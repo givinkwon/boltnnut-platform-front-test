@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
 import Background from "../../components/Background";
 import Button from "../../components/Button";
-import * as Title from "../../components/Title";
-import * as Text from "../../components/Text";
-import Router from "next/router";
-
-// images
-const Banner6BackgroundImg = "/static/images/Banner6BackgroundImg.png";
 
 class Banner6Container extends React.Component {
   render() {
@@ -22,16 +15,15 @@ class Banner6Container extends React.Component {
               alignItems: "center",
             }}
           >
-            <Title26>신제품을 개발하고 싶으신가요?</Title26>
-            <Title26>
-              1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.
-            </Title26>
+            <Font29>마음에 드는 공장을 찾기 힘드시나요?</Font29>
+            <Font25>
+              볼트앤너트에서 여러 업체의 회사소개서와 제안서를 받아보세요.
+            </Font25>
           </div>
 
           <a href={"request"}>
-            <RequestButton>맞춤형 문의하기</RequestButton>
+            <RequestButton>무료로 의뢰하기</RequestButton>
           </a>
-          {/* <RequestButton onClick={() => Router.push("/request")}> */}
         </Container>
       </CustomBackground>
     );
@@ -53,29 +45,33 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Title26 = styled(Title.FontSize26)`
+const Font29 = styled.p`
+  font-family: NotoSansCJKkr;
+  font-size: 29px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.72;
+  letter-spacing: -0.73px;
+  color: #1e2222;
+`;
+
+const Font25 = styled.p`
+  font-family: NotoSansCJKkr;
+  font-size: 25px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.92;
-  letter-spacing: -0.65px;
+  line-height: 2;
+  letter-spacing: -0.63px;
   color: #000000;
-`;
-
-const Text20 = styled(Text.FontSize20)`
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.6;
-  letter-spacing: -0.5px;
-  color: #0933b3;
 `;
 
 const RequestButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 282px;
+  width: 224px !important;
   height: 58px;
   margin-top: 46px;
   border-radius: 29px;
@@ -83,13 +79,12 @@ const RequestButton = styled(Button)`
   background: none;
   cursor: pointer;
 
-  font-size: 20px;
+  font-size: 20px !important;
   font-weight: 500;
   font-style: normal;
   color: #0933b3;
 
   :hover {
-    background-color: #174aee;
-    color: #ffffff;
+    background-color: #edf4fe;
   }
 `;

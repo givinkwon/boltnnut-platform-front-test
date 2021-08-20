@@ -14,7 +14,7 @@ class Home {
   @observable is_ie = false;
   @observable request_list = [];
   @observable home_idx = 0;
-  @observable categoryIndex = 1;
+  @observable categoryIndex = 41;
   @observable mobile_warning_modal_state = true;
 
   @action init = () => {

@@ -281,7 +281,7 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       this.develop_selected.push(id);
-      this.category_selected_tagbox.push(data);
+      this.category_selected_tagbox.push({ id: id, type: state, data: data });
     }
 
     // 소재 선택

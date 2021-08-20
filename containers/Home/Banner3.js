@@ -11,7 +11,7 @@ class Banner3Container extends React.Component {
     return (
       <a href={"signup"}>
         <CustomBackground>
-          <CustomContainer style={{ width: "830px" }}>
+          <CustomContainer style={{ width: "820px" }}>
             <Title26>
               더 다양한 카테고리의 업체 전문가들을 찾고 있으신가요?
             </Title26>
@@ -43,21 +43,20 @@ const CustomContainer = styled(Containerv1)`
 const SignupButton = styled(Button)`
   display: flex;
   justify-content: center;
-  width: 160px;
+  width: 175px !important;
   height: 58px;
   border-radius: 29px;
   border: solid 2px #0933b3;
   cursor: pointer;
   background: none;
 
-  font-size: 20px;
+  font-size: 20px !important;
   font-weight: 500;
   font-style: normal;
   color: #0933b3;
 
   :hover {
-    background-color: #174aee;
-    color: #ffffff;
+    background-color: #edf4fe;
   }
 `;
 

@@ -39,6 +39,7 @@ class ManufacturerContentContainer extends React.Component {
     fileName: "",
     file: "",
     checkFileUpload: false,
+    result_banner: false,
   };
 
   async componentDidMount() {
@@ -135,6 +136,13 @@ class ManufacturerContentContainer extends React.Component {
     Request.set_request_type(1);
   };
 
+  resultBannerHandler = () => {
+    const { Partner } = this.props;
+    if (Partner.subButtonActive) {
+      return (Partner.subButtonActive = false);
+    }
+  };
+
   render() {
     const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
@@ -147,17 +155,27 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           {Partner.subButtonActive ? (
             <RequestMiddle>
-              <Font16>
-                <b style={{ fontWeight: "bold", color: "#1e2222" }}>
-                  마음에 드는 공장을 찾기 힘드시나요?
-                </b>{" "}
-                지금 '의뢰하기'를 눌러서 여러 업체의 회사소개서와 제안서를
-                받아보세요.
-              </Font16>
+              <ResultBannerContainer>
+                <ResultBannerInnerBox>
+                  <Font22 style={{ color: "#000000" }}>
+                    마음에 드는 공장을 찾기 힘드시나요?
+                  </Font22>
 
-              <RequestBtn onClick={() => this.ToRequest()}>
-                무료로 의뢰하기
-              </RequestBtn>
+                  <Font16>
+                    30분 이내로 볼트앤너트 전문가가 유선으로 상담을
+                    도와드립니다.
+                  </Font16>
+                </ResultBannerInnerBox>
+
+                <RequestBtn onClick={() => this.ToRequest()}>
+                  무료 전문가 상담
+                </RequestBtn>
+
+                <ResultBannerCloseImg
+                  src="static/images/close_banner.svg"
+                  onClick={() => this.resultBannerHandler()}
+                />
+              </ResultBannerContainer>
             </RequestMiddle>
           ) : (
             <></>
@@ -846,8 +864,8 @@ const Header = styled.div`
 `;
 
 const Border = styled.div`
-width: 100%
-border: solid 1px #e1e2e4;
+  width: 100%;
+  border: solid 1px #e1e2e4;
 `;
 
 const Font20 = styled(Title.FontSize20)`
@@ -859,11 +877,17 @@ const Font20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Font16 = styled(Content.FontSize16)`
+const Font22 = styled(Content.FontSize22)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   color: #555963;
+`;
+
+const Font16 = styled(Content.FontSize16)`
+  color: #000000;
+  font-weight: normal;
+  margin-top: 15px;
 `;
 
 const LoadingComponent = styled(ButtonSpinnerComponent)`
@@ -885,37 +909,32 @@ const Layer = styled.div`
 `;
 
 const RequestMiddle = styled.div`
-  width: 120%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 113px;
   margin-top: 40px;
   margin-bottom: 40px;
-  background-color: #f6f6f6;
-  div{
+  background-image: url("static/images/search_result_background.svg");
+  div {
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.4px;
     color: #555963;
-    margin-right: 40px;
-}
+    /* margin-right: 40px; */
   }
 `;
 
 const RequestBtn = styled.button`
   width: 145px;
   height: 40px;
-  margin-left: 20px;
-  object-fit: contain;
   border-radius: 29px;
   border: solid 2px #0933b3;
-  background: none;
+  background-color: #0933b3;
+  color: #ffffff;
   font-size: 15px;
-  letter-spacing: -0.38px;
-  color: #0933b3;
   cursor: pointer;
-}
 `;
 
 const TopButton = styled.div`
@@ -962,6 +981,25 @@ const DeleteFile = styled.img`
     height: 12px;
     margin-right: 10px;
   }
+`;
+
+const ResultBannerContainer = styled.div`
+  position: relative;
+  width: 700px;
+  display: flex;
+  gap: 90px;
+`;
+
+const ResultBannerInnerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ResultBannerCloseImg = styled.img`
+  position: absolute;
+  left: 120%;
+  bottom: 100%;
+  cursor: pointer;
 `;
 
 export default ManufacturerContentContainer;

@@ -7,6 +7,7 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
+import Slider from "react-slick";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
@@ -14,7 +15,6 @@ const bookmarkcount = "static/icon/bookmarkcount.svg";
 const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
-import Slider from "react-slick";
 
 var availableFileType = [
   "png",
