@@ -23,28 +23,29 @@ class SearchFilterBox extends React.Component {
     category_arrow: false,
     classify_arrow: false,
     location_arrow: false,
+    develop_material_arrow: false,
   };
 
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
     // 카테고리 선택
-    if (flag == "business") {
+    if (flag === "business") {
       this.setState({ ...this.state, type: "business" });
     }
 
     // 업체 분류 선택
-    if (flag == "category") {
+    if (flag === "category") {
       this.setState({ ...this.state, type: "category" });
     }
 
     // 지역 선택
-    if (flag == "city") {
+    if (flag === "city") {
       this.setState({ ...this.state, type: "city" });
     }
 
     // 공정 선택
-    if (flag == "develop&material") {
+    if (flag === "develop&material") {
       this.setState({ ...this.state, type: "develop&material" });
     }
 
@@ -54,9 +55,12 @@ class SearchFilterBox extends React.Component {
       Partner.filter_dropdown = true;
     }
   };
+
   componentDidMount = async () => {
-    const { Partner } = this.props;
+    const { Partner, Category } = this.props;
     Partner.subButtonActive = false;
+    Category.category_selected_tagbox = [];
+    Category.selected_category_subbox = [];
   };
 
   componentWillUnmount = () => {
@@ -65,22 +69,23 @@ class SearchFilterBox extends React.Component {
       data.checked = false;
     });
   };
+
   activeHandler = (flag) => {
-    if (flag == "city") {
+    if (flag === "city") {
       if (this.state.filter_city_active) {
         this.setState({ filter_city_active: false });
       } else {
         this.setState({ filter_city_active: true });
       }
     }
-    if (flag == "category") {
+    if (flag === "category") {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
       } else {
         this.setState({ filter_category_active: true });
       }
     }
-    if (flag == "category_arrow") {
+    if (flag === "category_arrow") {
       if (this.state.category_arrow) {
         this.setState({ category_arrow: false });
       } else {
@@ -88,10 +93,11 @@ class SearchFilterBox extends React.Component {
           category_arrow: true,
           classify_arrow: false,
           location_arrow: false,
+          develop_material_arrow: false,
         });
       }
     }
-    if (flag == "classify_arrow") {
+    if (flag === "classify_arrow") {
       if (this.state.classify_arrow) {
         this.setState({ classify_arrow: false });
       } else {
@@ -99,15 +105,30 @@ class SearchFilterBox extends React.Component {
           classify_arrow: true,
           category_arrow: false,
           location_arrow: false,
+          develop_material_arrow: false,
         });
       }
     }
-    if (flag == "location_arrow") {
+    if (flag === "location_arrow") {
       if (this.state.location_arrow) {
         this.setState({ location_arrow: false });
       } else {
         this.setState({
           location_arrow: true,
+          category_arrow: false,
+          classify_arrow: false,
+          develop_material_arrow: false,
+        });
+      }
+    }
+
+    if (flag === "develop&material") {
+      if (this.state.develop_material_arrow) {
+        this.setState({ develop_material_arrow: false });
+      } else {
+        this.setState({
+          develop_material_arrow: true,
+          location_arrow: false,
           category_arrow: false,
           classify_arrow: false,
         });
@@ -117,77 +138,102 @@ class SearchFilterBox extends React.Component {
 
   render() {
     const { Category, Partner } = this.props;
-    console.log(Category.category_selected_tagbox)
     return (
       <ContainerV2>
-        {console.log(`Active : ${Partner.subButtonActive}`)}
-
         <FilterBoxSearchBar />
 
         <FilterCategory>
           <CategoryContainer>
             <CategoryName>카테고리</CategoryName>
-            <Field active={this.state.classify_arrow}                 
-            onClick={() => {
-                  this.dropdownHandler("category");
-                  this.activeHandler("classify_arrow");
-                }}>
-              <div>전체</div>
-              <img
-                src={this.state.classify_arrow ? up_arrow : down_arrow}
-                
-              ></img>
+            <Field
+              active={this.state.classify_arrow}
+              onClick={() => {
+                this.dropdownHandler("category");
+                this.activeHandler("classify_arrow");
+              }}
+            >
+              {Category.selected_category_subbox.length <= 0 ? (
+                <div>전체</div>
+              ) : (
+                Category.selected_category_subbox.length > 0 && (
+                  <div style={{ color: "#000000" }}>
+                    {Category.selected_category_subbox.join().length > 10
+                      ? Category.selected_category_subbox.join().slice(0, 10) +
+                        "..."
+                      : Category.selected_category_subbox.join()}
+                  </div>
+                )
+              )}
+              <img src={this.state.classify_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
           <CategoryContainer>
             <CategoryName>업체 분류</CategoryName>
-            <Field active={this.state.category_arrow}
-            onClick={() => {
+            <Field
+              active={this.state.category_arrow}
+              onClick={() => {
                 this.dropdownHandler("business");
                 this.activeHandler("category_arrow");
-              }}>
-              <div>전체</div>
-              <img
-                src={this.state.category_arrow ? up_arrow : down_arrow}
-
-              ></img>
+              }}
+            >
+              {Category.selected_business_subbox.length <= 0 ? (
+                <div>전체</div>
+              ) : (
+                Category.selected_business_subbox.length > 0 && (
+                  <div style={{ color: "#000000" }}>
+                    {Category.selected_business_subbox.join().length > 10
+                      ? Category.selected_business_subbox.join().slice(0, 10) +
+                        "..."
+                      : Category.selected_business_subbox.join()}
+                  </div>
+                )
+              )}
+              <img src={this.state.category_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
           <CategoryContainer>
             <CategoryName>지역</CategoryName>
-            <Field active={this.state.location_arrow}
-            onClick={() => {
+            <Field
+              active={this.state.location_arrow}
+              onClick={() => {
                 this.dropdownHandler("city");
                 this.activeHandler("location_arrow");
-              }}>
-              <div>전체</div>
-              <img
-                src={this.state.location_arrow ? up_arrow : down_arrow}
-              ></img>
+              }}
+            >
+              {Category.selected_city_subbox.length <= 0 ? (
+                <div>전체</div>
+              ) : (
+                Category.selected_city_subbox.length > 0 && (
+                  <div style={{ color: "#000000" }}>
+                    {Category.selected_city_subbox.join().length > 10
+                      ? Category.selected_city_subbox.join().slice(0, 10) +
+                        "..."
+                      : Category.selected_city_subbox.join()}
+                  </div>
+                )
+              )}
+              <img src={this.state.location_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
           <CategoryContainer>
             <ProcessMaterialBox>공정/소재</ProcessMaterialBox>
-            <Material>
+            <Material active={this.state.develop_material_arrow}>
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   this.dropdownHandler("develop&material");
+                  this.activeHandler("develop&material");
                 }}
               >
                 <img
                   src="/static/icon/detail_filter.svg"
                   style={{ widht: 24, height: 24 }}
-                ></img>
-                <img
+                />
+
+                <DevelopMaterialArrowImg
+                  active={this.state.develop_material_arrow}
                   src="/static/icon/arrow_down.svg"
-                  style={{
-                    widht: 12,
-                    height: 12,
-                    marginLeft: 2,
-                    marginBottom: 5,
-                  }}
-                ></img>
+                />
               </div>
             </Material>
           </CategoryContainer>
@@ -197,15 +243,19 @@ class SearchFilterBox extends React.Component {
         )}
 
         <SelectedCategoryContainer>
-          {Category.category_selected_tagbox[0] && Category.category_selected_tagbox[0].data &&
+          {Category.category_selected_tagbox.length > 0 &&
             Category.category_selected_tagbox.map((v, idx) => (
               <SelectedCategoryBox>
-
                 <div style={{ marginLeft: "10px" }}>{v.data}</div>
                 <CloseImgBox
                   src="/static/images/xbox.svg"
                   onClick={() =>
-                    this.props.Category.remove_selected(v.type, v.idx, "search", v.data)
+                    this.props.Category.remove_selected(
+                      v.type,
+                      v.idx,
+                      "search",
+                      v.data
+                    )
                   }
                 />
               </SelectedCategoryBox>
@@ -248,7 +298,8 @@ const Material = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  border: solid 1px #c6c7cc;
+  border: ${(props) =>
+    props.active ? "solid 1px #0933b3" : "solid 1px #c6c7cc"};
   width: 64px;
   height: 40px;
 `;
@@ -293,7 +344,7 @@ const ContainerV2 = styled.div`
   flex-direction: column;
   align-items: center;
   width: 1200px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
@@ -1147,9 +1198,10 @@ const Button = styled.button`
 const SelectedCategoryContainer = styled.div`
   display: inline-flex;
   gap: 15px;
-  width: 1140px;
+  width: 760px;
   flex-wrap: wrap;
-  margin-top: 50px;
+  margin-top: 12px;
+  top: 50%;
 `;
 
 const SelectedCategoryBox = styled.div`
@@ -1167,4 +1219,17 @@ const CloseImgBox = styled.img`
   height: 12px;
   cursor: pointer;
   margin: 0px 10px 0px 10px;
+`;
+
+const DevelopMaterialArrowImg = styled.img`
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
+  margin-bottom: 5px;
+
+  ${(props) =>
+    props.active &&
+    css`
+      transform: rotate(180deg);
+    `}
 `;

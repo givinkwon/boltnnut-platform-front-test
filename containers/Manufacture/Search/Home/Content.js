@@ -39,12 +39,12 @@ class ManufacturerContentContainer extends React.Component {
     fileName: "",
     file: "",
     checkFileUpload: false,
+    result_banner: false,
   };
 
   async componentDidMount() {
     const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
-
     Partner.currentPage = 1;
 
     if (Partner.filter_category_ary.length === 1) {
@@ -53,8 +53,6 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-
-    console.log(this.props.Auth.logged_in_user);
 
     Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
@@ -66,12 +64,9 @@ class ManufacturerContentContainer extends React.Component {
     var recent_partner_namearr = [];
 
     await Cookie.partner_view_list.map((item, idx) => {
-      console.log(item);
-
       PartnerAPI.detail(item)
         .then((res) => {
           this.setState({ recent_partner: res.data });
-          console.log(res);
 
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
@@ -84,10 +79,6 @@ class ManufacturerContentContainer extends React.Component {
             recent_partner: recent_partner,
             recent_partner_namearr: recent_partner_namearr,
           });
-          console.log(this.state.recent_partner_dic);
-          console.log(this.state.recent_partner_name);
-          console.log(this.state.recent_partner);
-          console.log(this.state.recent_partner_namearr);
         })
         .catch((e) => {
           console.log(e);
@@ -101,7 +92,6 @@ class ManufacturerContentContainer extends React.Component {
     console.log("content unmount");
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
-    // Partner.search_text = "";
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
@@ -120,7 +110,6 @@ class ManufacturerContentContainer extends React.Component {
       link.click();
     } else {
       alert("로그인이 필요합니다.");
-      // this.props.Auth.previous_url = "search";
       Router.push("/login");
     }
   };
@@ -135,29 +124,44 @@ class ManufacturerContentContainer extends React.Component {
     Request.set_request_type(1);
   };
 
-  render() {
-    const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
-    const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
-    const gray = "#f9f9f9";
-    const usertype = "partner";
-    console.log(toJS(Partner.partner_list));
+  resultBannerHandler = () => {
+    const { Partner } = this.props;
+    if (Partner.result_banner) {
+      Partner.result_banner = false;
+    }
+  };
 
-    console.log(Partner.suggest_list);
+  render() {
+    const { Project, Partner, Search, Auth, Cookie } = this.props;
+    const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
+
     return (
       <>
         <Background id="MyBackground">
-          {Partner.subButtonActive ? (
+          {Partner.result_banner && (
             <RequestMiddle>
-              <div>
-                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
-                원하시나요?
-              </div>
-              <RequestBtn onClick={() => this.ToRequest()}>
-                맞춤형 문의하기
-              </RequestBtn>
+              <ResultBannerContainer>
+                <ResultBannerInnerBox>
+                  <Font22 style={{ color: "#000000" }}>
+                    마음에 드는 공장을 찾기 힘드시나요?
+                  </Font22>
+
+                  <Font16>
+                    30분 이내로 볼트앤너트 전문가가 유선으로 상담을
+                    도와드립니다.
+                  </Font16>
+                </ResultBannerInnerBox>
+
+                <RequestBtn onClick={() => this.ToRequest()}>
+                  무료 전문가 상담
+                </RequestBtn>
+
+                <ResultBannerCloseImg
+                  src="static/images/close_banner.svg"
+                  onClick={() => this.resultBannerHandler()}
+                />
+              </ResultBannerContainer>
             </RequestMiddle>
-          ) : (
-            <></>
           )}
           <Container>
             <Body>
@@ -251,7 +255,7 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
-                      console.log(item);
+                      // console.log(item);
                       return (
                         <Background>
                           <div
@@ -843,8 +847,8 @@ const Header = styled.div`
 `;
 
 const Border = styled.div`
-width: 100%
-border: solid 1px #e1e2e4;
+  width: 100%;
+  border: solid 1px #e1e2e4;
 `;
 
 const Font20 = styled(Title.FontSize20)`
@@ -856,13 +860,17 @@ const Font20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Font14 = styled(Content.FontSize14)`
-  font-weight: bold !important;
-  font-stretch: normal !important;
-  font-style: normal !important;
-  line-height: 30px !important;
-  letter-spacing: -0.14px !important;
-  color: #0933b3;
+const Font22 = styled(Content.FontSize22)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  color: #555963;
+`;
+
+const Font16 = styled(Content.FontSize16)`
+  color: #000000;
+  font-weight: normal;
+  margin-top: 15px;
 `;
 
 const LoadingComponent = styled(ButtonSpinnerComponent)`
@@ -884,36 +892,34 @@ const Layer = styled.div`
 `;
 
 const RequestMiddle = styled.div`
-  width: 120%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  margin-top: 40px;
+  height: 113px;
+  margin-top: 30px;
   margin-bottom: 40px;
-  background-color: #f6f6f6;
-  div{
+  background-image: url("static/images/search_result_background.svg");
+  div {
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.4px;
     color: #555963;
-    margin-right: 40px;
-}
+    /* margin-right: 40px; */
   }
 `;
 
 const RequestBtn = styled.button`
   width: 145px;
   height: 40px;
-  object-fit: contain;
+  margin-top: 16px;
+  padding-top: 5px;
   border-radius: 29px;
   border: solid 2px #0933b3;
-  background: none;
+  background-color: #0933b3;
+  color: #ffffff;
   font-size: 15px;
-  letter-spacing: -0.38px;
-  color: #0933b3;
   cursor: pointer;
-}
 `;
 
 const TopButton = styled.div`
@@ -960,6 +966,26 @@ const DeleteFile = styled.img`
     height: 12px;
     margin-right: 10px;
   }
+`;
+
+const ResultBannerContainer = styled.div`
+  position: relative;
+  width: 900px;
+  display: flex;
+  justify-content: center;
+  gap: 180px;
+`;
+
+const ResultBannerInnerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ResultBannerCloseImg = styled.img`
+  position: absolute;
+  left: 110%;
+  bottom: 100%;
+  cursor: pointer;
 `;
 
 export default ManufacturerContentContainer;

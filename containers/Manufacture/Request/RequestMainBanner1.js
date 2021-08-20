@@ -39,7 +39,7 @@ class RequestMain extends React.Component {
                   <br />
                   직접 의뢰하는 형식입니다.
                 </Text>
-                <Button onClick={() => (Router.push('/search'))}>
+                <Button onClick={() => Router.push("/search")}>
                   제조사 찾기 바로가기
                   <img src={bluearrow} style={{ marginLeft: 8 }} />
                 </Button>

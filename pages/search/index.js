@@ -29,11 +29,11 @@ class Index extends React.Component {
     // category 리셋하여 메인페이지 연동되지 않게 + 파트너 가져오기
     Partner.init();
     await Partner.getPartner(1, "Home");
-    console.log("search didmount2");
+    // console.log("search didmount2");
 
     Auth.previous_url = "search";
 
-    console.log(Auth);
+    // console.log(Auth);
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -42,14 +42,14 @@ class Index extends React.Component {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href);
+    // console.log(window.location.href);
     const req = {
       data: formData,
     };
 
     AccountAPI.setUserPageIP(req)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((e) => {
         console.log(e);

@@ -29,7 +29,6 @@ class FilterModalContainer extends React.Component {
   async componentDidMount() {
     const { Category } = this.props;
     await Category.init();
-    console.log("ASNCKLANSCLKNLAKSCNLKANSCLKNASLCK");
     var mainCategoryTypeDic = {};
     var subCategoryTypeDic = {};
     mainCategoryTypeDic["business"] = Category.mainbusiness_list;
@@ -78,7 +77,7 @@ class FilterModalContainer extends React.Component {
     if (type === "main") {
       // 대분류 선택
       this.setState({ mainSelectIdx: idx });
-    // 중분류 선택 시
+      // 중분류 선택 시
     } else {
       // 현재 Active True의 상태이면
       if (Category.categoryActiveHandler(idx, type)) {
@@ -238,7 +237,6 @@ class FilterModalContainer extends React.Component {
           </>
         </MainCategoryBox>
 
-
         {/* 중카테고리 선택 */}
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
@@ -249,11 +247,15 @@ class FilterModalContainer extends React.Component {
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
-                  console.log(sub_data)
+                  console.log(sub_data);
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("business", sub_data.id, sub_data.category);
+                        this.buttonClick(
+                          "business",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -273,7 +275,7 @@ class FilterModalContainer extends React.Component {
               {type == "city" &&
                 this.state.mainCategoryTypeDic[type] &&
                 toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
-                  console.log(data)
+                  console.log(data);
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -303,7 +305,11 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("category", sub_data.id, sub_data.category);
+                        this.buttonClick(
+                          "category",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >

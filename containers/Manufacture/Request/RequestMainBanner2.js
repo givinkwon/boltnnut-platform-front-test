@@ -25,7 +25,7 @@ class RequestMain extends React.Component {
               <img src={step3} />
             </StepBox>
             <TextBox>
-              <TextSubBox style={{ marginLeft: 64 }}>
+              <TextSubBox>
                 <Title>의뢰 요청</Title>
                 <Content>
                   의뢰를 요청하면 볼트앤너트의 전문가가
@@ -41,7 +41,7 @@ class RequestMain extends React.Component {
                   의뢰에 대한 소통을 진행합니다.
                 </Content>
               </TextSubBox>
-              <TextSubBox style={{ marginRight: 65 }}>
+              <TextSubBox>
                 <Title>업체 확정</Title>
                 <Content>
                   채팅 페이지 상단의 '업체 확정' <br />
@@ -77,15 +77,15 @@ const Header = styled.span`
 
 const StepBox = styled.div`
   margin-top: 80px;
-  width: 870px;
+  width: 700px;
   display: flex;
   justify-content: space-around;
 `;
 
 const TextBox = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: center;
+  width: 870px;
+  justify-content: space-around;
 `;
 
 const TextSubBox = styled.div`

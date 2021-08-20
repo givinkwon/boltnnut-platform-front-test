@@ -37,6 +37,11 @@ class Category {
   @observable develop_selected = [];
   @observable category_selected_tagbox = [];
 
+  // 카테고리 선택 시 상단 박스안에 선택한 카테고리 들어가는 상태
+  @observable selected_category_subbox = [];
+  @observable selected_business_subbox = [];
+  @observable selected_city_subbox = [];
+
   //전체<< 체크박스 체크상태 저장하는 dictionary
   @observable checkAllState = {};
   @observable nextBtnActive = false;
@@ -151,7 +156,7 @@ class Category {
     await CategoryAPI.getCity()
       .then((res) => {
         this.city_list = res.data.results;
-        console.log(toJS(this.city_list));
+        // console.log(toJS(this.city_list));
       })
       .catch((e) => {
         console.log(e);
@@ -162,7 +167,7 @@ class Category {
       .then((res) => {
         this.mainmaterial_list = res.data.results;
         this.setCheckAllState("material");
-        console.log(toJS(this.mainmaterial_list));
+        // console.log(toJS(this.mainmaterial_list));
       })
       .catch((e) => {
         console.log(e);
@@ -176,7 +181,7 @@ class Category {
         this.developbig_list.forEach((mainCategory) => {
           this.setCheckAllState("develop");
         });
-        console.log(toJS(this.developbig_list));
+        // console.log(toJS(this.developbig_list));
       })
       .catch((e) => {
         console.log(e);
@@ -253,6 +258,7 @@ class Category {
       if (this.business_selected.indexOf(id) < 0) {
         this.business_selected.push(id);
         this.category_selected_tagbox.push({ id: id, type: state, data: data });
+        this.selected_business_subbox.push(data);
       }
     }
     // 카테고리 선택
@@ -260,6 +266,7 @@ class Category {
       if (this.category_selected.indexOf(id) < 0) {
         this.category_selected.push(id);
         this.category_selected_tagbox.push({ id: id, type: state, data: data });
+        this.selected_category_subbox.push(data);
       }
     }
 
@@ -268,6 +275,7 @@ class Category {
       this.city_selected.push(id);
       console.log(toJS(this.city_selected));
       this.category_selected_tagbox.push({ id: id, type: state, data: data });
+      this.selected_city_subbox.push(data);
     }
 
     // 공정 선택
@@ -310,31 +318,34 @@ class Category {
   @action remove_selected = async (state, id, container = "search", data) => {
     let deleteIdx;
     let deletedata;
-    console.log(this.category_selected_tagbox)
+    console.log(this.category_selected_tagbox);
     // 태그 박스 삭제
     this.category_selected_tagbox.map((sub_data, idx) => {
       // 데이터가 있는 경우
-      if(sub_data.data == data){
+      if (sub_data.data == data) {
         this.category_selected_tagbox.splice(idx, 1);
       }
-    })
+    });
 
     // 카테고리 선택
     if (state == "business") {
       deleteIdx = this.business_selected.indexOf(id);
       this.business_selected.splice(deleteIdx, 1);
+      this.selected_business_subbox.splice(deleteIdx, 1);
     }
 
     // 업체 분류 선택
     if (state == "category") {
       deleteIdx = this.category_selected.indexOf(id);
       this.category_selected.splice(deleteIdx, 1);
+      this.selected_category_subbox.splice(deleteIdx, 1);
     }
 
     // 지역 선택
     if (state == "city") {
       deleteIdx = this.city_selected.indexOf(id);
       this.city_selected.splice(deleteIdx, 1);
+      this.selected_city_subbox.splice(deleteIdx, 1);
     }
 
     // 공정 선택
@@ -358,7 +369,7 @@ class Category {
   categoryActiveHandler = (idx, state) => {
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
-        console.log(idx);
+        // console.log(idx);
         return true;
       } else {
         return false;
@@ -368,7 +379,7 @@ class Category {
     // 업체 분류 선택
     if (state == "category") {
       if (this.category_selected.includes(idx)) {
-        console.log(idx);
+        // console.log(idx);
         return true;
       } else {
         return false;
@@ -378,7 +389,7 @@ class Category {
     // 지역 선택
     if (state == "city") {
       if (this.city_selected.includes(idx)) {
-        console.log(idx);
+        // console.log(idx);
         return true;
       } else {
         return false;
@@ -388,7 +399,7 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       if (this.develop_selected.includes(idx)) {
-        console.log(idx);
+        // console.log(idx);
         return true;
       } else {
         return false;
@@ -398,7 +409,7 @@ class Category {
     // 소재 선택
     if (state == "material") {
       if (this.material_selected.includes(idx)) {
-        console.log(idx);
+        // console.log(idx);
         return true;
       } else {
         return false;

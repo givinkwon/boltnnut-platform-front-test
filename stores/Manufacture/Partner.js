@@ -115,6 +115,7 @@ class Partner {
   @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
+
   // city를 id로 주고 있어서 받아오기
   @observable city_name = "";
 
@@ -196,9 +197,10 @@ class Partner {
   @observable filterLoading = true;
 
   @observable filterList = [];
-  // @observable img = "";
+
   @observable selectedIntroductionFile = null;
   @observable selectedIntroductionFileType = null;
+
   // 파트너 리뷰
   @observable star_ary = [
     { id: 1, checked: false },
@@ -209,8 +211,6 @@ class Partner {
   ];
 
   @observable cityArray = [
-    // { id: 1, name: "전체", checked: false },
-    // { id: 0, name: "전체", checked: false },
     { id: 1, name: "서울특별시", checked: false },
     {
       id: 2,
@@ -222,32 +222,25 @@ class Partner {
     { id: 7, name: "전라남도", checked: false },
     { id: 9, name: "경상남도", checked: false },
     { id: 15, name: "인천광역시", checked: false },
-    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable filterArray = [
-    // { id: 1, name: "전체", checked: false },
-    // { id: 0, name: "전체", checked: false },
     { id: 1, name: "신제품개발", checked: false },
     { id: 2, name: "OEM 구매", checked: false },
     { id: 3, name: "금형/양산", checked: false },
     { id: 4, name: "단품가공", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable detailFilterArray = [
-    // { id: 1, name: "전체", checked: false },
     { id: 1, name: "샘플제작", checked: false },
     { id: 2, name: "OEM", checked: false },
     { id: 3, name: "ODM", checked: false },
     { id: 4, name: "금형/사출", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable partnerName = "";
-  // @observable reviewPartnerName = 0;
   @observable reviewScore = "";
   @observable reviewContent = "";
   @observable review_ary = [];
@@ -301,7 +294,6 @@ class Partner {
 
   // 파트너의 답변
   @observable answer_set = [];
-
   @observable clientInfo = [];
 
   // 파트너 리뷰 페이지
@@ -352,7 +344,6 @@ class Partner {
   @observable review_partner_page = 0;
   @observable review_partner_count = 0;
 
-  // @observable clientInfoList = {};
   @observable clientInfoList = [];
   @observable isSearched = false;
   @observable originPartnerList = [];
@@ -377,6 +368,8 @@ class Partner {
   @observable total_review = 0;
 
   @observable check_bookmark = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+
+  @observable result_banner = false;
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -436,16 +429,11 @@ class Partner {
     this.detailLoadingFlag = true;
 
     if (!this.requestModalActive && !this.modalActive) {
-      console.log("Detail click");
-      console.log(item, idx)
       this.category_name_list = null;
 
       this.category_name_list = this.category_dic[idx];
 
       if (!item.file) {
-        // this.detailLoadingFlag = false;
-        // alert("해당 회사의 소개서가 존재하지 않습니다!");
-        // return;
         this.partner_detail_list = [];
         await this.partner_detail_list.push({ item: item, idx: idx });
         this.recentPartnerId = this.partner_detail_list[0].item.id;
@@ -458,7 +446,7 @@ class Partner {
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
-        
+
         Router.push("/search/detail");
         return;
       }
@@ -471,13 +459,11 @@ class Partner {
       this.selectedIntroductionFileType = fileType;
 
       if (this.availableFileType.indexOf(fileType) > -1) {
-        console.log("뷰어 페이지 router push");
         this.partner_detail_list = [];
+
         await this.partner_detail_list.push({ item: item, idx: idx });
         this.recentPartnerId = this.partner_detail_list[0].item.id;
 
-        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(this.partner_detail_list));
         await this.getReviewByPartner(
           this.partner_detail_list[0].item.id,
           1,
@@ -488,7 +474,6 @@ class Partner {
         await this.getCityName(this.partner_detail_list[0].item.city);
 
         Router.push("/search/detail");
-        // this.setState({ g: 3 });
       } else {
         console.log("file download");
         this.filedownload(item.file);
@@ -500,13 +485,11 @@ class Partner {
     if (!url) {
       alert("준비중입니다.");
     }
-    // const url = data.file;
+
     const link = document.createElement("a");
     link.href = url;
     link.click();
   };
-
-  //
 
   @observable searchFileUrl = "";
   @action onChangeFile = (e) => {
@@ -705,18 +688,14 @@ class Partner {
 
   @action setSmallCategory = (val) => {
     this.input_small_category = val;
-    // this.input_detail_small_category = val;
   };
 
   @action setDetailBigCategory = async (val) => {
     this.input_detail_big_category = val;
-
     this.request_middle_list = this.input_detail_big_category.category_set;
-    // this.selectedMidCategory = obj.category_set[0];
     this.category_middle_ary = await this.category_middle_total_ary.filter(
       (item) => item.maincategory === val.id
     );
-
     this.input_detail_small_category = this.category_middle_ary[0];
   };
 
@@ -726,12 +705,10 @@ class Partner {
 
   @action setMinBudget = (val) => {
     this.input_min_budget = val;
-    console.log(val);
+
     if (val.label === "직접 입력") {
-      console.log("true");
       this.minDirectInput = true;
     } else {
-      console.log("false");
       this.minDirectInput = false;
     }
   };
@@ -739,54 +716,42 @@ class Partner {
   @action setMaxBudget = (val) => {
     this.input_max_budget = val;
     if (val.label === "직접 입력") {
-      console.log("true");
       this.maxDirectInput = true;
     } else {
-      console.log("false");
       this.maxDirectInput = false;
     }
   };
 
   @action setDetailMinBudget = (val) => {
     this.input_detail_min_budget = val;
-    console.log(val);
+
     if (val.label === "직접 입력") {
-      console.log("true");
       this.detailMinDirectInput = true;
     } else {
-      console.log("false");
       this.detailMinDirectInput = false;
     }
   };
 
   @action setDetailMaxBudget = (val) => {
     this.input_detail_max_budget = val;
-    console.log(val);
+
     if (val.label === "직접 입력") {
-      console.log("true");
       this.detailMaxDirectInput = true;
     } else {
-      console.log("false");
       this.detailMaxDirectInput = false;
     }
   };
 
   @action setCategory = (val) => {
-    console.log(val);
     this.input_category = val;
-    console.log(toJS(this.input_category));
 
     if (val.value === "전체") {
-      console.log("전체");
       this.search_class = "전체";
     } else if (val.value === "만든 제품") {
-      console.log("만든 제품");
       this.search_class = "만든 제품";
     } else {
       this.search_class = "";
     }
-    //this.getPartner();
-    console.log(toJS(this.search_class));
   };
 
   @action setLoading = () => {
@@ -798,7 +763,6 @@ class Partner {
       .then(async (res) => {
         this.category_main_list = res.data.results;
         this.big_category_all = res.data.results;
-        console.log(res.data.results.splice(0, 4));
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(
@@ -831,7 +795,7 @@ class Partner {
         console.log(e.response);
       });
     // 초기화
-    this.reset()
+    this.reset();
   };
   @action reset = () => {
     this.detail = null;
@@ -864,10 +828,7 @@ class Partner {
   @action getPartnerDetail = async (id) => {
     await PartnerAPI.detail(id)
       .then((res) => {
-        console.log(res);
-        // return res.data;
         this.detail = res.data;
-        console.log(this.detail);
       })
       .catch((e) => {
         console.log(e);
@@ -885,25 +846,19 @@ class Partner {
   };
 
   @action setCityCategory = (val) => {
-    console.log(val);
     this.select_city = val;
     this.filter_region = val.id;
 
-    console.log(toJS(this.filter_region));
     this.partner_next = null;
     this.partner_count = null;
 
     this.currentPage = 1;
-
-    // this.category_dic = {};
     this.resetDevCategory();
-
     this.getPartner();
   };
 
   @action setDetailCityCategory = (val) => {
     this.detail_select_city = val;
-    console.log(this.detail_select_city);
   };
 
   @action setParentList = (state, data, type) => {
@@ -926,7 +881,6 @@ class Partner {
         }
       }
     } else if (type === "develop") {
-      console.log(data);
       const list = [];
       if (state) {
         for (var d of data.develop_set) {
@@ -938,7 +892,6 @@ class Partner {
           list.push(d.id);
         }
         this.search_develop = [...list, ...this.search_develop];
-        console.log(this.search_develop);
       } else {
         for (var d of data.develop_set) {
           const index = this.search_develop.indexOf(d.id);
@@ -1008,7 +961,6 @@ class Partner {
         }
       }
     }
-    console.log(subclasses);
 
     const req = {
       data: {
@@ -1024,10 +976,9 @@ class Partner {
         page: this.page,
       },
     };
-    console.log(req);
+
     await PartnerAPI.search(req)
       .then((res) => {
-        console.log(res);
         this.partner_list = res.data.results;
         this.partner_count = res.data.count;
         this.partner_next = res.data.next;
@@ -1043,9 +994,7 @@ class Partner {
 
   @action saveSearchText = (text) => {
     const formData = new FormData();
-    console.log(this.partner_count);
-    console.log(text);
-    console.log(typeof this.partner_count);
+
     formData.append("text", text); // 입력 텍스트
     formData.append("count", this.partner_count); // 파트너 개수
 
@@ -1069,18 +1018,16 @@ class Partner {
 
   // image search를 위한 함수
   @action ImageSearch = () => {
-    console.log(this.file);
     // 데이터 만들기
     var formData = new FormData();
     formData.append("file", this.file);
-    console.log(formData);
+
     const req = {
       data: formData,
     };
 
     PartnerAPI.imagesearch(req)
       .then((res) => {
-        console.log(res);
         this.partner_list = [];
         this.partner_list = res.data.partner;
         this.partner_count = res.data.partner.length;
@@ -1099,7 +1046,6 @@ class Partner {
   @action set_searchfile = (obj) => {
     if (typeof obj == "object") {
       this.request_file_set.push(obj);
-      console.log("file uploaded");
     } else {
       this.request_file = null;
     }
@@ -1113,10 +1059,8 @@ class Partner {
 
     PartnerAPI.BookmarkPartner(req)
       .then((res) => {
-        console.log(res);
         this.partner_list = [];
         this.partner_list = res.data.results;
-        console.log(res.data.results);
         this.partner_count = res.data.partner.length;
 
         // image modal state 초기화
@@ -1144,9 +1088,6 @@ class Partner {
 
     PartnerAPI.getNextPage(req)
       .then((res) => {
-        console.log("파트너 다음 페이지 읽기 성공");
-        console.log(res.data);
-
         this.partner_list = this.partner_list.concat(res.data.results);
         this.partner_next = res.data.next;
       })
@@ -1172,9 +1113,6 @@ class Partner {
 
     PartnerAPI.getNextJustPage(req)
       .then((res) => {
-        console.log("파트너 다음 페이지 읽기 성공");
-        console.log(res.data);
-
         this.partner_list = this.partner_list.concat(res.data.results);
         this.partner_next = res.data.next;
       })
@@ -1200,9 +1138,6 @@ class Partner {
 
     PartnerAPI.getNextJustPage(req)
       .then((res) => {
-        console.log("파트너 다음 페이지 읽기 성공");
-        console.log(res.data);
-
         this.partner_list = this.partner_list.concat(res.data.results);
         this.partner_next = res.data.next;
       })
@@ -1242,7 +1177,6 @@ class Partner {
       PartnerAPI.getProject(projectId, req)
         .then((res) => {
           this.requests.push(res.data.request_set[0]);
-          console.log(res.data);
 
           if (idx === this.detail.answer_set.length - 1) {
             this.getClientsByRequests();
@@ -1259,7 +1193,6 @@ class Partner {
     PartnerAPI.getProject(projectId, req)
       .then((res) => {
         this.requests.push(res.data.request_set[0]);
-        console.log(res.data);
 
         if (idx === this.detail.answer_set.length - 1) {
           this.getClientsByRequests();
@@ -1516,7 +1449,7 @@ class Partner {
         }
         // console.log(toJS(res.data.results.category));
         // console.log(toJS(typeof this.filter_category_ary));
-        console.log(toJS(toJS(this.filter_category_ary)));
+        // console.log(toJS(toJS(this.filter_category_ary)));
       })
       .catch((e) => {
         console.log(e);
@@ -1536,7 +1469,7 @@ class Partner {
         this.filter_city_ary = await this.filter_city_ary.concat(
           res.data.results
         );
-        console.log(toJS(this.filter_city_ary));
+        // console.log(toJS(this.filter_city_ary));
         this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
@@ -1572,7 +1505,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    console.log(this.filter_city_ary);
+    // console.log(this.filter_city_ary);
   };
 
   // city를 id로 주고 있어서 이름 가져오기
@@ -1788,7 +1721,7 @@ class Partner {
     if (Category.business_selected.length) {
       toJS(Category.business_selected).map((data) => {
         this.business_string += data + ",";
-        console.log(this.business_string);
+        // console.log(this.business_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.business_string = this.business_string.substr(
@@ -1802,17 +1735,17 @@ class Partner {
 
     // 업체 분류 선택되어 있을 때
     if (Category.category_selected.length) {
-      console.log(toJS(Category.category_selected));
+      // console.log(toJS(Category.category_selected));
       toJS(Category.category_selected).map((data) => {
         this.category_string += data + ",";
-        console.log(this.category_string);
+        // console.log(this.category_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.category_string = this.category_string.substr(
         0,
         this.category_string.length - 1
       );
-      console.log(this.category_string);
+      // console.log(this.category_string);
 
       req.params.category = this.category_string;
     }
@@ -1821,7 +1754,7 @@ class Partner {
     if (Category.city_selected.length) {
       toJS(Category.city_selected).map((data) => {
         this.city_string += data + ",";
-        console.log(this.city_string);
+        // console.log(this.city_string);
       });
       // 마지막 쉼표 제거하기 위함
 
@@ -1838,7 +1771,7 @@ class Partner {
     if (Category.develop_selected.length) {
       toJS(Category.develop_selected).map((data) => {
         this.develop_string += data + ",";
-        console.log(this.develop_string);
+        // console.log(this.develop_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.develop_string = this.develop_string.substr(
@@ -1854,7 +1787,7 @@ class Partner {
     if (Category.material_selected.length) {
       toJS(Category.material_selected).map((data) => {
         this.material_string += data + ",";
-        console.log(this.material_string);
+        // console.log(this.material_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.material_string = this.material_string.substr(
@@ -1866,10 +1799,10 @@ class Partner {
       req.params.material = this.material_string;
     }
 
-    console.log(req.params);
+    // console.log(req.params);
     PartnerAPI.getPartners(req)
       .then(async (res) => {
-        console.log(res);
+        // console.log(res);
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];
@@ -2147,7 +2080,7 @@ class Partner {
         page: page,
       },
     };
-    
+
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {
@@ -2495,8 +2428,8 @@ class Partner {
 
     PartnerAPI.getTotalBookmarkByPartner(req)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.count);
+        // console.log(res);
+        // console.log(res.data.count);
         this.totalPartnerBookmark = res.data.count;
       })
       .catch((e) => {
@@ -2741,9 +2674,9 @@ class Partner {
   };
 
   @action existCheckedBookmark = async (clientID, partnerID, idx) => {
-    console.log(typeof clientID);
-    console.log(clientID);
-    console.log(partnerID);
+    // console.log(typeof clientID);
+    // console.log(clientID);
+    // console.log(partnerID);
 
     if (!clientID) {
       clientID = 20;
@@ -2758,15 +2691,15 @@ class Partner {
 
     await PartnerAPI.existBookmarkPartner(req)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.data);
-        console.log(typeof res.data.data);
+        // console.log(res);
+        // console.log(res.data.data);
+        // console.log(typeof res.data.data);
         if (parseInt(res.data.data)) {
           this.check_bookmark[idx] = idx;
         } else {
           this.check_bookmark[idx] = -1;
         }
-        console.log(this.check_bookmark[idx]);
+        // console.log(this.check_bookmark[idx]);
       })
       .catch((e) => {
         console.log(e);

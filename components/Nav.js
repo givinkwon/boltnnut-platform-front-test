@@ -121,7 +121,7 @@ class Nav extends React.Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
-    console.log(toJS(Auth.logged_in_user));
+    // console.log(toJS(Auth.logged_in_user));
   }
   render() {
     const { Auth, Request, Home } = this.props;
@@ -323,7 +323,7 @@ class Nav extends React.Component {
               </Menu>
               <Menu style={{ marginLeft: "auto" }}>
                 {/* 로그인한/안한 경우 */}
-                {console.log(Auth.logged_in_user)}
+                {/* {console.log(Auth.logged_in_user)} */}
                 {token ? (
                   <ul>
                     {/* 클라이언트 로그인 */}

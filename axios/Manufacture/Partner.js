@@ -256,7 +256,7 @@ export function getRandomPartner(req) {
 }
 
 export function getPartners(req) {
-  console.log(req.params);
+  // console.log(req.params);
 
   return axios({
     method: "GET",
@@ -329,7 +329,7 @@ export function getReview(req) {
 }
 
 export function getTotalReview(req) {
-  console.log(req);
+  // console.log(req);
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partnerreview/total_score/`,

@@ -42,12 +42,12 @@ class NewBanner2Container extends React.Component {
   render() {
     // id는 실제 DB의 id로 해야함
     const nameTable = [
+      { id: 41, name: "전자/반도체 부품" },
       { id: 1, name: "생활/위생" },
       { id: 2, name: "디지털/가전" },
       { id: 5, name: "반려" },
       { id: 6, name: "인테리어" },
       { id: 7, name: "주방" },
-      { id: 41, name: "전자/반도체 부품" },
       { id: 46, name: "볼트/너트류" },
       { id: 39, name: "동력전달부품" },
       { id: 19, name: "냉난방/공조" },

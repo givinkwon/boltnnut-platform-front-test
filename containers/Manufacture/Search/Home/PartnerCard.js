@@ -7,7 +7,7 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
-
+import Slider from "react-slick";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
@@ -15,7 +15,6 @@ const bookmarkcount = "static/icon/bookmarkcount.svg";
 const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
-import Slider from "react-slick";
 
 var availableFileType = [
   "png",
@@ -49,6 +48,87 @@ class PartnerCard extends React.Component {
     totalPartnerBookmark: "",
     total_review: -1,
   };
+
+  async componentDidMount() {
+    const { width, Search, data, Partner, idx, Auth } = this.props;
+
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const partnerId = data && data.id;
+    await Partner.existCheckedBookmark(clientId, partnerId, idx);
+    await Partner.getTotalBookmarkByPartner(partnerId);
+
+    const existLogo = data && data.logo && data.logo.split("/")[4];
+
+    window.addEventListener("resize", Search.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+
+    const req = {
+      id: data && data.city,
+    };
+
+    const partnerReq = {
+      id: data && data.id,
+    };
+
+    const reviewReq = {
+      params: {
+        partner_id: data && data.id,
+      },
+    };
+
+    const BookmarkReq = {
+      params: {
+        partnerID: data && data.id,
+      },
+    };
+
+    PartnerAPI.getCityName(req)
+      .then(async (res) => {
+        this.setState({ city: res.data.maincategory });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    await PartnerAPI.getTotalReview(reviewReq)
+      .then((res) => {
+        this.setState({ total_review: res.data.score });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
+      .then(async (res) => {
+        this.setState({ totalPartnerBookmark: res.data.count });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    const temp = [];
+    PartnerAPI.getBusinessCategory(partnerReq)
+      .then(async (res) => {
+        res.data.business.forEach((element) => {
+          PartnerAPI.getBusinessName(element).then((res) => {
+            temp.push(res.data.category);
+          });
+        });
+        this.setState({ business: temp });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
+
+  componentWillUnmount() {
+    const { Search } = this.props;
+    window.removeEventListener("resize", Search.updateDimensions);
+  }
 
   openModal = (user_phone) => {
     this.props.Partner.modalActive = true;
@@ -106,108 +186,13 @@ class PartnerCard extends React.Component {
 
     AccountAPI.setUserPageIP(req)
       .then((res) => {
-        //console.log(res);
+        console.log(res);
       })
       .catch((e) => {
-        //console.log(e);
-        //console.log(e.response);
+        console.log(e);
+        console.log(e.response);
       });
   };
-
-  async componentDidMount() {
-    // //console.log(data.id);
-    const { width, Search, data, Partner, idx, Auth } = this.props;
-
-    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data && data.id;
-    await Partner.existCheckedBookmark(clientId, partnerId, idx);
-    await Partner.getTotalBookmarkByPartner(partnerId);
-
-    const existLogo = data && data.logo && data.logo.split("/")[4];
-    //console.log(existLogo);
-
-    window.addEventListener("resize", Search.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-
-    const req = {
-      id: data && data.city,
-    };
-
-    const partnerReq = {
-      id: data && data.id,
-    };
-
-    const reviewReq = {
-      params: {
-        partner_id: data && data.id,
-      },
-    };
-
-    const BookmarkReq = {
-      params: {
-        partnerID: data && data.id,
-      },
-    };
-
-    PartnerAPI.getCityName(req)
-      .then(async (res) => {
-        //console.log(res);
-        this.setState({ city: res.data.maincategory });
-        //console.log(this.state.maincategory);
-      })
-      .catch((e) => {
-        //console.log(e);
-        //console.log(e.response);
-      });
-
-    await PartnerAPI.getTotalReview(reviewReq)
-      .then((res) => {
-        //console.log(res);
-        this.setState({ total_review: res.data.score });
-        //console.log(this.state.total_review);
-      })
-      .catch((e) => {
-        //console.log(e);
-        //console.log(e.response);
-      });
-
-    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then(async (res) => {
-        //console.log(res);
-        //console.log(res.data.count);
-        this.setState({ totalPartnerBookmark: res.data.count });
-        //console.log(this.state.totalPartnerBookmark);
-      })
-      .catch((e) => {
-        //console.log(e);
-        //console.log(e.response);
-      });
-
-    const temp = [];
-    PartnerAPI.getBusinessCategory(partnerReq)
-      .then(async (res) => {
-        //console.log(res);
-        // this.setState({ business: res.data.business });
-        res.data.business.forEach((element) => {
-          //console.log(element);
-          PartnerAPI.getBusinessName(element).then((res) => {
-            //console.log(res);
-            temp.push(res.data.category);
-          });
-        });
-        this.setState({ business: temp });
-        //console.log(toJS(this.state.business));
-      })
-      .catch((e) => {
-        //console.log(e);
-        //console.log(e.response);
-      });
-  }
-
-  componentWillUnmount() {
-    const { Search } = this.props;
-    window.removeEventListener("resize", Search.updateDimensions);
-  }
 
   activeHandler = (type) => {
     switch (type) {
@@ -242,75 +227,60 @@ class PartnerCard extends React.Component {
     }
   };
 
-  filedownload = (urls) => {
-    const { data } = this.props;
+  // filedownload = (urls) => {
+  //   const { data } = this.props;
 
-    if (this.props.Auth && this.props.Auth.logged_in_user) {
-      if (!data.file) {
-        alert("준비중입니다.");
-      }
-      const url = data && data.file;
-      const link = document.createElement("a");
-      link.href = url;
-      link.click();
-    } else {
-      alert("로그인이 필요합니다.");
-      // this.props.Auth.previous_url = "search";
-      Router.push("/login");
-    }
-  };
-  cardClick = async (e) => {
-    e.stopPropagation();
-    const { data, Partner, idx } = this.props;
-    //console.log(idx);
-    Partner.detailLoadingFlag = true;
+  //   if (this.props.Auth && this.props.Auth.logged_in_user) {
+  //     if (!data.file) {
+  //       alert("준비중입니다.");
+  //     }
+  //     const url = data && data.file;
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.click();
+  //   } else {
+  //     alert("로그인이 필요합니다.");
+  //     Router.push("/login");
+  //   }
+  // };
 
-    if (this.props.Auth && this.props.Auth.logged_in_user) {
-      // if (!data.file) {
-      //   Partner.detailLoadingFlag = false;
-      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
-      //   return;
-      // }
-      this.props.Partner.selectedIntroductionFile = data && data.file;
+  // cardClick = async (e) => {
+  //   e.stopPropagation();
+  //   const { data, Partner } = this.props;
+  //   Partner.detailLoadingFlag = true;
 
-      const fileType =
-        data &&
-        data.file.split(".")[data.file.split(".").length - 1].toLowerCase();
-      this.props.Partner.selectedIntroductionFileType = fileType;
+  //   if (this.props.Auth && this.props.Auth.logged_in_user) {
+  //     this.props.Partner.selectedIntroductionFile = data && data.file;
 
-      if (availableFileType.indexOf(fileType) > -1) {
-        //console.log("뷰어 페이지 router push");
-        Partner.partner_detail_list = [];
-        await Partner.partner_detail_list.push({ item: data });
+  //     const fileType =
+  //       data &&
+  //       data.file.split(".")[data.file.split(".").length - 1].toLowerCase();
+  //     this.props.Partner.selectedIntroductionFileType = fileType;
 
-        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        //console.log(toJS(Partner.partner_detail_list));
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id,
-          1,
-          1
-        );
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id
-        );
+  //     if (availableFileType.indexOf(fileType) > -1) {
+  //       Partner.partner_detail_list = [];
+  //       await Partner.partner_detail_list.push({ item: data });
+  //       await Partner.getReviewByPartner(
+  //         Partner.partner_detail_list[0].item.id,
+  //         1,
+  //         1
+  //       );
+  //       await Partner.getReviewByPartner(
+  //         Partner.partner_detail_list[0].item.id
+  //       );
 
-        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Router.push("/search/detail");
-        this.setState({ g: 3 });
-      } else {
-        //console.log("file download");
-        this.filedownload(data.file);
-      }
-    } else {
-      alert("로그인이 필요합니다.");
-      Partner.detailLoadingFlag = false;
-      // Router.back();
-      // this.props.Auth.previous_url = "search";
-      // Router.push("/login");
-      // Router.push("/login");
-      location.href = this.props.Common.makeUrl("login");
-    }
-  };
+  //       await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+  //       Router.push("/search/detail");
+  //       this.setState({ g: 3 });
+  //     } else {
+  //       this.filedownload(data.file);
+  //     }
+  //   } else {
+  //     alert("로그인이 필요합니다.");
+  //     Partner.detailLoadingFlag = false;
+  //     location.href = this.props.Common.makeUrl("login");
+  //   }
+  // };
 
   render() {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
@@ -318,24 +288,8 @@ class PartnerCard extends React.Component {
     const partnerId = data && data.id;
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
-    //console.log(Partner.interestedIdx);
     const existLogo = data && data.logo && data.logo.split("/")[4];
 
-    const SlideSettingsMobile = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 0,
-      draggable: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-    };
-
-    let category_data;
-    //console.log(data.logo);
-    console.log(data);
-    console.log(Partner.matching_image)
     return (
       <>
         {width > 767.98 && data ? (
@@ -354,17 +308,12 @@ class PartnerCard extends React.Component {
                   <Item>
                     {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
                     {Partner.matching_image.length > 0 ? (
-                    <img
-                      src={Partner.matching_image[idx]}
-                    ></img>
-                    )
-                    :
-                    (
-                    <img
-                      src={data && data.portfolio_set[0].img_portfolio}
-                    ></img>
-                    )
-                    }
+                      <img src={Partner.matching_image[idx]}></img>
+                    ) : (
+                      <img
+                        src={data && data.portfolio_set[0].img_portfolio}
+                      ></img>
+                    )}
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>

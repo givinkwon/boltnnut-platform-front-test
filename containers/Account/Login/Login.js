@@ -5,7 +5,7 @@ import * as Title from "../../../components/Title";
 import ButtonComponent from "components/Button";
 import InputComponent from "components/Input";
 import { inject, observer } from "mobx-react";
-import Router from "next/router"
+import Router from "next/router";
 const signupbnlogo = "/static/images/signupbnlogo.svg";
 const line1 = "/static/images/line1.svg";
 const signupkakao = "/static/images/signupkakao.svg";
@@ -226,6 +226,10 @@ const LoginBtn = styled.button`
   border: solid 1px #0933b3;
   background: #0933b3;
   cursor: pointer;
+
+  :hover {
+    background-color: #174aee;
+  }
 `;
 
 const SnsLoginContainer = styled.div`

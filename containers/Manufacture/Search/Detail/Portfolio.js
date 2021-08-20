@@ -122,12 +122,14 @@ class PortfolioConatiner extends React.Component {
               </>
             )}
 
-            {data.portfolio_set && data.portfolio_set.length > 0 && !notLoginUser && (
-              <>
-                <Arrow left onClick={this.sliderPrev} />
-                <Arrow right onClick={this.sliderNext} />
-              </>
-            )}
+            {data.portfolio_set &&
+              data.portfolio_set.length > 0 &&
+              !notLoginUser && (
+                <>
+                  <Arrow left onClick={this.sliderPrev} />
+                  <Arrow right onClick={this.sliderNext} />
+                </>
+              )}
           </Content>
 
           {this.state.modalOpen && (
@@ -163,7 +165,8 @@ class PortfolioConatiner extends React.Component {
           {notLoginUser && <Block />}
 
           <SmallImageContainer>
-            {data.portfolio_set && data.portfolio_set.length != 0 &&
+            {data.portfolio_set &&
+              data.portfolio_set.length != 0 &&
               data.portfolio_set.map((item, idx) => {
                 return (
                   <SmallImageBox>

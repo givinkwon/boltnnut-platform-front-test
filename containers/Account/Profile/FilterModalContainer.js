@@ -31,7 +31,6 @@ class FilterModalContainer extends React.Component {
   async componentDidMount() {
     const { Category } = this.props;
     await Category.init();
-    console.log("ASNCKLANSCLKNLAKSCNLKANSCLKNASLCK");
     var mainCategoryTypeDic = {};
     var subCategoryTypeDic = {};
     mainCategoryTypeDic["business"] = Category.mainbusiness_list;

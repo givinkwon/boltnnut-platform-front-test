@@ -140,7 +140,7 @@ const Header = styled.span`
 `;
 
 const ReviewBox = styled.div`
-  width: 100%;
+  width: 1180px;
   display: flex;
   justify-content: space-between;
   margin-top: 80px;

@@ -64,7 +64,7 @@ class Magazine {
               console.log(e.response);
             });
         }
-        console.log(`magazine length: ${this.magazine_list.length}`);
+        // console.log(`magazine length: ${this.magazine_list.length}`);
         this.magazine_length = this.magazine_list.length;
         this.full_page = parseInt(this.magazine_list.length / 12) + 1;
         this.mobile_full_page = parseInt(this.magazine_list.length / 6) + 1;
@@ -107,7 +107,7 @@ class Magazine {
               console.log(e.response);
             });
         }
-        console.log(`magazine length: ${this.magazine_list.length}`);
+        // console.log(`magazine length: ${this.magazine_list.length}`);
         this.magazine_length = this.magazine_list.length;
         this.full_page = parseInt(this.magazine_list.length / 12) + 1;
         this.mobile_full_page = parseInt(this.magazine_list.length / 6) + 1;
