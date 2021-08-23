@@ -81,6 +81,9 @@ class SubBoxContainer extends React.Component {
                       Partner.clickHandler("project");
                       Request.partner_request(partnerId);
                       Router.push("/request");
+                      // path 설정
+                      Request.path = 3;
+                      
                       // this.setState({ g: 3 });
                     }}
                   >

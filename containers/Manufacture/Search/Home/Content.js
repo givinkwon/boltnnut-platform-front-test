@@ -125,7 +125,10 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   resultBannerHandler = () => {
-    const { Partner } = this.props;
+    const { Partner, Request } = this.props;
+    // path 설정
+    Request.path = 2;
+    
     if (Partner.result_banner) {
       Partner.result_banner = false;
     }

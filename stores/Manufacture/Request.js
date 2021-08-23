@@ -43,6 +43,8 @@ class Request {
 
   @observable loadingFlag = false; //의뢰 요청하기 버튼 클릭 후 로딩
 
+  @observable path = 1; // 이전 방문 경로 => Nav 의뢰하기 1, 제조사 찾기 배너 의뢰하기 2, 파트너를 통해 의뢰하면 3
+
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
     this.selected_partner = val;
@@ -249,6 +251,9 @@ class Request {
     for (var i = 0; i < this.request_drawing_set.length; i++) {
       formData.append(`blueprint`, this.request_file_set[i]);
     }
+    
+    // 방문 경로 추가
+    formData.append("path", this.path);
 
     // 비로그인 시
     // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
