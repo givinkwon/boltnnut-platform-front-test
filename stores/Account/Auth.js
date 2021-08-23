@@ -74,6 +74,8 @@ class Auth {
   @observable registerType = "";
   @observable registerPageIdx = 0;
 
+  // stepper를 위한 state
+  @observable pageState = 0;
   // SNS 이메일 저장
   @observable SNSemail = null;
 
