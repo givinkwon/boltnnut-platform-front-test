@@ -1000,7 +1000,6 @@ class Partner {
     if (Auth.logged_in_user !== null) {
       formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
     }
-    console.log("확인하자!!!!!!!!!!!!!!!!!!!", Auth.logged_in_user);
 
     formData.append("text", text); // 입력 텍스트
     formData.append("count", this.partner_count); // 파트너 개수
