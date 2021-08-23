@@ -99,11 +99,21 @@ class ProcessContainer extends Component {
 
 export default ProcessContainer;
 
+
 const CheckItem = styled.label`
   width: 33%;
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 24px;
+  > input {
+    width: 18px;
+    height: 18px;
+  }
+  @media (min-width: 1200px) {
+    width: 186px;
+  }
+
 `;
 const CheckItemBox = styled.div`
   width: 95%;

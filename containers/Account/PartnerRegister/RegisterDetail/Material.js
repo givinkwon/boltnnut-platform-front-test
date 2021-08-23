@@ -70,7 +70,7 @@ class MaterialContainer extends Component {
                             wholeList={item.material_set}
                           />
                         </CheckItem>
-                        <CheckItem></CheckItem>
+
                         <CheckItem></CheckItem>
                         {item.material_set.map((subItem, subIdx) => {
                           return (
@@ -99,11 +99,21 @@ class MaterialContainer extends Component {
 
 export default MaterialContainer;
 
+
 const CheckItem = styled.label`
   width: 33%;
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 24px;
+  > input {
+    width: 18px;
+    height: 18px;
+  }
+  @media (min-width: 1200px) {
+    width: 45%;
+  }
+
 `;
 const CheckItemBox = styled.div`
   width: 95%;

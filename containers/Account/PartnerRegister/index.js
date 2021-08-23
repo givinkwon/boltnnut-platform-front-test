@@ -11,8 +11,10 @@ import Button from "containers/Account/PartnerRegister/Button";
 @observer
 class PartnerRegisterContainer extends React.Component {
   componentDidMount() {
-    this.props.Category.init();
-    this.props.Category.isChecked("main");
+    const { Category } = this.props;
+    Category.reset();
+    Category.init();
+    Category.isChecked("main");
   }
   render() {
     const { Auth, Category } = this.props;
@@ -67,7 +69,10 @@ class PartnerRegisterContainer extends React.Component {
               다음 단계
             </Button>
           ) : (
-            <DisabledButton>다음 단계</DisabledButton>
+            <DisabledButton
+
+            >
+              다음 단계</DisabledButton>
           )}
         </Containerv1>
       </Background>

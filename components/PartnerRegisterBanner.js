@@ -8,7 +8,7 @@ class PartnerRegisterBanner extends React.Component {
   render() {
     return (
       <ItemBox>
-        <img src={signupDotImg} />
+        <img style={{ marginBottom : '20px' }} src={signupDotImg} />
         <Font32>
           <span>추가정보를 입력</span>해주세요.
         </Font32>
@@ -25,7 +25,7 @@ export default PartnerRegisterBanner;
 
 const ItemBox = styled.div`
   margin-top: 80px;
-  margin-bottom: 70px;
+  margin-bottom: 61px;
 `;
 
 const Font32 = styled(Content.FontSize32)`
@@ -51,3 +51,4 @@ const Font19 = styled(Content.FontSize19)`
   text-align: center;
   color: #000;
 `;
+

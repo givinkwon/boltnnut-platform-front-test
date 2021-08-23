@@ -12,16 +12,20 @@ import CategoryContainer from "./Category";
 import ProcessContainer from "./Process";
 import MaterialContainer from "./Material";
 import AboutUsContainer from "./AboutUs";
+import CompleteContainer from "./Complete";
 
 import Stepper from "react-stepper-enhanced";
 import Auth from "stores/Account/Auth";
 const perfection = "/static/icon/camera.png";
 
-const pageNameArr = ["Category", "Process", "Material", "Aboutus"];
+const pageNameArr = ["Category", "Process", "Material", "Aboutus","Complete"];
+// error 변수
+let error = 0
 @inject("Auth", "Category")
 @observer
 class RegisterDetailContainer extends React.Component {
   
+
   // pageState 설정하기
   set_page_state = (pageName) => {
     if(pageName === "Aboutus"){ 
@@ -38,18 +42,28 @@ class RegisterDetailContainer extends React.Component {
 
   }
 
+  // 미선택 시 스크롤 올리고 에러 표시 
+  ScrollTop = () => {
+    const { Auth } = this.props;
+    Auth.error_register = 1
+    window.scrollTo(0, 0)
+
+  }
+
+
   render() {
     const { Auth, Category } = this.props;
 
-    const { pageName } = this.props;
+    const { pageName, error } = this.props;
 
     
     return (
+      <>
+      {pageName === "Complete" ? (<CompleteContainer/>) : (
       <Background>
         <Containerv1
           style={{
             width: "792px",
-            marginTop: 10,
             justifyContent: "center",
             textAlign: "center",
           }}
@@ -63,40 +77,42 @@ class RegisterDetailContainer extends React.Component {
             }}
           >
             <PartnerRegisterBanner />
+            <div style={{width: '420px'}}>
+              <Stepper 
 
-            <Stepper              
-              activeColor={"#edf4fe"}
-              defaultColor={"#f6f6f6"}
-              completeColor={"#edf4fe"}
+                activeColor={"#edf4fe"}
+                defaultColor={"#f6f6f6"}
+                completeColor={"#edf4fe"}
 
-              // 글씨 삭제
-              circleFontSize={"0px"}
-              
-              // 테두리 색
-              defaultBorderColor={"#e1e2e4"}
-              defaultBorderStyle={"solid"}
-              activeBorderColor={"#0933b3"}
-              activeBorderStyle={"solid"}
-              completeBorderColor={"#0933b3"}
-              completeBorderStyle={"solid"}
-              
+                // 글씨 삭제
+                circleFontSize={"0px"}
+                
+                // 테두리 색
+                defaultBorderColor={"#e1e2e4"}
+                defaultBorderStyle={"solid"}
+                activeBorderColor={"#0933b3"}
+                activeBorderStyle={"solid"}
+                completeBorderColor={"#0933b3"}
+                completeBorderStyle={"solid"}
+                
 
-              // bar 색
-              defaultBarColor={"#e1e2e4"}
-              completeBarColor={"#e1e2e4"}
-              activeStep={Auth.pageState}
-              
-              steps={[
-                { title: "카테고리"},
-                { title: "소재"},
-                { title: "회사소개"},
-              ]}
-            />
-           
+                // bar 색
+                defaultBarColor={"#e1e2e4"}
+                completeBarColor={"#e1e2e4"}
+                activeStep={Auth.pageState}
+                
+                steps={[
+                  { title: "카테고리"},
+                  { title: "소재"},
+                  { title: "회사소개"},
+                ]}
+              />
+            </div>
             {pageName === "Category" && <CategoryContainer />}
             {pageName === "Process" && <ProcessContainer />}
             {pageName === "Material" && <MaterialContainer />}
             {pageName === "Aboutus" && <AboutUsContainer />}
+
             <div style={{ display: "flex", justifyContent: "center" }}>
               <ButtonBox width={"400px"} style={{ marginTop: 70 }}>
                 <Button
@@ -127,15 +143,14 @@ class RegisterDetailContainer extends React.Component {
                     onClick={async () => {
                       await Auth.checkLogin();
                       console.log(Auth.logged_in_partner);
-                      if (Auth.registerPageIdx < 3) {
-                        Auth.registerType === "product" &&
-                        Auth.registerPageIdx === 0
+                      console.log(Auth.registerPageIdx)
+
+                      if (Auth.registerPageIdx <= 3) {
+                        Auth.registerType === "product" && Auth.registerPageIdx === 0
                           ? (Auth.registerPageIdx += 2)
                           : (Auth.registerPageIdx += 1);
-                        Category.save_selected(
-                          pageName,
-                          Auth.logged_in_partner.id
-                        );
+                        await Category.save_selected(pageName, Auth.logged_in_partner.id)
+                      
                         // 라우팅
                         Router.push(
                           "/partnerregister/[pagename]",
@@ -152,13 +167,19 @@ class RegisterDetailContainer extends React.Component {
                     다음 단계
                   </Button>
                 ) : (
-                  <DisabledButton>다음 단계</DisabledButton>
+                  <DisabledButton
+                  onClick={() => this.ScrollTop()}
+                  >
+                    다음 단계</DisabledButton>
                 )}
               </ButtonBox>
             </div>
           </div>
         </Containerv1>
       </Background>
+      )
+                }
+                </>
     );
   }
 }

@@ -79,6 +79,9 @@ class Auth {
   // SNS 이메일 저장
   @observable SNSemail = null;
 
+  // register error state => 1일 때 error
+  @observable error_register = 0;
+
   @action reset = () => {
     this.email = "";
     this.password = "";
