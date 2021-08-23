@@ -14,25 +14,36 @@ import MaterialContainer from "./Material";
 import AboutUsContainer from "./AboutUs";
 
 import Stepper from "react-stepper-enhanced";
+import Auth from "stores/Account/Auth";
 const perfection = "/static/icon/camera.png";
+
 const pageNameArr = ["Category", "Process", "Material", "Aboutus"];
 @inject("Auth", "Category")
 @observer
 class RegisterDetailContainer extends React.Component {
+  
+  // pageState 설정하기
+  set_page_state = (pageName) => {
+    if(pageName === "Aboutus"){ 
+      Auth.pageState = 2 
+      console.log(pageName)
+      console.log(Auth.pageState)
+    } 
+
+    if(pageName === "Material"){
+      Auth.pageState = 1
+      console.log(pageName)
+      console.log(Auth.pageState)
+    }
+
+  }
+
   render() {
     const { Auth, Category } = this.props;
 
     const { pageName } = this.props;
-    const step1Content = <h1>Step 1 Content</h1>;
-    const step2Content = <h1>Step 2 Content</h1>;
-    const step3Content = <h1>Step 3 Content</h1>;
-    function step2Validator() {
-      // return a boolean
-    }
 
-    function step3Validator() {
-      // return a boolean
-    }
+    
     return (
       <Background>
         <Containerv1
@@ -52,42 +63,36 @@ class RegisterDetailContainer extends React.Component {
             }}
           >
             <PartnerRegisterBanner />
-            <div>카테고리 {true && <>- 공정</>} - 소재 - 회사소개</div>
-            <Stepper
-              // activeBorderColor={"solid 10px blue"}
-              // activeColor={"red"}
-              steps={[
-                { title: "Step One", icon: perfection },
-                { title: "Step Two" },
-                { title: "Step Three" },
-                { title: "Step Four" },
-              ]}
-              // activeStep={1}
 
-              // barStyle={"dashed"}
-            />
-            {/* <StepProgressBar
-              startingStep={0}
+            <Stepper              
+              activeColor={"#edf4fe"}
+              defaultColor={"#f6f6f6"}
+              completeColor={"#edf4fe"}
+
+              // 글씨 삭제
+              circleFontSize={"0px"}
+              
+              // 테두리 색
+              defaultBorderColor={"#e1e2e4"}
+              defaultBorderStyle={"solid"}
+              activeBorderColor={"#0933b3"}
+              activeBorderStyle={"solid"}
+              completeBorderColor={"#0933b3"}
+              completeBorderStyle={"solid"}
+              
+
+              // bar 색
+              defaultBarColor={"#e1e2e4"}
+              completeBarColor={"#e1e2e4"}
+              activeStep={Auth.pageState}
+              
               steps={[
-                {
-                  label: "Step 1",
-                  name: "step 1",
-                  content: step1Content,
-                },
-                {
-                  label: "Step 2",
-                  name: "step 2",
-                  content: step2Content,
-                  validator: step2Validator,
-                },
-                {
-                  label: "Step 3",
-                  name: "step 3",
-                  content: step3Content,
-                  validator: step3Validator,
-                },
+                { title: "카테고리"},
+                { title: "소재"},
+                { title: "회사소개"},
               ]}
-            /> */}
+            />
+           
             {pageName === "Category" && <CategoryContainer />}
             {pageName === "Process" && <ProcessContainer />}
             {pageName === "Material" && <MaterialContainer />}
@@ -103,6 +108,8 @@ class RegisterDetailContainer extends React.Component {
                         ? (Auth.registerPageIdx -= 2)
                         : (Auth.registerPageIdx -= 1);
 
+                      // stepper 설정을 위한 함수
+                      this.set_page_state(pageName)
                       Router.push(
                         "/partnerregister/[pagename]",
                         `/partnerregister/${pageNameArr[Auth.registerPageIdx]}`
@@ -129,16 +136,16 @@ class RegisterDetailContainer extends React.Component {
                           pageName,
                           Auth.logged_in_partner.id
                         );
-                        // switch (pageName) {
-                        //   case "Category":
-                        //     break;
-                        // }
+                        // 라우팅
                         Router.push(
                           "/partnerregister/[pagename]",
                           `/partnerregister/${
                             pageNameArr[Auth.registerPageIdx]
                           }`
                         );
+                        // stepper 설정을 위한 함수
+                        this.set_page_state(pageNameArr[Auth.registerPageIdx])
+
                       }
                     }}
                   >
