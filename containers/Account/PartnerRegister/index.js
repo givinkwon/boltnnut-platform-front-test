@@ -67,7 +67,10 @@ class PartnerRegisterContainer extends React.Component {
               다음 단계
             </Button>
           ) : (
-            <DisabledButton>다음 단계</DisabledButton>
+            <DisabledButton
+
+            >
+              다음 단계</DisabledButton>
           )}
         </Containerv1>
       </Background>

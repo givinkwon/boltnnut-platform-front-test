@@ -11,16 +11,30 @@ const topCategoryOuterStyles = {
   marginBottom: 20,
 };
 
+const outerStylesFirst = {
+  borderRadius: "5px",
+  border: "2px solid #e1e2e4",
+  marginBottom: 70,
+  marginTop: 100,
+};
+
 const outerStyles = {
   borderRadius: "5px",
-  border: "1px solid #e1e2e4",
+  border: "2px solid #e1e2e4",
   marginBottom: 20,
+};
+
+const outerStyles_error = {
+  borderRadius: "5px",
+  border: "2px solid #e53c38",
+  marginBottom: 70,
+  marginTop: 100,
 };
 
 const innerStyles = {
   padding: "40px 78px",
 };
-@inject("Category")
+@inject("Category", "Auth")
 @observer
 class CategoryContainer extends Component {
   componentDidMount() {
@@ -34,7 +48,8 @@ class CategoryContainer extends Component {
     this.props.Category.isChecked("category");
   }
   render() {
-    const { Category } = this.props;
+    const { Category, Auth } = this.props;
+    console.log(Auth.error_register)
     return (
       <>
         {Category.RegisterTypeArray.map((item, idx) => {
@@ -42,7 +57,7 @@ class CategoryContainer extends Component {
             <>
               {item.checked && (
                 <InnerBox
-                  outerStyles={outerStyles}
+                  outerStyles={Auth && Auth.error_register ? outerStyles_error : outerStylesFirst}
                   innerStyles={innerStyles}
                   Content={() => {
                     return (
@@ -55,6 +70,12 @@ class CategoryContainer extends Component {
                                 {Category.mainbusiness_list &&
                                   Category.mainbusiness_list[item.id]
                                     .maincategory}
+                                     &nbsp;
+                                     
+                                <b style={{                             
+                                    fontWeight: "bold",
+                                    color: "#E53C38",
+                                }}>(필수)</b>
                               </Font18>
                             </HeaderText>
 
@@ -70,6 +91,7 @@ class CategoryContainer extends Component {
                                     Category.mainbusiness_list[item.id]
                                       .business_set
                                   }
+
                                 />
                               </CheckItem>
                               <CheckItem></CheckItem>
@@ -163,11 +185,21 @@ class CategoryContainer extends Component {
 
 export default CategoryContainer;
 
+
 const CheckItem = styled.label`
   width: 33%;
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 24px;
+  > input {
+    width: 18px;
+    height: 18px;
+  }
+  @media (min-width: 1200px) {
+    width: 186px;
+  }
+
 `;
 const CheckItemBox = styled.div`
   width: 95%;
@@ -191,7 +223,8 @@ const HeaderText = styled.div`
   width: 100%;
   display: flex;
   border-bottom: 1px solid #e1e2e4;
-  padding-bottom: 17px;
+  padding-bottom: 16px;
+  margin-bottom: 27px;
 `;
 const Font18 = styled(Content.FontSize18)`
   font-weight: bold;
