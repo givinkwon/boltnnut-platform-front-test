@@ -125,15 +125,6 @@ class DetailCardContainer extends React.Component {
       portfolioPosY += portfolioObject.offsetParent.offsetTop;
     }
 
-    // if (Partner.partner_detail_list[0].item.file !== null) {
-    //   let introductionObject = document.getElementById("introduction");
-
-    //   let introductionPosY = introductionObject.offsetTop;
-    //   if (introductionObject.offsetParent) {
-    //     introductionPosY += introductionObject.offsetParent.offsetTop;
-    //   }
-    // }
-
     let reviewObject = document.getElementById("review");
 
     let reviewPosY = reviewObject.offsetTop;
@@ -152,19 +143,12 @@ class DetailCardContainer extends React.Component {
       const { Partner } = this.props;
       if (Partner.partner_detail_list[0].item.file !== null) {
         return {
-          // portfoliLocation: document
-          //   .getElementById("portfolio")
-          //   .getBoundingClientRect().top,
           portfoliLocation: portfolioPosY,
-          // introductionLocation: introductionPosY,
           reviewLocation: reviewPosY,
           mapLocation: mapsPosY,
         };
       } else {
         return {
-          // portfoliLocation: document
-          //   .getElementById("portfolio")
-          //   .getBoundingClientRect().top,
           portfoliLocation: portfolioPosY,
           reviewLocation: reviewPosY,
           mapLocation: mapsPosY,
@@ -182,32 +166,26 @@ class DetailCardContainer extends React.Component {
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
 
-    console.log(Partner.reviewWritingModalActive);
-
     // 지역 가지고 오기
-    //console.log(toJS(Partner.partner_detail_list[0].item.city))
     Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city));
 
     // 비즈니스 가지고 오기
-
-    console.log(toJS(Partner.partner_detail_list[0].item.business));
-    if(Partner.partner_detail_list[0].item.business != undefined){
-    toJS(Partner.partner_detail_list[0].item.business).map(
-      async (item) => await Partner.getBusinessName(item)
-    );
+    if (Partner.partner_detail_list[0].item.business != undefined) {
+      toJS(Partner.partner_detail_list[0].item.business).map(
+        async (item) => await Partner.getBusinessName(item)
+      );
     }
-    console.log(toJS(Partner.business_name));
 
     await this.countTotalPoint();
     this.setState((state) => {
       return { g: state.g + 1 };
     });
   };
+
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
     Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
     Partner.review_partner_page = 0;
-    // loadingCounter = 0;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -217,6 +195,7 @@ class DetailCardContainer extends React.Component {
 
   countTotalPoint = async () => {
     const { Partner } = this.props;
+
     /* 리뷰를 위한 변수 및 연산 */
     let total_consult_score = 0;
     let total_kindness_score = 0;
@@ -360,13 +339,6 @@ class DetailCardContainer extends React.Component {
     console.log(Partner.modalActive);
 
     if (!Partner.requestModalActive && !Partner.modalActive) {
-      console.log("Detail click");
-      // if (!item.file) {
-      //   Partner.detailLoadingFlag = false;
-      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
-      //   return;
-      // }
-
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
       await Partner.partner_detail_list.push({ item: item, idx: idx });
@@ -380,10 +352,7 @@ class DetailCardContainer extends React.Component {
         .split(".")
         [item.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
-      // this.props.Partner.viewerLoading
 
-      // this.reload();
-      // myStorage = window.localStorage;
       console.log(this.props.Partner.partner_detail_list[0].item.id);
 
       Partner.partnerReviewList = [];
@@ -402,7 +371,6 @@ class DetailCardContainer extends React.Component {
         1
       );
 
-      console.log("222222");
       await this.props.Partner.getReviewByPartner(
         this.props.Partner.partner_detail_list[0].item.id
       );
@@ -417,8 +385,6 @@ class DetailCardContainer extends React.Component {
 
       console.log(item.file);
       console.log(JSON.parse(localStorage.getItem("recent")));
-
-      // Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
 
       localStorage.setItem("recent", JSON.stringify(Partner.recentPartnerList));
 
@@ -436,13 +402,10 @@ class DetailCardContainer extends React.Component {
   reload() {
     (location || window.location || document.location).reload();
   }
+
   render() {
     const { width, Partner, Auth, Common } = this.props;
 
-    // if (!Partner.partner_detail_list[0].item) {
-    //   console.log("nonono");
-    //   location.href = Common.makeUrl("search");
-    // }
     region = "";
     if (Partner.partner_detail_list[0].item) {
       region =
@@ -504,7 +467,6 @@ class DetailCardContainer extends React.Component {
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
-    // let arr = [1, 2, 3, 4, 5]
     Partner.shuffleArray(arr);
 
     let remainderAry = arr.filter((el) => el !== index);
@@ -524,17 +486,6 @@ class DetailCardContainer extends React.Component {
     this.setState((state) => {
       return { loading: state.loading + 1 };
     });
-
-    const SlideSettings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      draggable: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-    };
 
     console.log(toJS(Partner.questionList));
     console.log(Partner.partner_detail_list[0].item.region);
@@ -612,20 +563,7 @@ class DetailCardContainer extends React.Component {
                     style={{ marginBottom: "162px" }}
                   >
                     <Font24 id="portfolio">포토폴리오</Font24>
-                    {/* <SliderContainer {...SlideSettings}>
-                      {Partner.partner_detail_list &&
-                        Partner.partner_detail_list[0].item.portfolio_set
-                          .length > 0 &&
-                        Partner.partner_detail_list[0].item.portfolio_set.map(
-                          (item, idx) => {
-                            return (
-                              <Item>
-                                <img src={item.img_portfolio} />
-                              </Item>
-                            );
-                          }
-                        )}
-                    </SliderContainer> */}
+
                     <PortfolioConatiner
                       data={Partner.partner_detail_list[0].item}
                       width={width}
@@ -633,7 +571,7 @@ class DetailCardContainer extends React.Component {
                   </IntroductionBox>
                   {Partner.partner_detail_list[0].item.file !== null ? (
                     <IntroductionBox width={width}>
-                     <div></div>
+                      <div></div>
                     </IntroductionBox>
                   ) : (
                     <></>
@@ -672,10 +610,7 @@ class DetailCardContainer extends React.Component {
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
                   <SummaryBox
                     login={notLoginUser}
-                    active={
-                      !Partner.reviewWritingModalActive &&
-                      !Auth.logged_in_partner
-                    }
+                    active={!Auth.logged_in_partner}
                   >
                     {/* <label>클라이언트 평균 만족도</label> */}
                     <header>
@@ -838,55 +773,49 @@ class DetailCardContainer extends React.Component {
                         );
                       })}
                   </content>
+
                   {!Auth.logged_in_client && !Auth.logged_in_partner && (
                     <BlackBox
                       content="이 제조사의 리뷰를 보고싶다면?"
                       width={width}
                     />
                   )}
-                  {Auth.logged_in_client &&
-                    (!Partner.reviewWritingModalActive ? (
+
+                  {!Auth.logged_in_client ? (
+                    <Layer>
+                      <span>
+                        <Modal
+                          width={width}
+                          open={!Partner.reviewWritingModalActive}
+                          close={this.closeModal}
+                          purpose="FirstReview"
+                          headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? 첫 평가를 작성해주세요"
+                          headerTwo=""
+                          bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                          bodyTwo="업체 평가 작성이 가능합니다."
+                        />
+                      </span>
+                    </Layer>
+                  ) : (
+                    Partner.review_partner_page === 0 &&
+                    Partner.partnerReviewList.length === 0 && (
                       <Layer>
                         <span>
                           <Modal
                             width={width}
-                            open={!Partner.reviewWritingModalActive}
+                            open={!Partner.partnerReviewList.length}
                             close={this.closeModal}
-                            purpose="FirstReview"
-                            headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? 첫 평가를 작성해주세요"
-                            headerTwo=""
+                            purpose="NoReview"
+                            headerOne="현재 작성 된 리뷰가 없습니다"
+                            headerTwo="첫 평가를 작성해주세요"
                             bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
                             bodyTwo="업체 평가 작성이 가능합니다."
                           />
                         </span>
                       </Layer>
-                    ) : (
-                      Partner.review_partner_page === 0 &&
-                      Partner.partnerReviewList.length === 0 && (
-                        <Layer>
-                          <span>
-                            <Modal
-                              width={width}
-                              open={!Partner.partnerReviewList.length}
-                              close={this.closeModal}
-                              purpose="NoReview"
-                              headerOne="현재 작성 된 리뷰가 없습니다"
-                              headerTwo="첫 평가를 작성해주세요"
-                              bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
-                              bodyTwo="업체 평가 작성이 가능합니다."
-                            />
-                          </span>
-                        </Layer>
-                      )
-                    ))}
-                  {console.log("1111111111111")}
-                  {console.log(Auth.logged_in_partner !== null)}
-                  {console.log(Partner.reviewWritingModalActive)}
-                  {console.log(
-                    Partner.reviewWritingModalActive ||
-                      Auth.logged_in_partner !== null
+                    )
                   )}
-                  {console.log(notLoginUser)}
+
                   <PageBar
                     login={
                       notLoginUser ||
@@ -910,7 +839,6 @@ class DetailCardContainer extends React.Component {
                           "none",
                       }}
                       onClick={() => {
-                        console.log("lll");
                         this.pagePrev();
                       }}
                     />
@@ -1015,7 +943,7 @@ class DetailCardContainer extends React.Component {
 
                 {console.log(toJS(Partner.questionList))}
                 <QuestionBox>
-                  <Font24>업체 Q&A</Font24>
+                  <Font24>Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
                   {Partner.mergeQuestionList &&
                     Partner.mergeQuestionList.map((item, idx) => {
@@ -1032,41 +960,6 @@ class DetailCardContainer extends React.Component {
                         />
                       );
                     })}
-                  {/* {Partner.questionList &&
-              Partner.questionList.map((item, idx) => {
-                return (
-                  <>
-                    {console.log("PARENTPARENTPARENTPARENTPARENTPARENT")}
-                    <QuestionContainer
-                      data={item}
-                      width={this.props.width}
-                      idx={idx}
-                      clientId={clientId}
-                      partnerId={partnerId}
-                      parentType="comment"
-                      setQA={this.setQA}
-                    />
-                    {item.reply &&
-                      item.reply.map((subItem, subIdx) => (
-                        <>
-                          {console.log("SUBSUBSUBSUBSUBSUBSUBSUB")}
-                          <QuestionContainer
-                            subData={subItem}
-                            width={this.props.width}
-                            idx={subIdx}
-                            clientId={clientId}
-                            partnerId={partnerId}
-                            parentType="recomment"
-                            setQA={this.setQA}
-                          />
-                        </>
-                      ))}
-                  </>
-                );
-
-                {
-                  item.reply && console.log(item.reply);
-                } */}
 
                   <PageBar active={true} type="QnA">
                     <img
@@ -1086,9 +979,7 @@ class DetailCardContainer extends React.Component {
                         this.pagePrev(e);
                       }}
                     />
-                    {console.log(Partner.questionPage)}
-                    {console.log(QuestionCurrentSet)}
-                    {console.log(Partner.questionList.length)}
+
                     <PageCount
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -1210,13 +1101,9 @@ class DetailCardContainer extends React.Component {
                 </QuestionBox>
               </Card>
 
-
               {!Auth.logged_in_partner && (
                 <SubCard>
-                  <SubBox 
-                    partnerId={Partner.partner_detail_list[0].item.id}
-                  />
-
+                  <SubBox partnerId={Partner.partner_detail_list[0].item.id} />
                 </SubCard>
               )}
             </div>
@@ -1262,19 +1149,14 @@ class DetailCardContainer extends React.Component {
                             return (
                               <div
                                 onClick={(e) => {
-                                  // e.stopPropagation();
                                   this.props.Partner.viewerLoading = 0;
-                                  // this.props.Partner.subViewerLoading = 1;
                                   this.props.Partner.recentPartnerId =
                                     this.props.Partner.partner_detail_list[0].item.id;
-                                  console.log(
-                                    this.props.Partner.subViewerLoading
-                                  );
+
                                   this.pushToDetail(
                                     Partner.partner_list[item],
                                     item
                                   );
-                                  console.log("click");
                                 }}
                                 style={{ width: "100%", marginRight: "24px" }}
                               >
@@ -1297,12 +1179,8 @@ class DetailCardContainer extends React.Component {
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   this.props.Partner.viewerLoading = 0;
-                                  // this.props.Partner.subViewerLoading = 1;
                                   this.props.Partner.recentPartnerId =
                                     this.props.Partner.partner_detail_list[0].item.id;
-                                  console.log(
-                                    this.props.Partner.subViewerLoading
-                                  );
                                   this.pushToDetail(
                                     Partner.partner_list[item],
                                     item
@@ -1325,30 +1203,6 @@ class DetailCardContainer extends React.Component {
                           }))}
                   </div>
                 </Background>
-                {/* {Partner.partner_list &&
-                  Partner.partner_list.slice(1,4).map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();                            
-                            this.pushToDetail(item, idx)
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                            
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })} */}
               </SimilarBox>
             </Containerv1>
           </Background>
@@ -1365,16 +1219,11 @@ const CustomSlider = withStyles({
     color: "#0933b3",
     height: "7px !important",
     width: "60%",
-    // cursor: "default",
-    // background: "red",
     padding: 0,
     display: "none",
     marginRight: "10px",
   },
   thumb: {
-    // top: -10,
-    // paddingRight: 20,
-    // content: "apapap"
     display: "none",
   },
   track: {
@@ -1438,7 +1287,6 @@ const Card = styled.div`
   margin-top: 50px;
   width: ${(props) => (props.partner ? "100%" : "70%")};
   border-radius: 10px;
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
 
@@ -1469,7 +1317,8 @@ const HeaderBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 146px;
-  >tag {
+
+  > tag {
     width: 118px;
     height: 40px;
     border-radius: 3px;
@@ -1478,7 +1327,8 @@ const HeaderBox = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 34px;
-    >span {
+
+    > span {
       color: #ffffff;
       font-size: 18px;
       line-height: 30px;
@@ -1486,15 +1336,15 @@ const HeaderBox = styled.div`
       font-weight: 500;
     }
   }
-  >name {
+
+  > name {
     font-size: 26px;
     line-height: 52px;
-    letter-spacinig: -0.65px;
     color: #282c36;
     font-weight: bold;
-    // margin-bottom: 34px;
   }
-  >content {
+
+  > content {
     span {
       font-size: 18px;
       line-height: 34px;
@@ -1508,7 +1358,7 @@ const HeaderBox = styled.div`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-bottom: 32px;
-    >tag {
+    > tag {
       width: 68px;
       height: 26px;
       margin-bottom: 14px;
@@ -1517,17 +1367,18 @@ const HeaderBox = styled.div`
         letter-spacing: -0.12px;
       }
     }
-    >name {
+    > name {
       font-size: 16px;
       line-height: 15px;
-      letter-spacinig: -0.4px;
       margin-bottom: 24px;
     }
-    >content {
+
+    > content {
       border: 1px solid #c6c7cc;
       border-radius: 5px;
       padding: 24px 16px;
       box-sizing: border-box;
+
       span {
         font-size: 14px;
         line-height: 26px;
@@ -1536,24 +1387,26 @@ const HeaderBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-bottom: 96px;
 
-    margin-bottom:96px;
-    >tag {
+    > tag {
       width: 88px;
       height: 32px;
       margin-bottom: 20px;
+
       span {
         font-size: 14px;
         letter-spacing: -0.12px;
       }
     }
-    >name {
+
+    > name {
       font-size: 20px;
       line-height: 15px;
-      letter-spacinig: -0.4px;
       margin-bottom: 20px;
     }
-    >content {
+
+    > content {
       span {
         font-size: 16px;
         line-height: 26px;
@@ -1562,10 +1415,10 @@ const HeaderBox = styled.div`
     }
   }
 
-  }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-bottom: 144px;
-    >tag {
+
+    > tag {
       width: 104px;
       height: 36px;
       margin-bottom: 28px;
@@ -1574,13 +1427,14 @@ const HeaderBox = styled.div`
         letter-spacing: -0.12px;
       }
     }
-    >name {
+
+    > name {
       font-size: 23px;
       line-height: 15px;
-      letter-spacinig: -0.4px;
       margin-bottom: 24px;
     }
-    >content {
+
+    > content {
       span {
         font-size: 17px;
         line-height: 26px;
@@ -1588,20 +1442,13 @@ const HeaderBox = styled.div`
       }
     }
   }
-
 `;
-
-// const HeaderItem = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   margin-bottom: 34px;
-// `;
 
 const ReviewBox = styled.div`
   position: relative;
-  // height: 500px;
   margin-top: 109px;
   user-select: none;
+
   label {
     font-size: 24px;
     line-height: 40px;
@@ -1609,6 +1456,7 @@ const ReviewBox = styled.div`
     color: #282c36;
     font-weight: bold;
   }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 20px;
   }
@@ -1625,14 +1473,11 @@ const Layer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 99;
-  // opacity: 0.1;
-  // background-color: rgba(0, 0, 0, 0.5);
 
   > span {
     display: flex;
     justify-content: center;
     align-items: center;
-    // height: 100vh;
   }
 `;
 
@@ -1649,103 +1494,7 @@ const InnerBox = styled.div`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     padding: 44px 0;
   }
-  @media (min-width: 1300px) {
-  }
 `;
-
-const DetailInfoBox = styled.div`
-  background-color: #f6f6f6;
-  padding: 41px 69px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-  div {
-    display: flex;
-    margin-bottom: 40px;
-    width: 100%;
-    label {
-      width: 25%;
-      span {
-        font-size: 18px;
-        line-height: 27px;
-        letter-spacing: -0.45px;
-        color: #191919;
-        font-weight: bold;
-      }
-    }
-    content {
-      width: 90%;
-      font-size: 18px;
-      line-height: 27px;
-      letter-spacing: -0.45px;
-      word-break: keep-all;
-    }
-  }
-  div:last-child {
-    margin-bottom: 0px;
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 16px 8px;
-
-    div {
-      display: block;
-      margin-bottom: 40px;
-      label {
-        width: 100%;
-        display: block;
-        span {
-          font-size: 14px;
-          line-height: 20px;
-          letter-spacing: -0.45px;
-        }
-      }
-      content {
-        font-size: 12px;
-        line-height: 20px;
-        letter-spacing: -0.45px;
-      }
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 24px 16px;
-    div {
-      margin-bottom: 40px;
-      label {
-        span {
-          font-size: 16px;
-          line-height: 27px;
-          letter-spacing: -0.45px;
-        }
-      }
-      content {
-        font-size: 14px;
-        line-height: 27px;
-      }
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 31px 31px;
-    div {
-      margin-bottom: 40px;
-      label {
-        span {
-          font-size: 17px;
-          line-height: 27px;
-          letter-spacing: -0.45px;
-        }
-      }
-      content {
-        font-size: 16px;
-        line-height: 27px;
-      }
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
-const FileViewerContainer = styled(FileViewer)``;
 
 const PageBar = styled.div`
   width: 351px;
@@ -1756,8 +1505,7 @@ const PageBar = styled.div`
   text-align: center;
   display: ${(props) => (props.login ? "none" : "flex")};
   justify-content: space-between;
-  filter: ${(props) => (props.acitve ? "blur(9px)" : "none")};
-  
+  /* filter: ${(props) => (props.acitve ? "blur(9px)" : "none")}; */
 
   img {
     align-self: center;
@@ -1773,7 +1521,6 @@ const PageBar = styled.div`
     }
   }
 
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 251px;
     margin-top: 69px;
@@ -1788,24 +1535,17 @@ const PageBar = styled.div`
     width: 301px;
     margin-top: 84px;
     margin-bottom: 127px;
+
     img {
       width: 8px;
       height: 22px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin: 50px auto 60px auto;
-    width: 250px;
-    > img {
-      height: 15px;
     }
-  }
-  `;
-const SliderContainer = styled(Slider)`
-  .slick-list {
-    width: 100%;
-    .slick-track {
-      .slick-slide {
-        display: flex;
-        justify-content: center;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin: 50px auto 60px auto;
+      width: 250px;
+
+      > img {
+        height: 15px;
       }
     }
   }
@@ -1846,28 +1586,6 @@ const PageCount = styled.span`
   }
 `;
 
-const NoReviewItem = styled.div``;
-
-const Item = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // width: calc(14% - 40px);
-  padding: 20px 0;
-  margin: 0 20px;
-
-  > img {
-    // width: 100%;
-    // display: inline-block;
-    // position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-    width: 141px;
-    height: 141px;
-  }
-`;
-
 const MapBox = styled.div`
   width: 100%;
   height: 500px;
@@ -1877,9 +1595,9 @@ const MapBox = styled.div`
 
 const QuestionBox = styled.div`
   width: 100%;
-  // height: 500px;
   margin-bottom: 160px;
 `;
+
 const TotalCount = styled.div`
   font-size: 14px;
   font-weight: 500;
@@ -1892,6 +1610,7 @@ const TotalCount = styled.div`
 
 const ReviewTop = styled.div`
   display: none;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: flex;
     justify-content: space-between;
@@ -1911,6 +1630,7 @@ const DateSorting = styled.div`
     text-align: left;
     color: #282c36;
   }
+
   > img {
     width: 10px;
   }
@@ -1935,6 +1655,7 @@ const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
   filter: ${(props) => (props.login || props.active) && "blur(9px)"};
+
   > label {
     font-size: 24px;
     line-height: 40px;
@@ -1944,18 +1665,22 @@ const SummaryBox = styled.div`
     margin-bottom: 24px;
     display: block;
   }
+
   > header {
     display: flex;
     justify-content: space-between;
+
     > mainscore {
       display: flex;
       > div:nth-of-type(1) {
         padding-top: 9px;
         box-sizing: border-box;
       }
+
       > div:nth-of-type(2) {
         display: flex;
         flex-direction: column;
+
         > span:nth-of-type(1) {
           align-self: center;
           font-size: 48px;
@@ -1965,6 +1690,7 @@ const SummaryBox = styled.div`
           font-weight: bold;
           margin-bottom: 12px;
         }
+
         > span:nth-of-type(2) {
           font-size: 16px;
           line-height: 24px;
@@ -1974,53 +1700,53 @@ const SummaryBox = styled.div`
         }
       }
     }
+
     > subscore {
       display: flex;
       flex-direction: column;
       width: 165px;
-     
+
       > div {
         margin-bottom: 9px;
         display: flex;
         justify-content: space-between;
 
-        // 4. (1)        
-        >div{
+        > div {
           display: flex;
           align-items: center;
         }
       }
     }
-  }  
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
-    >label{
+    > label {
       font-size: 20px;
     }
-    > header {    
-      > mainscore {      
+    > header {
+      > mainscore {
         > div:nth-of-type(1) {
-          padding-top: 6px;        
+          padding-top: 6px;
         }
-        > div:nth-of-type(2) {        
+        > div:nth-of-type(2) {
           > span:nth-of-type(1) {
             font-size: 32px;
             line-height: 24px;
-            
+
             margin-bottom: 6px;
           }
           > span:nth-of-type(2) {
             font-size: 12px;
-            line-height: 18px;        
+            line-height: 18px;
           }
         }
       }
-      > subscore {      
+      > subscore {
         width: 165px;
         > div {
           margin-bottom: 7px;
-          >span{
-            font-size:12px;
+          > span {
+            font-size: 12px;
           }
         }
       }
@@ -2028,101 +1754,88 @@ const SummaryBox = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    >header{
-      > subscore {          
-        > div {      
-        
+    > header {
+      > subscore {
+        > div {
           align-items: center;
-          >span{              
+          > span {
             padding: 2px;
             width: 180px;
-            // margin-bottom: 7px;
           }
           > span:nth-of-type(1) {
-              
-              margin-right: 10px;
-              font-size: 12px;
-              // width: 55px;
-              text-align: right;
-          
-            }
-            > div:nth-of-type(1) {
-              
-              // display: none;
-              font-size: 12px;
-            }
-            > div:nth-of-type(2) {
-              // display: none;
-              
-        
-              display: block;
-              font-size: 12px;
-                 
-            }
-          
+            margin-right: 10px;
+            font-size: 12px;
+            text-align: right;
+          }
+          > div:nth-of-type(1) {
+            font-size: 12px;
+          }
+          > div:nth-of-type(2) {
+            display: block;
+            font-size: 12px;
+          }
         }
       }
     }
   }
 
-
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    >label{
+    > label {
       font-size: 22px;
     }
-      > header {    
-    > mainscore {      
-      > div:nth-of-type(1) {
-        padding-top: 8px;        
-      }
-      > div:nth-of-type(2) {        
-        > span:nth-of-type(1) {
-          font-size: 40px;
-          line-height: 32px;
-          
-          margin-bottom: 8px;
-        }
-        > span:nth-of-type(2) {
-          font-size: 14px;
-          line-height: 24px;        
-        }
-      }
-    }
-   > subscore {      
-      width: 165px;
-      > div {
-        margin-bottom: 7px;
-        >span{
-          font-size:12px;
-
-          // 4. (2)
-        align-items: center;
-        @media (min-width: 0px) and (max-width: 767.98px) {
-          padding: 2px;
-          width: 180px;
-          margin-bottom: 7px;
-        }
-        > span:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            margin-right: 10px;
-            font-size: 12px;
-            width: 55px;
-            text-align: right;
-          }
-        }
+    > header {
+      > mainscore {
         > div:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: none;
-          }
+          padding-top: 8px;
         }
         > div:nth-of-type(2) {
-          display: none;
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: block;
-            font-size: 12px;
+          > span:nth-of-type(1) {
+            font-size: 40px;
+            line-height: 32px;
+
+            margin-bottom: 8px;
           }
-// 4. (2)        
-}
+          > span:nth-of-type(2) {
+            font-size: 14px;
+            line-height: 24px;
+          }
+        }
+      }
+      > subscore {
+        width: 165px;
+        > div {
+          margin-bottom: 7px;
+          > span {
+            font-size: 12px;
+            align-items: center;
+
+            @media (min-width: 0px) and (max-width: 767.98px) {
+              padding: 2px;
+              width: 180px;
+              margin-bottom: 7px;
+            }
+            > span:nth-of-type(1) {
+              @media (min-width: 0px) and (max-width: 767.98px) {
+                margin-right: 10px;
+                font-size: 12px;
+                width: 55px;
+                text-align: right;
+              }
+            }
+            > div:nth-of-type(1) {
+              @media (min-width: 0px) and (max-width: 767.98px) {
+                display: none;
+              }
+            }
+            > div:nth-of-type(2) {
+              display: none;
+              @media (min-width: 0px) and (max-width: 767.98px) {
+                display: block;
+                font-size: 12px;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -2143,20 +1856,12 @@ const TotalRating = styled.div`
     }
   }
 `;
+
 const InfoBox = styled.div`
   display: flex;
   align-items: self-start;
   margin-bottom: 60px;
 `;
-
-const ParentRecommentBox = styled.div`
-  display: flex;
-  > img {
-    margin-right: 20px;
-  }
-`;
-
-const Main = styled.div``;
 
 const SimilarBox = styled.div`
   width: 100%;
