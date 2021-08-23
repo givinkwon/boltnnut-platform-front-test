@@ -12,12 +12,13 @@ import CategoryContainer from "./Category";
 import ProcessContainer from "./Process";
 import MaterialContainer from "./Material";
 import AboutUsContainer from "./AboutUs";
+import CompleteContainer from "./Complete";
 
 import Stepper from "react-stepper-enhanced";
 import Auth from "stores/Account/Auth";
 const perfection = "/static/icon/camera.png";
 
-const pageNameArr = ["Category", "Process", "Material", "Aboutus"];
+const pageNameArr = ["Category", "Process", "Material", "Aboutus","Complete"];
 // error 변수
 let error = 0
 @inject("Auth", "Category")
@@ -57,6 +58,8 @@ class RegisterDetailContainer extends React.Component {
 
     
     return (
+      <>
+      {pageName === "Complete" ? (<CompleteContainer/>) : (
       <Background>
         <Containerv1
           style={{
@@ -109,6 +112,7 @@ class RegisterDetailContainer extends React.Component {
             {pageName === "Process" && <ProcessContainer />}
             {pageName === "Material" && <MaterialContainer />}
             {pageName === "Aboutus" && <AboutUsContainer />}
+
             <div style={{ display: "flex", justifyContent: "center" }}>
               <ButtonBox width={"400px"} style={{ marginTop: 70 }}>
                 <Button
@@ -139,15 +143,14 @@ class RegisterDetailContainer extends React.Component {
                     onClick={async () => {
                       await Auth.checkLogin();
                       console.log(Auth.logged_in_partner);
-                      if (Auth.registerPageIdx < 3) {
-                        Auth.registerType === "product" &&
-                        Auth.registerPageIdx === 0
+                      console.log(Auth.registerPageIdx)
+
+                      if (Auth.registerPageIdx <= 3) {
+                        Auth.registerType === "product" && Auth.registerPageIdx === 0
                           ? (Auth.registerPageIdx += 2)
                           : (Auth.registerPageIdx += 1);
-                        Category.save_selected(
-                          pageName,
-                          Auth.logged_in_partner.id
-                        );
+                        await Category.save_selected(pageName, Auth.logged_in_partner.id)
+                      
                         // 라우팅
                         Router.push(
                           "/partnerregister/[pagename]",
@@ -174,6 +177,9 @@ class RegisterDetailContainer extends React.Component {
           </div>
         </Containerv1>
       </Background>
+      )
+                }
+                </>
     );
   }
 }

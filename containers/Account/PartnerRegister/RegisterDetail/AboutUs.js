@@ -27,7 +27,7 @@ class AboutUsContainer extends Component {
     return (
       <>
         <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16 }}>
-          파트너 소개를 작성해주세요
+          회사 소개를 작성해주세요
         </Font18>
 
         <InputComponent

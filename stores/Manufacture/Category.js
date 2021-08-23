@@ -4,6 +4,7 @@ import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import Partner from "./Partner";
+import Auth from "stores/Account/Auth";
 
 class Category {
   constructor() {
@@ -222,6 +223,22 @@ class Category {
     this.category_selected_name = [];
     this.material_selected_name = [];
     this.develop_selected_name = [];
+
+    // 파트너 등록 데이터
+    this.locationModalActive = false;
+    this.LocationAddress = "";
+    this.LocationZipCode = "";
+    //회사소개서 파일(1개)
+    this.partnerInfoFile = null;
+    //파트너 포트폴리오(배열)
+    this.partnerPortfolioArray = null;
+    //파트너 소개
+    this.partnerInfo = "";
+    //진행한 제품군
+    this.partnerHistory = "";
+
+    // RegisterIndex
+    Auth.registerPageIdx = 0;
   };
 
   /* 선택된 리스트 초기화 */
@@ -457,7 +474,7 @@ class Category {
 
   @action save_selected = async (pageName, id) => {
     let req = null;
-    // alert("F");
+
     switch (pageName) {
       //business입니다. 페이지만 Category
       case "Category":
@@ -495,6 +512,25 @@ class Category {
           .catch((e) => console.log(e));
         break;
       case "Aboutus":
+        // 예외처리
+        if (!this.LocationAddress.split(" ")[0] && !this.LocationAddress) {
+          await alert("주소를 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          console.log(Auth.registerPageIdx)
+          return;
+        }
+
+        if (!this.partnerInfo) {
+          await alert("회사소개를 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
+        if (!this.partnerHistory) {
+          await alert("진행한 제품군을 입력해주세요");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
+
         req = {
           data: {
             partnerId: id,
