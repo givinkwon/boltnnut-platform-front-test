@@ -900,6 +900,8 @@ const RequestMiddle = styled.div`
   margin-top: 30px;
   margin-bottom: 40px;
   background-image: url("static/images/search_result_background.svg");
+  background-position: center;
+
   div {
     font-size: 16px;
     font-weight: 500;
@@ -973,7 +975,7 @@ const ResultBannerContainer = styled.div`
   width: 900px;
   display: flex;
   justify-content: center;
-  gap: 180px;
+  gap: 200px;
 `;
 
 const ResultBannerInnerBox = styled.div`

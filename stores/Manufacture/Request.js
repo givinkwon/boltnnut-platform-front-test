@@ -181,7 +181,7 @@ class Request {
       alert("의뢰 내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
       return false;
     }
-    
+
     // 데이터 저장
     var formData = new FormData();
 
@@ -282,14 +282,14 @@ class Request {
         data: formData,
       };
       // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
-      this.newIndex = 1;
+      this.requestTabIdx = 2;
       console.log(req);
 
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
           // page 넘기기 위한 트리거 만들기
-          this.newIndex = 1;
+          this.requestTabIdx = 2;
           // GA 데이터 보내기
           MyDataLayerPush({ event: "request_Drawing" });
         })
@@ -313,14 +313,14 @@ class Request {
         data: formData,
       };
       // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
-      this.newIndex = 1;
+      this.requestTabIdx = 2;
       console.log(req);
 
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
           // page 넘기기 위한 트리거 만들기
-          this.newIndex = 1;
+          this.requestTabIdx = 2;
           // GA 데이터 보내기
           MyDataLayerPush({ event: "request_Drawing" });
         })

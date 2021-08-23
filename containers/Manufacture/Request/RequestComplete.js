@@ -4,9 +4,12 @@ import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import Router from "next/router";
 import Buttonv1 from "components/Buttonv1";
+import { inject, observer } from "mobx-react";
 
 const submitimg = "./static/images/request/submitimg.svg";
 
+@inject("Request")
+@observer
 class RequestComplete extends React.Component {
   // 추가 견적 요청했을 때
   additionalrequest = () => {
@@ -16,7 +19,7 @@ class RequestComplete extends React.Component {
     Router.push("/");
   };
   async componentDidMount() {
-    const { Request } = this.state;
+    const { Request } = this.props;
 
     Request.loadingFlag = false;
   }

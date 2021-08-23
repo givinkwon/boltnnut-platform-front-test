@@ -23,9 +23,9 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            {Request.requestTabIdx == 0 && <RequestMain />}
-            {Request.requestTabIdx == 1 && <RequestContent />}
-            {Request.requestTabIdx == 2 && <RequestComplete />}
+            {Request.requestTabIdx === 0 && <RequestMain />}
+            {Request.requestTabIdx === 1 && <RequestContent />}
+            {Request.requestTabIdx === 2 && <RequestComplete />}
           </Containerv1>
         </Background>
       </>
