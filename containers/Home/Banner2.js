@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
-import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import MainPagePartnerCard from "./MainPagePartnerCard";
 import { toJS } from "mobx";
@@ -64,8 +63,12 @@ class NewBanner2Container extends React.Component {
           marginTop: "200px",
         }}
       >
-        <Containerv1
-          style={{ justifyContent: " center", flexDirection: "column" }}
+        <div
+          style={{
+            width: 1200,
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
         >
           <Header>
             <b style={{ fontWeight: "bold" }}>7071개</b>의 볼트앤너트의 업체
@@ -108,7 +111,7 @@ class NewBanner2Container extends React.Component {
                 </>
               );
             })}
-        </Containerv1>
+        </div>
       </div>
     );
   }
@@ -130,6 +133,7 @@ const Header = styled(Title.FontSize32)`
 
 const CategoryBox = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   margin-top: 80px;
   margin-bottom: 24px;
