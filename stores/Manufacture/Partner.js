@@ -3,6 +3,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import Router from "next/router";
+import Auth from "../Account/Auth";
 
 import Category from "./Category";
 
@@ -10,6 +11,7 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+
   // 상세 주소
   @observable detailRegion = "";
   // 비즈니스 관련 카테고리를 가지고 있는 지
@@ -995,6 +997,11 @@ class Partner {
   @action saveSearchText = (text) => {
     const formData = new FormData();
 
+    if (Auth.logged_in_user !== null) {
+      formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
+    }
+    console.log("확인하자!!!!!!!!!!!!!!!!!!!", Auth.logged_in_user);
+
     formData.append("text", text); // 입력 텍스트
     formData.append("count", this.partner_count); // 파트너 개수
 
@@ -1535,13 +1542,9 @@ class Partner {
     };
 
     PartnerAPI.getBusinessName(req.id)
-      .then(async (res) => {
-        console.log("우왕", res);
-        this.business_name.push(res.data.category + "   ");
+      .then((res) => {
         console.log(res.data.category);
-        console.log(this.business_name);
-        console.log(this.business_name.includes(res.data.category));
-        // return res.data.city
+        this.business_name.push(res.data.category + "   ");
       })
       .catch((e) => {
         console.log(e);
@@ -2560,16 +2563,15 @@ class Partner {
       id: id,
     };
     console.log(id);
-    await PartnerAPI.getBusinessCategory(req)
-      .then(async (res) => {
+    PartnerAPI.getBusinessCategory(req)
+      .then((res) => {
         console.log(res);
         this.business_name = res.data.business;
         console.log(this.business_name);
 
-        await res.data.business.forEach(async (element) => {
+        res.data.business.forEach((element) => {
           console.log(element);
-          await PartnerAPI.getBusinessName(element).then((res) => {
-            console.log(res);
+          PartnerAPI.getBusinessName(element).then((res) => {
             this.hashBusinessCategory.push(res.data.category);
           });
         });
@@ -2705,6 +2707,45 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+  };
+
+  // PartnerCard && MainPagePartnerCard Active Handler
+  @observable introduction = false;
+  @observable call = false;
+  @observable message = false;
+  @observable active = false;
+
+  @action PartnerCardactiveHandler = (type) => {
+    switch (type) {
+      case "file":
+        if (this.introduction) {
+          this.introduction = false;
+        } else {
+          this.introduction = true;
+        }
+
+        break;
+      case "call":
+        if (this.call) {
+          this.call = false;
+        } else {
+          this.call = true;
+        }
+        break;
+      case "message":
+        if (this.message) {
+          this.message = false;
+        } else {
+          this.message = true;
+        }
+        break;
+      case "active":
+        if (this.active) {
+          this.active = false;
+        } else {
+          this.active = true;
+        }
+    }
   };
 }
 

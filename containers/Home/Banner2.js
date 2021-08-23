@@ -4,7 +4,7 @@ import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
-import PartnerCard from "../Manufacture/Search/Home/PartnerCard";
+import MainPagePartnerCard from "./MainPagePartnerCard";
 import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Search", "Category")
@@ -89,12 +89,12 @@ class NewBanner2Container extends React.Component {
               return (
                 <>
                   {idx < 3 && (
-                    <Background style={{ marginBottom: "5px" }}>
+                    <Background style={{ marginTop: 24 }}>
                       <div
                         onClick={() => Partner.pushToDetail(item, idx)}
                         style={{ width: "100%" }}
                       >
-                        <PartnerCard
+                        <MainPagePartnerCard
                           data={item}
                           width={this.props.width}
                           categoryData={toJS(Partner.category_dic[idx])}
@@ -132,6 +132,7 @@ const CategoryBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 80px;
+  margin-bottom: 24px;
   border-bottom: solid 1px #c6c7cc;
 `;
 

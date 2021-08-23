@@ -1,39 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
-const star = "static/icon/star_lightblue.svg";
-const viewcount = "static/images/viewcount.svg";
-const bookmarkcount = "static/icon/bookmarkcount.svg";
-const bookmarkImg = "/static/icon/bookmark_empty.svg";
-const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
-const location = "static/icon/location.svg";
-
 @inject("Partner", "Auth", "Common", "Search")
 @observer
-class PartnerCard extends React.Component {
+class MainPagePartnerCard extends React.Component {
   state = {
     width: null,
     modalOpen: false,
-    activeReview: false,
     city: "",
-    business: "",
-    totalPartnerBookmark: "",
-    total_review: -1,
+    business: [],
   };
 
-  async componentDidMount() {
-    const { width, Search, data, Partner, idx, Auth } = this.props;
-
-    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data && data.id;
-    await Partner.existCheckedBookmark(clientId, partnerId, idx);
-    await Partner.getTotalBookmarkByPartner(partnerId);
-
-    const existLogo = data && data.logo && data.logo.split("/")[4];
+  componentDidMount() {
+    const { Search, data } = this.props;
 
     window.addEventListener("resize", Search.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -46,39 +28,9 @@ class PartnerCard extends React.Component {
       id: data && data.id,
     };
 
-    const reviewReq = {
-      params: {
-        partner_id: data && data.id,
-      },
-    };
-
-    const BookmarkReq = {
-      params: {
-        partnerID: data && data.id,
-      },
-    };
-
     PartnerAPI.getCityName(req)
-      .then(async (res) => {
-        this.setState({ city: res.data.maincategory });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    await PartnerAPI.getTotalReview(reviewReq)
       .then((res) => {
-        this.setState({ total_review: res.data.score });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then(async (res) => {
-        this.setState({ totalPartnerBookmark: res.data.count });
+        this.setState({ city: res.data.maincategory });
       })
       .catch((e) => {
         console.log(e);
@@ -87,13 +39,13 @@ class PartnerCard extends React.Component {
 
     const temp = [];
     PartnerAPI.getBusinessCategory(partnerReq)
-      .then(async (res) => {
+      .then((res) => {
         res.data.business.forEach((element) => {
           PartnerAPI.getBusinessName(element).then((res) => {
             temp.push(res.data.category);
+            this.setState({ business: temp });
           });
         });
-        this.setState({ business: temp });
       })
       .catch((e) => {
         console.log(e);
@@ -182,15 +134,7 @@ class PartnerCard extends React.Component {
       <>
         {width > 767.98 && data ? (
           <>
-            <Card
-              active={this.state.active}
-              onMouseOver={() => {
-                Partner.activeHandler("active");
-              }}
-              onMouseOut={() => {
-                Partner.activeHandler("active");
-              }}
-            >
+            <Card>
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
@@ -198,14 +142,12 @@ class PartnerCard extends React.Component {
                     {Partner.matching_image.length > 0 ? (
                       <img src={Partner.matching_image[idx]}></img>
                     ) : (
-                      <img
-                        src={data && data.portfolio_set[0].img_portfolio}
-                      ></img>
+                      <img src={data && data.portfolio_set[0].img_portfolio} />
                     )}
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
-                    {this.state.active ? (
+                    {Partner.active ? (
                       <img src="static/images/noportfolio_img_over.svg" />
                     ) : (
                       <img src="static/images/noportfolio_img.svg" />
@@ -217,6 +159,7 @@ class PartnerCard extends React.Component {
                   </Item>
                 )}
               </Header>
+
               <Main>
                 <Title>
                   <div>
@@ -230,25 +173,8 @@ class PartnerCard extends React.Component {
                       <></>
                     )}
                   </div>
-                  {Auth.logged_in_user && (
-                    <BookMark>
-                      <img
-                        src={
-                          Partner.check_bookmark[idx] === idx
-                            ? bookmarkBlueImg
-                            : bookmarkImg
-                        }
-                        onClick={async (e) => {
-                          if (!loggedInPartnerId && clientId) {
-                            e.stopPropagation();
-                            Partner.BookmarkHandler(idx);
-                            Partner.checkedBookmark(clientId, partnerId, idx);
-                          }
-                        }}
-                      ></img>
-                    </BookMark>
-                  )}
                 </Title>
+
                 <Introduce
                   style={{
                     width: 630,
@@ -259,103 +185,43 @@ class PartnerCard extends React.Component {
                 >
                   {data && data.history}
                 </Introduce>
-                {this.state.business.length !== 0 ? (
-                  this.state.active ? (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          return (
-                            <Hashtag style={{ background: " #ffffff" }}>
-                              #{item}
-                            </Hashtag>
-                          );
-                        })}
-                    </div>
-                  ) : (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          return (
-                            <Hashtag style={{ background: " #f6f6f6" }}>
-                              #{item}
-                            </Hashtag>
-                          );
-                        })}
-                    </div>
-                  )
-                ) : (
-                  <></>
-                )}
+
                 <Bottom>
                   <BottomBox>
-                    {this.state.total_review === -1 ? (
-                      <></>
-                    ) : (
-                      <Review>
-                        <img src={star} style={{ marginRight: 5 }}></img>
-                        <Score
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div style={{ fontWeight: "bold" }}>
-                            {this.state.total_review}
-                          </div>
-                          /5.0
-                        </Score>
-                      </Review>
-                    )}
                     <Location>
-                      <img
-                        src={location}
-                        style={{ marginLeft: 15, marginRight: 5 }}
-                      ></img>
-                      <div>
+                      <img src="static/icon/location.svg" />
+                      <div style={{ marginLeft: 10 }}>
                         {(data && data.region === null) || data.region === "nan"
                           ? this.state.city
                           : data.region}
                       </div>
                     </Location>
                   </BottomBox>
-                  <BottomBox>
-                    <ViewCount>
-                      <img src={viewcount} style={{ marginRight: 5 }}></img>
-                      <div>높음</div>
-                    </ViewCount>
-                    <BookmarkCount>
-                      <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>{this.state.totalPartnerBookmark}</div>
-                    </BookmarkCount>
-                  </BottomBox>
                 </Bottom>
+
+                {this.state.business.length > 0 ? (
+                  <div style={{ display: "flex", marginTop: 11 }}>
+                    {this.state.business.map((item, idx) => (
+                      <Hashtag active={Partner.active}>#{item}</Hashtag>
+                    ))}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </Main>
             </Card>
           </>
         ) : (
           <>
-            <Card
-              active={this.state.active}
-              onClick={(e) => {
-                // this.cardClick(e);
-              }}
-              onMouseOver={() => {
-                Partner.activeHandler("active");
-              }}
-              onMouseOut={() => {
-                Partner.activeHandler("active");
-              }}
-            >
+            <Card>
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img
-                      src={data && data.portfolio_set[0].img_portfolio}
-                    ></img>
+                    <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
-                    {this.state.active ? (
+                    {Partner.active ? (
                       <img src="static/images/noportfolio_img_over.svg" />
                     ) : (
                       <img src="static/images/noportfolio_img.svg" />
@@ -377,18 +243,6 @@ class PartnerCard extends React.Component {
                 </InfoOne>
               </Main>
             </Card>
-            {this.props.Partner.ReviewActive &&
-              this.props.Partner.ReviewActiveIndex === idx && (
-                <>
-                  <ReviewContainer
-                    data={data}
-                    width={width}
-                    Partner={Partner}
-                    categoryData={categoryData}
-                    idx={idx}
-                  />
-                </>
-              )}
           </>
         )}
       </>
@@ -396,23 +250,26 @@ class PartnerCard extends React.Component {
   }
 }
 
-export default PartnerCard;
+export default MainPagePartnerCard;
 
 const Card = styled.div`
+  display: inline-flex;
+  gap: 20px;
   width: 100%;
-  object-fit: contain;
-  border-bottom: solid 2px #e1e2e4;
-  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
-  display: flex;
-  cursor: pointer;
-  height: 100%;
-  padding: 14px 0px 14px 10px;
-  box-sizing: border-box;
+  height: 226px;
+  padding: 14px 10px 14px 10px;
+  background: ${(props) => (props.active ? "f6f6f6" : "#ffffff")};
   border-radius: 8px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+
+  :hover {
+    border: 1px solid #0933b3;
+  }
 `;
 
 const Header = styled.div`
-  margin-right: 34px;
+  /* margin-right: 34px; */
 `;
 
 const Main = styled.div`
@@ -434,6 +291,8 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 32px;
+
   > div:nth-of-type(1) {
     display: flex;
   }
@@ -445,6 +304,7 @@ const Name = styled.div`
   letter-spacing: -0.5px;
   color: #1e2222;
   font-weight: bold;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #0933b3;
     font-size: 16px;
@@ -457,11 +317,13 @@ const Certification = styled.div`
   display: flex;
   justify-content: space-between;
   margin-left: 20px;
+
   img {
     width: 16px;
     height: 16px;
     margin-top: 13px;
   }
+
   div {
     margin-left: 5px;
     font-size: 16px;
@@ -472,12 +334,7 @@ const Certification = styled.div`
   }
 `;
 
-const BookMark = styled.div`
-  margin-right: 20px;
-`;
-
 const Introduce = styled.div`
-  margin-top: 10px;
   font-size: 16px;
   line-height: 2.5;
   letter-spacing: -0.4px;
@@ -491,35 +348,23 @@ const Hashtag = styled.div`
   align-items: center;
   height: 34px;
   border-radius: 5px;
+  margin-top: 10px;
   margin-right: 20px;
   padding-right: 10px;
   padding-left: 10px;
+  background-color: ${(props) => (props.active ? "#ffffff" : "#f6f6f6")};
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 120px;
+  margin-top: 25px;
   width: 95%;
 `;
 
 const BottomBox = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const Review = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  img {
-    width: 22px;
-    height: 21px;
-  }
-`;
-
-const Score = styled.div`
-  font-size: 14px;
 `;
 
 const Location = styled.div`
@@ -530,42 +375,10 @@ const Location = styled.div`
     width: 100%;
     font-size: 14px;
     color: #767676;
-    line-height: 2.86;
-    letter-spacing: -0.35px;
   }
   img {
     width: 10.6px;
     height: 15.3px;
-  }
-`;
-
-const ViewCount = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  div {
-    margin-left: 5px;
-    width: 50px;
-    font-size: 12px;
-    color: #999999;
-  }
-  img {
-    width: 16px;
-    height: 16px;
-  }
-`;
-
-const BookmarkCount = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  div {
-    font-size: 12px;
-    color: #999999;
-  }
-  img {
-    width: 16px;
-    height: 16px;
   }
 `;
 
@@ -598,7 +411,7 @@ const Item = styled.div`
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
-    width: 262px;
-    height: 200px;
+    width: 258px;
+    height: 185px;
   }
 `;
