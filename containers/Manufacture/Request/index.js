@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 
 import RequestContent from "./RequestContent";
 import RequestComplete from "./RequestComplete";
-import RequestMain from "./RequestMain";
+import RequestMain from "./Home/index";
 
 @inject("Request")
 @observer

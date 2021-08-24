@@ -62,7 +62,7 @@ class MyProject extends React.Component {
               <div style={{ marginBottom: 12 }}>
                 내 프로젝트 >{" "}
                 {Project.myproject_state == 1
-                  ? " 진행 중인 프로젝트"
+                  ? " 진행중 프로젝트"
                   : " 종료된 프로젝트"}
               </div>
             </HeaderTitle>
@@ -78,7 +78,7 @@ class MyProject extends React.Component {
                     onClick={() => Project.set_myproject_state(1)}
                     style={{ marginBottom: 12 }}
                   >
-                    진행 중인 프로젝트
+                    진행중 프로젝트
                   </div>
                   <div onClick={() => Project.set_myproject_state(2)}>
                     종료된 프로젝트
@@ -89,7 +89,7 @@ class MyProject extends React.Component {
                 <MainHeader>
                   <div>
                     {Project.myproject_state == 1
-                      ? "진행 중인 프로젝트"
+                      ? "진행중 프로젝트"
                       : "종료된 프로젝트"}
                   </div>
                 </MainHeader>
@@ -271,7 +271,10 @@ const Header = styled.div`
 
 const HeaderTitle = styled.div`
   height: 100%;
-  padding-left: 118px;
+  width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+
   display: flex;
   align-items: flex-end;
   font-size: 16px;
