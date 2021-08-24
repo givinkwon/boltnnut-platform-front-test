@@ -202,7 +202,7 @@ class MainPagePartnerCard extends React.Component {
                 {this.state.business.length > 0 ? (
                   <div style={{ display: "flex", marginTop: 11 }}>
                     {this.state.business.map((item, idx) => (
-                      <Hashtag active={Partner.active}>#{item}</Hashtag>
+                      <Hashtag>#{item}</Hashtag>
                     ))}
                   </div>
                 ) : (
@@ -411,7 +411,7 @@ const Item = styled.div`
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
-    width: 258px;
-    height: 185px;
+    width: 262px;
+    height: 200px;
   }
 `;
