@@ -281,7 +281,7 @@ class SearchFilterBox extends React.Component {
                   onClick={() =>
                     this.props.Category.remove_selected(
                       v.type,
-                      v.idx,
+                      idx,
                       "search",
                       v.data
                     )

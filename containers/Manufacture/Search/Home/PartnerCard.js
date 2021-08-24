@@ -103,6 +103,8 @@ class PartnerCard extends React.Component {
         console.log(e);
         console.log(e.response);
       });
+
+    // 조회수 axios 요청
   }
 
   componentWillUnmount() {

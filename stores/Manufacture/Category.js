@@ -334,51 +334,59 @@ class Category {
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
   @action remove_selected = async (state, id, container = "search", data) => {
     let deleteIdx;
-    let deletedata;
-    console.log(this.category_selected_tagbox);
+    let business_subbox_deleteIdx;
+    let category_subbox_deleteIdx;
+    let city_subbox_deleteIdx;
+
     // 태그 박스 삭제
     this.category_selected_tagbox.map((sub_data, idx) => {
       // 데이터가 있는 경우
-      if (sub_data.data == data) {
+      if (sub_data.data === data) {
         this.category_selected_tagbox.splice(idx, 1);
       }
     });
 
     // 카테고리 선택
-    if (state == "business") {
+    if (state === "business") {
       deleteIdx = this.business_selected.indexOf(id);
+      business_subbox_deleteIdx = this.selected_business_subbox.indexOf(data);
+
       this.business_selected.splice(deleteIdx, 1);
-      this.selected_business_subbox.splice(deleteIdx, 1);
+      this.selected_business_subbox.splice(business_subbox_deleteIdx, 1);
     }
 
     // 업체 분류 선택
-    if (state == "category") {
+    if (state === "category") {
       deleteIdx = this.category_selected.indexOf(id);
+      category_subbox_deleteIdx = this.selected_category_subbox.indexOf(data);
+
       this.category_selected.splice(deleteIdx, 1);
-      this.selected_category_subbox.splice(deleteIdx, 1);
+      this.selected_category_subbox.splice(category_subbox_deleteIdx, 1);
     }
 
     // 지역 선택
-    if (state == "city") {
+    if (state === "city") {
       deleteIdx = this.city_selected.indexOf(id);
+      city_subbox_deleteIdx = this.selected_city_subbox.indexOf(data);
+
       this.city_selected.splice(deleteIdx, 1);
-      this.selected_city_subbox.splice(deleteIdx, 1);
+      this.selected_city_subbox.splice(city_subbox_deleteIdx, 1);
     }
 
     // 공정 선택
-    if (state == "develop") {
+    if (state === "develop") {
       deleteIdx = this.develop_selected.indexOf(id);
       this.develop_selected.splice(deleteIdx, 1);
     }
 
     // 소재 선택
-    if (state == "material") {
+    if (state === "material") {
       deleteIdx = this.material_selected.indexOf(id);
       this.material_selected.splice(deleteIdx, 1);
     }
 
     // search 페이지에서 왔을 때만
-    if (container == "search") {
+    if (container === "search") {
       Partner.getPartner();
     }
   };
@@ -386,7 +394,6 @@ class Category {
   categoryActiveHandler = (idx, state) => {
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
-        // console.log(idx);
         return true;
       } else {
         return false;
@@ -396,7 +403,6 @@ class Category {
     // 업체 분류 선택
     if (state == "category") {
       if (this.category_selected.includes(idx)) {
-        // console.log(idx);
         return true;
       } else {
         return false;
@@ -406,7 +412,6 @@ class Category {
     // 지역 선택
     if (state == "city") {
       if (this.city_selected.includes(idx)) {
-        // console.log(idx);
         return true;
       } else {
         return false;
@@ -416,7 +421,6 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       if (this.develop_selected.includes(idx)) {
-        // console.log(idx);
         return true;
       } else {
         return false;
@@ -426,7 +430,6 @@ class Category {
     // 소재 선택
     if (state == "material") {
       if (this.material_selected.includes(idx)) {
-        // console.log(idx);
         return true;
       } else {
         return false;
@@ -516,7 +519,7 @@ class Category {
         if (!this.LocationAddress.split(" ")[0] && !this.LocationAddress) {
           await alert("주소를 입력해주세요.");
           Auth.registerPageIdx -= 1;
-          console.log(Auth.registerPageIdx)
+          console.log(Auth.registerPageIdx);
           return;
         }
 
