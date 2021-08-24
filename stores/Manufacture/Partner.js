@@ -430,6 +430,16 @@ class Partner {
   @action pushToDetail = async (item, idx) => {
     this.detailLoadingFlag = true;
 
+    // 파트너 카드 조회 수 체크
+    const req = {
+      data: { partner_id: item.id },
+    };
+    PartnerAPI.partnerView(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+
     if (!this.requestModalActive && !this.modalActive) {
       this.category_name_list = null;
 
@@ -494,6 +504,7 @@ class Partner {
   };
 
   @observable searchFileUrl = "";
+  @observable imgSearchModalActive = false; // 이미지 검색 시 사진 렌더링하는 박스 상태
   @action onChangeFile = (e) => {
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
@@ -511,6 +522,7 @@ class Partner {
         if (typeof e.currentTarget.files[item] === "object") {
           this.fileArray.pop();
           this.fileArray.push(e.currentTarget.files[item]);
+          this.imgSearchModalActive = true;
         } else {
           break;
         }

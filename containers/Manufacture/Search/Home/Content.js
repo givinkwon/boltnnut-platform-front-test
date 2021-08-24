@@ -15,7 +15,6 @@ import { toJS } from "mobx";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 import Cookies from "js-cookie";
 
-const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
@@ -128,7 +127,7 @@ class ManufacturerContentContainer extends React.Component {
     const { Partner, Request } = this.props;
     // path 설정
     Request.path = 2;
-    
+
     if (Partner.result_banner) {
       Partner.result_banner = false;
     }
@@ -175,54 +174,6 @@ class ManufacturerContentContainer extends React.Component {
                 </>
               )}
 
-              {/* 이미지 검색 리스트 */}
-              {Partner.fileArray.map((item, idx) => {
-                console.log(item);
-                return (
-                  <>
-                    <span
-                      onClick={() => {
-                        if (this.state.checkFileUpload) {
-                          Partner.fileArray.splice(idx, 1);
-                          const inputFile =
-                            document.getElementById("inputFile");
-                          inputFile.innerHTML = "";
-
-                          if (Partner.fileArray.length === 0) {
-                            this.setState({ checkFileUpload: false });
-                          }
-                        }
-                      }}
-                    >
-                      <span>
-                        {Partner.fileArray[0] ? (
-                          <img
-                            style={{ width: 127, height: 101 }}
-                            src={Partner.searchFileUrl}
-                          />
-                        ) : (
-                          <>파일이 없습니다</>
-                        )}
-                        <span style={{ marginRight: "10px" }}>
-                          {/* {!item.name
-                            ? decodeURI(item.split("/").pop())
-                            : item.name} */}
-                        </span>
-                        <DeleteFile
-                          src={deleteButtonImg}
-                          style={{
-                            display: this.state.checkFileUpload
-                              ? "inline"
-                              : "none",
-                          }}
-                        />
-                      </span>
-                      {/* <span>해당 이미지를 검색 합니다.</span> */}
-                    </span>
-                  </>
-                );
-              })}
-
               <Header>
                 <Font20 style={{ marginLeft: "20px" }}>
                   <span style={{ fontWeight: "bold" }}>
@@ -258,7 +209,6 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
-                      // console.log(item);
                       return (
                         <Background>
                           <div
@@ -287,6 +237,7 @@ class ManufacturerContentContainer extends React.Component {
                       );
                     })}
                 </MainBody>
+
                 <Aside>
                   <RecentPartner>
                     <header>
@@ -307,25 +258,22 @@ class ManufacturerContentContainer extends React.Component {
                               <RecentPartnerContent>
                                 <div
                                   style={{
-                                    width: 156,
+                                    width: 150,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "center",
+                                    marginTop: 10,
                                   }}
                                 >
-                                  <div style={{ marginLeft: 3 }}>{name}</div>
+                                  <div>{name}</div>
                                   <img
                                     src={close}
                                     style={{
-                                      marginRight: 3,
                                       width: 12,
                                       height: 12,
                                       cursor: "pointer",
                                     }}
-                                    onClick={async () => {
-                                      console.log(
-                                        this.state.recent_partner_dic
-                                      );
+                                    onClick={() => {
                                       if (this.state.recent_partner_dic) {
                                         Cookie.delete_partner_view(
                                           Cookie.partner_view_list[
@@ -339,9 +287,9 @@ class ManufacturerContentContainer extends React.Component {
                                       expires.setMinutes(
                                         expires.getMinutes() + 2440
                                       );
+
                                       const a = this.state.recent_partner_dic;
                                       const b = this.state.recent_partner;
-                                      console.log(b);
                                       delete a[name];
                                       b.splice(
                                         this.state.recent_partner_namearr.indexOf(
@@ -349,11 +297,12 @@ class ManufacturerContentContainer extends React.Component {
                                         ),
                                         1
                                       );
-                                      console.log(b);
+
                                       this.setState({
                                         recent_partner_dic: a,
                                         recent_partner: b,
                                       });
+
                                       Cookies.set(
                                         "partner_view",
                                         Cookie.partner_view_list,
@@ -363,7 +312,7 @@ class ManufacturerContentContainer extends React.Component {
                                         }
                                       );
                                     }}
-                                  ></img>
+                                  />
                                 </div>
                                 <img
                                   src={this.state.recent_partner_dic[name]}
@@ -383,7 +332,13 @@ class ManufacturerContentContainer extends React.Component {
                                     );
                                   }}
                                   style={{ cursor: "pointer" }}
-                                ></img>
+                                />
+                                <div
+                                  style={{
+                                    margin: "5px, 0px, 5px, 0px",
+                                    border: "1px solid #e1e2e4",
+                                  }}
+                                />
                               </RecentPartnerContent>
                             )
                           )
@@ -777,19 +732,19 @@ const RecentPartner = styled.div`
 `;
 
 const RecentPartnerContent = styled.div`
-  height: 100%:
-  position: absolute;
-  top: 0;
+  width: 156px;
+  height: 160px;
+
   div {
     font-size: 14px;
     color: #1e2222;
-    line-height: 2.86;
-    letter-spacing: -0.35px;
   }
+
   img {
     width: 156px;
     height: 120px;
     border-radius: 10px;
+    object-fit: scale-down;
   }
 `;
 
@@ -949,27 +904,6 @@ const TopButton = styled.div`
     font-weight: 500;
     letter-spacing: -0.35px;
     color: #0933b3;
-  }
-`;
-
-const DeleteFile = styled.img`
-  width: 18px;
-  height: 18px;
-  padding: 2px;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  background-color: #e1e2e4;
-  align-self: center;
-  line-height: 40px;
-  letter-spacing: -0.45px;
-  margin-right: 29px;
-  vertical-align: middle;
-  cursor: pointer;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
   }
 `;
 
