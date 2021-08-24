@@ -4,45 +4,52 @@ import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import Router from "next/router";
+import Buttonv1 from "components/Buttonv1";
+import { inject, observer } from "mobx-react";
 
+@inject("Project", "Auth")
+@observer
 class ProjectNone extends React.Component {
   render() {
+    const { Project, Auth } = this.props;
     return (
-      <Background>
-        <Containerv1>
-          <RequestCompleteBox>
-            <RequestCompleteTitle>
-              <FontSize26 style={{ marginBottom: "20px" }}>
-                첫 상담을 시작해보세요.
-              </FontSize26>
-            </RequestCompleteTitle>
+      <Background style={{width:"894px", height:"248px"}}>
+        <Containerv1 style={{display:"contents"}} >
+          {/* 파트너일 때 */}
+          {Auth.logged_in_partner && 
+          <>
+          <NoneTitleBox>
+            프로젝트를 찾고 계시나요? <br/>
+            프로젝트에 지원하고 클라이언트와 직접 소통해보세요.
+          </NoneTitleBox>
 
-            <RequestCompleteDesc>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>
-                  의뢰주신 상담이 아직 없습니다. 첫 상담을 시작해보세요.
-                </FontSize22>
-              </InlineDiv>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>
-                  생산에 대한 모든 문의사항을 4000 여 개 전문 제조사들이 바로
-                  상담해드립니다.
-                </FontSize22>
-              </InlineDiv>
-            </RequestCompleteDesc>
+          <Button onClick={() => {
+            Router.push('/project')
+            Project.set_step_index(1)
+            }
+            }>
+              프로젝트 찾기
+          </Button>
+          </>
+          }
 
-            <ButtonBox>
-              <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
+          {/* 클라이언트일 때 */}
+          {Auth.logged_in_client && 
+          <>
+          <NoneTitleBox>
+            업체를 찾고 계시나요? <br/>
+            5분 만에 프로젝트를 등록하고 원하는 업체를 찾아보세요.
+          </NoneTitleBox>
 
-              <MyProjectBtn onClick={() => Router.push("/request")}>
-                상담 및 견적 요청하기
-              </MyProjectBtn>
-            </ButtonBox>
-          </RequestCompleteBox>
+          <Button onClick={() => {
+            Router.push('/request')
+            }
+            }>
+              프로젝트 등록
+          </Button>
+          </>
+          }
+          
         </Containerv1>
       </Background>
     );
@@ -51,11 +58,36 @@ class ProjectNone extends React.Component {
 
 export default ProjectNone;
 
-// global
-const InlineDiv = styled.div`
-  display: inline-flex;
+const Button = styled(Buttonv1)`
+  width: 158px !important;
+  height: 44px !important;
+  font-size: 16px;
+  font-family: NotoSansCJKkr !important;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  margin-top: 22px;
+  margin-bottom: 66px;
+  z-index: 2;
+  :hover {
+    background-color: #174aee;
+  }
 `;
-
+const NoneTitleBox = styled.div`
+  margin-top: 66px;
+  margin-left: auto;
+  margin-right: auto;
+  // width: 346px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: -0.4px !important;
+  text-align: center;
+  color: #282c36;
+`
 // fontsize
 const FontSize26 = styled(Title.FontSize26)`
   font-weight: bold;
@@ -90,21 +122,6 @@ const FontSize18 = styled(Title.FontSize18)`
   line-height: 1.89;
   letter-spacing: -0.45px;
   color: #111111;
-`;
-
-// body
-const RequestCompleteBox = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 1200px;
-  height: 496px;
-  margin-top: 60px;
-  margin-bottom: 200px;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
 `;
 
 const RequestCompleteTitle = styled.div`

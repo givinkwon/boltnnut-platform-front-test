@@ -19,7 +19,10 @@ const pass4 = "static/images/pass4.png";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
-@inject("Project", "Auth")
+
+const userImg = "/static/images/search/user.svg";
+
+@inject("Project", "Auth", "Partner")
 @observer
 class AllProject extends React.Component {
   handleIntersection = (event) => {
@@ -41,7 +44,7 @@ class AllProject extends React.Component {
   }
 
   render() {
-    const { Project } = this.props;
+    const { Project, Partner, Auth } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -61,17 +64,21 @@ class AllProject extends React.Component {
               <Font32 style={{ marginBottom: 60 }}>프로젝트 찾기</Font32>
               <SearchBar />
             </div>
-            <>
-              <Body>
-                <Main>
-                  <Header style={{ paddingTop: "32px" }}>
-                    <Font20 style={{ marginLeft: "-9px" }}>
+            <Header>
+                    <Font20>
                       <span style={{ fontWeight: "bold" }}>
                         {Project.project_count}개
                       </span>
                       의 상담 요청 프로젝트가 있습니다.
                     </Font20>
-                  </Header>
+            </Header>
+          </Container>
+        </Background>
+
+        <Background style={{backgroundColor: '#f6f6f6'}}>
+          <Container style={{ flexDirection: "column", marginTop: 0 }}>
+              <Body>
+                <Main>
 
                   {Project.projectDataList &&
                     Project.currentPage > 0 && 
@@ -82,7 +89,7 @@ class AllProject extends React.Component {
                       return (
                         <>
                           {toJS(item.request_set.length > 0) && (
-                            <Background style={{ marginBottom: "34px" }}>
+                            <Background style={{ marginBottom: "24px"}}>
                               <div
                                 style={{ cursor: "pointer", width: "100%" }}
                                 onClick={() => Project.pushToDetail(item.id)}
@@ -99,8 +106,38 @@ class AllProject extends React.Component {
                       );
                     })}
                 </Main>
+                <SubCard>
+                  <SubCardContainer>
+                    <SubCardTitle>
+                      <div> 최근 본 프로젝트 &nbsp; &nbsp;  &nbsp; 0
+                      </div>
+                    </SubCardTitle>
+                  </SubCardContainer>
+                  
+                    <ShowItem>
+                      <UserBox>
+                        <img src={userImg} />
+                        {Auth.logged_in_user ? (
+                          <div>{Auth.logged_in_user.username.split("@")[0]}</div>
+                        ) : (
+                          <div>로그인 해주세요.</div>
+                        )}
+                      </UserBox>
+                      <SubItem>
+                        <span>프로젝트 의뢰</span>
+                        {Project.project_count ? (
+                          <span>{Project.project_count}</span>
+                        ) : (
+                          <span>0</span>
+                        )}
+                      </SubItem>
+                      <SubItem>
+                        <span>관심 업체 등록</span>
+                        <span>{Partner.totalClientBookmark}</span>
+                      </SubItem>
+                  </ShowItem>
+              </SubCard>
               </Body>
-            </>
           </Container>
         </Background>
         <PageBar>
@@ -210,29 +247,80 @@ class AllProject extends React.Component {
   }
 }
 
-const request_data = [
-  {
-    id: "1",
-    name: "전체",
-    checked: "false",
-  },
-  {
-    id: "2",
-    name: "상담요청",
-    checked: "false",
-  },
-  {
-    id: "3",
-    name: "견적문의",
-    checked: "false",
-  },
-  {
-    id: "4",
-    name: "업체수배",
-    checked: "false",
-  },
-];
+// subcard 관련
+const SubCard = styled.div`
+  display: block;
+`;
 
+const SubCardContainer = styled.div`
+  width: 180px;
+  margin-top: 21px;
+  height: 784px;
+  margin: 0 0 21px 24px;
+  padding: 0 0 524px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+`;
+
+const SubCardTitle = styled.div`
+  width: 180px;
+  height: 40px;
+  object-fit: contain;
+  background-color: #e1e2e4;
+  border-radius: 10px 10px 0px 0px;
+  > div {
+    padding : 11px 12px 9px 12px;  
+  }
+`
+
+const ShowItem = styled.div`
+  margin-left:auto;
+  width: 180px;
+  height: 123px;
+  margin
+`;
+
+
+const UserBox = styled.div`
+  border-bottom: 1px solid #e1e2e4;
+  // padding-bottom: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  > div {
+    font-size: 14px;
+    line-height: 77px;
+    letter-spacing: -0.35px;
+    color: #999999;
+    font-weight: normal;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 60px;
+    > img {
+      width: 30px;
+    }
+  }
+`;
+
+
+const SubItem = styled.div`
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  > span:last-child {
+    color: #0933b3;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > span {
+      font-size: 13px;
+    }
+  }
+`;
+
+
+// 페이지 관련
 const PageBar = styled.div`
   width: 351px;
   margin-top: 109px;
@@ -268,17 +356,9 @@ const Body = styled.div`
   justify-content: center;
   border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  margin-top: 25px;
 `;
 const Main = styled.div`
-  @media (min-width: 768px) and (max-width: 1299.98px) {
-    width: 560px;
-    padding-left: 20px;
-  }
-  @media (min-width: 1300px) {
-    width: 987px;
-    padding-left: 33px;
-  }
 `;
 const Filter = styled.div`
   display: flex;
@@ -318,22 +398,10 @@ const Filter = styled.div`
 `;
 
 const Header = styled.div`
-  width: 993px;
   display: flex;
-  align-items: center;
-  margin-bottom: 28px;
+  margin-right: auto;
+  margin-bottom: 17px;
   position: relative;
-  > span {
-    position: absolute;
-    left: 88%;
-    display: flex;
-    align-items: center;
-    > img {
-      width: 14px;
-      height: 7px;
-      margin-left: 10px;
-    }
-  }
 `;
 
 const Font20 = styled(Title.FontSize20)`

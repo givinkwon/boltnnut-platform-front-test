@@ -9,6 +9,7 @@ const CustomInput = withStyles({
     marginTop: "35px",
     border: "1px",
     borderRadius: "3px",
+    font: "NotoSansCJKkr",
     "& label": {
       color: "#c7c7c7",
     },
@@ -28,6 +29,7 @@ const CustomInput = withStyles({
       borderColor: "#0933b3",
     },
     "& .MuiOutlinedInput-root": {
+
       "& fieldset": {
         borderColor: "#c7c7c7",
       },

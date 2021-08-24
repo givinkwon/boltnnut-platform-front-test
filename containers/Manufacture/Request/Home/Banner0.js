@@ -6,15 +6,31 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 
 import Buttonv1 from "components/Buttonv1";
+import UseScrollCount from "components/AnimationCount"
 
 const arrow = "static/images/request/arrow.svg";
 const background = "static/images/request/background.png";
 
-@inject("Request")
+// 카운트 애니메이션
+const CountFunc = ({index,projCount=0,partnerCount=0}) =>
+{
+    const countItem = {
+      0: UseScrollCount(projCount,0,0,0,15),
+    };
+
+    return (
+        <p {...countItem[index]} style={{display:'inline'}}/>
+    );
+};
+
+
+@inject("Request", "Project")
 @observer
 class RequestMain extends React.Component {
   render() {
-    const { Request } = this.props;
+    const { Request, Project } = this.props;
+    Project.getProject()
+
     return (
       <Background>
         <Container>
@@ -25,7 +41,7 @@ class RequestMain extends React.Component {
               볼트앤너트가 함께 합니다.
             </Header>
             <RequestCount>
-              1,835
+            <CountFunc index={0} projCount={Project.project_count}/>
               <span style={{ fontSize: 25, letterSpacing: -0.63 }}> 건</span>
             </RequestCount>
             <Text>볼트앤너트에 등록된 의뢰 건수</Text>
@@ -87,12 +103,11 @@ const Button = styled(Buttonv1)`
   width: 263px !important;
   height: 58px !important;
   font-size: 20px;
-  font-family: NotoSansCJKkr;
+  font-family: NotoSansCJKkr !important;
   line-height: 2.1;
   letter-spacing: -0.5px;
   margin-top: 100px;
   z-index: 2;
-
   :hover {
     background-color: #174aee;
   }

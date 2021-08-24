@@ -179,7 +179,7 @@ class RequestContent extends Component {
           <RequestHeader>
             <img src={reqeustlogo} style={{ widht: 45, height: 45 }}></img>
             <RequestTitle>
-              <span style={{ color: "#0933b3" }}>프로젝트 정보</span>를
+              <span style={{ color: "#0933b3", fontWeight: 700 }}>프로젝트 정보</span>를
               입력해주세요.
             </RequestTitle>
           </RequestHeader>
@@ -466,13 +466,14 @@ class RequestContent extends Component {
                   <img src={help_face}></img>
                 </Help>
                 <ProjectInput>
-                  <InputComponent2
+                  <InputComponentContent
                     class="Input"
-                    onFocus={(e) => (e.target.placeholder = "")}
+                    //placeholder = {Request.request_contents_placeholder}
                     value={Request.request_contents}
                     onChange={(e) => {
                       Request.set_contents(e);
                     }}
+                    
                   />
                 </ProjectInput>
               </RequestContentBox>
@@ -537,7 +538,7 @@ class RequestContent extends Component {
                   marginBottom: 70,
                 }}
               >
-                <span style={{ color: "#0933b3" }}>관련 파일</span>을 업로드
+                <span style={{ color: "#0933b3", fontWeight: 700 }}>관련 파일</span>을 업로드
                 해주세요.
               </span>
               <ContentTitle style={{ marginBottom: 4 }}>
@@ -595,7 +596,7 @@ class RequestContent extends Component {
                     }
                     style={{ width: 17, height: 17, marginTop: 14 }}
                   ></img>
-                  <SecurityBoxTitle>허용된 제조사만 도면 보기</SecurityBoxTitle>
+                  <SecurityBoxTitle>허용된 제조사만 파일 보기</SecurityBoxTitle>
                   <SecurityBoxContent>
                     채팅이나 견적서 요청에서
                     <br />
@@ -631,7 +632,7 @@ class RequestContent extends Component {
                       display: "flex",
                       justifyContent: "center",
                       fontSize: 32,
-                      fontWeight: 500,
+                      fontWeight: 700,
                       letterSpacing: -0.8,
                       color: "#1e2222",
                       marginTop: 140,
@@ -702,6 +703,7 @@ class RequestContent extends Component {
                           fontSize: 15,
                           display: "flex",
                           alignItems: "center",
+                          fontWeight: "bold",
                         }}
                       >
                         이용약관 및 개인정보 처리방침에 동의합니다. (필수)
@@ -760,6 +762,10 @@ const quantityAry = [
   { label: "9", value: 9 },
   { label: "직접 입력", value: "" },
 ];
+
+const InputComponentContent = styled(InputComponent2)`
+font-family: NotoSansCJKkr !important ;
+`
 
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
@@ -1876,6 +1882,7 @@ const RequestButton = styled(Buttonv1)`
   font-size: 18px;
   line-height: 1.89;
   letter-spacing: -0.45px;
+  font-family : NotoSansCJKkr !important;
 `;
 
 const FileImageContainer = styled.div`
