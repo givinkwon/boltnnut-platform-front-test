@@ -55,8 +55,8 @@ class Content1 extends React.Component {
     await Auth.checkLogin();
 
     // 쿠기 값 리스트에 저장
-    if (Project.projectDetailData.item) {
-      Cookie.add_project_view(Project.projectDetailData.item.id);
+    if (Project.projectDetailData) {
+      Cookie.add_project_view(Project.projectDetailData.id);
     }
 
     // 쿠키 저장하기
