@@ -61,7 +61,7 @@ class RequestMain extends React.Component {
       contents: contents.map((content) => {
         return content.id === id
           ? { ...content, open: !content.open }
-          : content;
+          : {...content, open: false};
       }),
     });
   };
@@ -75,7 +75,7 @@ class RequestMain extends React.Component {
             <Header>자주 묻는 클라이언트 질문</Header>
             {contents.map((content) => {
               return (
-                <QnABox key={content.id}>
+                <QnABox key={content.id} onClick={() => this.toggleOpen(content.id)}>
                   <QnATitle open={content.open}>
                     <span
                       style={{
@@ -91,7 +91,6 @@ class RequestMain extends React.Component {
                       style={{ marginLeft: "auto" }}
                       open={content.open}
                       src={arrow_bottom}
-                      onClick={() => this.toggleOpen(content.id)}
                     />
                   </QnATitle>
 
@@ -128,13 +127,14 @@ const Header = styled.span`
   letter-spacing: -0.8px;
   color: #000;
   margin-top: 140px;
+  margin-bottom: 80px;
 `;
 
 const QnABox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
+
 `;
 
 const QnATitle = styled.div`

@@ -30,10 +30,9 @@ const Buttonv1 = styled.button`
   @media (min-width: 1280px) {
     width: 380px;
     height: 77px;
-    box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.4);
+    // box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.4);
   }
 
-  -webkit-font-smoothing: antialiased;
   transition: all 0.1s ease-out;
 
   &:active {

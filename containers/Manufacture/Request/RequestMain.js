@@ -16,7 +16,7 @@ class RequestMain extends React.Component {
     return (
       <>
         <Background>
-          <Container style={{ width: 1920 }}>
+          <Container style={{ width: 4980 }}>
             <Body>
               <RequestMainBanner0 />
               <RequestMainBanner1 />
