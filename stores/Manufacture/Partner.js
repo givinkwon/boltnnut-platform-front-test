@@ -494,6 +494,7 @@ class Partner {
   };
 
   @observable searchFileUrl = "";
+  @observable imgSearchModalActive = false; // 이미지 검색 시 사진 렌더링하는 박스 상태
   @action onChangeFile = (e) => {
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
@@ -511,6 +512,7 @@ class Partner {
         if (typeof e.currentTarget.files[item] === "object") {
           this.fileArray.pop();
           this.fileArray.push(e.currentTarget.files[item]);
+          this.imgSearchModalActive = true;
         } else {
           break;
         }

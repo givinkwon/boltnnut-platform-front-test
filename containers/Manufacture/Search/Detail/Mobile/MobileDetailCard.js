@@ -13,7 +13,6 @@ import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
 import ReviewStarRating from "../Review/ReviewStarRating";
 
-
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
@@ -184,10 +183,10 @@ class MobileDetailCardContainer extends React.Component {
 
     // 비즈니스 가지고 오기
     console.log(toJS(Partner.partner_detail_list[0].item.business));
-    if(Partner.partner_detail_list[0].item.business != undefined){
-    toJS(Partner.partner_detail_list[0].item.business).map(
-      async (item) => await Partner.getBusinessName(item)
-    );
+    if (Partner.partner_detail_list[0].item.business != undefined) {
+      toJS(Partner.partner_detail_list[0].item.business).map(
+        async (item) => await Partner.getBusinessName(item)
+      );
     }
     console.log(toJS(Partner.business_name));
 
@@ -596,9 +595,6 @@ class MobileDetailCardContainer extends React.Component {
                     zIndex: 1,
                   }}
                 >
-                  <div style={{ opacity: 0.2 }}>
-                    <img src={waterMarkImg} />
-                  </div>
                 </div>
                 <InnerBox>
                   {console.log(this.state.portfoliLocation)}

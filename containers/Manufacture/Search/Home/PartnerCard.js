@@ -96,7 +96,6 @@ class PartnerCard extends React.Component {
           PartnerAPI.getBusinessName(element).then((res) => {
             temp.push(res.data.category);
             this.setState({ business: temp });
-            console.log("이거어언 무엇이냐?", this.state.business);
           });
         });
       })
@@ -218,7 +217,6 @@ class PartnerCard extends React.Component {
 
     return (
       <>
-        {console.log("한번 알아보자아~", this.state.business)}
         {width > 767.98 && data ? (
           <>
             <Card
@@ -632,5 +630,6 @@ const Item = styled.div`
     cursor: pointer;
     width: 262px;
     height: 200px;
+    object-fit: scale-down;
   }
 `;

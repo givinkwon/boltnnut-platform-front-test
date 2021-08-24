@@ -545,11 +545,7 @@ class DetailCardContainer extends React.Component {
                     transform: "translate(-50%,-50%)",
                     zIndex: 1,
                   }}
-                >
-                  <div style={{ opacity: 0.2 }}>
-                    <img src={waterMarkImg} />
-                  </div>
-                </div>
+                ></div>
                 <InnerBox>
                   {console.log(this.state.portfoliLocation)}
                   <TabBar

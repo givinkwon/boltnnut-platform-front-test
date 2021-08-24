@@ -413,5 +413,6 @@ const Item = styled.div`
     cursor: pointer;
     width: 262px;
     height: 200px;
+    object-fit: scale-down;
   }
 `;
