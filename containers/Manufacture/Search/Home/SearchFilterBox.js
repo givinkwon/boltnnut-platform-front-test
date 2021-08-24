@@ -2,13 +2,16 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import MobileSelectComponent from "../Mobile/MobileSelect";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import ButtonComponent from "components/Buttonv2";
 import FilterBoxSearchBar from "./SearchBar";
 import FilterModalContainer from "./FilterModal";
+
 const filter_img = "static/images/filter.svg";
 const down_arrow = "/static/icon/down_arrow.svg";
 const up_arrow = "/static/icon/up_arrow.svg";
+const deleteButtonImg = "/static/images/delete.svg";
 
 @inject("Auth", "Project", "Request", "Partner", "Category")
 @observer
@@ -61,6 +64,10 @@ class SearchFilterBox extends React.Component {
     Partner.subButtonActive = false;
     Category.category_selected_tagbox = [];
     Category.selected_category_subbox = [];
+
+    if (Partner.fileArray > 0) {
+      this.setState({ checkFileUpload: true });
+    }
   };
 
   componentWillUnmount = () => {
@@ -136,6 +143,24 @@ class SearchFilterBox extends React.Component {
     }
   };
 
+  onClickImgModalCloseHandler = () => {
+    const { Partner } = this.props;
+    const req = { page: 1 };
+
+    Partner.matching_image = "";
+    Partner.imgSearchModalActive = false;
+
+    PartnerAPI.getPartners(req)
+      .then((res) => {
+        console.log(res);
+        Partner.partner_count = res.data.count;
+        Partner.partner_list = res.data.results;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   render() {
     const { Category, Partner } = this.props;
     return (
@@ -167,6 +192,7 @@ class SearchFilterBox extends React.Component {
               <img src={this.state.classify_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
+
           <CategoryContainer>
             <CategoryName>업체 분류</CategoryName>
             <Field
@@ -191,6 +217,7 @@ class SearchFilterBox extends React.Component {
               <img src={this.state.category_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
+
           <CategoryContainer>
             <CategoryName>지역</CategoryName>
             <Field
@@ -215,6 +242,7 @@ class SearchFilterBox extends React.Component {
               <img src={this.state.location_arrow ? up_arrow : down_arrow} />
             </Field>
           </CategoryContainer>
+
           <CategoryContainer>
             <ProcessMaterialBox>공정/소재</ProcessMaterialBox>
             <Material active={this.state.develop_material_arrow}>
@@ -238,6 +266,7 @@ class SearchFilterBox extends React.Component {
             </Material>
           </CategoryContainer>
         </FilterCategory>
+
         {Partner.filter_dropdown && (
           <FilterModalContainer type={this.state.type}></FilterModalContainer>
         )}
@@ -252,7 +281,7 @@ class SearchFilterBox extends React.Component {
                   onClick={() =>
                     this.props.Category.remove_selected(
                       v.type,
-                      v.idx,
+                      idx,
                       "search",
                       v.data
                     )
@@ -261,6 +290,31 @@ class SearchFilterBox extends React.Component {
               </SelectedCategoryBox>
             ))}
         </SelectedCategoryContainer>
+
+        {/* 이미지 검색 리스트 */}
+        <ImgSearchModalContainer active={Partner.imgSearchModalActive}>
+          {Partner.fileArray.map((item, idx) => (
+            <ImgSearchModalBox>
+              <span>
+                {Partner.fileArray[0] ? (
+                  <img
+                    style={{ width: 127, height: 101, objectFit: "scale-down" }}
+                    src={Partner.searchFileUrl}
+                  />
+                ) : (
+                  <>파일이 없습니다</>
+                )}
+              </span>
+              <span style={{ fontSize: 14, color: "#1e2222" }}>
+                해당 이미지를 검색 합니다.
+              </span>
+              <DeleteFile
+                src={deleteButtonImg}
+                onClick={() => this.onClickImgModalCloseHandler()}
+              />
+            </ImgSearchModalBox>
+          ))}
+        </ImgSearchModalContainer>
       </ContainerV2>
     );
   }
@@ -1232,4 +1286,22 @@ const DevelopMaterialArrowImg = styled.img`
     css`
       transform: rotate(180deg);
     `}
+`;
+
+const ImgSearchModalContainer = styled.div`
+  display: ${(props) => (props.active ? "flex" : "none")};
+  justify-content: flex-start;
+  width: 1200px;
+  margin-top: 20px;
+`;
+
+const ImgSearchModalBox = styled.div`
+  /* display: ${(props) => (props.active ? "block" : "none")}; */
+`;
+
+const DeleteFile = styled.img`
+  width: 12px;
+  height: 12px;
+  margin-left: 12px;
+  cursor: pointer;
 `;

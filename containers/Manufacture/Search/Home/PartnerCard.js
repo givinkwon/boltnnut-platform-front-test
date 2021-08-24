@@ -17,21 +17,24 @@ const location = "static/icon/location.svg";
 class PartnerCard extends React.Component {
   state = {
     width: null,
+    introduction: false,
+    call: false,
+    message: false,
+    active: false,
     modalOpen: false,
     activeReview: false,
     city: "",
-    business: "",
+    business: [],
     totalPartnerBookmark: "",
     total_review: -1,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { width, Search, data, Partner, idx, Auth } = this.props;
-
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
-    await Partner.existCheckedBookmark(clientId, partnerId, idx);
-    await Partner.getTotalBookmarkByPartner(partnerId);
+    Partner.existCheckedBookmark(clientId, partnerId, idx);
+    Partner.getTotalBookmarkByPartner(partnerId);
 
     const existLogo = data && data.logo && data.logo.split("/")[4];
 
@@ -67,7 +70,7 @@ class PartnerCard extends React.Component {
         console.log(e.response);
       });
 
-    await PartnerAPI.getTotalReview(reviewReq)
+    PartnerAPI.getTotalReview(reviewReq)
       .then((res) => {
         this.setState({ total_review: res.data.score });
       })
@@ -76,7 +79,7 @@ class PartnerCard extends React.Component {
         console.log(e.response);
       });
 
-    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
+    PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then(async (res) => {
         this.setState({ totalPartnerBookmark: res.data.count });
       })
@@ -87,13 +90,13 @@ class PartnerCard extends React.Component {
 
     const temp = [];
     PartnerAPI.getBusinessCategory(partnerReq)
-      .then(async (res) => {
+      .then((res) => {
         res.data.business.forEach((element) => {
           PartnerAPI.getBusinessName(element).then((res) => {
             temp.push(res.data.category);
+            this.setState({ business: temp });
           });
         });
-        this.setState({ business: temp });
       })
       .catch((e) => {
         console.log(e);
@@ -170,6 +173,39 @@ class PartnerCard extends React.Component {
       });
   };
 
+  activeHandler = (type) => {
+    switch (type) {
+      case "file":
+        if (this.state.introduction) {
+          this.setState({ introduction: false });
+        } else {
+          this.setState({ introduction: true });
+        }
+
+        break;
+      case "call":
+        if (this.state.call) {
+          this.setState({ call: false });
+        } else {
+          this.setState({ call: true });
+        }
+        break;
+      case "message":
+        if (this.state.message) {
+          this.setState({ message: false });
+        } else {
+          this.setState({ message: true });
+        }
+        break;
+      case "active":
+        if (this.state.active) {
+          this.setState({ active: false });
+        } else {
+          this.setState({ active: true });
+        }
+    }
+  };
+
   render() {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
@@ -185,10 +221,10 @@ class PartnerCard extends React.Component {
             <Card
               active={this.state.active}
               onMouseOver={() => {
-                Partner.activeHandler("active");
+                this.activeHandler("active");
               }}
               onMouseOut={() => {
-                Partner.activeHandler("active");
+                this.activeHandler("active");
               }}
             >
               <Header>
@@ -217,6 +253,7 @@ class PartnerCard extends React.Component {
                   </Item>
                 )}
               </Header>
+
               <Main>
                 <Title>
                   <div>
@@ -249,6 +286,7 @@ class PartnerCard extends React.Component {
                     </BookMark>
                   )}
                 </Title>
+
                 <Introduce
                   style={{
                     width: 630,
@@ -259,33 +297,17 @@ class PartnerCard extends React.Component {
                 >
                   {data && data.history}
                 </Introduce>
-                {this.state.business.length !== 0 ? (
-                  this.state.active ? (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          return (
-                            <Hashtag style={{ background: " #ffffff" }}>
-                              #{item}
-                            </Hashtag>
-                          );
-                        })}
-                    </div>
-                  ) : (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          return (
-                            <Hashtag style={{ background: " #f6f6f6" }}>
-                              #{item}
-                            </Hashtag>
-                          );
-                        })}
-                    </div>
-                  )
+
+                {this.state.business.length > 0 ? (
+                  <div style={{ display: "flex", marginTop: 11 }}>
+                    {this.state.business.map((item, idx) => (
+                      <Hashtag active={this.state.active}>#{item}</Hashtag>
+                    ))}
+                  </div>
                 ) : (
-                  <></>
+                  <BlankHashtag active={this.state.active} />
                 )}
+
                 <Bottom>
                   <BottomBox>
                     {this.state.total_review === -1 ? (
@@ -307,11 +329,8 @@ class PartnerCard extends React.Component {
                       </Review>
                     )}
                     <Location>
-                      <img
-                        src={location}
-                        style={{ marginLeft: 15, marginRight: 5 }}
-                      ></img>
-                      <div>
+                      <img src={location} />
+                      <div style={{ marginLeft: 10 }}>
                         {(data && data.region === null) || data.region === "nan"
                           ? this.state.city
                           : data.region}
@@ -340,10 +359,10 @@ class PartnerCard extends React.Component {
                 // this.cardClick(e);
               }}
               onMouseOver={() => {
-                Partner.activeHandler("active");
+                this.activeHandler("active");
               }}
               onMouseOut={() => {
-                Partner.activeHandler("active");
+                this.activeHandler("active");
               }}
             >
               <Header>
@@ -399,20 +418,18 @@ class PartnerCard extends React.Component {
 export default PartnerCard;
 
 const Card = styled.div`
-  width: 100%;
-  object-fit: contain;
-  border-bottom: solid 2px #e1e2e4;
-  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
+  gap: 20px;
+  width: 100%;
+  height: 248px;
+  border-bottom: solid 2px #e1e2e4;
   cursor: pointer;
-  height: 100%;
   padding: 14px 0px 14px 10px;
-  box-sizing: border-box;
-  border-radius: 8px;
+  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
 `;
 
 const Header = styled.div`
-  margin-right: 34px;
+  /* margin-right: 34px; */
 `;
 
 const Main = styled.div`
@@ -434,6 +451,8 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
+
   > div:nth-of-type(1) {
     display: flex;
   }
@@ -445,6 +464,7 @@ const Name = styled.div`
   letter-spacing: -0.5px;
   color: #1e2222;
   font-weight: bold;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #0933b3;
     font-size: 16px;
@@ -457,11 +477,13 @@ const Certification = styled.div`
   display: flex;
   justify-content: space-between;
   margin-left: 20px;
+
   img {
     width: 16px;
     height: 16px;
     margin-top: 13px;
   }
+
   div {
     margin-left: 5px;
     font-size: 16px;
@@ -477,12 +499,11 @@ const BookMark = styled.div`
 `;
 
 const Introduce = styled.div`
-  margin-top: 10px;
   font-size: 16px;
-  line-height: 2.5;
-  letter-spacing: -0.4px;
   color: #1e2222;
+  margin-bottom: 12px;
 `;
+
 const Hashtag = styled.div`
   display: flex;
   font-size: 15px;
@@ -494,24 +515,31 @@ const Hashtag = styled.div`
   margin-right: 20px;
   padding-right: 10px;
   padding-left: 10px;
+  background-color: ${(props) => (props.active ? "#ffffff" : "#f6f6f6")};
+`;
+
+const BlankHashtag = styled.div`
+  height: 34px;
+  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 120px;
   width: 95%;
 `;
 
 const BottomBox = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 57px;
 `;
 
 const Review = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   img {
     width: 22px;
     height: 21px;
@@ -600,5 +628,6 @@ const Item = styled.div`
     cursor: pointer;
     width: 262px;
     height: 200px;
+    object-fit: scale-down;
   }
 `;

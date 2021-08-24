@@ -47,10 +47,18 @@ export function getMainCategory(req) {
 }
 
 export function exitProject(req) {
-  console.log(req)
+  console.log(req);
   return axios({
     method: "PUT",
     url: `${ROOT_URL}/project/${req.id}/`,
     data: req.data,
+  });
+}
+
+export function projectView(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/project/view/`,
+    data: req.data ? req.data : null,
   });
 }

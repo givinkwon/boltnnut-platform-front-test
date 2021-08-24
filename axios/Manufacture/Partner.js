@@ -546,3 +546,12 @@ export function saveSearchText(req) {
     data: req.data ? req.data : null,
   });
 }
+
+// 파트너 카드 조회수
+export function partnerView(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/partner/view/`,
+    data: req.data ? req.data : null,
+  });
+}
