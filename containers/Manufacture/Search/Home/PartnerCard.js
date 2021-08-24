@@ -31,7 +31,6 @@ class PartnerCard extends React.Component {
 
   componentDidMount() {
     const { width, Search, data, Partner, idx, Auth } = this.props;
-
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
     Partner.existCheckedBookmark(clientId, partnerId, idx);
@@ -103,8 +102,6 @@ class PartnerCard extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
-    // 조회수 axios 요청
   }
 
   componentWillUnmount() {
@@ -428,7 +425,6 @@ const Card = styled.div`
   border-bottom: solid 2px #e1e2e4;
   cursor: pointer;
   padding: 14px 0px 14px 10px;
-  border-radius: 8px;
   background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
 `;
 

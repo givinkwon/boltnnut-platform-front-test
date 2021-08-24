@@ -430,6 +430,16 @@ class Partner {
   @action pushToDetail = async (item, idx) => {
     this.detailLoadingFlag = true;
 
+    // 파트너 카드 조회 수 체크
+    const req = {
+      data: { partner_id: item.id },
+    };
+    PartnerAPI.partnerView(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+
     if (!this.requestModalActive && !this.modalActive) {
       this.category_name_list = null;
 
