@@ -7,14 +7,17 @@ import Router from "next/router";
 import Buttonv1 from "components/Buttonv1";
 import { inject, observer } from "mobx-react";
 
-@inject("Project")
+@inject("Project", "Auth")
 @observer
 class ProjectNone extends React.Component {
   render() {
-    const { Project } = this.props;
+    const { Project, Auth } = this.props;
     return (
       <Background style={{width:"894px", height:"248px"}}>
         <Containerv1 style={{display:"contents"}} >
+          {/* 파트너일 때 */}
+          {Auth.logged_in_partner && 
+          <>
           <NoneTitleBox>
             프로젝트를 찾고 계시나요? <br/>
             프로젝트에 지원하고 클라이언트와 직접 소통해보세요.
@@ -27,6 +30,25 @@ class ProjectNone extends React.Component {
             }>
               프로젝트 찾기
           </Button>
+          </>
+          }
+
+          {/* 클라이언트일 때 */}
+          {Auth.logged_in_client && 
+          <>
+          <NoneTitleBox>
+            업체를 찾고 계시나요? <br/>
+            5분 만에 프로젝트를 등록하고 원하는 업체를 찾아보세요.
+          </NoneTitleBox>
+
+          <Button onClick={() => {
+            Router.push('/request')
+            }
+            }>
+              프로젝트 등록
+          </Button>
+          </>
+          }
           
         </Containerv1>
       </Background>
