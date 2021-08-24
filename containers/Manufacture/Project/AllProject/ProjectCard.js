@@ -86,7 +86,7 @@ class ProjectCardContainer extends React.Component {
     const { Project } = this.props;
 
     return (
-      <Background>
+      <Background style={{marginTop: 0, width: '996px'}}>
         <Container style={{ width: "95%" }}>
           <MainContainer>
             <ContentBox style={{ width: 110, alignItems: "center" }}>
