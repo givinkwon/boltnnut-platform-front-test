@@ -861,7 +861,7 @@ const Layer = styled.div`
 
 const RequestMiddle = styled.div`
   position: sticky;
-  top: 68px;
+  top: 66px;
   z-index: 100;
   width: 100%;
   display: flex;
