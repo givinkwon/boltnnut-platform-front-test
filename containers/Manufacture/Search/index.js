@@ -28,7 +28,6 @@ class SearchConatiner extends React.Component {
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     partner_view_data = await Cookies.get("partner_view");
     // list 전처리
-    console.log(partner_view_data);
     if (partner_view_data) {
       partner_view_data = partner_view_data
         .replace("[", "")
@@ -75,7 +74,6 @@ class SearchConatiner extends React.Component {
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
-
             </>
           ))}
       </>

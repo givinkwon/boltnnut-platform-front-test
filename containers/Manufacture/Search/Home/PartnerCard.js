@@ -62,7 +62,7 @@ class PartnerCard extends React.Component {
     };
 
     PartnerAPI.getCityName(req)
-      .then(async (res) => {
+      .then((res) => {
         this.setState({ city: res.data.maincategory });
       })
       .catch((e) => {
@@ -80,7 +80,7 @@ class PartnerCard extends React.Component {
       });
 
     PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then(async (res) => {
+      .then((res) => {
         this.setState({ totalPartnerBookmark: res.data.count });
       })
       .catch((e) => {
@@ -287,15 +287,10 @@ class PartnerCard extends React.Component {
                   )}
                 </Title>
 
-                <Introduce
-                  style={{
-                    width: 630,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {data && data.history}
+                <Introduce>
+                  {data && data.history.length > 35
+                    ? data.history.slice(0, 35) + "..."
+                    : data.history}
                 </Introduce>
 
                 {this.state.business.length > 0 ? (
@@ -339,8 +334,14 @@ class PartnerCard extends React.Component {
                   </BottomBox>
                   <BottomBox>
                     <ViewCount>
-                      <img src={viewcount} style={{ marginRight: 5 }}></img>
-                      <div>높음</div>
+                      <img src={viewcount} style={{ marginRight: 5 }} />
+                      {data && data.view <= 1 ? (
+                        <div>낮음</div>
+                      ) : 1 <= data.view && data.view <= 4 ? (
+                        <div>보통</div>
+                      ) : data.view >= 5 ? (
+                        <div>높음</div>
+                      ) : null}
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
@@ -499,6 +500,9 @@ const BookMark = styled.div`
 `;
 
 const Introduce = styled.div`
+  width: 630px;
+  white-space: nowrap;
+  overflow: hidden;
   font-size: 16px;
   color: #1e2222;
   margin-bottom: 12px;
@@ -519,6 +523,7 @@ const Hashtag = styled.div`
 `;
 
 const BlankHashtag = styled.div`
+  width: 1px;
   height: 34px;
   background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
 `;
