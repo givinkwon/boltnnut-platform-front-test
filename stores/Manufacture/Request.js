@@ -82,15 +82,22 @@ class Request {
     console.log(this.request_price);
   };
 
-  // 예산 조율 협의 상태 추가하기
+  // 납기일 협의 상태 추가하기
   @action set_period_state = (val) => {
     this.request_period_state = val;
     console.log(this.request_period_state);
   };
 
-  // 납기일 협의 상태 추가하기
+  // 비용 조율 협의 상태 추가하기
   @action set_price_state = (val) => {
-    this.request_price_state = val;
+    if(val) {
+      // 상담 후 예산 결정 선택 시에
+      this.request_price_state = 1;
+    } else {
+      // 미선택 시에
+      this.request_price_state = 0;
+    }
+
     console.log(this.request_price_state);
   };
 
@@ -199,7 +206,7 @@ class Request {
     // 희망 예산 상태 저장
     formData.append("price_state", this.request_price_state);
 
-    // 희망 예산 저장
+    // 지역 저장
     formData.append("region", this.request_region.id);
 
     // 희망 예산 상태 저장
@@ -429,7 +436,7 @@ class Request {
     this.request_state = -1;
     this.request_name = "";
     this.request_price = "";
-    this.request_price_state = -1;
+    this.request_price_state = 0;
     this.request_period = "";
     this.request_period_state = 0;
     //this.request_contents = "";

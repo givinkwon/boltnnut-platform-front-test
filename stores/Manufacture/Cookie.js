@@ -48,13 +48,12 @@ class Cookie {
       console.log(toJS(this.project_view_list));
     };
     
-    @observable recnet_project_list = [];
+
 
     // 최근 본 프로젝트 불러오기
     @action get_recent_project = () => {
-      this.partner_view_list.map((item, idx) => {
-        Project.getProjectDetail(item)
-        this.recnet_project_list.append(Project.projectDetailData) 
+      this.project_view_list.map( async (item, idx) => {
+        Project.getProjectDetail(item, "Cookie")
       }
       )
     }

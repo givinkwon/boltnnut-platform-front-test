@@ -380,6 +380,8 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <>
+            {/* 페이스북 설치 태그*/}
+            <meta name="facebook-domain-verification" content="l31dir7jjxp2c050hcf9cjdnjpgi50" /> 
             {/* 구글 옵티마이저 설치태그 */}
             <script src="https://www.googleoptimize.com/optimize.js?id=OPT-56ZDC8G"></script>
             <script

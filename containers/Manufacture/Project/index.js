@@ -26,24 +26,6 @@ class ProjectContainer extends React.Component {
   }
   
   async componentDidMount() {
-    const { Auth, Project, Cookie } = this.props;
-  
-    // Cookie 값 가지고 와서 리스트에 먼저 저장
-    let project_view_data = [];
-    project_view_data = await Cookies.get("project_view");
-    // list 전처리
-    console.log(project_view_data);
-    if (project_view_data) {
-      project_view_data = project_view_data
-        .replace("[", "")
-        .replace("]", "")
-        .split(",");
-    }
-
-    if (project_view_data !== undefined && project_view_data !== "undefined") {
-      project_view_data.map((data) => Cookie.add_project_view(data));
-    }
-    // Cookie 값 저장 끝
 
   }
 
@@ -62,7 +44,7 @@ class ProjectContainer extends React.Component {
               {/* 내 프로젝트 */}
               {Project.step_index == 0 && <MyProject/>}
               {/* 전체 프로젝트 */}
-              {Project.step_index == 1 && <AllProject />}
+              {Project.step_index == 1 && <AllProject/>}
               
               {/* 프로젝트 상세 */}
               {/* 클라이언트로 로그인 */}

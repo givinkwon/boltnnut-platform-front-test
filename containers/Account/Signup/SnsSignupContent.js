@@ -91,10 +91,13 @@ class SnsSignupContent extends React.Component {
               defaultValue={Signup.individual}
             />
             <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
-            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
 
             <div style={{ display: "inline-flex", marginTop: "12px" }}>
-              <CustomCheckBox type="checkbox" onClick={() => Signup.individualhandler(Signup.individualState)} />
+              <CustomCheckBox type="checkbox" onClick={() => {
+                Signup.individualhandler(Signup.individualState)
+                Signup.company_name = "개인"; 
+              }}
+                />
               <Title15>개인일 경우 체크해 주세요.</Title15>
             </div>
           </InputInnerBox>
@@ -395,7 +398,7 @@ const InputInnerBox = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  margin-top: 32px;
+  margin-top: 80px;
 `;
 
 const AgreeContainer = styled.div`

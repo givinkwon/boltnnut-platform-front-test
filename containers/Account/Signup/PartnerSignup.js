@@ -175,11 +175,6 @@ class PartnerSignupContainer extends React.Component {
               active={Signup.company_nameInputState}
             />
             <InvalidImgBox src={success} active={Signup.company_nameInvalid} />
-            {Signup.company_name && (
-              <InvalidTitle14 active={Signup.company_nameInvalid}>
-                특수문자는 입력할 수 없습니다.
-              </InvalidTitle14>
-            )}
           </InputInnerBox>
 
           {/* agree */}
