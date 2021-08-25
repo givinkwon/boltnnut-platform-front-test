@@ -30,10 +30,11 @@ class Project {
 
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
-
+  // subbox에서 프로젝트 개수
+  @observable subbox_project_count = 0;
   
   /* 프로젝트 가져오기 */
-  // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기 / 채팅창에서 호출
+  // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기 / 채팅창에서 호출 3. subbox : subox에서 프로젝트 개수 호출
   // search_text : allproject에서 검색한 경우에 검색 텍스트 저장 후 필터 호출
   // clientId : 해당 클라이언트의 프로젝트 가져오기 | partnerId : 해당 파트너의 프로젝트 가져오기
   // page : page에 따라 호출
@@ -66,10 +67,10 @@ class Project {
       });
     } 
 
-    // 내 프로젝트 가져오기에서 호출한 경우
+    // 내 프로젝트 가져오기에서 호출한 경우 or Subbox에서 프로젝트 개수 가져오는 경우
 
     // 클라이언트인 경우
-    if (container == "myproject" && clientId != ""){
+    if ((container == "myproject" || container == "subbox" ) && clientId != "" ){
       const req = {
           params: {
             request__client: clientId,
@@ -83,6 +84,9 @@ class Project {
 
       await ProjectAPI.getProjects(req)
       .then((res) => {
+        
+        // 내 프로젝트 가져오기에서 호출한 경우
+        if(container == "myproject") {
         // 과거 데이터 삭제
         this.projectDataList = [];
         this.projectDataList = res.data.results;
@@ -90,6 +94,12 @@ class Project {
         this.project_count = res.data.count;
         this.project_page = parseInt((this.project_count - 1) / 5) + 1;
         console.log(res.data.results);
+        }
+
+        // subbox에서 프로젝트 개수 호출한 경우
+        if(container == "subbox") {
+          this.subbox_project_count = res.data.count;
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -136,9 +146,22 @@ class Project {
       alert("프로젝트 상세 내용은 볼트앤너트에 등록된 파트너사 혹은 본인만 확인 가능합니다.")
       return false;
     }
+    // 프로젝트 view 카운트 추가하기
+    const req = {
+      data: { project_id: id },
+    };
+    ProjectAPI.projectView(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+
+    // 프로젝트 id 설정 
     this.selectedProjectId = id;
+    
     // 디테일 데이터 가져오기
     await this.getProjectDetail(id);
+    
     // 상세 페이지로 이동
     this.set_step_index(2)
   };
@@ -272,6 +295,8 @@ class Project {
     // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
     this.projectQuickView = [];
     this.recent_project_list = [];
+    // subbox에서 프로젝트 개수
+    this.subbox_project_count = 0;
   }
 }
 

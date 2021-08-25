@@ -149,12 +149,20 @@ class ProjectCardContainer extends React.Component {
 
             <AssistantInnerBox>
               <img src="static/images/eye.svg" />
-              <AssistantTitle14>높음</AssistantTitle14>
+              <AssistantTitle14>
+              {data && data.view <= 1 ? (
+                        <div>낮음</div>
+                      ) : 1 <= data.view && data.view <= 4 ? (
+                        <div>보통</div>
+                      ) : data.view >= 5 ? (
+                        <div>높음</div>
+                      ) : null}
+              </AssistantTitle14>
             </AssistantInnerBox>
 
             <AssistantInnerBox>
               <img src="static/images/person.svg" />
-              <AssistantTitle14>총 3명 지원</AssistantTitle14>
+              <AssistantTitle14>총 {data && data.answer_set.length} 명 지원</AssistantTitle14>
             </AssistantInnerBox>
 
             <img src="static/images/underline.svg" style={{ marginTop: 9 }} />

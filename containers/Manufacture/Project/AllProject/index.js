@@ -66,6 +66,9 @@ class AllProject extends React.Component {
 
     // Cookie 값에 저장된 프로젝트 불러오기
     Cookie.get_recent_project()
+
+    // subbox 프로젝트 개수 호출
+    Project.getProject("subbox")
   }
 
   render() {
@@ -179,11 +182,8 @@ class AllProject extends React.Component {
                       </UserBox>
                       <SubItem>
                         <span>프로젝트 의뢰</span>
-                        {Project.project_count ? (
-                          <span>{Project.project_count}</span>
-                        ) : (
-                          <span>0</span>
-                        )}
+                        <span>{Project.subbox_project_count}</span>
+
                       </SubItem>
                       <SubItem>
                         <span>관심 업체 등록</span>
