@@ -6,6 +6,7 @@ import Router from "next/router";
 import Auth from "../Account/Auth";
 
 import Category from "./Category";
+import { NonceProvider } from "react-select";
 
 class Partner {
   constructor() {
@@ -958,6 +959,7 @@ class Partner {
     }
     this.search();
   };
+
   @action search = async () => {
     const name = this.search_text;
     const develop = this.search_develop;
@@ -1038,6 +1040,11 @@ class Partner {
   @action ImageSearch = () => {
     // 데이터 만들기
     var formData = new FormData();
+
+    if (Auth.logged_in_user !== null) {
+      formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
+    }
+
     formData.append("file", this.file);
 
     const req = {
@@ -1438,23 +1445,19 @@ class Partner {
         );
         this.develop_next = res.data.next;
 
-        // console.log(toJS(res.data.results));
-        // console.log(toJS(this.filter_category_ary));
-        // console.log(this.develop_next);
         while (this.develop_next) {
           const req = {
             nextUrl: this.develop_next,
           };
-          //console.log("========================");
+
           await PartnerAPI.getNextDevelopPage(req)
             .then((res) => {
-              //console.log(res);
               this.filter_category_ary = this.filter_category_ary.concat(
                 res.data.results
               );
 
               this.develop_next = res.data.next;
-              //console.log(this.develop_next);
+
               //this.project_page = parseInt(this.project_count/5) + 1
               // if (callback) {
               //   callback();
@@ -1465,9 +1468,6 @@ class Partner {
               console.log(e.response);
             });
         }
-        // console.log(toJS(res.data.results.category));
-        // console.log(toJS(typeof this.filter_category_ary));
-        // console.log(toJS(toJS(this.filter_category_ary)));
       })
       .catch((e) => {
         console.log(e);
@@ -1487,27 +1487,23 @@ class Partner {
         this.filter_city_ary = await this.filter_city_ary.concat(
           res.data.results
         );
-        // console.log(toJS(this.filter_city_ary));
+
         this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
-        // console.log(toJS(res.data.results));
-        // console.log(toJS(this.filter_city_ary));
-        // console.log(this.city_next);
         while (this.city_next) {
           const req = {
             nextUrl: this.city_next,
           };
           await PartnerAPI.getNextCityPage(req)
             .then((res) => {
-              // console.log(res);
               this.filter_city_ary = this.filter_city_ary.concat(
                 res.data.results
               );
               this.city_ary = this.city_ary.concat(res.data.results);
 
               this.city_next = res.data.next;
-              //console.log(this.city_next);
+
               //this.project_page = parseInt(this.project_count/5) + 1
               // if (callback) {
               //   callback();
@@ -1523,7 +1519,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    // console.log(this.filter_city_ary);
   };
 
   // city를 id로 주고 있어서 이름 가져오기
