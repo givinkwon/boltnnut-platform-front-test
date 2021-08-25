@@ -7,6 +7,7 @@ import Background from "components/Background";
 
 
 import PartnerCard from "containers/Manufacture/Search/Home/PartnerCard";
+import NoContainer from "./NoContainer";
 
 const userImg = "/static/images/search/user.svg";
 
@@ -39,6 +40,8 @@ class SubBoxContainer extends React.Component {
     console.log(Project.project_count);
     return (
       <>
+        {/* 클라이언트일 때 */}
+        {Auth.logged_in_client &&
         <Main>
           <MainHeader>
             <div>관심 제조사</div>
@@ -78,7 +81,58 @@ class SubBoxContainer extends React.Component {
                 </Background>
               );
             })}
+
+            {/* 파트너 리스트 없을 때 */}
+            {Partner.partner_list.length == 0 && <NoPartner/>}
         </Main>
+        }
+
+        {/* 파트너일 때 */}
+        {Auth.logged_in_partner &&
+        <Main>
+          <MainHeader>
+            <div>관심 프로젝트</div>
+          </MainHeader>
+          {Partner.partner_list &&
+            Partner.partner_list.map((item, idx) => {
+              console.log(item);
+              return (
+                <Background
+                  style={{
+                    marginTop: 24,
+                    backgroundColor: "#f6f6f6",
+                  }}
+                >
+                  <div
+                    onClick={async () => {
+                      console.log(Auth);
+                      if (Auth.logged_in_client) {
+                        await Project.getProject(
+                          "myproject",
+                          Auth.logged_in_client.id
+                        );
+                      }
+                      Partner.pushToDetail(item.bookmark_partner, idx);
+                    }}
+                    style={{ width: "100%" }}
+                  >
+                    <PartnerCard
+                      data={item.bookmark_partner}
+                      width={this.props.width}
+                      idx={idx}
+                      categoryData={toJS(Partner.category_dic[idx])}
+                      handleIntersection={Search.handleIntersection}
+                      customer="partner"
+                    />{" "}
+                  </div>
+                </Background>
+              );
+            })}
+
+            {/* 파트너 리스트 없을 때 */}
+            {Partner.partner_list.length == 0 && <NoContainer/>}
+        </Main>
+        }
       </>
     );
   }
@@ -91,8 +145,10 @@ const Main = styled.div`
 `;
 
 const MainHeader = styled.div`
+width: 894px;
 padding-top: 45px;
 padding-bottom: 16px;
+margin-bottom: 21px;
 border-bottom: solid 1px #e1e2e4;
 font-size: 20px;
   font-weight: 500;
