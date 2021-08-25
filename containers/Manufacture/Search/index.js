@@ -52,11 +52,6 @@ class SearchConatiner extends React.Component {
               {Partner.newIndex == 0 && (
                 <>
                   <BannerConatiner />
-                  <Background>
-                    <Container>
-                      <SearchFilterBox width={this.props.width} />
-                    </Container>
-                  </Background>
                   <ContentContainer width={this.props.width} />
                 </>
               )}

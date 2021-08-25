@@ -14,6 +14,9 @@ import PartnerCard from "./PartnerCard";
 import { toJS } from "mobx";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 import Cookies from "js-cookie";
+import SearchBar from "./SearchBar";
+import SearchFilterBox from "./SearchFilterBox";
+import { flexbox } from "@material-ui/system";
 
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -39,6 +42,7 @@ class ManufacturerContentContainer extends React.Component {
     file: "",
     checkFileUpload: false,
     result_banner: false,
+    scorllActive: false,
   };
 
   async componentDidMount() {
@@ -140,8 +144,11 @@ class ManufacturerContentContainer extends React.Component {
     return (
       <>
         <Background id="MyBackground">
+          <SearchBar />
+          <SearchFilterBox />
+
           {Partner.result_banner && (
-            <RequestMiddle>
+            <RequestMiddle className="fixed">
               <ResultBannerContainer>
                 <ResultBannerInnerBox>
                   <Font22 style={{ color: "#000000" }}>
@@ -165,6 +172,7 @@ class ManufacturerContentContainer extends React.Component {
               </ResultBannerContainer>
             </RequestMiddle>
           )}
+
           <Container>
             <Body>
               {Partner.detailLoadingFlag && (
@@ -852,6 +860,9 @@ const Layer = styled.div`
 `;
 
 const RequestMiddle = styled.div`
+  position: sticky;
+  top: 68px;
+  z-index: 100;
   width: 100%;
   display: flex;
   justify-content: center;

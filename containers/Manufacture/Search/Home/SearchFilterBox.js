@@ -5,7 +5,6 @@ import MobileSelectComponent from "../Mobile/MobileSelect";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import ButtonComponent from "components/Buttonv2";
-import FilterBoxSearchBar from "./SearchBar";
 import FilterModalContainer from "./FilterModal";
 
 const filter_img = "static/images/filter.svg";
@@ -165,8 +164,6 @@ class SearchFilterBox extends React.Component {
     const { Category, Partner } = this.props;
     return (
       <ContainerV2>
-        <FilterBoxSearchBar />
-
         <FilterCategory>
           <CategoryContainer>
             <CategoryName>카테고리</CategoryName>
@@ -393,12 +390,10 @@ const Field = styled.div`
 `;
 
 const ContainerV2 = styled.div`
-  margin-top: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 1200px;
-  margin-bottom: 15px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
