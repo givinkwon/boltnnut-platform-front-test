@@ -12,6 +12,8 @@ import Background from "components/Background";
 import SearchBar from "./SearchBar";
 import { toJS } from "mobx";
 
+// Cookie 추가
+import Cookies from "js-cookie"
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 const pass4 = "static/images/pass4.png";
@@ -21,8 +23,9 @@ const right = "static/icon/right-arrow.png";
 
 
 const userImg = "/static/images/search/user.svg";
+const Remove = "/static/images/project/remove.png";
 
-@inject("Project", "Auth", "Partner")
+@inject("Project", "Auth", "Partner", "Cookie")
 @observer
 class AllProject extends React.Component {
   handleIntersection = (event) => {
@@ -32,7 +35,9 @@ class AllProject extends React.Component {
   };
 
   async componentDidMount() {
-    const { Project, Auth } = this.props;
+    const { Project, Auth, Cookie } = this.props;
+    // 프로젝트 초기화
+    await Project.reset()
     Project.newIndex = 0;
     Project.search_text = "";
     Project.currentPage = 1;
@@ -41,10 +46,30 @@ class AllProject extends React.Component {
 
     await Auth.checkLogin();
     Project.getProject("allproject");
+    
+    // Cookie 값 가지고 와서 리스트에 먼저 저장
+    let project_view_data = [];
+    project_view_data = await Cookies.get("project_view");
+    // list 전처리
+    console.log(project_view_data);
+    if (project_view_data) {
+      project_view_data = project_view_data
+        .replace("[", "")
+        .replace("]", "")
+        .split(",");
+    }
+
+    if (project_view_data !== undefined && project_view_data !== "undefined") {
+      project_view_data.map((data) => Cookie.add_project_view(data));
+    }
+    // Cookie 값 저장 끝
+
+    // Cookie 값에 저장된 프로젝트 불러오기
+    Cookie.get_recent_project()
   }
 
   render() {
-    const { Project, Partner, Auth } = this.props;
+    const { Project, Partner, Auth, Cookie } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -109,9 +134,38 @@ class AllProject extends React.Component {
                 <SubCard>
                   <SubCardContainer>
                     <SubCardTitle>
-                      <div> 최근 본 프로젝트 &nbsp; &nbsp;  &nbsp; 0
+                      <div> 최근 본 프로젝트 &nbsp; &nbsp;  &nbsp; {Project.recent_project_list.length}
                       </div>
                     </SubCardTitle>
+                    <SubCardProject>
+                    {Project.recent_project_list.map((item, idx) => {
+                      
+                      return (
+                       
+                      <div style={{display: 'flex'}}>
+                        <span onClick={()=> Project.pushToDetail(item.id)} >{item.request_set ? item.request_set[0].name : item.title}</span>
+                        <img onClick={() => {
+                          console.log(item.id)
+                          Cookie.delete_project_view(item.id)
+                          // 쿠키 저장하기
+                          const expires = new Date();
+                          console.log(Cookie.project_view_list)
+                          expires.setMinutes(expires.getMinutes() + 2440);
+                          Cookies.set("project_view", Cookie.project_view_list, {
+                            path: "/",
+                            expires,
+                          });
+                          // 변경된 쿠키에 따라서 재설정
+                          Cookie.get_recent_project()
+                        }} 
+                        src={Remove}/>
+                      </div>
+                       
+                      )
+                    })
+                    }
+                    </SubCardProject>
+                    
                   </SubCardContainer>
                   
                     <ShowItem>
@@ -272,6 +326,37 @@ const SubCardTitle = styled.div`
   border-radius: 10px 10px 0px 0px;
   > div {
     padding : 11px 12px 9px 12px;  
+  }
+`
+
+const SubCardProject = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 163px;
+  height: 40px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #86888c;
+  > div {
+    padding : 24px 0px 24px 0px;
+    border-bottom: 1px solid #e1e2e4;
+    > span {
+      margin-right: auto;
+      cursor : pointer;
+    }
+    > img {
+      width : 16px;
+      height : 16px;
+      margin-left : 13px;
+      cursor : pointer;
+    }
   }
 `
 
