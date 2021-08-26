@@ -6,7 +6,7 @@ import { toJS } from "mobx";
 import Background from "components/Background";
 
 
-import PartnerCard from "containers/Manufacture/Search/Home/PartnerCard";
+import ProjectCard from "containers/Manufacture/Project/AllProject/ProjectCard";
 import NoContainer from "./NoContainer";
 
 const userImg = "/static/images/search/user.svg";
@@ -19,25 +19,21 @@ class SubBoxContainer extends React.Component {
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
-    await Partner.getBookmarkByClient(clientId);
+    
+    // 클라이언트 로그인일 때
+    if(Auth.logged_in_client) {
+      await Partner.getBookmarkByClient(clientId);
+    }
+
+    // 파트너 로그인일 때
+    if(Auth.logged_in_partner){
+      await Project.getProject("myproject", "", partnerId)
+    }
   };
   render() {
     const { Auth, partnerId, Project, Partner, Search } = this.props;
-    // console.log(this.props.Auth.logged_in_client.id);
-    // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
-    console.log(toJS(Auth));
+    console.log(Project.projectDataList)
 
-    let notLoginUser = false;
-    if (!Auth.logged_in_client && !Auth.logged_in_partner) {
-      notLoginUser = true;
-    }
-
-    const userEmail =
-      Auth.logged_in_client && Auth.logged_in_client.user.username;
-    const clientId =
-      this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
-    console.log(toJS(`partnerId: ${partnerId}`));
-    console.log(Project.project_count);
     return (
       <>
         {/* 클라이언트일 때 */}
@@ -93,8 +89,8 @@ class SubBoxContainer extends React.Component {
           <MainHeader>
             <div>관심 프로젝트</div>
           </MainHeader>
-          {Partner.partner_list &&
-            Partner.partner_list.map((item, idx) => {
+          {Project.projectDataList &&
+            Project.projectDataList.map((item, idx) => {
               console.log(item);
               return (
                 <Background
@@ -105,32 +101,22 @@ class SubBoxContainer extends React.Component {
                 >
                   <div
                     onClick={async () => {
-                      console.log(Auth);
-                      if (Auth.logged_in_client) {
-                        await Project.getProject(
-                          "myproject",
-                          Auth.logged_in_client.id
-                        );
-                      }
-                      Partner.pushToDetail(item.bookmark_partner, idx);
+                      Project.pushToDetail(item.id);
                     }}
                     style={{ width: "100%" }}
                   >
-                    <PartnerCard
-                      data={item.bookmark_partner}
-                      width={this.props.width}
-                      idx={idx}
-                      categoryData={toJS(Partner.category_dic[idx])}
-                      handleIntersection={Search.handleIntersection}
+                    <ProjectCard
+                      data={item}
+                      handleIntersection={this.handleIntersection}
                       customer="partner"
-                    />{" "}
+                    />
                   </div>
                 </Background>
               );
             })}
 
             {/* 파트너 리스트 없을 때 */}
-            {Partner.partner_list.length == 0 && <NoContainer/>}
+            {Project.projectDataList.length == 0 && <NoContainer/>}
         </Main>
         }
       </>
