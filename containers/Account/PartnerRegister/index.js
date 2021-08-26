@@ -37,27 +37,22 @@ class PartnerRegisterContainer extends React.Component {
                 <CategoryItem
                   active={item.checked}
                   onClick={() => {
-                    // Router.push(
-                    //   "/partnerregister/[pagename]",
-                    //   "/partnerregister/Category"
-                    // );
-                    // Auth.registerType = item.type;
                     item.checked = !item.checked;
                     Category.isChecked("main");
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <img src={item.img} />
-                    {item.content}
+                    <img style={{ marginRight: "32px"}} src={item.img} />
+                    <span>{item.content}</span>
                   </div>
-                  <input type="checkbox" checked={item.checked} />
+                  <input style={{width : '18px', height : '18px'}}type="checkbox" checked={item.checked} />
                 </CategoryItem>
               );
             })}
           </CategoryBox>
 
           {Category.nextBtnActive ? (
-            <Button
+            <ButtonRegister
               buttonType="next"
               onClick={() => {
                 Router.push(
@@ -67,7 +62,7 @@ class PartnerRegisterContainer extends React.Component {
               }}
             >
               다음 단계
-            </Button>
+            </ButtonRegister>
           ) : (
             <DisabledButton
 
@@ -82,21 +77,44 @@ class PartnerRegisterContainer extends React.Component {
 
 export default PartnerRegisterContainer;
 
-// 버튼 비활성화 시
-const DisabledButton = styled.div`
+const ButtonRegister = styled(Button)`
+  padding : 0px;
+  margin-top : 46px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 181px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 24px;
+  background-color: #0933b3;
+  /* 버튼 폰트 */
+  color: #fff;
+  object-fit: contain;
+  font-family: NotoSansCJKkr !important;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.45px;
+  text-align: center;
+`
+
+// 버튼 비활성화 시
+const DisabledButton = styled.div`
+  margin-top : 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 181px;
+  height: 48px;
   object-fit: contain;
   border-radius: 24px;
   background-color: #e1e2e4;
   /* 버튼 폰트 */
   color: #a4aab4;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
-  padding-top: 11px;
-  padding-bottom: 10px;
+  font-family: NotoSansCJKkr !important;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -111,12 +129,15 @@ const CategoryBox = styled.div`
 
 const CategoryItem = styled.div`
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
   padding: 40px 52px 40px 102px;
+  font-weight: 700;
   object-fit: contain;
   border-radius: 10px;
   border: ${(props) =>
     props.active ? "solid 2px #0933b3" : "solid 2px #c6c7cc;"};
+  font-size: 18px;
+  
 `;

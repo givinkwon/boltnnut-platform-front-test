@@ -5,17 +5,12 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import CheckBoxComponent from "./CheckBoxComponent";
-const topCategoryOuterStyles = {
-  borderRadius: "5px",
-  border: "1px solid #e1e2e4",
-  marginBottom: 20,
-};
 
 const outerStylesFirst = {
   borderRadius: "5px",
   border: "2px solid #e1e2e4",
-  marginBottom: 70,
-  marginTop: 100,
+  marginBottom: 20,
+  marginTop: 0,
 };
 
 const outerStyles = {
@@ -26,9 +21,9 @@ const outerStyles = {
 
 const outerStyles_error = {
   borderRadius: "5px",
-  border: "2px solid #e53c38",
+  border: "1px solid #e53c38",
   marginBottom: 70,
-  marginTop: 100,
+  marginTop: 0,
 };
 
 const innerStyles = {
@@ -70,11 +65,12 @@ class CategoryContainer extends Component {
                                 {Category.mainbusiness_list &&
                                   Category.mainbusiness_list[item.id]
                                     .maincategory}
-                                     &nbsp;
                                      
-                                <b style={{                             
+                                <b style={{   
+                                    marginLeft: 8,                          
                                     fontWeight: "bold",
                                     color: "#E53C38",
+                                    fontSize: "14px",
                                 }}>(필수)</b>
                               </Font18>
                             </HeaderText>
@@ -121,7 +117,7 @@ class CategoryContainer extends Component {
             </>
           );
         })}
-        <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16 }}>
+        <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16, marginTop: 50 }}>
           카테고리
         </Font18>
         <InnerBox
@@ -184,7 +180,6 @@ class CategoryContainer extends Component {
 }
 
 export default CategoryContainer;
-
 
 const CheckItem = styled.label`
   width: 33%;

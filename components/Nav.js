@@ -645,7 +645,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper>
                         <KSLink
-                          url={"partnerregister"}
+                          url={"signup"}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}

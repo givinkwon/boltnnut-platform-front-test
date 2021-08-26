@@ -77,13 +77,15 @@ class RegisterDetailContainer extends React.Component {
             }}
           >
             <PartnerRegisterBanner />
-            <div style={{width: '420px'}}>
+            <div style={{width: '420px', marginBottom: 48}}>
               <Stepper 
 
                 activeColor={"#edf4fe"}
                 defaultColor={"#f6f6f6"}
                 completeColor={"#edf4fe"}
-
+                defaultTitleColor={"#C6C7CC"}
+                completeTitleColor={"#C6C7CC"}
+                activeTitleColor={"#0933b3"}
                 // 글씨 삭제
                 circleFontSize={"0px"}
                 
@@ -114,7 +116,7 @@ class RegisterDetailContainer extends React.Component {
             {pageName === "Aboutus" && <AboutUsContainer />}
 
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <ButtonBox width={"400px"} style={{ marginTop: 70 }}>
+              <ButtonBox width={"400px"} style={{ marginTop: 50 }}>
                 <Button
                   buttonType="prev"
                   onClick={() => {
