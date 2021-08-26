@@ -409,30 +409,7 @@ class RequestContent extends Component {
                   <div>프로젝트 예상 진행 기간</div>
                 </ContentTitle>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  {/* <span
-                    style={{
-                      fontSize: 16,
-                      color: "#505050",
-                      letterSpacing: -0.4,
-                      fontWeight: "normal",
-                      marginBottom: 16,
-                    }}
-                  >
-                    희망하는 프로젝트 진행 기간을 입력해주세요.
-                  </span> */}
                   <Calendar />
-                  {/* <CheckBoxComponent onChange={() => this.periodCheckBox()}>
-                    <span
-                      style={{
-                        color: "#1e2222",
-                        fontSize: 15,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      프로젝트 진행 기간 조율이 가능합니다.
-                    </span>
-                  </CheckBoxComponent> */}
                 </div>
               </RequestContentBox>
 
