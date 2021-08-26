@@ -244,10 +244,6 @@ class Calendar extends Component {
     return (
       <>
         <FoldedComponent               
-              onClick={() => {
-                this.calendarOnOff();
-                this.calendarHandler();
-              }}
               mobile={mobile}>
           <div
             style={{
@@ -256,6 +252,10 @@ class Calendar extends Component {
               alignItems: "center",
               width: "100%",
               cursor: "pointer",
+            }}
+            onClick={() => {
+              this.calendarOnOff();
+              this.calendarHandler();
             }}
           >
             <img
