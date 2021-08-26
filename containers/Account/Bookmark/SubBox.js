@@ -5,7 +5,7 @@ import { toJS } from "mobx";
 
 import Background from "components/Background";
 
-
+import PartnerCard from "containers/Manufacture/Search/Home/PartnerCard";
 import ProjectCard from "containers/Manufacture/Project/AllProject/ProjectCard";
 import NoContainer from "./NoContainer";
 
@@ -79,7 +79,7 @@ class SubBoxContainer extends React.Component {
             })}
 
             {/* 파트너 리스트 없을 때 */}
-            {Partner.partner_list.length == 0 && <NoPartner/>}
+            {Partner.partner_list.length == 0 && <NoContainer/>}
         </Main>
         }
 
