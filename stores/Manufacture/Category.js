@@ -5,6 +5,7 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import Partner from "./Partner";
 import Auth from "stores/Account/Auth";
+import { flattenDiagnosticMessageText } from "typescript";
 
 class Category {
   constructor() {
@@ -76,11 +77,19 @@ class Category {
   //회사소개서 파일(1개)
   @observable partnerInfoFile = null;
   //파트너 포트폴리오(배열)
-  @observable partnerPortfolioArray = null;
+  @observable partnerPortfolioArray = [];
   //파트너 소개
   @observable partnerInfo = "";
   //진행한 제품군
   @observable partnerHistory = "";
+
+  
+  // 가능한 포토폴리오 사진 타입
+  @observable availablePortfolioType = [
+    "png",
+    "jpeg",
+    "jpg",
+  ];
 
   @action setCheckAllState = (type) => {
     const temp = new Array();
@@ -91,23 +100,34 @@ class Category {
   };
 
   @action setPartnerInfo = (e) => {
-    console.log(e);
-    this.partnerInfo = e;
+    this.partnerInfo = e[0];
+    console.log(e[0])
   };
   @action setPartnerHistory = (e) => {
     console.log(e);
     this.partnerHistory = e;
   };
   @action setPartnerInfoFile = (e) => {
-    console.log(e);
     this.partnerInfoFile = e[0];
+    console.log(e[0])
   };
 
   @action setPartnerPortfolioFile = (e) => {
-    console.log(e);
-    // console.log(e.target);
-    this.partnerPortfolioArray = e;
-    console.log(this.partnerPortfolioArray);
+
+    for (var i = 0; i < e.length; i++) {
+
+      // 확장자 >> 인덱싱 + 소문자
+      const fileType = e[i].name.split(".")[e[i].name.split(".").length - 1].toLowerCase();
+      // 포트폴리오 이미지가 맞는 경우만 넣기
+      if (this.availablePortfolioType.indexOf(fileType) > -1) {
+        this.partnerPortfolioArray.push(e[i]);
+      } else {
+        alert("포토폴리오 이미지는 jpg, jpeg, png만 가능합니다")
+        return false;
+      }
+    }
+      console.log(this.partnerPortfolioArray);     
+
   };
   /* init */
 
@@ -231,7 +251,7 @@ class Category {
     //회사소개서 파일(1개)
     this.partnerInfoFile = null;
     //파트너 포트폴리오(배열)
-    this.partnerPortfolioArray = null;
+    this.partnerPortfolioArray = [];
     //파트너 소개
     this.partnerInfo = "";
     //진행한 제품군
@@ -553,22 +573,54 @@ class Category {
           Auth.registerPageIdx -= 1;
           return;
         }
+        
+        // 데이터 저장
+        var formData = new FormData();
+        
+        // 파트너 ID
+        formData.append("partnerId", id);
 
-        req = {
-          data: {
-            partnerId: id,
-            city: this.LocationAddress.split(" ")[0],
-            region: this.LocationAddress,
-            info_company: this.partnerInfo,
-            file: this.partnerInfoFile,
-            history: this.partnerHistory,
-            portfolio: this.partnerPortfolioArray,
-            CEO: Partner.CEO_name,
-            staff: Partner.employee.value,
-            sales: Partner.revenue.value,
-            year: Partner.year,
-            certification_list: Partner.certification
-          },
+        // 지역 대분류
+        formData.append("city", this.LocationAddress.split(" ")[0]);
+
+        // 지역 상세분류
+        formData.append("region", this.LocationAddress);
+
+        // 회사소개
+        formData.append("info_company", this.partnerInfo);
+
+        // 회사소개서 파일
+        formData.append("file", this.partnerInfoFile);
+
+        // 만든 제품 소개
+        formData.append("history", this.partnerHistory);
+
+        // 포토폴리오 파일 리스트
+        if (this.partnerPortfolioArray.length === 0) {
+          formData.append(`portfolio`, "");
+        }
+        for (var i = 0; i < this.partnerPortfolioArray.length; i++) {
+          formData.append(`portfolio`, this.partnerPortfolioArray[i]);
+        }
+
+        // 회사 대표 이름
+        formData.append("CEO", Partner.CEO_name);
+
+        // 직원 숫자
+        formData.append("staff", Partner.employee.value);
+
+        // 매출
+        formData.append("sales", Partner.revenue.value);
+
+        // 설립연도
+        formData.append("year", Partner.year);
+
+        // 인증서 관련 내용
+        formData.append("certification_list", Partner.certification)
+
+        // axois 쏘기
+        let req = {
+          data: formData,
         };
 
         CategoryAPI.savePartnerInfo(req)
