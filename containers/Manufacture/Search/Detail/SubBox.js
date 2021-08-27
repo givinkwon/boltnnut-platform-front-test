@@ -15,9 +15,14 @@ class SubBoxContainer extends React.Component {
     const { Partner, Auth, partnerId, Project } = this.props;
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+
     await Partner.existBookmarkPartner(clientId, partnerId);
-    await Partner.getBookmarkByClient(clientId);
-    console.log(Auth.logged_in_client);
+    
+    // 클라이언트 로그인일 때
+    if(Auth.logged_in_client) {
+      await Partner.getBookmarkByClient(clientId);
+    }
+
   };
   render() {
     const { Partner, Auth, partnerId, Project, Common, Request } = this.props;
@@ -44,23 +49,6 @@ class SubBoxContainer extends React.Component {
               <ActiveItem>
                 <div>프로젝트를 등록하고 견적 요청을 해보세요!</div>
 
-                {/* {buttenArray.map((item, idx) => {
-              return (
-                <Button
-                  style={{ marginBottom: "12px" }}
-                  active={Partner.activeHandler("interested", item, idx)}                  
-                >
-                  <div
-                    onClick={() => {
-                      Partner.clickHandler("interested", item, idx);
-                      this.setState({ g: 3 });
-                    }}
-                  >
-                    <span>{item.name}</span>
-                  </div>
-                </Button>
-              );
-            })} */}
                 <Button
                   active={Partner.activeHandler("project")}
                   hover={Partner.hoverProjectIdx}

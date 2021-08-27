@@ -7,9 +7,9 @@ import { inject, observer } from "mobx-react";
 import Background from "../../components/Background";
 
 // Images
-const stepimg1 = "/static/images/stepimg1.png";
+const stepimg1 = "/static/images/Home/stepimg1.png";
 const stepimg2 = "/static/images/stepimg2.svg";
-const stepimg3 = "/static/images/stepimg3.png";
+const stepimg3 = "/static/images/Home/stepimg3.png";
 const backgroundlogo = "/static/images/backgroundlogo.svg";
 
 @inject("Home")
@@ -85,7 +85,7 @@ class Banner4Container extends React.Component {
             </InnerContainer>
 
             <StepContainer>
-              <img src={this.onChangeStepImage()} />
+              <img style={{width : '750px', height : '460px'}} src={this.onChangeStepImage()} />
 
               <div
                 style={{

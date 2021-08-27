@@ -157,17 +157,6 @@ class MobileProposalCard extends React.Component {
         console.log(e.response);
       });
 
-    await PartnerAPI.getTotalReview(reviewReq)
-      .then((res) => {
-        console.log(res);
-        this.setState({ total_review: res.data.score });
-        console.log(this.state.total_review);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
     await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then(async (res) => {
         console.log(res);

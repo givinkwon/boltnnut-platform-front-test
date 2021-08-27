@@ -113,7 +113,7 @@ class ReviewModal extends React.Component {
       data: formData,
     };
 
-    PartnerAPI.setReview(req)
+    ReviewAPI.setReview(req)
       .then((res) => {
         console.log("create: ", res);
         alert("리뷰 작성이 정상적으로 완료되었습니다");

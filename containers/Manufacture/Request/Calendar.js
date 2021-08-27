@@ -243,21 +243,23 @@ class Calendar extends Component {
     const { Schedule, mobile } = this.props;
     return (
       <>
-        <FoldedComponent mobile={mobile}>
+        <FoldedComponent               
+              mobile={mobile}>
           <div
             style={{
               display: "flex",
               justifyContent: "flex-start",
               alignItems: "center",
               width: "100%",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              this.calendarOnOff();
+              this.calendarHandler();
             }}
           >
             <img
               src={calendar}
-              onClick={() => {
-                this.calendarOnOff();
-                this.calendarHandler();
-              }}
               style={{ cursor: "pointer" }}
             />
             <span

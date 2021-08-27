@@ -88,7 +88,7 @@ class Home extends React.Component {
               <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
             )}
           </>
-          <>{width && <Footer />}</>
+          <>{width && <Footer BackgroundColor= "#fffw" />}</>
         </div>
       </>
     );

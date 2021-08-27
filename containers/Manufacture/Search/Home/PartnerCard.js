@@ -71,25 +71,14 @@ class PartnerCard extends React.Component {
         console.log(e.response);
       });
 
-    PartnerAPI.getTotalReview(reviewReq)
+    PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then((res) => {
-        this.setState({ total_review: res.data.score });
+        this.setState({ totalPartnerBookmark: res.data.count });
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-
-    if (BookmarkReq) {
-      PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-        .then((res) => {
-          this.setState({ totalPartnerBookmark: res.data.count });
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    }
 
     const temp = [];
     PartnerAPI.getBusinessCategory(partnerReq)

@@ -29,7 +29,8 @@ class BookmarkContainer extends React.Component {
 
     return (
       <>
-        <Background
+        {/* 클라이언트일 때 */}
+        {Auth.logged_in_client && <Background
           style={{ backgroundColor: "#f6f6f6", paddingBottom: 277 }}
           id="MyBackground"
         >
@@ -41,7 +42,7 @@ class BookmarkContainer extends React.Component {
           <Container>
             <Body>
               <Aside>
-                <AsideHeader>관심 제조사</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
                 
                 <AsideBody>
                   <div>
@@ -54,6 +55,34 @@ class BookmarkContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+        }
+
+        {/* 파트너일 때 */}
+        {Auth.logged_in_partner && <Background
+          style={{ backgroundColor: "#f6f6f6", paddingBottom: 277 }}
+          id="MyBackground"
+        >
+          <Header>
+            <HeaderTitle>
+              <div style={{ marginBottom: 12 }}>계정 설정 > 관심 프로젝트</div>
+            </HeaderTitle>
+          </Header>
+          <Container>
+            <Body>
+              <Aside>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                
+                <AsideBody>
+                  <div>
+                    관심 프로젝트를 설정하고, 내가 제안할 수 있는 의뢰들을 살펴보세요.
+                  </div>
+                </AsideBody>
+              </Aside>
+              <SubBoxContainer width={this.props.width} />
+            </Body>
+          </Container>
+        </Background>
+        }
       </>
     );
   }
@@ -63,11 +92,13 @@ export default BookmarkContainer;
 
 const Header = styled.div`
   background-color: #ffffff;
-  width: 1200px;
+  width: 100%;
   height: 116px;
 `;
 
 const HeaderTitle = styled.div`
+  margin : 0px auto 0px auto;
+  width: 1200px;
   height: 100%;
   display: flex;
   align-items: flex-end;
