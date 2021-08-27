@@ -104,8 +104,9 @@ class Category {
   };
 
   @action setPartnerPortfolioFile = (e) => {
-    // console.log(e.target);
-    this.partnerPortfolioArray.push(e[0]);
+    for (var i = 0; i < e.length; i++) {
+      this.partnerPortfolioArray.push(e[i]);
+    }
     console.log(this.partnerPortfolioArray);
   };
   /* init */
@@ -552,22 +553,54 @@ class Category {
           Auth.registerPageIdx -= 1;
           return;
         }
+        
+        // 데이터 저장
+        var formData = new FormData();
+        
+        // 파트너 ID
+        formData.append("partnerId", id);
 
-        req = {
-          data: {
-            partnerId: id,
-            city: this.LocationAddress.split(" ")[0],
-            region: this.LocationAddress,
-            info_company: this.partnerInfo,
-            file: this.partnerInfoFile,
-            history: this.partnerHistory,
-            portfolio: this.partnerPortfolioArray,
-            CEO: Partner.CEO_name,
-            staff: Partner.employee.value,
-            sales: Partner.revenue.value,
-            year: Partner.year,
-            certification_list: Partner.certification
-          },
+        // 지역 대분류
+        formData.append("city", this.LocationAddress.split(" ")[0]);
+
+        // 지역 상세분류
+        formData.append("region", this.LocationAddress);
+
+        // 회사소개
+        formData.append("info_company", this.partnerInfo);
+
+        // 회사소개서 파일
+        formData.append("file", this.partnerInfoFile);
+
+        // 만든 제품 소개
+        formData.append("history", this.partnerHistory);
+
+        // 포토폴리오 파일 리스트
+        if (this.partnerPortfolioArray.length === 0) {
+          formData.append(`portfolio`, "");
+        }
+        for (var i = 0; i < this.partnerPortfolioArray.length; i++) {
+          formData.append(`portfolio`, this.partnerPortfolioArray[i]);
+        }
+
+        // 회사 대표 이름
+        formData.append("CEO", Partner.CEO_name);
+
+        // 직원 숫자
+        formData.append("staff", Partner.employee.value);
+
+        // 매출
+        formData.append("sales", Partner.revenue.value);
+
+        // 설립연도
+        formData.append("year", Partner.year);
+
+        // 인증서 관련 내용
+        formData.append("certification_list", Partner.certification)
+
+        // axois 쏘기
+        let req = {
+          data: formData,
         };
 
         CategoryAPI.savePartnerInfo(req)
