@@ -5,6 +5,7 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import Partner from "./Partner";
 import Auth from "stores/Account/Auth";
+import { flattenDiagnosticMessageText } from "typescript";
 
 class Category {
   constructor() {
@@ -82,6 +83,14 @@ class Category {
   //진행한 제품군
   @observable partnerHistory = "";
 
+  
+  // 가능한 포토폴리오 사진 타입
+  @observable availablePortfolioType = [
+    "png",
+    "jpeg",
+    "jpg",
+  ];
+
   @action setCheckAllState = (type) => {
     const temp = new Array();
     temp.push(false);
@@ -104,10 +113,21 @@ class Category {
   };
 
   @action setPartnerPortfolioFile = (e) => {
+
     for (var i = 0; i < e.length; i++) {
-      this.partnerPortfolioArray.push(e[i]);
+
+      // 확장자 >> 인덱싱 + 소문자
+      const fileType = e[i].name.split(".")[e[i].name.split(".").length - 1].toLowerCase();
+      // 포트폴리오 이미지가 맞는 경우만 넣기
+      if (this.availablePortfolioType.indexOf(fileType) > -1) {
+        this.partnerPortfolioArray.push(e[i]);
+      } else {
+        alert("포토폴리오 이미지는 jpg, jpeg, png만 가능합니다")
+        return false;
+      }
     }
-    console.log(this.partnerPortfolioArray);
+      console.log(this.partnerPortfolioArray);     
+
   };
   /* init */
 
