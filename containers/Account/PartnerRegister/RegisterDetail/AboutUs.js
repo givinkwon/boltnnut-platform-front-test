@@ -190,6 +190,18 @@ class AboutUsContainer extends Component {
         <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16 }}>
           제품 사진 파일을 업로드해주세요
         </Font18>
+
+        {Category.partnerPortfolioArray.length > 0 && Category.partnerPortfolioArray.map((item) => {
+          return (
+          <Font16
+            style={{ textAlign: "left", width: "100%", marginBottom: 16 }}
+          >
+            {item.name}
+          </Font16>
+          )
+          }
+        )}
+
         <InputComponent
           file={true}
           onChange={(e) => {

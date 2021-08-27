@@ -76,7 +76,7 @@ class Category {
   //회사소개서 파일(1개)
   @observable partnerInfoFile = null;
   //파트너 포트폴리오(배열)
-  @observable partnerPortfolioArray = null;
+  @observable partnerPortfolioArray = [];
   //파트너 소개
   @observable partnerInfo = "";
   //진행한 제품군
@@ -91,22 +91,21 @@ class Category {
   };
 
   @action setPartnerInfo = (e) => {
-    console.log(e);
-    this.partnerInfo = e;
+    this.partnerInfo = e[0];
+    console.log(e[0])
   };
   @action setPartnerHistory = (e) => {
     console.log(e);
     this.partnerHistory = e;
   };
   @action setPartnerInfoFile = (e) => {
-    console.log(e);
     this.partnerInfoFile = e[0];
+    console.log(e[0])
   };
 
   @action setPartnerPortfolioFile = (e) => {
-    console.log(e);
     // console.log(e.target);
-    this.partnerPortfolioArray = e;
+    this.partnerPortfolioArray.push(e[0]);
     console.log(this.partnerPortfolioArray);
   };
   /* init */
@@ -231,7 +230,7 @@ class Category {
     //회사소개서 파일(1개)
     this.partnerInfoFile = null;
     //파트너 포트폴리오(배열)
-    this.partnerPortfolioArray = null;
+    this.partnerPortfolioArray = [];
     //파트너 소개
     this.partnerInfo = "";
     //진행한 제품군
