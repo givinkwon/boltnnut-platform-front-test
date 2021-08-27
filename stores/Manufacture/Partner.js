@@ -375,6 +375,43 @@ class Partner {
 
   @observable result_banner = false;
 
+  // 파트너 등록 페이지 데이터
+  @observable employee = 0; // 직원 수
+  @observable revenue = 0; // 매출액
+  @observable CEO_name = ""; // 대표 이름
+  @observable year = ""; // 설립연도
+  @observable certification = ""; // 기업 인증
+
+  // 직원 수 설정하는 함수
+  @action set_employee = (obj) => {
+    this.employee = obj;
+    console.log(this.employee)
+  }
+
+  // 매출액 설정하는 함수
+  @action set_revenue = (obj) => {
+    this.revenue = obj;
+    console.log(this.revenue)
+  }
+
+  // CEO 이름
+  @action set_CEO_name = (val) => {
+    this.CEO_name = val;
+    console.log(this.CEO_name)
+  }
+
+  // 설립 연도
+  @action set_year = (val) => {
+    this.year = val;
+    console.log(this.year)
+  }
+
+  // 기업 인증
+  @action set_certification = (val) => {
+    this.certification = val;
+    console.log(this.certification)
+  }
+
   @action movePage = (e) => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;

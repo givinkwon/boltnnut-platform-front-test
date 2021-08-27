@@ -533,6 +533,26 @@ class Category {
           Auth.registerPageIdx -= 1;
           return;
         }
+        if (!Partner.CEO_name){
+          await alert("대표자명을 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
+        if (!Partner.employee){
+          await alert("직원 숫자를 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
+        if (!Partner.revenue){
+          await alert("매출액을 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
+        if (!Partner.year){
+          await alert("설립연도를 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
 
         req = {
           data: {
@@ -543,6 +563,11 @@ class Category {
             file: this.partnerInfoFile,
             history: this.partnerHistory,
             portfolio: this.partnerPortfolioArray,
+            CEO: Partner.CEO_name,
+            staff: Partner.employee.value,
+            sales: Partner.revenue.value,
+            year: Partner.year,
+            certification_list: Partner.certification
           },
         };
 
