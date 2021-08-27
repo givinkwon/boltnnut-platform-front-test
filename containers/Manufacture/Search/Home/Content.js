@@ -10,6 +10,7 @@ import * as Content from "components/Content";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import PartnerCard from "./PartnerCard";
+import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 
 import { toJS } from "mobx";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
@@ -17,6 +18,7 @@ import Cookies from "js-cookie";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
 import { flexbox } from "@material-ui/system";
+import { CenturyView } from "react-calendar";
 
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -42,11 +44,23 @@ class ManufacturerContentContainer extends React.Component {
     file: "",
     checkFileUpload: false,
     result_banner: false,
-    scorllActive: false,
+  };
+
+  scrollEventHandler = () => {
+    const { Partner } = this.props;
+
+    if (window.pageYOffset > 150) {
+      Partner.scrollActive = true;
+    } else {
+      Partner.scrollActive = false;
+    }
   };
 
   async componentDidMount() {
     const { Partner, Cookie } = this.props;
+
+    window.addEventListener("scroll", this.scrollEventHandler);
+
     Partner.detailLoadingFlag = false;
     Partner.currentPage = 1;
 
@@ -92,7 +106,6 @@ class ManufacturerContentContainer extends React.Component {
 
   componentWillUnmount() {
     const { Partner } = this.props;
-    console.log("content unmount");
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
     Partner.resetDevCategory();
@@ -101,8 +114,6 @@ class ManufacturerContentContainer extends React.Component {
   }
 
   filedownload = (urls) => {
-    const { data } = this.props;
-
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!urls) {
         alert("준비중입니다.");
@@ -129,6 +140,7 @@ class ManufacturerContentContainer extends React.Component {
 
   resultBannerHandler = () => {
     const { Partner, Request } = this.props;
+
     // path 설정
     Request.path = 2;
 
@@ -143,12 +155,17 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        <Background id="MyBackground">
-          <SearchBar />
+        <BackgroundContainer>
+          <ScrollActiveBox scrollActive={Partner.scrollActive}>
+            <ScrollActiveBoxInnerBox scrollActive={Partner.scrollActive}>
+              <SearchBar />
+            </ScrollActiveBoxInnerBox>
+          </ScrollActiveBox>
+
           <SearchFilterBox />
 
           {Partner.result_banner && (
-            <RequestMiddle className="fixed">
+            <RequestMiddle>
               <ResultBannerContainer>
                 <ResultBannerInnerBox>
                   <Font22 style={{ color: "#000000" }}>
@@ -173,7 +190,7 @@ class ManufacturerContentContainer extends React.Component {
             </RequestMiddle>
           )}
 
-          <Container>
+          <div>
             <Body>
               {Partner.detailLoadingFlag && (
                 <>
@@ -397,8 +414,8 @@ class ManufacturerContentContainer extends React.Component {
               <img src={toparrowblue}></img>
               <div style={{ marginTop: 5 }}>Top</div>
             </TopButton>
-          </Container>
-        </Background>
+          </div>
+        </BackgroundContainer>
 
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
         {/* <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div> */}
@@ -623,20 +640,6 @@ const Question = styled.div`
   font-size: 20px;
 `;
 
-const SubButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100px;
-  border: ${(props) => (props.active ? " 2px solid blue" : " 2px solid black")};
-  margin-bottom: 20px;
-
-  :hover {
-    background: lightblue;
-  }
-`;
-
 const PageBar = styled.div`
   width: 500px;
   margin-top: 109px;
@@ -846,7 +849,7 @@ const LoadingComponent = styled(ButtonSpinnerComponent)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  /* z-index: 1; */
 `;
 
 const Layer = styled.div`
@@ -855,13 +858,13 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
+  /* z-index: 100; */
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const RequestMiddle = styled.div`
   position: sticky;
-  top: 66px;
+  top: 135px;
   z-index: 100;
   width: 100%;
   display: flex;
@@ -878,13 +881,12 @@ const RequestMiddle = styled.div`
     font-weight: 500;
     letter-spacing: -0.4px;
     color: #555963;
-    /* margin-right: 40px; */
   }
 `;
 
 const RequestBtn = styled.button`
-  width: 145px;
-  height: 40px;
+  width: 160px;
+  height: 42px;
   margin-top: 16px;
   padding-top: 5px;
   border-radius: 29px;
@@ -893,6 +895,7 @@ const RequestBtn = styled.button`
   color: #ffffff;
   font-size: 15px;
   cursor: pointer;
+  font-family: NotoSansCJKkr;
 `;
 
 const TopButton = styled.div`
@@ -902,14 +905,13 @@ const TopButton = styled.div`
   flex-direction: column;
   width: 56px;
   height: 56px;
-  // object-fit: contain;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   border-radius: 100%;
   top: 78%;
   left: 94.2%;
   position: fixed;
-  z-index: 2;
+  /* z-index: 2; */
   div {
     object-fit: contain;
     font-family: NotoSansCJKkr;
@@ -938,6 +940,29 @@ const ResultBannerCloseImg = styled.img`
   left: 110%;
   bottom: 100%;
   cursor: pointer;
+`;
+
+const ScrollActiveBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: ${(props) => (props.scrollActive ? "100%" : "none")};
+  height: ${(props) => (props.scrollActive ? "70px" : "none")};
+  position: ${(props) => (props.scrollActive ? "sticky" : "none")};
+  top: 65px;
+  z-index: ${(props) => (props.scrollActive ? "100" : "none")};
+  background-image: url("static/images/search/wbackground.svg");
+  background-position: center;
+`;
+
+const BackgroundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ScrollActiveBoxInnerBox = styled.div`
+  position: ${(props) => (props.scrollActive ? "absolute" : "none")};
+  left: ${(props) => (props.scrollActive ? "18.5%" : "none")};
 `;
 
 export default ManufacturerContentContainer;
