@@ -116,7 +116,7 @@ class RegisterDetailContainer extends React.Component {
             {pageName === "Aboutus" && <AboutUsContainer />}
 
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <ButtonBox width={"400px"} style={{ marginTop: 50 }}>
+              <ButtonBox width={"400px"} style={{ marginTop: 50, marginBottom: 290 }}>
                 <Button
                   buttonType="prev"
                   onClick={() => {

@@ -85,7 +85,7 @@ class Banner4Container extends React.Component {
             </InnerContainer>
 
             <StepContainer>
-              <img style={{width : '690px', height : '480px'}} src={this.onChangeStepImage()} />
+              <img style={{width : '750px', height : '460px'}} src={this.onChangeStepImage()} />
 
               <div
                 style={{

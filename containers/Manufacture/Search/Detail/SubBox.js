@@ -15,7 +15,6 @@ class SubBoxContainer extends React.Component {
     const { Partner, Auth, partnerId, Project } = this.props;
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
 
     await Partner.existBookmarkPartner(clientId, partnerId);
     

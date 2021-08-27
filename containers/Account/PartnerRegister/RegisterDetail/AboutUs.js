@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import InputComponent from "components/Input2";
+import * as Title from "components/Title";
 import TextFieldComponent from "components/Input";
 import LocationContainer from "containers/Account/Profile/LocationSearchModal";
 @inject("Category")
@@ -130,6 +131,36 @@ class AboutUsContainer extends Component {
             Category.setPartnerHistory(e);
           }}
         />
+
+        <RegisterBox>
+          <InputInnerBox>
+            <Title18>대표자</Title18>
+            <CustomInput/>            
+          </InputInnerBox>
+          <InputInnerBox>
+            <Title18>직원 수</Title18>
+            <CustomInput/>
+          </InputInnerBox>
+
+        </RegisterBox>
+
+        <RegisterBox>
+          <InputInnerBox>
+              <Title18>총 매출액</Title18>
+              <CustomInput/>            
+            </InputInnerBox>
+            <InputInnerBox>
+              <Title18>설립연도</Title18>
+              <CustomInput/>
+          </InputInnerBox>
+        </RegisterBox>
+        
+        <RegisterBox>
+          <InputInnerBox>
+              <Title18>인증</Title18>
+              <CustomInput/>
+          </InputInnerBox>
+        </RegisterBox>
       </>
     );
   }
@@ -202,4 +233,54 @@ const Layer = styled.div`
     align-items: center;
     height: 100vh;
   }
+`;
+
+
+/// 기본정보용
+const RegisterBox = styled.div`
+  width : 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 32px;
+`;
+
+const InputInnerBox = styled.div`
+  width : 384px;
+  padding : 0px;
+  margin : 0px;
+  margin-right: 24px;
+  display: block;
+
+`;
+
+
+const CustomInput = styled.input`
+  border-radius: 3px;
+  padding : 0px;
+  margin : 0px;
+  width: 384px;
+  height: 42px;
+  font-size: 16px;
+  border: solid 1px #c6c7cc;
+  ::placeholder {
+    color: #c7c7c7;
+  }
+
+  :focus {
+    background-color: #edf4fe;
+    outline: none;
+  }
+`;
+
+const Title18 = styled(Title.FontSize18)`
+  width: 384px;
+  margin-right : 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.89;
+  letter-spacing: -0.45px;
+  color: #1e2222;
+  margin-bottom: 10px;
 `;

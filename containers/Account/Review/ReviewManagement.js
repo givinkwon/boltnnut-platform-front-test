@@ -14,6 +14,7 @@ const profileimg = "/static/images/profileimg2.svg";
 @observer
 class ReviewManagement extends React.Component {
   render() {
+    const { Auth } = this.props;
     return (
       <>
         <Background
@@ -31,7 +32,7 @@ class ReviewManagement extends React.Component {
             <Body>
               <Aside>
                 {/* <AsideHeader>{Auth.logged_in_user.username}</AsideHeader> */}
-                <AsideHeader>1234@naver.com</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user && Auth.logged_in_user.username}</AsideHeader>
                 <AsideBody>
                   <div>작성 가능한 후기</div>
                   <div>내가 작성한 후기</div>
@@ -66,11 +67,13 @@ export default ReviewManagement;
 
 const Header = styled.div`
   background-color: #ffffff;
-  width: 1200px;
+  width: 100%;
   height: 116px;
 `;
 
 const HeaderTitle = styled.div`
+  margin: 0px auto 0px auto;
+  width: 1200px;
   height: 100%;
   display: flex;
   align-items: flex-end;

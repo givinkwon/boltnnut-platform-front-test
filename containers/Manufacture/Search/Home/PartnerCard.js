@@ -70,15 +70,6 @@ class PartnerCard extends React.Component {
         console.log(e.response);
       });
 
-    PartnerAPI.getTotalReview(reviewReq)
-      .then((res) => {
-        this.setState({ total_review: res.data.score });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
     PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then((res) => {
         this.setState({ totalPartnerBookmark: res.data.count });

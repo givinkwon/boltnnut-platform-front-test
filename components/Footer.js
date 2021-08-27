@@ -93,13 +93,14 @@ class FooterComponent extends React.Component {
   };
 
   render() {
-    const { Auth, Magazine } = this.props;
+    const { Auth, Magazine, BackgroundColor } = this.props;
     const { width } = this.state;
+
     return (
       <>
         {width > 768 ? (
           <>
-            <Footer myColor={Auth.bgColor} id="MyFooter">
+            <Footer myColor={BackgroundColor} id="MyFooter">
               <Containerv1 style={{ flexDirection: "column" }}>
                 <img src={rowline} style={{ width: 16, height: 4, marginBottom: 6 }}></img>
                 <TelInfoWrapper>
@@ -255,7 +256,7 @@ export default FooterComponent;
 
 const Footer = styled.div`
   // background-color: white;
-  background-color: ${(props) => (props.myColor ? props.myColor : "#ffffff")};
+  background-color: ${(props) => (props.myColor ? props.myColor : "#f6f6f6")};
   padding: 40px 0 34px 0;
   display: inline-flex;
   align-items: center;

@@ -311,42 +311,6 @@ export function getPartnerCategory(req) {
   });
 }
 
-export function setReview(req) {
-  return axios({
-    method: "POST",
-    url: `${ROOT_URL}/partnerreviewtemp/`,
-    data: req.data ? req.data : null,
-  });
-}
-
-export function getReview(req) {
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/partnerreviewtemp/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
-
-export function getTotalReview(req) {
-  // console.log(req);
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/partnerreview/total_score/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
-
-export function getNextReviewPage(req) {
-  return axios({
-    method: "GET",
-    url: req.nextUrl,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
-
 export function getClientEmail(req) {
   return axios({
     method: "GET",
@@ -390,31 +354,6 @@ export function getPartnerName(req) {
   });
 }
 
-export function setPartnerReview(req) {
-  return axios({
-    method: "POST",
-    url: `${ROOT_URL}/partnerreview/create/`,
-    data: req.data ? req.data : null,
-  });
-}
-
-export function getReviewByPartner(req) {
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/partnerreview/partner_filter/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
-
-export function checkReviewWriting(req) {
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/partnerreview/client_filter/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
 
 export function getPPTInfo(req) {
   return axios({

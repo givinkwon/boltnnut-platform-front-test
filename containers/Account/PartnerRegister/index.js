@@ -78,6 +78,7 @@ class PartnerRegisterContainer extends React.Component {
 export default PartnerRegisterContainer;
 
 const ButtonRegister = styled(Button)`
+  margin-bottom : 290px;
   padding : 0px;
   margin-top : 46px;
   display: flex;
@@ -102,6 +103,7 @@ const ButtonRegister = styled(Button)`
 
 // 버튼 비활성화 시
 const DisabledButton = styled.div`
+  margin-bottom : 290px;
   margin-top : 46px;
   display: flex;
   justify-content: center;

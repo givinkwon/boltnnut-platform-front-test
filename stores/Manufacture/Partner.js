@@ -2,6 +2,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
+import * as ReviewAPI from "axios/Manufacture/Review";
 import Router from "next/router";
 import Auth from "../Account/Auth";
 
@@ -451,12 +452,12 @@ class Partner {
         await this.partner_detail_list.push({ item: item, idx: idx });
         this.recentPartnerId = this.partner_detail_list[0].item.id;
 
-        await this.getReviewByPartner(
-          this.partner_detail_list[0].item.id,
-          1,
-          1
-        );
-        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        // await this.getReviewByPartner(
+        //   this.partner_detail_list[0].item.id,
+        //   1,
+        //   1
+        // );
+        // await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
@@ -477,12 +478,12 @@ class Partner {
         await this.partner_detail_list.push({ item: item, idx: idx });
         this.recentPartnerId = this.partner_detail_list[0].item.id;
 
-        await this.getReviewByPartner(
-          this.partner_detail_list[0].item.id,
-          1,
-          1
-        );
-        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        // await this.getReviewByPartner(
+        //   this.partner_detail_list[0].item.id,
+        //   1,
+        //   1
+        // );
+        // await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
@@ -1690,12 +1691,12 @@ class Partner {
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(this.partner_detail_list));
-        await this.getReviewByPartner(
-          this.partner_detail_list[0].item.id,
-          1,
-          1
-        );
-        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        // await this.getReviewByPartner(
+        //   this.partner_detail_list[0].item.id,
+        //   1,
+        //   1
+        // );
+        // await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
@@ -1850,7 +1851,7 @@ class Partner {
       // nextUrl: this.develop_next,
     };
 
-    await PartnerAPI.getReview(req)
+    await ReviewAPI.getReview(req)
       .then(async (res) => {
         // console.log(res.data.results);
         this.review_ary = this.review_ary.concat(res.data.results);
@@ -1874,7 +1875,7 @@ class Partner {
               // client: clientId,
             },
           };
-          await PartnerAPI.getNextReviewPage(req)
+          await ReviewAPI.getNextReviewPage(req)
             .then((res) => {
               // console.log(res.data.results);
               this.review_ary = this.review_ary.concat(res.data.results);
@@ -1896,14 +1897,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    // console.log(toJS(this.review_ary));
-
-    // if (this.review_count !== 0 && clientId) {
-    //   this.review_done = true;
-    // } else {
-    //   this.review_done = false;
-    // }
-    // console.log(this.review_done);
   };
   @action getPortfolio = async (partnerId) => {
     const req = {
@@ -1923,78 +1916,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
-  /* 
-  클라이언트가 리뷰를 썼는지 안 썼는지 확인하는 함수 
-  페이지 번호와 클라이언트 ID를 인자로 받음
-  */
-  @action checkReviewWriting = async (page = 1, clientId = "") => {
-    // console.log(clientId);
-    const req = {
-      params: {
-        client: clientId,
-      },
-
-      // nextUrl: this.develop_next,
-    };
-
-    await PartnerAPI.getReview(req)
-      .then(async (res) => {
-        // console.log(res.data.results);
-
-        this.review_count = res.data.count;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    if (this.review_count !== 0 && clientId) {
-      this.review_done = true;
-    } else {
-      this.review_done = false;
-    }
-    // console.log(this.review_done);
-  };
-
-  /* 
-    리뷰 데이터에서 클라이언트 ID로 Email 주소를 알아내는 함수
-  */
-
-  @action async getClientEmail() {
-    console.log("getClientEmail");
-    console.log(toJS(this.review_ary));
-    let req = {};
-
-    await Promise.all(
-      this.review_ary.map(async (item, idx) => {
-        req = {
-          params: {
-            id: item.client,
-          },
-        };
-        // console.log(req.params.id);
-
-        await PartnerAPI.getClientEmail(req)
-          .then((res) => {
-            console.log("MapMapMap");
-            // console.log(res.data.results);
-            // console.log(res.data.results[0].user);
-            // console.log(res.data.results[0]);
-
-            this.userEmail = res.data.results[0].user.username;
-            this.review_user_ary.push(res.data.results[0].user.username);
-            // console.log(toJS(this.review_user_ary));
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-        // console.log(toJS(this.review_user_ary));
-      })
-    );
-    console.log(toJS(this.review_user_ary));
-  }
 
   @action setclickLog = async (formData) => {
     const req = {
@@ -2043,119 +1964,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
-  /* 
-    리뷰를 저장하는 함수
-  */
-
-  @action setPartnerReview = async (formData) => {
-    const req = {
-      data: formData,
-    };
-
-    PartnerAPI.setPartnerReview(req)
-      .then((res) => {
-        console.log("create!!", res);
-        this.resetReviewData();
-        this.reviewActiveIndex = 2;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  /* 
-    제조사 별로 리뷰를 가져오는 함수
-    제조사의 ID, 페이지 수, page_nation(1: 카운트 개수 O, 한 페이지당 5? 10?개씩의 데이터를 가져옴
-      0: 카운트 개수 X, 전체 데이터를 한 페이지로 가져옴)
-  */
-  @action getReviewByPartner = async (id, page_nation = 0, page = 1) => {
-    console.log(id);
-    console.log(page_nation);
-    console.log(page);
-    console.log(this.review_partner_page);
-    // this.review_partner_page = 0;
-    if (page_nation == 1) {
-      this.partnerReviewList = [];
-    } else {
-      this.partnerAllReviewList = [];
-    }
-
-    const req = {
-      params: {
-        partner_id: id,
-        page_nation: page_nation,
-        page: page,
-      },
-    };
-
-    await PartnerAPI.getReviewByPartner(req)
-      .then(async (res) => {
-        if (page_nation == 1) {
-          this.partnerReviewList = await this.partnerReviewList.concat(
-            res.data
-          );
-          console.log(this.partnerReviewList);
-          this.review_partner_count = res.data.count;
-          this.review_partner_page =
-            parseInt((this.review_partner_count - 1) / 10) + 1;
-        } else {
-          this.partnerAllReviewList = await this.partnerAllReviewList.concat(
-            res.data
-          );
-        }
-        console.log(this.partnerReviewList);
-        console.log(this.partnerAllReviewList);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-
-        if (page_nation == 1) {
-          this.partnerReviewList = [];
-          console.log(this.partnerReviewList);
-          this.review_partner_count = 0;
-          this.review_partner_page = 0;
-        } else {
-          this.partnerAllReviewList = [];
-        }
-        console.log(this.partnerReviewList);
-        console.log(this.partnerAllReviewList);
-      });
-  };
-
-  @action checkReviewWriting = async (client_id) => {
-    console.log(client_id);
-    const req = {
-      params: {
-        client_id: client_id,
-      },
-    };
-
-    await PartnerAPI.checkReviewWriting(req)
-      .then((res) => {
-        this.reviewWritingModalActive = true;
-        console.log(res);
-      })
-      .catch((e) => {
-        this.reviewWritingModalActive = false;
-        console.log(e);
-      });
-  };
-
-  // @action getClientById = (id) => {
-  //   const
-  //   PartnerAPI.getClient(request.client, req)
-  // .then((res) => {
-  //   this.clients.push(res.data);
-  //   console.log(res.data);
-  // })
-  // .catch((e) => {
-  //   console.log(e);
-  //   console.log(e.response);
-  // });
-  // }
 
   /* 
     클라이언트 ID로 클라이언트 이름 가져오기 
@@ -2551,17 +2359,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-  };
-
-  @action getBusinessCategory = (id) => {
-    const req = {
-      id: id,
-    };
-
-    PartnerAPI.getTotalReview(req).then((res) => {
-      console.log(res);
-      // this.total_review = res.data.score
-    });
   };
 
   @action getBusinessCategory = async (id) => {
