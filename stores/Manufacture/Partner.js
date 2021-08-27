@@ -385,32 +385,32 @@ class Partner {
   // 직원 수 설정하는 함수
   @action set_employee = (obj) => {
     this.employee = obj;
-    console.log(this.employee)
-  }
+    console.log(this.employee);
+  };
 
   // 매출액 설정하는 함수
   @action set_revenue = (obj) => {
     this.revenue = obj;
-    console.log(this.revenue)
-  }
+    console.log(this.revenue);
+  };
 
   // CEO 이름
   @action set_CEO_name = (val) => {
     this.CEO_name = val;
-    console.log(this.CEO_name)
-  }
+    console.log(this.CEO_name);
+  };
 
   // 설립 연도
   @action set_year = (val) => {
     this.year = val;
-    console.log(this.year)
-  }
+    console.log(this.year);
+  };
 
   // 기업 인증
   @action set_certification = (val) => {
     this.certification = val;
-    console.log(this.certification)
-  }
+    console.log(this.certification);
+  };
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -1729,7 +1729,7 @@ class Partner {
         await this.partner_detail_list.push({ item: res.data, idx: 0 });
         this.recentPartnerId = res.data.id;
 
-        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(this.partner_detail_list));
         // await this.getReviewByPartner(
         //   this.partner_detail_list[0].item.id,

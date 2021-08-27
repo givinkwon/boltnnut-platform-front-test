@@ -159,7 +159,7 @@ class DetailCardContainer extends React.Component {
     console.log(document.getElementById("portfolio").offsetTop);
 
     if (Auth.logged_in_client) {
-      await Partner.checkReviewWriting(Auth.logged_in_client.id);
+      // await Partner.checkReviewWriting(Auth.logged_in_client.id);
       this.setState({ g: 3 });
     }
 

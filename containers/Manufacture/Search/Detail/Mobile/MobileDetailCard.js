@@ -158,7 +158,7 @@ class MobileDetailCardContainer extends React.Component {
     console.log(document.getElementById("portfolio").offsetTop);
 
     if (Auth.logged_in_client) {
-      await Partner.checkReviewWriting(Auth.logged_in_client.id);
+      // await Partner.checkReviewWriting(Auth.logged_in_client.id);
       this.setState({ g: 3 });
     }
 
@@ -564,7 +564,8 @@ class MobileDetailCardContainer extends React.Component {
                       src={markImg}
                       name="지역"
                       content={
-                        (Partner.partner_detail_list[0] &&
+                        (Partner.partner_detail_list &&
+                          Partner.partner_detail_list[0] &&
                           Partner.partner_detail_list[0].item.region ===
                             "null") ||
                         Partner.partner_detail_list[0].item.region === "nan"
@@ -594,8 +595,7 @@ class MobileDetailCardContainer extends React.Component {
                     transform: "translate(-50%,-50%)",
                     zIndex: 1,
                   }}
-                >
-                </div>
+                ></div>
                 <InnerBox>
                   {console.log(this.state.portfoliLocation)}
                   <TabBar
