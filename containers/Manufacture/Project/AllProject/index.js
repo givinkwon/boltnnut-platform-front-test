@@ -13,14 +13,13 @@ import SearchBar from "./SearchBar";
 import { toJS } from "mobx";
 
 // Cookie 추가
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 const pass4 = "static/images/pass4.png";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
-
 
 const userImg = "/static/images/search/user.svg";
 const Remove = "/static/images/project/remove.png";
@@ -37,7 +36,7 @@ class AllProject extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Cookie } = this.props;
     // 프로젝트 초기화
-    await Project.reset()
+    await Project.reset();
     Project.newIndex = 0;
     Project.search_text = "";
     Project.currentPage = 1;
@@ -46,7 +45,7 @@ class AllProject extends React.Component {
 
     await Auth.checkLogin();
     Project.getProject("allproject");
-    
+
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     let project_view_data = [];
     project_view_data = await Cookies.get("project_view");
@@ -65,10 +64,10 @@ class AllProject extends React.Component {
     // Cookie 값 저장 끝
 
     // Cookie 값에 저장된 프로젝트 불러오기
-    Cookie.get_recent_project()
+    Cookie.get_recent_project();
 
     // subbox 프로젝트 개수 호출
-    Project.getProject("subbox")
+    Project.getProject("subbox");
   }
 
   render() {
@@ -93,105 +92,111 @@ class AllProject extends React.Component {
               <SearchBar />
             </div>
             <Header>
-                    <Font20>
-                      <span style={{ fontWeight: "bold" }}>
-                        {Project.project_count}개
-                      </span>
-                      의 상담 요청 프로젝트가 있습니다.
-                    </Font20>
+              <Font20>
+                <span style={{ fontWeight: "bold" }}>
+                  {Project.project_count}개
+                </span>
+                의 상담 요청 프로젝트가 있습니다.
+              </Font20>
             </Header>
           </Container>
         </Background>
 
-        <Background style={{backgroundColor: '#f6f6f6'}}>
+        <Background style={{ backgroundColor: "#f6f6f6" }}>
           <Container style={{ flexDirection: "column", marginTop: 0 }}>
-              <Body>
-                <Main>
-
-                  {Project.projectDataList &&
-                    Project.currentPage > 0 && 
-                    Project.projectDataList.map((item, idx) => {
-                      {
-                        console.log(toJS(item.request_set.length));
-                      }
+            <Body>
+              <Main>
+                {Project.projectDataList &&
+                  Project.currentPage > 0 &&
+                  Project.projectDataList.map((item, idx) => {
+                    {
+                      console.log(toJS(item.request_set.length));
+                    }
+                    return (
+                      <>
+                        {toJS(item.request_set.length > 0) && (
+                          <Background style={{ marginBottom: "24px" }}>
+                            <div
+                              style={{ cursor: "pointer", width: "100%" }}
+                              onClick={() => Project.pushToDetail(item.id)}
+                            >
+                              <ProjectCard
+                                data={item}
+                                handleIntersection={this.handleIntersection}
+                                customer="partner"
+                              />
+                            </div>
+                          </Background>
+                        )}
+                      </>
+                    );
+                  })}
+              </Main>
+              <SubCard>
+                <SubCardContainer>
+                  <SubCardTitle>
+                    <div>
+                      {" "}
+                      최근 본 프로젝트 &nbsp; &nbsp; &nbsp;{" "}
+                      {Project.recent_project_list.length}
+                    </div>
+                  </SubCardTitle>
+                  <SubCardProject>
+                    {Project.recent_project_list.map((item, idx) => {
                       return (
-                        <>
-                          {toJS(item.request_set.length > 0) && (
-                            <Background style={{ marginBottom: "24px"}}>
-                              <div
-                                style={{ cursor: "pointer", width: "100%" }}
-                                onClick={() => Project.pushToDetail(item.id)}
-                              >
-                                <ProjectCard
-                                  data={item}
-                                  handleIntersection={this.handleIntersection}
-                                  customer="partner"
-                                />
-                              </div>
-                            </Background>
-                          )}
-                        </>
+                        <div style={{ display: "flex" }}>
+                          <span onClick={() => Project.pushToDetail(item.id)}>
+                            {item.request_set
+                              ? item.request_set[0].name
+                              : item.title}
+                          </span>
+                          <img
+                            onClick={() => {
+                              console.log(item.id);
+                              Cookie.delete_project_view(item.id);
+                              // 쿠키 저장하기
+                              const expires = new Date();
+                              console.log(Cookie.project_view_list);
+                              expires.setMinutes(expires.getMinutes() + 2440);
+                              Cookies.set(
+                                "project_view",
+                                Cookie.project_view_list,
+                                {
+                                  path: "/",
+                                  expires,
+                                }
+                              );
+                              // 변경된 쿠키에 따라서 재설정
+                              Cookie.get_recent_project();
+                            }}
+                            src={Remove}
+                          />
+                        </div>
                       );
                     })}
-                </Main>
-                <SubCard>
-                  <SubCardContainer>
-                    <SubCardTitle>
-                      <div> 최근 본 프로젝트 &nbsp; &nbsp;  &nbsp; {Project.recent_project_list.length}
-                      </div>
-                    </SubCardTitle>
-                    <SubCardProject>
-                    {Project.recent_project_list.map((item, idx) => {
-                      
-                      return (
-                       
-                      <div style={{display: 'flex'}}>
-                        <span onClick={()=> Project.pushToDetail(item.id)} >{item.request_set ? item.request_set[0].name : item.title}</span>
-                        <img onClick={() => {
-                          console.log(item.id)
-                          Cookie.delete_project_view(item.id)
-                          // 쿠키 저장하기
-                          const expires = new Date();
-                          console.log(Cookie.project_view_list)
-                          expires.setMinutes(expires.getMinutes() + 2440);
-                          Cookies.set("project_view", Cookie.project_view_list, {
-                            path: "/",
-                            expires,
-                          });
-                          // 변경된 쿠키에 따라서 재설정
-                          Cookie.get_recent_project()
-                        }} 
-                        src={Remove}/>
-                      </div>
-                       
-                      )
-                    })
-                    }
-                    </SubCardProject>
-                    
-                  </SubCardContainer>
-                  
-                    <ShowItem>
-                      <UserBox>
-                        <img src={userImg} />
-                        {Auth.logged_in_user ? (
-                          <div>{Auth.logged_in_user.username.split("@")[0]}</div>
-                        ) : (
-                          <div>로그인 해주세요.</div>
-                        )}
-                      </UserBox>
-                      <SubItem>
-                        <span>프로젝트 의뢰</span>
-                        <span>{Project.subbox_project_count}</span>
+                  </SubCardProject>
+                </SubCardContainer>
 
-                      </SubItem>
-                      <SubItem>
-                        <span>관심 업체 등록</span>
-                        <span>{Partner.totalClientBookmark}</span>
-                      </SubItem>
-                  </ShowItem>
+                <ShowItem>
+                  <UserBox>
+                    <img src={userImg} />
+                    {Auth.logged_in_user ? (
+                      <div>{Auth.logged_in_user.username.split("@")[0]}</div>
+                    ) : (
+                      <div>로그인 해주세요.</div>
+                    )}
+                  </UserBox>
+                  <SubItem>
+                    <span>프로젝트 의뢰</span>
+                    <span>{Project.subbox_project_count}</span>
+                  </SubItem>
+                  <SubItem>
+                    <span>관심 업체 등록</span>
+                    <span>{Partner.totalClientBookmark}</span>
+                  </SubItem>
+                </ShowItem>
               </SubCard>
-              </Body>
+            </Body>
           </Container>
         </Background>
         <PageBar>
@@ -325,9 +330,9 @@ const SubCardTitle = styled.div`
   background-color: #e1e2e4;
   border-radius: 10px 10px 0px 0px;
   > div {
-    padding : 11px 12px 9px 12px;  
+    padding: 11px 12px 9px 12px;
   }
-`
+`;
 
 const SubCardProject = styled.div`
   margin-left: auto;
@@ -345,20 +350,20 @@ const SubCardProject = styled.div`
   text-align: left;
   color: #86888c;
   > div {
-    padding : 24px 0px 24px 0px;
+    padding: 24px 0px 24px 0px;
     border-bottom: 1px solid #e1e2e4;
     > span {
       margin-right: auto;
-      cursor : pointer;
+      cursor: pointer;
     }
     > img {
-      width : 16px;
-      height : 16px;
-      margin-left : 13px;
-      cursor : pointer;
+      width: 16px;
+      height: 16px;
+      margin-left: 13px;
+      cursor: pointer;
     }
   }
-`
+`;
 
 const ShowItem = styled.div`
   margin-left:auto;
@@ -366,7 +371,6 @@ const ShowItem = styled.div`
   height: 123px;
   margin
 `;
-
 
 const UserBox = styled.div`
   border-bottom: 1px solid #e1e2e4;
@@ -389,7 +393,6 @@ const UserBox = styled.div`
   }
 `;
 
-
 const SubItem = styled.div`
   margin-bottom: 12px;
   display: flex;
@@ -403,7 +406,6 @@ const SubItem = styled.div`
     }
   }
 `;
-
 
 // 페이지 관련
 const PageBar = styled.div`
@@ -443,8 +445,7 @@ const Body = styled.div`
   border-bottom: 1px solid #e1e2e4;
   margin-top: 25px;
 `;
-const Main = styled.div`
-`;
+const Main = styled.div``;
 const Filter = styled.div`
   display: flex;
   flex-direction: column;

@@ -33,6 +33,7 @@ class PartnerCard extends React.Component {
     const { width, Search, data, Partner, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
+
     Partner.existCheckedBookmark(clientId, partnerId, idx);
     Partner.getTotalBookmarkByPartner(partnerId);
 

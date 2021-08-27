@@ -58,8 +58,21 @@ class SearchFilterBox extends React.Component {
     }
   };
 
-  componentDidMount = async () => {
+  scrollEventHandler = () => {
+    const { Partner } = this.props;
+
+    if (window.pageYOffset > 150) {
+      Partner.scrollActive = true;
+    } else {
+      Partner.scrollActive = false;
+    }
+  };
+
+  componentDidMount = () => {
     const { Partner, Category } = this.props;
+
+    window.addEventListener("scroll", this.scrollEventHandler);
+
     Partner.subButtonActive = false;
     Category.category_selected_tagbox = [];
     Category.selected_category_subbox = [];
@@ -163,7 +176,7 @@ class SearchFilterBox extends React.Component {
   render() {
     const { Category, Partner } = this.props;
     return (
-      <ContainerV2>
+      <ContainerV2 scrollActive={Partner.scrollActive}>
         <FilterCategory>
           <CategoryContainer>
             <CategoryName>카테고리</CategoryName>
@@ -391,6 +404,8 @@ const Field = styled.div`
 
 const ContainerV2 = styled.div`
   display: flex;
+  opacity: ${(props) => (props.scrollActive ? "0" : "1")};
+  transition: 0.3s all;
   flex-direction: column;
   align-items: center;
   width: 1200px;
