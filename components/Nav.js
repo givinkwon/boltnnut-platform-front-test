@@ -126,7 +126,7 @@ class Nav extends React.Component {
   render() {
     const { Auth, Request, Home } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-    console.log(Auth.logged_in_partner)
+    console.log(Auth.logged_in_partner);
     return (
       <>
         <NavBox>
@@ -219,7 +219,11 @@ class Nav extends React.Component {
                       <NavLink active={url.indexOf("project") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink step_index={1} url={"project"} content={"프로젝트 보기"} />
+                            <KSLink
+                              step_index={1}
+                              url={"project"}
+                              content={"프로젝트 보기"}
+                            />
                           </Font16>
                         </RouterWrapper>
 
@@ -497,16 +501,19 @@ class Nav extends React.Component {
                                   }}
                                 >
                                   {/*파트너 등록한 경우 : 만든 제품 attribute를 트리거로 이용*/}
-                                  {Auth.logged_in_partner.history ? 
-                                   <>
-                                   <span> 포트폴리오를 업데이트</span>하여 <br /> 업체를 홍보해보세요!
-                                   </>
-                                  : 
+                                  {Auth.logged_in_partner &&
+                                  Auth.logged_in_partner.history ? (
                                     <>
-                                    <span>포트폴리오를 업로드</span>하여 <br />
-                                     업체를 홍보해보세요!
+                                      <span> 포트폴리오를 업데이트</span>하여{" "}
+                                      <br /> 업체를 홍보해보세요!
                                     </>
-                                  }
+                                  ) : (
+                                    <>
+                                      <span>포트폴리오를 업로드</span>하여{" "}
+                                      <br />
+                                      업체를 홍보해보세요!
+                                    </>
+                                  )}
                                 </Font14>
                               </div>
                             </AnimationBox>

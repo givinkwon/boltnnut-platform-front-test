@@ -934,6 +934,7 @@ class Partner {
     }
     this.searchjust();
   };
+
   @action setList = (id, type) => {
     if (type === "category") {
       const index = this.search_category.indexOf(id);
@@ -1005,7 +1006,9 @@ class Partner {
       });
 
     // 검색 시 텍스트 저장
-    this.saveSearchText(this.search_text);
+    if (this.search_text) {
+      this.saveSearchText(this.search_text);
+    }
   };
 
   @action saveSearchText = (text) => {
@@ -2336,8 +2339,6 @@ class Partner {
       clientID = 20;
     }
 
-    console.log(clientID);
-
     const req = {
       params: {
         clientID: clientID,
@@ -2391,6 +2392,10 @@ class Partner {
 
     if (!clientID) {
       clientID = 20;
+    }
+
+    if (!partnerID) {
+      partnerID = 0;
     }
 
     const req = {
@@ -2682,12 +2687,12 @@ class Partner {
   };
 
   @action existCheckedBookmark = async (clientID, partnerID, idx) => {
-    // console.log(typeof clientID);
-    // console.log(clientID);
-    // console.log(partnerID);
-
     if (!clientID) {
       clientID = 20;
+    }
+
+    if (!partnerID) {
+      partnerID = 0;
     }
 
     const req = {
@@ -2753,6 +2758,9 @@ class Partner {
         }
     }
   };
+
+  // 제조사 찾기 페이지 스크롤 이벤트 상태선언
+  @observable scrollActive = false;
 }
 
 export default new Partner();

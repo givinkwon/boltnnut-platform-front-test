@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-
 import * as Title from "components/Title";
 import Router from "next/router";
 
@@ -72,8 +71,20 @@ class SearchBarConatiner extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    await this.props.Auth.checkLogin();
+  scrollEventHandler = () => {
+    const { Partner } = this.props;
+
+    if (window.pageYOffset > 150) {
+      Partner.scrollActive = true;
+    } else {
+      Partner.scrollActive = false;
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.scrollEventHandler);
+
+    this.props.Auth.checkLogin();
     this.search();
   }
 
@@ -104,17 +115,10 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "95%",
-              alignItems: "center",
-            }}
-          >
+          <FormInnerBox>
             <SearchBar
               active={Partner.subButtonActive}
-              style={{ position: "relative" }}
+              scrollActive={Partner.scrollActive}
             >
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
@@ -132,6 +136,7 @@ class SearchBarConatiner extends React.Component {
               <ImgContainer
                 onMouseEnter={() => this.imageSearchHandler()}
                 onMouseLeave={() => this.imageSearchHandler()}
+                scrollActive={Partner.scrollActive}
               >
                 <HoverBox
                   active={this.state.imgsearchhover}
@@ -140,11 +145,14 @@ class SearchBarConatiner extends React.Component {
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
 
-                <ImageFile file={true} isOpen={true} />
+                <ImgContainer scrollActive={Partner.scrollActive}>
+                  <ImageFile file={true} isOpen={true} />
+                </ImgContainer>
               </ImgContainer>
 
-              <ImgContainer>
-                <img
+              <ImgContainer scrollActive={Partner.scrollActive}>
+                <ImgBox
+                  scrollActive={Partner.scrollActive}
                   src="/static/icon/search_blue.svg"
                   onClick={() => {
                     this.search();
@@ -153,7 +161,7 @@ class SearchBarConatiner extends React.Component {
                 />
               </ImgContainer>
             </SearchBar>
-          </div>
+          </FormInnerBox>
         </Form>
       </>
     );
@@ -162,13 +170,18 @@ class SearchBarConatiner extends React.Component {
 
 export default SearchBarConatiner;
 
+const ImgBox = styled.img`
+  width: ${(props) => (props.scrollActive ? "26px" : "none")};
+  height: ${(props) => (props.scrollActive ? "26px" : "none")};
+`;
+
 const ImgContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 50px;
-  height: 50px;
+  height: ${(props) => (props.scrollActive ? "35px" : "50px")};
   border-radius: 20px;
 
   :hover {
@@ -198,46 +211,8 @@ const Title13 = styled(Title.FontSize13)`
   color: #0933b3;
 `;
 
-const ImgBox = styled.img`
-  width: 32px;
-  height: 32px;
-`;
-
-const CustomUl = styled.ul`
-  width: 588px;
-  height: 150px;
-  margin-left: 30px;
-  font-size: 18px;
-  }
-`;
-
-const CustomLiBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 588px;
-  height: 160px;
-  overflow: scroll;
-  background-color: #ffffff;
-
-  > li {
-    cursor: pointer;
-    margin: 20px 10px 0px 10px;
-    font-size: 18px;
-
-    :hover {
-      background-color: #f2f2f2;
-    }
-  }
-`;
-
-const categoryArray = [
-  { label: "전체", value: "전체" },
-  // { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
-];
-
 const SearchBar = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -245,16 +220,20 @@ const SearchBar = styled.div`
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
   border: solid 0.5px #e1e2e4;
-  width: 100%;
   padding-right: 20px;
+
+  // 스크롤 이벤트
+  transition: all 0.3s ease-out;
+  width: ${(props) => (props.scrollActive ? "600px" : "100%")};
+  height: ${(props) => (props.scrollActive ? "46px" : "100%")};
 
   input {
     width: 640px;
-    height: 57px;
+    height: ${(props) => (props.scrollActive ? "43px" : "57px")};
     border: none;
     border-radius: 60px;
     padding: 0 14px;
-    margin-left: 10px;
+    margin-left: ${(props) => (props.scrollActive ? "none" : "10px")};
     font-size: 18px;
 
     :focus {
@@ -263,11 +242,12 @@ const SearchBar = styled.div`
 
     ::placeholder {
       color: #c6c7cc;
-      font-size: 18px;
+      font-size: ${(props) => (props.scrollActive ? "15px" : "18px")};
     }
   }
+
   img {
-    width: 24px;
+    width: ${(props) => (props.scrollActive ? "19px" : "24px")};
     height: 24px;
     cursor: pointer;
   }
@@ -284,59 +264,23 @@ const SearchBar = styled.div`
         font-size: 12px;
       }
     }
+
     img {
       width: 16px;
       height: 16px;
     }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 700px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 792px;
-  }
-  @media (min-width: 1300px) {
-    width: 792px;
-  }
-
-  .searcher-suggs-word {
-    height: 40px;
-    line-height: 40px;
-    list-style: none;
-    border-bottom: 1px dashed #ccc;
-    margin: 0px 3px 0px 3px;
-    font-size: 1.2em;
-    color: #212121;
-    font-size: 1.5em;
-    margin-left: 0;
-    margin-right: -1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    background-color: white;
-    overflow: hidden;
-
-    @include transition(background-color 0.2s, color 0.2s);
-  }
-
-  .searcher-suggs-word.selected {
-    background-color: #0288d1;
-    color: white;
   }
 `;
 
 const Form = styled.div`
   display: flex;
   justify-content: center;
-  height: 44px;
+  height: 100%;
+`;
 
-  /* @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 54%;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 67%;
-  }
-  @media (min-width: 1300px) {
-    margin-top: 0;
-    width: 75%;
-  } */
+const FormInnerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  align-items: center;
 `;
