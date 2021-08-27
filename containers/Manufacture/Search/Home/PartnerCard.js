@@ -224,11 +224,9 @@ class PartnerCard extends React.Component {
                   <Item>
                     {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
                     {Partner.matching_image.length > 0 ? (
-                      <img src={Partner.matching_image[idx]}></img>
+                      <img src={Partner.matching_image[idx]} />
                     ) : (
-                      <img
-                        src={data && data.portfolio_set[0].img_portfolio}
-                      ></img>
+                      <img src={data && data.portfolio_set[0].img_portfolio} />
                     )}
                   </Item>
                 ) : existLogo === "null" ? (
@@ -361,9 +359,7 @@ class PartnerCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img
-                      src={data && data.portfolio_set[0].img_portfolio}
-                    ></img>
+                    <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
@@ -379,6 +375,7 @@ class PartnerCard extends React.Component {
                   </Item>
                 )}
               </Header>
+
               <Main>
                 <Name>{data && data.name}</Name>
                 <InfoOne>
@@ -389,6 +386,7 @@ class PartnerCard extends React.Component {
                 </InfoOne>
               </Main>
             </Card>
+
             {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
                 <>
@@ -508,7 +506,7 @@ const Hashtag = styled.div`
   align-items: center;
   height: 34px;
   border-radius: 5px;
-  margin-right: 20px;
+  margin-right: 12px;
   padding-right: 10px;
   padding-left: 10px;
   background-color: ${(props) => (props.active ? "#ffffff" : "#f6f6f6")};
@@ -615,16 +613,17 @@ const InfoOne = styled.div`
 `;
 
 const Item = styled.div`
-  padding: 20px 0;
   margin: 0 20px;
-
+  padding: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
   > img {
     border: solid 1px #eeeeee;
     border-radius: 10px;
-    overflow: hidden;
     cursor: pointer;
     width: 262px;
     height: 200px;
-    object-fit: scale-down;
+    object-fit: cover;
+    object-position: center top;
   }
 `;

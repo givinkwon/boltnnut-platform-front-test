@@ -207,6 +207,7 @@ class ManufacturerContentContainer extends React.Component {
                   의 제조사가 있습니다.
                 </Font20>
               </Header>
+
               <Main>
                 <MainBody>
                   <Border style={{ border: "solid 1px #e1e2e4" }}></Border>
@@ -238,7 +239,6 @@ class ManufacturerContentContainer extends React.Component {
                         <Background>
                           <div
                             onClick={async () => {
-                              console.log(Auth);
                               if (Auth.logged_in_client) {
                                 await Project.getProject(
                                   "allproject",
@@ -247,7 +247,7 @@ class ManufacturerContentContainer extends React.Component {
                               }
                               Partner.pushToDetail(item, idx);
                             }}
-                            style={{ width: "100%" }}
+                            style={{ width: "996px" }}
                           >
                             <PartnerCard
                               data={item}
@@ -685,7 +685,7 @@ const Body = styled.div`
 const Main = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
 `;
 
 const MainBody = styled.div`
@@ -705,6 +705,7 @@ const MainBody = styled.div`
     width: 1200px;
   }
 `;
+
 const Aside = styled.div`
   width: 240px;
 `;
@@ -797,7 +798,7 @@ const Conter = styled.div`
 `;
 
 const Header = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -849,7 +850,7 @@ const LoadingComponent = styled(ButtonSpinnerComponent)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* z-index: 1; */
+  z-index: 1000;
 `;
 
 const Layer = styled.div`
@@ -858,7 +859,7 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  /* z-index: 100; */
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
@@ -888,7 +889,7 @@ const RequestBtn = styled.button`
   width: 160px;
   height: 42px;
   margin-top: 16px;
-  padding-top: 5px;
+  padding-top: 1px;
   border-radius: 29px;
   border: solid 2px #0933b3;
   background-color: #0933b3;

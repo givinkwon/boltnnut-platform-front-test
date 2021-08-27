@@ -269,7 +269,7 @@ class MobileProposalCard extends React.Component {
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
-        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(Partner.partner_detail_list));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
