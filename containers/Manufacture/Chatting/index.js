@@ -2,7 +2,8 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 
 import MyChatting from "./MyChatting/index";
-import BannerContainer from "containers/Manufacture/Chatting/MyChatting/Banner";
+import ChattingHeader from "./MyChatting/Header";
+import ChattingContent from "./MyChatting/Content";
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -12,16 +13,17 @@ class ChattingContainer extends React.Component{
     await Auth.checkLogin();
   };
   render(){
-    const {Auth} = this.props;
+    const {Auth, width } = this.props;
     return(
-      <div style = {{marginBottom: 200}}>
-      <BannerContainer/>
-      {this.props.width && this.props.width > 767.98 &&
-        <div style={{ overflow: "visible" }}>
-        <MyChatting/>
+      <>
+      {width && width > 767.98 &&
+        <div style={{ display : "flex", backgroundColor: "#f6f6f6" , overflow: "visible" }}>
+          <ChattingHeader/>
+          <ChattingContent/>
+          {/* <MyChatting/> */}
         </div>
       }
-      </div>
+      </>
     );
   }
 }

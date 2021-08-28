@@ -118,8 +118,8 @@ class MyChatting extends React.Component {
     const { Project, Auth } = this.props;
     
     return (
-      <Background>
-        <Container style={{ display: "flex", flexDirection: "column" }}>
+      <Background style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}>
+        <Container style={{display: "flex", flexDirection: "column" }}>
           {Project.chatModalActive && (
             <Layer onClick={() => this.modalHandler()}>
               <ChatTestContainer
