@@ -6,22 +6,23 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import Slider from "react-slick";
 
-const logo_img1 = "/static/images/logo/logo_1.png";
-const logo_img2 = "/static/images/logo/logo_2.png";
-const logo_img3 = "/static/images/logo/logo_3.png";
-const logo_img4 = "/static/images/logo/logo_4.png";
-const logo_img5 = "/static/images/logo/logo_5.png";
-const logo_img6 = "/static/images/logo/logo_6.png";
-const logo_img7 = "/static/images/logo/logo_7.png";
-const logo_img8 = "/static/images/logo/logo_8.png";
-const logo_img9 = "/static/images/logo/logo_9.png";
-const logo_img10 = "/static/images/logo/logo_10.png";
-const logo_img11 = "/static/images/logo/logo_11.png";
-const logo_img12 = "/static/images/logo/logo_12.png";
-const logo_img13 = "/static/images/logo/logo_13.png";
-const logo_img14 = "/static/images/logo/logo_14.png";
-const logo_img15 = "/static/images/logo/logo_15.jpg";
-const logo_img16 = "/static/images/logo/logo_16.png";
+const image1 = "/static/images/logo/logo_1.png";
+const image2 = "/static/images/logo/logo_2.png";
+// const image3 = "/static/images/logo/logo_3.png";
+const image4 = "/static/images/logo/logo_4.png";
+const image5 = "/static/images/logo/logo_5.png";
+const image6 = "/static/images/logo/logo_6.png";
+const image7 = "/static/images/logo/logo_7.png";
+const image8 = "/static/images/logo/logo_8.png";
+const image9 = "/static/images/logo/logo_9.png";
+const image10 = "/static/images/logo/logo_10.png";
+const image11 = "/static/images/logo/logo_11.png";
+const image12 = "/static/images/logo/logo_12.png";
+const image13 = "/static/images/logo/logo_13.png";
+const image14 = "/static/images/logo/logo_14.png";
+const image15 = "/static/images/logo/logo_15.jpg";
+const image16 = "/static/images/logo/logo_16.png";
+const image17 = "/static/images/logo/logo_17.png";
 
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
@@ -55,7 +56,7 @@ class MobileBanner1Container extends React.Component {
             <Item style={{ display: "flex" }}>
               <img src={logo_img1} />
               <img src={logo_img2} />
-              <img src={logo_img3} />
+              <img src={logo_img17} />
               <img src={logo_img4} />
             </Item>
             <Item style={{ display: "flex" }}>
