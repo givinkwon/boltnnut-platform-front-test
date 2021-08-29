@@ -5,13 +5,15 @@ import styled from "styled-components";
 import Background from "components/Background";
 
 import { inject, observer } from "mobx-react";
+import * as ChatAPI from "axios/Manufacture/Chat"; 
 
-
-@inject("Auth")
+@inject("Auth", "Project")
 @observer
 class ChattingContent extends React.Component {
+    
   render() {
-    const { Auth } = this.props;
+    const { Auth, Project } = this.props;
+
     return (
       <Background
       
@@ -22,7 +24,6 @@ class ChattingContent extends React.Component {
         </ContentTitle>
 
         <ContentBody>
-            
         </ContentBody>
 
       

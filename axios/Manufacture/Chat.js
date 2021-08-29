@@ -1,6 +1,16 @@
 import axios from "axios";
 import { ROOT_URL } from "../index";
 
+
+// 채팅 리스트 가져오기
+export function getChat(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/chatlog/`,
+    params: req.params ? req.params : null,
+  });
+}
+
 export function saveChat(req) {
   return axios({
     method: "POST",
