@@ -14,12 +14,15 @@ class Chat {
   // 채팅 내용를 저장한 array
   @observable chatcontent_arr = [];
 
+  // 파트너의 answer id 값 저장
+  @observable answerId = 0;
+
   // 채팅 로그를 가져오는 함수
-  @action getChat = (data) => {
+  @action getChat = () => {
      
         const req = {
             params: {
-              answer : data.id,
+              answer : this.answerId,
             },
           };
       

@@ -30,13 +30,35 @@ class ChattingHeader extends React.Component {
   }
 
   // 채팅 카드를 클릭했을 때 => 카드 활성화 및 채팅 로그 가져오기
-  clickchatcard  = (data) => {
+  clickchatcard  = (answer_data, request_data="") => {
     const {Auth, Project, Chat} = this.props;
-    // active를 위한 active 값 수정
-    Chat.chatcard_index = data.id;
+    
+    // answer는 여러 개여서 파트너의 경우 본인의 answer를 id 찾아야함
+    // 파트너인 경우
+    if(Auth.logged_in_partner){
 
-    // 채팅 로그 가져오기
-    Chat.getChat(data)
+      for (let i = 0; i < answer_data.length; i++) {
+        console.log(answer_data[i].partner, Auth.logged_in_partner.id)
+        if(answer_data[i].partner == Auth.logged_in_partner.id){
+          Chat.answerId = answer_data[i].id
+
+        }
+      }
+      // active를 위한 active 값 수정
+      Chat.chatcard_index = request_data[0].id;
+
+      Chat.getChat()
+    }
+    
+    // 클라이언트인 경우
+    if(Auth.logged_in_client){
+
+      // active를 위한 active 값 수정
+      Chat.chatcard_index = answer_data.id;
+      Chat.answerId = answer_data.id;
+      // 채팅 로그 가져오기
+      Chat.getChat()
+    }
     
   }
 
@@ -60,11 +82,13 @@ class ChattingHeader extends React.Component {
             {/* 카드 클릭 시 채팅 로그 불러오면서 active => 채팅 로그에는 answer만 저장되어 있어서 answer 데이터를 이용해야함*/}
             return (
                 // answer_set에 있는 정보 가져오기      
-
-                <HeaderContent onClick = {() => this.clickchatcard(data.answer_set[0])} active={Chat.chatcard_index == data.answer_set[0].id}>
-                  <span>{data.answer_set[0] && data.answer_set[0].content1.length > 15 ? (data.answer_set[0].content1.substring(0,15)+ "...") :  (data.answer_set[0].content1)}</span>
-                </HeaderContent>
-                
+                data.map((answer_data, idx) => {
+                  return (
+                  <HeaderContent onClick = {() => this.clickchatcard(answer_data)} active={Chat.chatcard_index == answer_data.id}>
+                    <span>{answer_data && answer_data.content1.length > 15 ? (answer_data.content1.substring(0,15)+ "...") :  (answer_data[0].content1)}</span>
+                  </HeaderContent>
+                  )
+                })
               
             )
           })
@@ -78,8 +102,7 @@ class ChattingHeader extends React.Component {
 
             return (
                 // request_set에 있는 정보 가져오기      
-
-                <HeaderContent onClick = {() => this.clickchatcard(data.answer_set[0])} active={Chat.chatcard_index == data.answer_set[0].id}>
+                <HeaderContent onClick = {() => this.clickchatcard(data.answer_set, data.request_set)} active={Chat.chatcard_index == data.request_set[0].id}>
                   <span>{data.request_set[0] && data.request_set[0].name.length > 15 ? (data.request_set[0].name.substring(0,15)+ "...") :  (data.request_set[0].name)}</span>
                 </HeaderContent>
                 
