@@ -42,10 +42,14 @@ class PartnerRegisterContainer extends React.Component {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <img style={{ marginRight: "32px"}} src={item.img} />
+                    <img style={{ marginRight: "32px" }} src={item.img} />
                     <span>{item.content}</span>
                   </div>
-                  <input style={{width : '18px', height : '18px'}}type="checkbox" checked={item.checked} />
+                  <input
+                    style={{ width: "18px", height: "18px" }}
+                    type="checkbox"
+                    checked={item.checked}
+                  />
                 </CategoryItem>
               );
             })}
@@ -59,15 +63,19 @@ class PartnerRegisterContainer extends React.Component {
                   "/partnerregister/[pagename]",
                   "/partnerregister/Category"
                 );
+                window.scrollTo(0, 0);
               }}
             >
               다음 단계
             </ButtonRegister>
           ) : (
             <DisabledButton
-
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
             >
-              다음 단계</DisabledButton>
+              다음 단계
+            </DisabledButton>
           )}
         </Containerv1>
       </Background>
@@ -78,9 +86,9 @@ class PartnerRegisterContainer extends React.Component {
 export default PartnerRegisterContainer;
 
 const ButtonRegister = styled(Button)`
-  margin-bottom : 290px;
-  padding : 0px;
-  margin-top : 46px;
+  margin-bottom: 290px;
+  padding: 0px;
+  margin-top: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,12 +107,12 @@ const ButtonRegister = styled(Button)`
   font-style: normal;
   letter-spacing: -0.45px;
   text-align: center;
-`
+`;
 
 // 버튼 비활성화 시
 const DisabledButton = styled.div`
-  margin-bottom : 290px;
-  margin-top : 46px;
+  margin-bottom: 290px;
+  margin-top: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,5 +149,4 @@ const CategoryItem = styled.div`
   border: ${(props) =>
     props.active ? "solid 2px #0933b3" : "solid 2px #c6c7cc;"};
   font-size: 18px;
-  
 `;

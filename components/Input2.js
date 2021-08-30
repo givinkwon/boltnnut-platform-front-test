@@ -29,8 +29,6 @@ class InputComponent extends React.Component {
 
   onChangeFile = (e) => {
     this.props.onChange(e.currentTarget.files);
-    // Category.
-    // Request.setCommonFile(e.currentTarget.files[0]);
   };
 
   render() {
@@ -150,7 +148,7 @@ const Input = styled.div`
   margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left:16px;
+  padding-left: 16px;
   :focus {
     outline: none;
   }
@@ -158,7 +156,7 @@ const Input = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-	padding: 0 !important;
+    padding: 0 !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -176,33 +174,35 @@ const Input = styled.div`
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     // padding-left: 2.3% !important;
-    padding-left:16px;
-  > input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.67;
-    letter-spacing: -0.18px;
-    text-align: left;
-    font-size: 14px;
-    :focus {
-      outline: none;
-    }
-    ::placeholder {  
-      font-weight: normal;
+    padding-left: 16px;
+    > input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      font-weight: 500;
       font-stretch: normal;
       font-style: normal;
-      line-height: 2.43;
-      letter-spacing: -0.35px;
+      line-height: 1.67;
+      letter-spacing: -0.18px;
       text-align: left;
-      color: #999999;
-      padding-left: 0;
+      font-size: 14px;
+      :focus {
+        outline: none;
+      }
+      ::placeholder {
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.43;
+        letter-spacing: -0.35px;
+        text-align: left;
+        color: #999999;
+        padding-left: 0;
+      }
     }
   }
 `;
+
 const FileText = styled(Content.FontSize18)`
   font-stretch: normal;
   font-style: normal;
