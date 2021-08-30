@@ -54,16 +54,16 @@ class MobileBanner1Container extends React.Component {
 
           <div style={{ display: "flex", flexDirection: "column", width: "347px" }}>
             <Item style={{ display: "flex" }}>
-              <img src={logo_img1} />
-              <img src={logo_img2} />
-              <img src={logo_img17} />
-              <img src={logo_img4} />
+              <img src={image1} />
+              <img src={image2} />
+              <img src={image17} />
+              <img src={image4} />
             </Item>
             <Item style={{ display: "flex" }}>
-              <img src={logo_img5} />
-              <img src={logo_img6} />
-              <img src={logo_img7} />
-              <img src={logo_img8} />
+              <img src={image5} />
+              <img src={image6} />
+              <img src={image7} />
+              <img src={image8} />
             </Item>
             {/* <Item style={{ display: "flex" }}>
           <img src={logo_img9} />
