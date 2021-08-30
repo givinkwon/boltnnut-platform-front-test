@@ -42,6 +42,7 @@ class ChattingHeader extends React.Component {
 
   render() {
     const { Auth, Project, Chat } = this.props;
+    console.log(Project.projectDataList)
     return (
       <Background
       
