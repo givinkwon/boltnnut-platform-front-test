@@ -7,13 +7,13 @@ import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import * as ChatAPI from "axios/Manufacture/Chat"; 
 
-@inject("Auth", "Project")
+@inject("Auth", "Project", "Chat")
 @observer
 class ChattingContent extends React.Component {
     
   render() {
-    const { Auth, Project } = this.props;
-
+    const { Auth, Project, Chat } = this.props;
+    console.log(Chat.chatcontent_arr.count)
     return (
       <Background
       
@@ -24,6 +24,14 @@ class ChattingContent extends React.Component {
         </ContentTitle>
 
         <ContentBody>
+          {Chat.chatcontent_arr.count > 0 && Chat.chatcontent_arr.results.map((data) => {
+            console.log(data)
+            return (
+                <div>{data.text_content}</div>
+                
+              )
+            })
+          }
         </ContentBody>
 
       
@@ -42,5 +50,5 @@ const ContentTitle = styled.div`
 `;
 
 const ContentBody = styled.div`
-
+  width : 100%;
 `;
