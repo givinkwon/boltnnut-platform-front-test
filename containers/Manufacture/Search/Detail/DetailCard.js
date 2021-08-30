@@ -558,7 +558,7 @@ class DetailCardContainer extends React.Component {
                     width={width}
                     style={{ marginBottom: "162px" }}
                   >
-                    <Font24 id="portfolio">포토폴리오</Font24>
+                    <Font24 id="portfolio">포트폴리오</Font24>
 
                     <PortfolioConatiner
                       data={Partner.partner_detail_list[0].item}

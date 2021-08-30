@@ -268,7 +268,18 @@ class AboutUsContainer extends Component {
         <PartnerPortfolioBox>
           {Category.imgUrl.length > 0 &&
             Category.imgUrl.map((item) => (
-              <img src={item} style={{ width: 100, height: 100 }} />
+              <div
+                style={{
+                  border: "solid 1px #c6c7cc",
+                  borderRadius: 3,
+                  objectFit: "contain",
+                }}
+              >
+                <img
+                  src={item}
+                  style={{ width: 100, height: 100, borderRadius: 3 }}
+                />
+              </div>
             ))}
         </PartnerPortfolioBox>
 
