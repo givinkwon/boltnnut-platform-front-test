@@ -27,8 +27,20 @@ class ChattingContent extends React.Component {
           {Chat.chatcontent_arr.count > 0 && Chat.chatcontent_arr.results.map((data) => {
             console.log(data)
             return (
-                <div>{data.text_content}</div>
+                <>
                 
+                  {/* 파트너일 때 */}
+                  {Auth.logged_in_partner && 
+                    data.chat_type == 0 ? (<Left>{data.text_content}</Left>) : (<Right>{data.text_content}</Right>)
+                  }
+                  
+                  {/* 클라이언트일 때 */}
+                  
+                  {Auth.logged_in_client && 
+                    data.chat_type == 1 ? (<Left>{data.text_content}</Left>) : (<Right>{data.text_content}</Right>)  
+                  }
+                
+                </>
               )
             })
           }
@@ -52,3 +64,12 @@ const ContentTitle = styled.div`
 const ContentBody = styled.div`
   width : 100%;
 `;
+
+const Left = styled.div`
+  margin-left : 15px;
+`
+
+const Right = styled.div`
+  text-align : end
+  margin-right : 32px;
+`

@@ -47,6 +47,9 @@ class ChattingHeader extends React.Component {
       // active를 위한 active 값 수정
       Chat.chatcard_index = request_data[0].id;
 
+      // 채팅창 타이틀 설정
+      Chat.chat_title = request_data.name;
+      // 채팅 로그 가져오기
       Chat.getChat()
     }
     
@@ -56,6 +59,9 @@ class ChattingHeader extends React.Component {
       // active를 위한 active 값 수정
       Chat.chatcard_index = answer_data.id;
       Chat.answerId = answer_data.id;
+
+      // 채팅창 타이틀 설정
+      Chat.chat_title = answer_data.name;
       // 채팅 로그 가져오기
       Chat.getChat()
     }
@@ -103,7 +109,27 @@ class ChattingHeader extends React.Component {
             return (
                 // request_set에 있는 정보 가져오기      
                 <HeaderContent onClick = {() => this.clickchatcard(data.answer_set, data.request_set)} active={Chat.chatcard_index == data.request_set[0].id}>
-                  <span>{data.request_set[0] && data.request_set[0].name.length > 15 ? (data.request_set[0].name.substring(0,15)+ "...") :  (data.request_set[0].name)}</span>
+                  <span>
+                    {data.request_set[0] && data.request_set[0].name.length > 15 ? (data.request_set[0].name.substring(0,15)+ "...") :  (data.request_set[0].name)}
+                    {/* 최근 채팅 시간 보여주기 */}
+                    {data.answer_set.map((answer_data) => {
+                      return (
+                        <RecentTime>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set[answer_data.chat_set.length - 1] && answer_data.chat_set[answer_data.chat_set.length - 1].createdAt.substring(11,16)}</RecentTime>
+                      ) 
+                    })
+                    } 
+                  </span>
+
+                  {/*본인에게 맞는 제안서의 채팅 최근값 도출*/}
+                  {data.answer_set.map((answer_data) => {
+
+                    return (
+                      <SubTitle>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set[answer_data.chat_set.length - 1] && answer_data.chat_set[answer_data.chat_set.length - 1].text_content}</SubTitle>
+                    ) 
+                  })
+                  
+                  }
+
                 </HeaderContent>
                 
               
@@ -125,6 +151,7 @@ const HeaderTitle = styled.div`
   height: 63px;
   border-bottom: solid 1px #e1e2e4;
   > span {
+    display : flex,
     font-size: 19px;
     width: 106px;
     height: 28px;
@@ -139,6 +166,7 @@ const HeaderTitle = styled.div`
     letter-spacing: -0.48px;
     text-align: left;
     color: #282c36;
+    
   }
 `;
 
@@ -149,19 +177,51 @@ border-bottom: solid 1px #e1e2e4;
 background-color: ${(props) => (props.active ? "#eeeeee" : "#ffffff")};
 cursor : pointer;
 > span {
+  display : flex;
   font-size: 15px !important;
-  width: 106px;
   height: 28px;
-  margin: 18px 0px 17px 16px;
+  margin: 18px 0px 0px 16px;
   object-fit: contain;
   font-family: NotoSansCJKkr-Bold;
   font-size: 19px;
   font-weight: 700;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.74;
   letter-spacing: -0.48px;
   text-align: left;
   color: #282c36;
+
+  > div {
+    margin-left : auto;
+    margin-right : 12px;
+  }
 }
+`;
+
+const SubTitle = styled.div`
+font-size: 13px !important;
+width: 194px;
+height: 19px;
+margin-bottom: 20px;
+margin-left : 16px;
+object-fit: contain;
+font-family: NotoSansCJKkr;
+font-weight: 700;
+font-stretch: normal;
+font-style: normal;
+text-align: left;
+color: #282c36;
+`;
+
+const RecentTime = styled.div`
+  itme-align: end;
+  height: 17px;
+  margin: 0px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 11px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  color: #86888c;
 `;

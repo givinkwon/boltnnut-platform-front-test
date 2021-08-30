@@ -17,6 +17,9 @@ class Chat {
   // 파트너의 answer id 값 저장
   @observable answerId = 0;
 
+  // 채팅방의 제목 설정 => 클라이언트인 경우에는 '파트너의 업체명'이 파트너인 경우에는 '의뢰서의 제목'이 이름이 된다.
+  @observable chat_title = "";
+
   // 채팅 로그를 가져오는 함수
   @action getChat = () => {
      
