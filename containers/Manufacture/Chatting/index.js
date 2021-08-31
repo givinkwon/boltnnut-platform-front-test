@@ -10,14 +10,24 @@ class ChattingContainer extends React.Component{
     const { Auth } = this.props;
     await Auth.checkLogin();
   };
+  // width 체크하기
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  };
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
+  
   render(){
     const {Auth, width } = this.props;
     return(
       <>
       {width && width > 767.98 &&
         <div style={{ display : "flex", backgroundColor: "#f6f6f6" , overflow: "visible" }}>
-          <ChattingHeader/>
-          <ChattingContent/>
+          <ChattingHeader width={width}/>
+          <ChattingContent width={width}/>
         </div>
       }
       </>
