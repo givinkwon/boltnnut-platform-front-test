@@ -447,76 +447,81 @@ class Nav extends React.Component {
                                 return <Font14>파트너 등록하기</Font14>;
                               }}
                             />
-                            <AnimationBox
-                              onClick={() => {
-                                Router.push("/partnerregister");
-                              }}
-                            >
-                              <img src={signupBoxImg} />
-                              <img
-                                src={signupIcon}
-                                style={{
-                                  position: "absolute",
-                                  left: "16%",
-                                  top: "38%",
-                                }}
-                              />
-                              <img
-                                src={
-                                  this.state.closeImgState
-                                    ? close_clicked
-                                    : close_ic
-                                }
-                                onMouseOver={() => {
-                                  this.setState({ closeImgState: true });
-                                }}
-                                onMouseOut={() => {
-                                  this.setState({ closeImgState: false });
-                                }}
-                                style={{
-                                  width: 12,
-                                  height: 12,
-                                  position: "absolute",
-                                  top: "40%",
-                                  right: "14%",
-                                  zIndex: 5000,
-                                }}
-                                onClick={(e) => {
-                                  Auth.signupBoxActive = false;
-                                  e.stopPropagation();
-                                }}
-                              />
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  textAlign: "center",
+                            {Auth.signupBoxActive && (
+                              <AnimationBox
+                                active={this.state.closeImgState}
+                                onClick={() => {
+                                  Router.push("/partnerregister");
                                 }}
                               >
-                                <Font14
+                                <img src={signupBoxImg} />
+                                <img
+                                  src={signupIcon}
                                   style={{
-                                    width: 250,
-                                    lineHeight: "1.71",
-                                    letterSpacing: "-0.14px",
-                                    marginTop: 6,
+                                    position: "absolute",
+                                    left: "16%",
+                                    top: "38%",
+                                  }}
+                                />
+
+                                <img
+                                  src={
+                                    this.state.closeImgState
+                                      ? close_clicked
+                                      : close_ic
+                                  }
+                                  onMouseOver={() => {
+                                    this.setState({ closeImgState: true });
+                                  }}
+                                  onMouseOut={() => {
+                                    this.setState({ closeImgState: false });
+                                  }}
+                                  style={{
+                                    width: 12,
+                                    height: 12,
+                                    position: "absolute",
+                                    top: "40%",
+                                    right: "14%",
+                                    zIndex: 5000,
+                                  }}
+                                  onClick={(e) => {
+                                    Auth.signupBoxActive = false;
+                                    e.stopPropagation();
+                                  }}
+                                />
+
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    textAlign: "center",
                                   }}
                                 >
-                                  {/*파트너 등록한 경우 : 만든 제품 attribute를 트리거로 이용*/}
-                                  {Auth.logged_in_partner &&
-                                  Auth.logged_in_partner.history ? (
-                                    <>
-                                      <span> 포트폴리오를 업데이트</span>하여{" "}
-                                      <br /> 업체를 홍보해보세요!
-                                    </>
-                                  ) : (
-                                    <>
-                                      <span>포트폴리오를 업로드</span>하여{" "}
-                                      <br />
-                                      업체를 홍보해보세요!
-                                    </>
-                                  )}
-                                </Font14>
-                              </div>
-                            </AnimationBox>
+                                  <Font14
+                                    style={{
+                                      width: 250,
+                                      lineHeight: "1.71",
+                                      letterSpacing: "-0.14px",
+                                      marginTop: 6,
+                                    }}
+                                  >
+                                    {/*파트너 등록한 경우 : 만든 제품 attribute를 트리거로 이용*/}
+                                    {Auth.logged_in_partner &&
+                                    Auth.logged_in_partner.history ? (
+                                      <>
+                                        <span> 포트폴리오를 업데이트</span>하여{" "}
+                                        <br /> 업체를 홍보해보세요!
+                                      </>
+                                    ) : (
+                                      <>
+                                        <span>포트폴리오를 업로드</span>하여{" "}
+                                        <br />
+                                        업체를 홍보해보세요!
+                                      </>
+                                    )}
+                                  </Font14>
+                                </div>
+                              </AnimationBox>
+                            )}
                           </RouterWrapper>
                         </NavLink>
                         <NavLink>
@@ -682,6 +687,7 @@ class Nav extends React.Component {
 
                         {Auth.signupBoxActive && (
                           <AnimationBox
+                            active={this.state.closeImgState}
                             onClick={() => {
                               Router.push("/signup");
                             }}

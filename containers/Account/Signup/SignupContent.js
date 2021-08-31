@@ -25,7 +25,7 @@ class SignupContent extends React.Component {
   toKakaoSignUp = () => {
     const { Auth } = this.props;
     this.props.Auth.kakaoLogin();
-    Auth.step= 0;
+    Auth.step = 0;
   };
 
   componentDidMount() {
@@ -81,10 +81,9 @@ class SignupContent extends React.Component {
                 onChange={(e) => {
                   Signup.setEmail(e.currentTarget.value);
                 }}
-
                 active={Signup.emailinputstate}
               />
-{/* 
+              {/* 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
               </AuthenticateBtn> */}
@@ -168,7 +167,7 @@ class SignupContent extends React.Component {
           {/* company name */}
           {/* 클라이언트는 회사명, 파트너는 상호명 */}
           <InputInnerBox>
-            <Title18>{Auth.type == "client" ? ("회사명") : ("상호명")}</Title18>
+            <Title18>{Auth.type == "client" ? "회사명" : "상호명"}</Title18>
             <CustomInput
               placeholder="근무하고 계신 회사명을 입력해 주세요."
               onChange={(e) => {
@@ -184,39 +183,42 @@ class SignupContent extends React.Component {
               active={Signup.company_nameInvalid}
             />
 
-            <div style={{ display: "inline-flex", marginTop: "12px" }}>
-              <CustomCheckBox
-                type="checkbox"
-                onClick={() => {
-                  Signup.individualhandler(Signup.individualState);
-                  Signup.company_name = "개인";
-                }
-              }
-              />
-              <Title15>개인일 경우 체크해 주세요.</Title15>
-            </div>
+            {Auth.type === "client" ? (
+              <div style={{ display: "inline-flex", marginTop: "12px" }}>
+                <CustomCheckBox
+                  type="checkbox"
+                  onClick={() => {
+                    Signup.individualhandler(Signup.individualState);
+                    Signup.company_name = "개인";
+                  }}
+                />
+                <Title15>개인일 경우 체크해 주세요.</Title15>
+              </div>
+            ) : (
+              <BlankCheckBox />
+            )}
           </InputInnerBox>
 
           {/* rank */}
-          {Auth.type == "client" &&
-          <InputInnerBox>
-            <Title18>직급</Title18>
-            <CustomInput
-              placeholder="직급을 입력해 주세요."
-              onChange={(e) => {
-                Signup.setTitle(e.currentTarget.value);
-                Signup.textInvalid("title", e.currentTarget.value);
-              }}
-              active={Signup.titleInputState}
-            />
-            <InvalidImgBox src={success} active={Signup.titleInvalid} />
-            {Signup.title && (
-              <InvalidTitle14 active={Signup.titleInvalid}>
-                특수문자는 입력할 수 없습니다.
-              </InvalidTitle14>
-            )}
-          </InputInnerBox>
-          }
+          {Auth.type == "client" && (
+            <InputInnerBox>
+              <Title18>직급</Title18>
+              <CustomInput
+                placeholder="직급을 입력해 주세요."
+                onChange={(e) => {
+                  Signup.setTitle(e.currentTarget.value);
+                  Signup.textInvalid("title", e.currentTarget.value);
+                }}
+                active={Signup.titleInputState}
+              />
+              <InvalidImgBox src={success} active={Signup.titleInvalid} />
+              {Signup.title && (
+                <InvalidTitle14 active={Signup.titleInvalid}>
+                  특수문자는 입력할 수 없습니다.
+                </InvalidTitle14>
+              )}
+            </InputInnerBox>
+          )}
 
           {/* agree */}
           <AgreeContainer>
@@ -265,10 +267,14 @@ class SignupContent extends React.Component {
                       Signup.marketingcheckboxState = e.currentTarget.checked;
                     }}
                     // 초기값이 안맞아서 역순으로 해야함
-                    onClick={() => Signup.setMarketing(!Signup.marketingcheckboxState)}
+                    onClick={() =>
+                      Signup.setMarketing(!Signup.marketingcheckboxState)
+                    }
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -427,6 +433,12 @@ const CustomCheckBox = styled.input`
   height: 18px;
   border: solid 1px #999999;
   margin-right: 18px;
+`;
+
+const BlankCheckBox = styled.div`
+  width: 18px;
+  height: 18px;
+  margin-top: 14px;
 `;
 
 const SubmitButton = styled.button`

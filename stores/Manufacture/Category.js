@@ -83,13 +83,10 @@ class Category {
   //진행한 제품군
   @observable partnerHistory = "";
 
-  
-  // 가능한 포토폴리오 사진 타입
-  @observable availablePortfolioType = [
-    "png",
-    "jpeg",
-    "jpg",
-  ];
+  // 가능한 회사소개서 및 포토폴리오 사진 타입
+  @observable possiblePartnerInfoType = ["pdf", "ppt", "pptx"];
+  @observable possiblePartnerPortfolioType = ["png", "jpeg", "jpg"];
+  @observable imgUrl = "";
 
   @action setCheckAllState = (type) => {
     const temp = new Array();
@@ -101,7 +98,7 @@ class Category {
 
   @action setPartnerInfo = (e) => {
     this.partnerInfo = e[0];
-    console.log(e[0])
+    console.log(e[0]);
   };
   @action setPartnerHistory = (e) => {
     console.log(e);
@@ -109,26 +106,44 @@ class Category {
   };
   @action setPartnerInfoFile = (e) => {
     this.partnerInfoFile = e[0];
-    console.log(e[0])
+    console.log(e[0]);
   };
 
-  @action setPartnerPortfolioFile = (e) => {
-
+  @action setPartnerInfoFile = (e) => {
     for (var i = 0; i < e.length; i++) {
-
       // 확장자 >> 인덱싱 + 소문자
-      const fileType = e[i].name.split(".")[e[i].name.split(".").length - 1].toLowerCase();
+      const fileType = e[i].name
+        .split(".")
+        [e[i].name.split(".").length - 1].toLowerCase();
+
       // 포트폴리오 이미지가 맞는 경우만 넣기
-      if (this.availablePortfolioType.indexOf(fileType) > -1) {
-        this.partnerPortfolioArray.push(e[i]);
+      if (this.possiblePartnerInfoType.indexOf(fileType) > -1) {
+        this.partnerInfoFile = e[i];
       } else {
-        alert("포토폴리오 이미지는 jpg, jpeg, png만 가능합니다")
+        alert("포토폴리오 이미지는 pdf, ppt, pptx만 가능합니다");
         return false;
       }
     }
-      console.log(this.partnerPortfolioArray);     
-
+    console.log(this.partnerInfoFile);
   };
+
+  @action setPartnerPortfolioFile = (e) => {
+    for (var i = 0; i < e.length; i++) {
+      // 확장자 >> 인덱싱 + 소문자
+      const fileType = e[i].name
+        .split(".")
+        [e[i].name.split(".").length - 1].toLowerCase();
+      // 포트폴리오 이미지가 맞는 경우만 넣기
+      if (this.possiblePartnerPortfolioType.indexOf(fileType) > -1) {
+        this.partnerPortfolioArray.push(e[i]);
+      } else {
+        alert("포토폴리오 이미지는 jpg, jpeg, png만 가능합니다");
+        return false;
+      }
+    }
+    console.log(this.partnerPortfolioArray);
+  };
+
   /* init */
 
   // @observable setCheckAllState = (type) => {
@@ -553,30 +568,30 @@ class Category {
           Auth.registerPageIdx -= 1;
           return;
         }
-        if (!Partner.CEO_name){
+        if (!Partner.CEO_name) {
           await alert("대표자명을 입력해주세요.");
           Auth.registerPageIdx -= 1;
           return;
         }
-        if (!Partner.employee){
+        if (!Partner.employee) {
           await alert("직원 숫자를 입력해주세요.");
           Auth.registerPageIdx -= 1;
           return;
         }
-        if (!Partner.revenue){
+        if (!Partner.revenue) {
           await alert("매출액을 입력해주세요.");
           Auth.registerPageIdx -= 1;
           return;
         }
-        if (!Partner.year){
+        if (!Partner.year) {
           await alert("설립연도를 입력해주세요.");
           Auth.registerPageIdx -= 1;
           return;
         }
-        
+
         // 데이터 저장
         var formData = new FormData();
-        
+
         // 파트너 ID
         formData.append("partnerId", id);
 
@@ -616,7 +631,7 @@ class Category {
         formData.append("year", Partner.year);
 
         // 인증서 관련 내용
-        formData.append("certification_list", Partner.certification)
+        formData.append("certification_list", Partner.certification);
 
         // axois 쏘기
         let req = {
