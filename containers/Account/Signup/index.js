@@ -16,10 +16,8 @@ class SignupConatiner extends React.Component {
     const { Auth } = this.props;
     return (
       <div style={{ paddingTop: 90 }}>
-
-        {Auth.step === 0 && <SignupSelectContainer/>}
-        {Auth.step === 1 && <SignupContentContainer/>}
-
+        {Auth.step === 0 && <SignupSelectContainer />}
+        {Auth.step === 1 && <SignupContentContainer />}
       </div>
     );
   }

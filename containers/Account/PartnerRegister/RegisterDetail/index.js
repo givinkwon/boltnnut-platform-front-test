@@ -18,170 +18,188 @@ import Stepper from "react-stepper-enhanced";
 import Auth from "stores/Account/Auth";
 const perfection = "/static/icon/camera.png";
 
-const pageNameArr = ["Category", "Process", "Material", "Aboutus","Complete"];
+const pageNameArr = ["Category", "Process", "Material", "Aboutus", "Complete"];
 // error 변수
-let error = 0
+let error = 0;
 @inject("Auth", "Category")
 @observer
 class RegisterDetailContainer extends React.Component {
-  
-
   // pageState 설정하기
   set_page_state = (pageName) => {
-    if(pageName === "Aboutus"){ 
-      Auth.pageState = 2 
-      console.log(pageName)
-      console.log(Auth.pageState)
-    } 
+    const { Auth } = this.props;
 
-    if(pageName === "Material"){
-      Auth.pageState = 1
-      console.log(pageName)
-      console.log(Auth.pageState)
+    if (pageName === "Category") {
+      Auth.pageState = 0;
+      console.log(pageName);
+      console.log(Auth.pageState);
     }
 
-  }
+    if (pageName === "Process") {
+      Auth.pageState = 1;
+      console.log(pageName);
+      console.log(Auth.pageState);
+    }
 
-  // 미선택 시 스크롤 올리고 에러 표시 
+    if (pageName === "Material") {
+      Auth.pageState = 2;
+      console.log(pageName);
+      console.log(Auth.pageState);
+    }
+
+    if (pageName === "Aboutus") {
+      Auth.pageState = 3;
+      console.log(pageName);
+      console.log(Auth.pageState);
+    }
+  };
+
+  // 미선택 시 스크롤 올리고 에러 표시
   ScrollTop = () => {
     const { Auth } = this.props;
-    Auth.error_register = 1
-    window.scrollTo(0, 0)
-
-  }
-
+    Auth.error_register = 1;
+    window.scrollTo(0, 0);
+  };
 
   render() {
     const { Auth, Category } = this.props;
-
     const { pageName, error } = this.props;
 
-    
     return (
       <>
-      {pageName === "Complete" ? (<CompleteContainer/>) : (
-      <Background>
-        <Containerv1
-          style={{
-            width: "792px",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <PartnerRegisterBanner />
-            <div style={{width: '420px', marginBottom: 48}}>
-              <Stepper 
+        {pageName === "Complete" ? (
+          <CompleteContainer />
+        ) : (
+          <Background>
+            <Containerv1
+              style={{
+                width: "792px",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <PartnerRegisterBanner />
+                <StepperContainer>
+                  <Stepper
+                    activeColor={"#C6C7CC"}
+                    defaultColor={"#f6f6f6"}
+                    completeColor={"#0933b3"}
+                    defaultTitleColor={"#C6C7CC"}
+                    completeTitleColor={"#0933b3"}
+                    activeTitleColor={"#0933b3"}
+                    circleFontSize={14}
+                    circleFontColor={"#ffffff"}
+                    // 테두리 색
+                    defaultBorderColor={"#e1e2e4"}
+                    defaultBorderStyle={"solid"}
+                    activeBorderColor={"#0933b3"}
+                    activeBorderStyle={"solid"}
+                    completeBorderColor={"#0933b3"}
+                    completeBorderStyle={"solid"}
+                    // bar 색
+                    defaultBarColor={"#e1e2e4"}
+                    completeBarColor={"#0933b3"}
+                    activeStep={Auth.pageState}
+                    // title
+                    steps={[
+                      { title: "카테고리" },
+                      { title: "공정" },
+                      { title: "소재" },
+                      { title: "회사소개" },
+                    ]}
+                  />
+                </StepperContainer>
+                {pageName === "Category" && <CategoryContainer />}
+                {pageName === "Process" && <ProcessContainer />}
+                {pageName === "Material" && <MaterialContainer />}
+                {pageName === "Aboutus" && <AboutUsContainer />}
 
-                activeColor={"#edf4fe"}
-                defaultColor={"#f6f6f6"}
-                completeColor={"#edf4fe"}
-                defaultTitleColor={"#C6C7CC"}
-                completeTitleColor={"#C6C7CC"}
-                activeTitleColor={"#0933b3"}
-                // 글씨 삭제
-                circleFontSize={"0px"}
-                
-                // 테두리 색
-                defaultBorderColor={"#e1e2e4"}
-                defaultBorderStyle={"solid"}
-                activeBorderColor={"#0933b3"}
-                activeBorderStyle={"solid"}
-                completeBorderColor={"#0933b3"}
-                completeBorderStyle={"solid"}
-                
-
-                // bar 색
-                defaultBarColor={"#e1e2e4"}
-                completeBarColor={"#e1e2e4"}
-                activeStep={Auth.pageState}
-                
-                steps={[
-                  { title: "카테고리"},
-                  { title: "소재"},
-                  { title: "회사소개"},
-                ]}
-              />
-            </div>
-            {pageName === "Category" && <CategoryContainer />}
-            {pageName === "Process" && <ProcessContainer />}
-            {pageName === "Material" && <MaterialContainer />}
-            {pageName === "Aboutus" && <AboutUsContainer />}
-
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <ButtonBox width={"400px"} style={{ marginTop: 50, marginBottom: 290 }}>
-                <Button
-                  buttonType="prev"
-                  onClick={() => {
-                    if (Auth.registerPageIdx > 0) {
-                      Auth.registerType === "product" &&
-                      Auth.registerPageIdx === 2
-                        ? (Auth.registerPageIdx -= 2)
-                        : (Auth.registerPageIdx -= 1);
-
-                      // stepper 설정을 위한 함수
-                      this.set_page_state(pageName)
-                      Router.push(
-                        "/partnerregister/[pagename]",
-                        `/partnerregister/${pageNameArr[Auth.registerPageIdx]}`
-                      );
-                    } else {
-                      Router.push(`/partnerregister`);
-                    }
-                  }}
-                >
-                  이전으로
-                </Button>
-                {Category.nextBtnActive ? (
-                  <Button
-                    buttonType="next"
-                    onClick={async () => {
-                      await Auth.checkLogin();
-                      console.log(Auth.logged_in_partner);
-                      console.log(Auth.registerPageIdx)
-
-                      if (Auth.registerPageIdx <= 3) {
-                        Auth.registerType === "product" && Auth.registerPageIdx === 0
-                          ? (Auth.registerPageIdx += 2)
-                          : (Auth.registerPageIdx += 1);
-                        await Category.save_selected(pageName, Auth.logged_in_partner.id)
-                      
-                        // 라우팅
-                        Router.push(
-                          "/partnerregister/[pagename]",
-                          `/partnerregister/${
-                            pageNameArr[Auth.registerPageIdx]
-                          }`
-                        );
-                        // stepper 설정을 위한 함수
-                        this.set_page_state(pageNameArr[Auth.registerPageIdx])
-
-                      }
-                    }}
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <ButtonBox
+                    width={"400px"}
+                    style={{ marginTop: 50, marginBottom: 290 }}
                   >
-                    다음 단계
-                  </Button>
-                ) : (
-                  <DisabledButton
-                  onClick={() => this.ScrollTop()}
-                  >
-                    다음 단계</DisabledButton>
-                )}
-              </ButtonBox>
-            </div>
-          </div>
-        </Containerv1>
-      </Background>
-      )
-                }
-                </>
+                    <Button
+                      buttonType="prev"
+                      onClick={() => {
+                        if (Auth.registerPageIdx > 0) {
+                          Auth.registerType === "product" &&
+                          Auth.registerPageIdx === 2
+                            ? (Auth.registerPageIdx -= 2)
+                            : (Auth.registerPageIdx -= 1);
+
+                          // stepper 설정을 위한 함수
+                          // this.set_page_state(pageName);
+                          Auth.pageState = Auth.pageState - 1;
+                          Router.push(
+                            "/partnerregister/[pagename]",
+                            `/partnerregister/${
+                              pageNameArr[Auth.registerPageIdx]
+                            }`
+                          );
+                          window.scrollTo(0, 0);
+                        } else {
+                          Router.push(`/partnerregister`);
+                        }
+                      }}
+                    >
+                      이전으로
+                    </Button>
+
+                    {Category.nextBtnActive ? (
+                      <Button
+                        buttonType="next"
+                        onClick={async () => {
+                          await Auth.checkLogin();
+                          console.log(Auth.logged_in_partner);
+                          console.log(Auth.registerPageIdx);
+
+                          if (Auth.registerPageIdx <= 3) {
+                            Auth.registerType === "product" &&
+                            Auth.registerPageIdx === 0
+                              ? (Auth.registerPageIdx += 2)
+                              : (Auth.registerPageIdx += 1);
+                            await Category.save_selected(
+                              pageName,
+                              Auth.logged_in_partner.id
+                            );
+
+                            // 라우팅
+                            Router.push(
+                              "/partnerregister/[pagename]",
+                              `/partnerregister/${
+                                pageNameArr[Auth.registerPageIdx]
+                              }`
+                            );
+                            // stepper 설정을 위한 함수
+                            this.set_page_state(
+                              pageNameArr[Auth.registerPageIdx]
+                            );
+                          }
+                          window.scrollTo(0, 0);
+                        }}
+                      >
+                        다음 단계
+                      </Button>
+                    ) : (
+                      <DisabledButton onClick={() => this.ScrollTop()}>
+                        다음 단계
+                      </DisabledButton>
+                    )}
+                  </ButtonBox>
+                </div>
+              </div>
+            </Containerv1>
+          </Background>
+        )}
+      </>
     );
   }
 }
@@ -209,4 +227,10 @@ const DisabledButton = styled.div`
   font-style: normal;
   letter-spacing: -0.45px;
   text-align: center;
+`;
+
+const StepperContainer = styled.div`
+  width: 420px;
+  margin-bottom: 48px;
+  font-weight: bold !important;
 `;

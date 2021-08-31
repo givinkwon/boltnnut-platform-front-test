@@ -44,7 +44,7 @@ class CategoryContainer extends Component {
   }
   render() {
     const { Category, Auth } = this.props;
-    console.log(Auth.error_register)
+    console.log(Auth.error_register);
     return (
       <>
         {Category.RegisterTypeArray.map((item, idx) => {
@@ -52,7 +52,11 @@ class CategoryContainer extends Component {
             <>
               {item.checked && (
                 <InnerBox
-                  outerStyles={Auth && Auth.error_register ? outerStyles_error : outerStylesFirst}
+                  outerStyles={
+                    Auth && Auth.error_register
+                      ? outerStyles_error
+                      : outerStylesFirst
+                  }
                   innerStyles={innerStyles}
                   Content={() => {
                     return (
@@ -61,17 +65,21 @@ class CategoryContainer extends Component {
                           <ContentBox>
                             <HeaderText>
                               <img src={item.img} />
-                              <Font18>
+                              <Font18 style={{ marginLeft: 32 }}>
                                 {Category.mainbusiness_list &&
                                   Category.mainbusiness_list[item.id]
                                     .maincategory}
-                                     
-                                <b style={{   
-                                    marginLeft: 8,                          
+
+                                <b
+                                  style={{
+                                    marginLeft: 8,
                                     fontWeight: "bold",
                                     color: "#E53C38",
                                     fontSize: "14px",
-                                }}>(필수)</b>
+                                  }}
+                                >
+                                  (필수)
+                                </b>
                               </Font18>
                             </HeaderText>
 
@@ -87,7 +95,6 @@ class CategoryContainer extends Component {
                                     Category.mainbusiness_list[item.id]
                                       .business_set
                                   }
-
                                 />
                               </CheckItem>
                               <CheckItem></CheckItem>
@@ -117,7 +124,14 @@ class CategoryContainer extends Component {
             </>
           );
         })}
-        <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16, marginTop: 50 }}>
+        <Font18
+          style={{
+            textAlign: "left",
+            width: "100%",
+            marginBottom: 16,
+            marginTop: 50,
+          }}
+        >
           카테고리
         </Font18>
         <InnerBox
@@ -194,7 +208,6 @@ const CheckItem = styled.label`
   @media (min-width: 1200px) {
     width: 186px;
   }
-
 `;
 const CheckItemBox = styled.div`
   width: 95%;
@@ -217,6 +230,7 @@ const ContentBox = styled.div`
 const HeaderText = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   border-bottom: 1px solid #e1e2e4;
   padding-bottom: 16px;
   margin-bottom: 27px;

@@ -43,27 +43,12 @@ class SnsSignupContent extends React.Component {
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
-
-          
-          {/* userID */}
-          <InputInnerBox>
-            <Title18>아이디</Title18>
-            <CustomInput
-              value={Signup.email}
-            />
-          </InputInnerBox>
-
-          {/* Phone */}
-          <InputInnerBox>
-            <Title18>휴대전화</Title18>
-            <CustomInput
-              value={Signup.phone}
-            />
-          </InputInnerBox>
+          <Title32 style={{ marginTop: "20px" }}>
+            추가정보를 입력해 주세요.
+          </Title32>
 
           {/* name */}
-          <InputInnerBox>
+          <InputInnerBox style={{ marginTop: 80 }}>
             <Title18>이름</Title18>
             <CustomInput
               placeholder="이름을 입력해 주세요."
@@ -74,13 +59,17 @@ class SnsSignupContent extends React.Component {
               active={Signup.realNameInputState}
             />
             <InvalidImgBox src={success} active={Signup.realNameInvalid} />
-            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            {Signup.realName && (
+              <InvalidTitle14 active={Signup.realNameInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* company name */}
           {/* 클라이언트는 회사명, 파트너는 상호명 */}
           <InputInnerBox>
-            <Title18>{Auth.type == "client" ? ("회사명") : ("상호명")}</Title18>
+            <Title18>{Auth.type === "client" ? "회사명" : "상호명"}</Title18>
             <CustomInput
               placeholder="근무하고 계신 회사명을 입력해 주세요."
               onChange={(e) => {
@@ -90,34 +79,45 @@ class SnsSignupContent extends React.Component {
               active={Signup.company_nameInputState}
               defaultValue={Signup.individual}
             />
-            <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
-
-            <div style={{ display: "inline-flex", marginTop: "12px" }}>
-              <CustomCheckBox type="checkbox" onClick={() => {
-                Signup.individualhandler(Signup.individualState)
-                Signup.company_name = "개인"; 
-              }}
+            <InvalidImgBox
+              src={success}
+              style={{ bottom: "40%" }}
+              active={Signup.company_nameInvalid}
+            />
+            {Auth.type === "client" && (
+              <div style={{ display: "inline-flex", marginTop: "12px" }}>
+                <CustomCheckBox
+                  type="checkbox"
+                  onClick={() => {
+                    Signup.individualhandler(Signup.individualState);
+                    Signup.company_name = "개인";
+                  }}
                 />
-              <Title15>개인일 경우 체크해 주세요.</Title15>
-            </div>
+                <Title15>개인일 경우 체크해 주세요.</Title15>
+              </div>
+            )}
           </InputInnerBox>
 
           {/* rank */}
-          {Auth.type == "client" &&
-          <InputInnerBox style={{ marginTop: "15px" }}>
-            <Title18>직급</Title18>
-            <CustomInput
-              placeholder="직급을 입력해 주세요."
-              onChange={(e) => {
-                Signup.setTitle(e.currentTarget.value);
-                Signup.textInvalid("title", e.currentTarget.value);
-              }}
-              active={Signup.titleInputState}
-            />
-            <InvalidImgBox src={success} active={Signup.titleInvalid} />
-            {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
-          </InputInnerBox>
-          }
+          {Auth.type === "client" && (
+            <InputInnerBox style={{ marginTop: "15px" }}>
+              <Title18>직급</Title18>
+              <CustomInput
+                placeholder="직급을 입력해 주세요."
+                onChange={(e) => {
+                  Signup.setTitle(e.currentTarget.value);
+                  Signup.textInvalid("title", e.currentTarget.value);
+                }}
+                active={Signup.titleInputState}
+              />
+              <InvalidImgBox src={success} active={Signup.titleInvalid} />
+              {Signup.title && (
+                <InvalidTitle14 active={Signup.titleInvalid}>
+                  특수문자는 입력할 수 없습니다.
+                </InvalidTitle14>
+              )}
+            </InputInnerBox>
+          )}
 
           {/* agree */}
           <AgreeContainer>
@@ -147,7 +147,9 @@ class SnsSignupContent extends React.Component {
                     }}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -163,10 +165,14 @@ class SnsSignupContent extends React.Component {
                       Signup.marketingcheckboxState = e.currentTarget.checked;
                     }}
                     // 초기값이 안맞아서 역순으로 해야함
-                    onClick={() => Signup.setMarketing(!Signup.marketingcheckboxState)}
+                    onClick={() =>
+                      Signup.setMarketing(!Signup.marketingcheckboxState)
+                    }
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -273,7 +279,8 @@ const KakaoImgBox = styled.div`
 
 const CustomInput = styled.input`
   border-radius: 3px;
-  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
+  border: ${(props) =>
+    props.active ? "1px solid #c7c7c7" : "1px solid #e53c38"};
   padding-left: 10px;
   width: 578px;
   height: 42px;
@@ -321,6 +328,7 @@ const SubmitButton = styled.button`
   align-items: center;
   width: 228px;
   height: 48px;
+  border: none;
   border-radius: 24px;
   background-color: #0933b3;
   margin-top: 80px;
@@ -398,7 +406,7 @@ const InputInnerBox = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  margin-top: 80px;
+  margin-top: 32px;
 `;
 
 const AgreeContainer = styled.div`

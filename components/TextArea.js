@@ -2,22 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import * as Text from "./Text";
 import { DARKGRAY } from "static/style";
-import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
-
-const fileImage = "/static/icon/addFile.svg";
 
 @inject("Request", "Category")
 @observer
-class InputComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.file = React.createRef();
-  }
-  state = {
-    fileName: "",
-    file: "",
-  };
+class TextAreaComponent extends React.Component {
   onChange = (e) => {
     if (this.props.type === "file") {
       alert("G");
@@ -34,75 +23,27 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, file, Request, boxHeight, ...props } =
       this.props;
-    const { fileName } = this.state;
 
-    if (!file) {
-      return (
-        <Wrap width={this.props.width}>
-          {label && (
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {label}
-            </Text.FontSize20>
-          )}
-          <InputBox marginTop={label ? 12 : 0} boxHeight={boxHeight}>
-            <Input>
-              <input {...props} onChange={this.onChange} />
-            </Input>
-            {children}
-          </InputBox>
-        </Wrap>
-      );
-    } else {
-      return (
-        <>
-          <FileText>
-            {/* {this.state.fileName} */}
-            {true ? this.state.fileName : "파일을 선택해 주세요."}
-          </FileText>
-          <Wrap width={this.props.width}>
-            <InputBox
-              style={{
-                width: "100%",
-                display: "inline-block",
-                height: "auto",
-                background: "#f6f6f6",
-              }}
-              onClick={() => this.file.current.click()}
-            >
-              <input
-                type="file"
-                multiple={"multiple"}
-                fileName={"fileName[]"}
-                style={{ display: "none" }}
-                onChange={this.onChangeFile}
-                ref={this.file}
-                placeholder={"파일을 선택해 주세요."}
-              />
-
-              <FileuploadBox style={{ color: "#0933B3" }}>
-                <img src={fileImage} style={{ marginRight: 12 }} />
-                파일 첨부
-              </FileuploadBox>
-
-              {/* <img src={fileImage} /> */}
-            </InputBox>
-          </Wrap>
-        </>
-      );
-    }
+    return (
+      <Wrap width={this.props.width}>
+        {label && (
+          <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
+            {label}
+          </Text.FontSize20>
+        )}
+        <InputBox marginTop={label ? 12 : 0} boxHeight={boxHeight}>
+          <Input>
+            <textarea {...props} onChange={this.onChange} />
+          </Input>
+          {children}
+        </InputBox>
+      </Wrap>
+    );
   }
 }
 
-export default InputComponent;
+export default TextAreaComponent;
 
-const FileuploadBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  padding: 5px;
-  background: white;
-`;
 const InputBox = styled.div`
   display: flex;
   height: ${(props) => (props.boxHeight ? props.boxHeight : "50px")};
@@ -149,11 +90,12 @@ const Input = styled.div`
   margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
+  padding-top: 22px;
   padding-left: 16px;
   :focus {
     outline: none;
   }
-  > input {
+  > textarea {
     width: 100%;
     height: 100%;
     border: none;
@@ -164,7 +106,8 @@ const Input = styled.div`
     line-height: 1.67;
     letter-spacing: -0.18px;
     text-align: left;
-    font-size: 18px;
+    font-size: 16px;
+    resize: none;
     :focus {
       outline: none;
     }
@@ -201,28 +144,5 @@ const Input = styled.div`
         padding-left: 0;
       }
     }
-  }
-`;
-
-const FileText = styled(Content.FontSize18)`
-  font-stretch: normal;
-  font-style: normal;
-  text-align: left;
-  font-weight: 400;
-  color: black;
-  display: flex;
-  padding-bottom: 10px;
-  /* align-items: center; */
-  /* position: absolute; */
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px !important;
-    padding-top: 0px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.43;
-    letter-spacing: -0.35px;
-    text-align: left;
-    color: #999999;
   }
 `;
