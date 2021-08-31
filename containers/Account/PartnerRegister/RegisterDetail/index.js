@@ -28,8 +28,8 @@ class RegisterDetailContainer extends React.Component {
   set_page_state = (pageName) => {
     const { Auth } = this.props;
 
-    if (pageName === "Aboutus") {
-      Auth.pageState = 3;
+    if (pageName === "Category") {
+      Auth.pageState = 0;
       console.log(pageName);
       console.log(Auth.pageState);
     }
@@ -42,6 +42,12 @@ class RegisterDetailContainer extends React.Component {
 
     if (pageName === "Material") {
       Auth.pageState = 2;
+      console.log(pageName);
+      console.log(Auth.pageState);
+    }
+
+    if (pageName === "Aboutus") {
+      Auth.pageState = 3;
       console.log(pageName);
       console.log(Auth.pageState);
     }
@@ -82,7 +88,7 @@ class RegisterDetailContainer extends React.Component {
                 <PartnerRegisterBanner />
                 <StepperContainer>
                   <Stepper
-                    activeColor={"#0933b3"}
+                    activeColor={"#C6C7CC"}
                     defaultColor={"#f6f6f6"}
                     completeColor={"#0933b3"}
                     defaultTitleColor={"#C6C7CC"}
@@ -130,13 +136,15 @@ class RegisterDetailContainer extends React.Component {
                             : (Auth.registerPageIdx -= 1);
 
                           // stepper 설정을 위한 함수
-                          this.set_page_state(pageName);
+                          // this.set_page_state(pageName);
+                          Auth.pageState = Auth.pageState - 1;
                           Router.push(
                             "/partnerregister/[pagename]",
                             `/partnerregister/${
                               pageNameArr[Auth.registerPageIdx]
                             }`
                           );
+                          window.scrollTo(0, 0);
                         } else {
                           Router.push(`/partnerregister`);
                         }
@@ -144,6 +152,7 @@ class RegisterDetailContainer extends React.Component {
                     >
                       이전으로
                     </Button>
+
                     {Category.nextBtnActive ? (
                       <Button
                         buttonType="next"
@@ -152,10 +161,10 @@ class RegisterDetailContainer extends React.Component {
                           console.log(Auth.logged_in_partner);
                           console.log(Auth.registerPageIdx);
 
-                          if (Auth.registerPageIdx <= 4) {
+                          if (Auth.registerPageIdx <= 3) {
                             Auth.registerType === "product" &&
                             Auth.registerPageIdx === 0
-                              ? (Auth.registerPageIdx += 1)
+                              ? (Auth.registerPageIdx += 2)
                               : (Auth.registerPageIdx += 1);
                             await Category.save_selected(
                               pageName,
