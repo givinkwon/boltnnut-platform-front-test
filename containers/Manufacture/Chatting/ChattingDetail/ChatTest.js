@@ -452,9 +452,8 @@ class ChatTestContainer extends React.Component {
       }
 
       // 읽음 표시 처리하기
-      {
-        this.checkRead(this.props.Project.chatMessages, data);
-      }
+      this.checkRead(this.props.Project.chatMessages, data);
+      
 
 
       let tempAnswerNum = roomNum;
@@ -476,13 +475,13 @@ class ChatTestContainer extends React.Component {
           });
         }
       }
+    // 소켓 onclose 시작
+    this.chatSocket.onclose = (e) => {
+    };
+    // 소켓 onclose 끝
   }
   // 소켓 onmessage 끝
   
-  // 소켓 onclose 시작
-  this.chatSocket.onclose = (e) => {
-  };
-  // 소켓 onclose 끝
 
   //redis에서 메세지 뿌려줄 때
   onSendMessage = (myMessage) => {
@@ -499,7 +498,8 @@ class ChatTestContainer extends React.Component {
       })
     );
   };
-
+  }
+  
   render() {
     return (
       <>
