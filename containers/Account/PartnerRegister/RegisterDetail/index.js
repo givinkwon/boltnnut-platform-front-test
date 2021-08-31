@@ -26,14 +26,22 @@ let error = 0;
 class RegisterDetailContainer extends React.Component {
   // pageState 설정하기
   set_page_state = (pageName) => {
+    const { Auth } = this.props;
+
     if (pageName === "Aboutus") {
-      Auth.pageState = 2;
+      Auth.pageState = 3;
+      console.log(pageName);
+      console.log(Auth.pageState);
+    }
+
+    if (pageName === "Process") {
+      Auth.pageState = 1;
       console.log(pageName);
       console.log(Auth.pageState);
     }
 
     if (pageName === "Material") {
-      Auth.pageState = 1;
+      Auth.pageState = 2;
       console.log(pageName);
       console.log(Auth.pageState);
     }
@@ -72,16 +80,16 @@ class RegisterDetailContainer extends React.Component {
                 }}
               >
                 <PartnerRegisterBanner />
-                <div style={{ width: "420px", marginBottom: 48 }}>
+                <StepperContainer>
                   <Stepper
-                    activeColor={"#edf4fe"}
+                    activeColor={"#0933b3"}
                     defaultColor={"#f6f6f6"}
-                    completeColor={"#edf4fe"}
+                    completeColor={"#0933b3"}
                     defaultTitleColor={"#C6C7CC"}
-                    completeTitleColor={"#C6C7CC"}
+                    completeTitleColor={"#0933b3"}
                     activeTitleColor={"#0933b3"}
-                    // 글씨 삭제
-                    circleFontSize={"0px"}
+                    circleFontSize={14}
+                    circleFontColor={"#ffffff"}
                     // 테두리 색
                     defaultBorderColor={"#e1e2e4"}
                     defaultBorderStyle={"solid"}
@@ -91,15 +99,17 @@ class RegisterDetailContainer extends React.Component {
                     completeBorderStyle={"solid"}
                     // bar 색
                     defaultBarColor={"#e1e2e4"}
-                    completeBarColor={"#e1e2e4"}
+                    completeBarColor={"#0933b3"}
                     activeStep={Auth.pageState}
+                    // title
                     steps={[
                       { title: "카테고리" },
+                      { title: "공정" },
                       { title: "소재" },
                       { title: "회사소개" },
                     ]}
                   />
-                </div>
+                </StepperContainer>
                 {pageName === "Category" && <CategoryContainer />}
                 {pageName === "Process" && <ProcessContainer />}
                 {pageName === "Material" && <MaterialContainer />}
@@ -142,10 +152,10 @@ class RegisterDetailContainer extends React.Component {
                           console.log(Auth.logged_in_partner);
                           console.log(Auth.registerPageIdx);
 
-                          if (Auth.registerPageIdx <= 3) {
+                          if (Auth.registerPageIdx <= 4) {
                             Auth.registerType === "product" &&
                             Auth.registerPageIdx === 0
-                              ? (Auth.registerPageIdx += 2)
+                              ? (Auth.registerPageIdx += 1)
                               : (Auth.registerPageIdx += 1);
                             await Category.save_selected(
                               pageName,
@@ -208,4 +218,10 @@ const DisabledButton = styled.div`
   font-style: normal;
   letter-spacing: -0.45px;
   text-align: center;
+`;
+
+const StepperContainer = styled.div`
+  width: 420px;
+  margin-bottom: 48px;
+  font-weight: bold !important;
 `;

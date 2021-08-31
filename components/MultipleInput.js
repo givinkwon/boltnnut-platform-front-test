@@ -9,7 +9,7 @@ const fileImage = "/static/icon/addFile.svg";
 
 @inject("Request", "Category")
 @observer
-class InputComponent extends React.Component {
+class MultipleInputComponent extends React.Component {
   constructor(props) {
     super(props);
     this.file = React.createRef();
@@ -61,7 +61,7 @@ class InputComponent extends React.Component {
               placeholder={"파일을 선택해 주세요."}
             />
 
-            <FileuploadBox>
+            <FileuploadBox style={{ color: "#0933B3" }}>
               <img src={fileImage} style={{ marginRight: 12 }} />
               파일 첨부
             </FileuploadBox>
@@ -72,7 +72,7 @@ class InputComponent extends React.Component {
   }
 }
 
-export default InputComponent;
+export default MultipleInputComponent;
 
 const FileuploadBox = styled.div`
   display: flex;

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import InnerBox from "components/InnerBox";
 import * as Content from "components/Content";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import { toJS } from "mobx";
 import InputComponent from "components/Input2";
+import TextAreaComponent from "components/TextArea";
 import MultipleInput from "components/MultipleInput";
 import * as Title from "components/Title";
 import TextFieldComponent from "components/Input";
@@ -116,7 +115,6 @@ class AboutUsContainer extends Component {
 
   render() {
     const { Category, Partner } = this.props;
-    const t = "asd\nsad";
 
     return (
       <>
@@ -141,11 +139,11 @@ class AboutUsContainer extends Component {
           많아집니다.
         </Font16>
 
-        <InputComponent
+        <TextAreaComponent
           class="Input"
           boxHeight="159px"
-          placeholder="업종, 설비, 개발품 등 최대한 내용을 상세히 작성해주세요.&#13;&#10;예시)<설비>프레스 80~250톤, N/C Feeder, 샤링기, 밀링기, 연마기, 컷팅기, 각종 측정장비 보유"
-          // onFocus={(e) => (e.target.placeholder = "")}
+          placeholder="업종, 설비, 개발품 등 최대한 내용을 상세히 작성해주세요.&#13;&#10;
+          예시)&#13;&#10;<설비>&#13;&#10;프레스 80~250톤, N/C Feeder, 샤링기, 밀링기, 연마기, 컷팅기, 각종 측정장비 보유"
           onChange={(e) => {
             Category.setPartnerInfo(e);
           }}
@@ -338,11 +336,10 @@ class AboutUsContainer extends Component {
           파일을 업로드 해주세요.
         </Font16>
 
-        <InputComponent
+        <TextAreaComponent
           class="Input"
           boxHeight="159px"
           placeholder="예시) 에어컨, 공기 청정기, 제습기, 에어컨, 공기 청정기, 제습기 에어컨, 공기 청정기, 제습기"
-          // onFocus={(e) => (e.target.placeholder = "")}
           onChange={(e) => {
             Category.setPartnerHistory(e);
           }}
