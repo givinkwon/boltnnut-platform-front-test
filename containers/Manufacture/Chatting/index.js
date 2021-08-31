@@ -1,7 +1,5 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-
-import MyChatting from "./MyChatting/index";
 import ChattingHeader from "./MyChatting/Header";
 import ChattingContent from "./MyChatting/Content";
 
@@ -20,7 +18,6 @@ class ChattingContainer extends React.Component{
         <div style={{ display : "flex", backgroundColor: "#f6f6f6" , overflow: "visible" }}>
           <ChattingHeader/>
           <ChattingContent/>
-          {/* <MyChatting/> */}
         </div>
       }
       </>
