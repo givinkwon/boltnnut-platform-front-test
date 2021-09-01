@@ -170,6 +170,11 @@ class RequestContent extends Component {
     }
   };
 
+  // 프로젝트 분류 state
+  categoryCheckBox = () => {
+
+  }
+
   render() {
     const { Request, Auth } = this.props;
 
@@ -262,7 +267,7 @@ class RequestContent extends Component {
                     프로젝트 분류에 해당하는 항목을 선택해주세요.
                   </span>
                   <ProjectFieldCheckbox>
-                    <CheckBoxComponent >
+                    <CheckBoxComponent onChange={this.categoryCheckBox}>
                       <span
                         style={{
                           color: "#767676",
@@ -275,7 +280,7 @@ class RequestContent extends Component {
                         완제품/부품 구매
                       </span>
                     </CheckBoxComponent>
-                    <CheckBoxComponent >
+                    <CheckBoxComponent onChange={this.categoryCheckBox}>
                       <span
                         style={{
                           color: "#767676",
@@ -288,7 +293,7 @@ class RequestContent extends Component {
                         개발/설계 업체
                       </span>
                     </CheckBoxComponent>
-                    <CheckBoxComponent >
+                    <CheckBoxComponent onChange={this.categoryCheckBox}>
                       <span
                         style={{
                           color: "#767676",
