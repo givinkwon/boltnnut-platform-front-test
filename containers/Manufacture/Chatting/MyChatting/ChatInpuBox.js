@@ -9,13 +9,32 @@ import { inject, observer } from "mobx-react";
 const file_img = "static/images/chat/file.png";
 
 
-@inject("Project", "Partner")
+@inject("Project", "Partner", "Chat")
 @observer
 class ChatInputBox extends React.Component {
-    state = {
-        text: "",
-        value: "",
-      };
+  state = {
+    text: "",
+  };
+
+  // 메세지를 입력할 때
+  onChange(e) {
+    this.setState({ text: e.target.value });
+  }
+
+  // 메세지를 보낼 때
+  onSubmit(e) {
+    const { Chat } = this.props;
+    e.preventDefault();
+
+    // 텍스트 초기화
+    this.setState({ text: "" });
+
+    // 빈메세지 제거
+    if (this.state.text.length > 0) {
+      Chat.SendMessage(this.state.text);
+    }
+  }
+
   // 채팅 검색창을 렌더해주는 함수
   render() {
     return (
@@ -38,7 +57,7 @@ class ChatInputBox extends React.Component {
                     type="text"
                     className={"textarea"}
                     placeholderStyle={{ fontWeight: "400" }}
-                    onChange={(e) => this.onChangeHandler(e)}
+                    onChange={(e) => this.onChange(e)}
                     value={this.state.text}
                   />
 

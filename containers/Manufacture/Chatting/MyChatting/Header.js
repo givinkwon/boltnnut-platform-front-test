@@ -103,6 +103,7 @@ class ChattingHeader extends React.Component {
     Chat.chatSocket.onmessage = (e) => {
     // redis에서 온 data
     const data = JSON.parse(e.data);
+    const messages = this.props.Project.chatMessages;
 
     console.log(data);
     // 읽음 표시가 안되있다면
@@ -121,61 +122,54 @@ class ChattingHeader extends React.Component {
             })
         );
         }
-      }
-    }
-        
-    //     // 최근 메세지가 현재 메시지가 아니라면
-    //     if (
-    //     !(
-    //         data.time === messages[messages.length - 1].time &&
-    //         data.type === messages[messages.length - 1].member
-    //     )
-    //     ) 
-    //     // 메세지 저장하기
-    //     {
-    //     messages.push({
-    //         member: data["type"],
-    //         text: data["message"],
-    //         time: data["time"],
-    //         bRead: false,
-    //     });
-    //     } else {
-    //     console.log(data);
-    //     console.log(messages[messages.length - 1]);
-    //     console.log("중복 발생!");
-    //     }
-    // }
 
-    // // 읽음 표시 처리하기
-    // {
-    //     this.checkRead(this.props.Project.chatMessages, data);
-    // }
+        // 최근 메세지인 경우 => 메세지 배열에 저장하기
+        if (!(data.time === messages[messages.length - 1].time && data.type === messages[messages.length - 1].member)) 
+          // 메세지 배열에 저장하기
+          {
+            messages.push({
+                member: data["type"],
+                text: data["message"],
+                time: data["time"],
+                bRead: false,
+              });
+              } 
 
+        else 
+          {
+              console.log(data);
+              console.log(messages[messages.length - 1]);
+              console.log("중복 발생!");
+          }
+        }
 
-    // let tempAnswerNum = roomNum;
-    // let chatCount = 0;
+        // 읽음 표시 처리하기
+        {
+            Chat.checkRead(Project.chatMessages, data);
+        }
 
-    // // 데이터 메세지가 "접속완료" "수신완료"가 아닌 실제 메세지인 경우
-    // if (data.message != "접속완료" && data.message != "수신완료") {
-    //     // 내가 보낸 메세지면
-    //     if (data.type === this.userType) {
-    //     // 현재 메세지 저장하기
-    //     const req = {
-    //         text_content: data.message,
-    //         user_type: data.type,
-    //         chat_type: 0,
-    //         answer: tempAnswerNum,
-    //     };
-    //     ChatAPI.saveChat(req).then((res) => {
-    //         console.log(res);
-    //     });
-    //     }
-    // }
-    // // 소켓 onclose 시작
-    // this.chatSocket.onclose = (e) => {
-    // };
-    // // 소켓 onclose 끝
-    // }
+        // 데이터 메세지가 "접속완료" "수신완료"가 아닌 실제 메세지인 경우
+        if (data.message != "접속완료" && data.message != "수신완료") {
+            // 내가 보낸 메세지면
+            if (data.type === Auth.logged_in_user.type) {
+            // 현재 메세지 저장하기
+            const req = {
+                text_content: data.message,
+                user_type: data.type,
+                chat_type: 0,
+                answer: Chat.answerId,
+            };
+            ChatAPI.saveChat(req).then((res) => {
+                console.log(res);
+            });
+            }
+        }
+        // 소켓 onclose(에러가 발생하는 경우)
+        Chat.chatSocket.onclose = (e) => {
+          alert("메세지 수신에 에러가 발생했습니다. 새로고침해주세요")
+        };
+
+        }
     
   }
 
