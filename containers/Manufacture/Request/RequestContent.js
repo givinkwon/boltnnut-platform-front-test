@@ -171,9 +171,7 @@ class RequestContent extends Component {
   };
 
   // 프로젝트 분류 state
-  categoryCheckBox = () => {
-
-  }
+  categoryCheckBox = () => {};
 
   render() {
     const { Request, Auth } = this.props;
@@ -184,7 +182,7 @@ class RequestContent extends Component {
           <RequestHeader>
             <img src={reqeustlogo} style={{ widht: 45, height: 45 }}></img>
             <RequestTitle>
-              <span style={{ color: "#0933b3", fontWeight: 700 }}>프로젝트 정보</span>를
+              <span style={{ color: "#0933b3" }}>프로젝트 정보</span>를
               입력해주세요.
             </RequestTitle>
           </RequestHeader>
@@ -455,7 +453,6 @@ class RequestContent extends Component {
                     onChange={(e) => {
                       Request.set_contents(e);
                     }}
-                    
                   />
                 </ProjectInput>
               </RequestContentBox>
@@ -520,8 +517,10 @@ class RequestContent extends Component {
                   marginBottom: 70,
                 }}
               >
-                <span style={{ color: "#0933b3", fontWeight: 700 }}>관련 파일</span>을 업로드
-                해주세요.
+                <span style={{ color: "#0933b3", fontWeight: 700 }}>
+                  관련 파일
+                </span>
+                을 업로드 해주세요.
               </span>
               <ContentTitle style={{ marginBottom: 4 }}>
                 <span>파일 업로드</span>
@@ -746,8 +745,8 @@ const quantityAry = [
 ];
 
 const InputComponentContent = styled(InputComponent2)`
-font-family: NotoSansCJKkr !important ;
-`
+  font-family: NotoSansCJKkr !important ;
+`;
 
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
@@ -1864,7 +1863,7 @@ const RequestButton = styled(Buttonv1)`
   font-size: 18px;
   line-height: 1.89;
   letter-spacing: -0.45px;
-  font-family : NotoSansCJKkr !important;
+  font-family: NotoSansCJKkr !important;
 `;
 
 const FileImageContainer = styled.div`

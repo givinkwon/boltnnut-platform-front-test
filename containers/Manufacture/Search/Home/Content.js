@@ -136,6 +136,7 @@ class ManufacturerContentContainer extends React.Component {
     const { Request } = this.props;
     Router.push("/request");
     Request.set_request_type(1);
+    Request.requestTabIdx = 1;
   };
 
   resultBannerHandler = () => {
@@ -150,7 +151,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project, Partner, Search, Auth, Cookie } = this.props;
+    const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
 
     return (

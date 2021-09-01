@@ -124,10 +124,10 @@ class MobileDetailCardContainer extends React.Component {
 
     let introductionObject = document.getElementById("introduction");
 
-    let introductionPosY = introductionObject.offsetTop;
-    if (introductionObject.offsetParent) {
-      introductionPosY += introductionObject.offsetParent.offsetTop;
-    }
+    // let introductionPosY = introductionObject.offsetTop;
+    // if (introductionObject.offsetParent) {
+    //   introductionPosY += introductionObject.offsetParent.offsetTop;
+    // }
 
     let reviewObject = document.getElementById("review");
 
@@ -149,7 +149,7 @@ class MobileDetailCardContainer extends React.Component {
         //   .getElementById("portfolio")
         //   .getBoundingClientRect().top,
         portfoliLocation: portfolioPosY,
-        introductionLocation: introductionPosY,
+        // introductionLocation: introductionPosY,
         reviewLocation: reviewPosY,
         mapLocation: mapsPosY,
       };

@@ -33,8 +33,9 @@ class Request {
   @observable request_price_state = -1; // 예산 조율 state => 미 체크 시에는 -1, 조율 가능 체크 시 0, 상담 후 예산 결정 시 1
   @observable request_period = ""; // 희망 납기일
   @observable request_period_state = 0; // 납기일 협의 state => 체크 시에는 1, 미 체크 시에는 0
-  @observable request_contents =   "1. 프로젝트의 소개 및 제작 목적\n\n\n2. 프로젝트의 진행 상황 및 계획 \n\n\n3. 프로젝트 기능 및 특이 사항 \n\n\n4. 참고자료 / 레퍼런스 \n\n\n예시) ‘볼트앤너트 네이버 블로그’ 참고 등 \n\n\n5. 제조사(파트너)에게의 요청사항 \n\n\n";
- 
+  @observable request_contents =
+    "1. 프로젝트의 소개 및 제작 목적\n\n\n2. 프로젝트의 진행 상황 및 계획 \n\n\n3. 프로젝트 기능 및 특이 사항 \n\n\n4. 참고자료 / 레퍼런스 \n\n\n예시) ‘볼트앤너트 네이버 블로그’ 참고 등 \n\n\n5. 제조사(파트너)에게의 요청사항 \n\n\n";
+
   @observable request_file_set = []; // 의뢰 관련 파일
   @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
@@ -90,7 +91,7 @@ class Request {
 
   // 비용 조율 협의 상태 추가하기
   @action set_price_state = (val) => {
-    if(val) {
+    if (val) {
       // 상담 후 예산 결정 선택 시에
       this.request_price_state = 1;
     } else {
@@ -258,7 +259,7 @@ class Request {
     for (var i = 0; i < this.request_drawing_set.length; i++) {
       formData.append(`blueprint`, this.request_file_set[i]);
     }
-    
+
     // 방문 경로 추가
     formData.append("path", this.path);
 
