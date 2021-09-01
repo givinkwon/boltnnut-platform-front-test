@@ -20,7 +20,6 @@ const pass2_img = "static/images/pass2.png";
 @observer
 class ChatCardContainer extends React.Component {
   ChatAreaRef = React.createRef();
-  chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -37,6 +36,7 @@ class ChatCardContainer extends React.Component {
     chatPageCount: 1,
   };
 
+  // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
   handleScrollChange() {
     if (this.ChatAreaRef.current) {
       if (
@@ -48,10 +48,10 @@ class ChatCardContainer extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("시작" + this.ChatAreaRef.current.scrollHeight);
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
     document.addEventListener("scroll", this.handleScrollChange, true);
   }
 
@@ -60,9 +60,11 @@ class ChatCardContainer extends React.Component {
     document.removeEventListener("scroll", this.handleScrollChange);
   }
 
+  // width 조절
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+
 
   onChangeHandler = (event) => {
     const textareaLineHeight = 34;
@@ -93,9 +95,12 @@ class ChatCardContainer extends React.Component {
     });
   };
 
+  // 메세지를 입력할 때
   onChange(e) {
     this.setState({ text: e.target.value });
   }
+
+  // 메세지를 보낼 때
   onSubmit(e) {
     e.preventDefault();
     console.log("onsubmit()");
@@ -107,6 +112,7 @@ class ChatCardContainer extends React.Component {
     }
   }
 
+  // 메세지 읽음 처리
   checkRead = (fullMessage, currentMessage) => {
 
     fullMessage.forEach((element) => {
@@ -119,8 +125,7 @@ class ChatCardContainer extends React.Component {
     });
   };
 
-  onChangeFile = async (e) => {};
-
+  // 메세지를 렌더해주는 함수
   renderMessage(message) {
 
     const { member, text, time, bRead } = message;
@@ -164,6 +169,7 @@ class ChatCardContainer extends React.Component {
     );
   }
 
+  // 채팅 검색창을 렌더해주는 함수
   render() {
     const { messages, Partner } = this.props;
     const { width } = this.state;

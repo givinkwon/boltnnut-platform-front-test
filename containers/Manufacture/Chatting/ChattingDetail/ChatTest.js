@@ -1,5 +1,5 @@
 import React from "react";
-import * as ProposalAPI from "axios/Manufacture/Proposal";
+
 import { inject, observer } from "mobx-react";
 import styled, { css } from "styled-components";
 import ChatCardContainer from "./ChatCard";
@@ -15,26 +15,22 @@ class ChatTestContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isIn: false,
+      isIn: false, // 입장 state
       messages: [],
-      currentTime: null,
-      currentFile: null,
+      currentTime: null, // 현재 시간
+      currentFile: null, 
       chatPageLimit: null,
     };
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
-
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
-
+  // 
   onChangeFile = async (e) => {
+    const { Chat } = this.props;
+
     let fileName;
 
     let file = [];
+    // 파일인 경우에는 파일 처리하기
     if (e.currentTarget.files[0]) {
       fileName = e.currentTarget.files[0].name;
       await this.setState({ currentFile: e.currentTarget.files[0] });
@@ -44,6 +40,8 @@ class ChatTestContainer extends React.Component {
       console.log(this.state.currentFile);
       console.log(this.state.currentFile.name.split(".").pop());
       const extension = this.state.currentFile.name.split(".").pop();
+
+      // 이미지인 경우
       if (
         extension === "jpg" ||
         extension === "jpeg" ||
@@ -53,19 +51,22 @@ class ChatTestContainer extends React.Component {
         file.push({
           chat_type: 1,
 
-          answer: 17378,
+          answer: Chat.answerId,
           origin_file: this.state.currentFile,
           type: this.userType,
         });
+        
+      // 일반 파일인 경우
       } else {
         file.push({
           chat_type: 2,
-          answer: 238,
+          answer: Chat.answerId,
           origin_file: this.state.currentFile,
           type: this.userType,
         });
       }
 
+      // 채팅 로그 저장하기
       var formData = new FormData();
 
       formData.append("chat_type", file[0].chat_type);
@@ -73,14 +74,6 @@ class ChatTestContainer extends React.Component {
       formData.append("file", file[0].origin_file);
       formData.append("user_type", 0);
 
-      for (let key of formData.keys()) {
-        console.log(key);
-      }
-
-      // FormData의 value 확인
-      for (let value of formData.values()) {
-        console.log(value);
-      }
       const Token = localStorage.getItem("token");
       const req = {
         data: formData,
@@ -88,11 +81,11 @@ class ChatTestContainer extends React.Component {
 
       ChatAPI.saveFile(req)
         .then((res) => {
-          console.log("dsfdfdsfdsfsdf");
           console.log(res);
 
           const file_url = res.data.file;
 
+          // 소켓으로 채팅 보내기
           this.chatSocket.send(
             JSON.stringify({
               type: this.userType,
@@ -111,69 +104,58 @@ class ChatTestContainer extends React.Component {
         });
     }
   };
-  shareButtonClick = () => {
-    const req = {
-      extraUrl: `238/`,
-      params: {
-        partner: 265,
-        share_inform: true,
-      },
-    };
-    ChatAPI.patchShareInform(req);
-  };
-
+  
+  // 소켓 통신 종료
   socketClose = () => {
     this.chatSocket.close();
   };
 
+  // 채팅 소켓 링크 설정
   chatSocket = new WebSocket(
     `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
   userType = null;
 
-  // 메세지 읽음 표시 함수
+  // 메세지 읽음 표시 함수 => currentMessage는 수신 완료 메세지, fullMessage는 지금 있는 전체 메세지
   checkRead = async (fullMessage, currentMessage, flag = 1) => {
-    console.log("================= Enter CheckRead ========================");
 
-    console.log(toJS(fullMessage));
-    console.log(fullMessage[0]);
-    console.log(toJS(currentMessage));
-
-    console.log(toJS(fullMessage).length);
+    // 전체 메세지(기존 메세지)에 메세지가 있으면
     if (fullMessage.length > 0) {
-      console.log("fullMessage forEach 돕니다");
+      
+      // 메세지 for 문
       fullMessage.forEach((element) => {
-        console.log("FULLMESSAGES");
-
-        console.log(currentMessage.time);
-        console.log(element.time);
+        
+        // 두 개의 메세지 모두 도착하면 
         if (element.time && currentMessage.time) {
+          
+          // 수신 완료 메세지의 type이 다른 경우 => 본인 메세지가 아닌 경우   
           if (
             currentMessage.type != element.member &&
+            // currentMessage 시간이 element 시간보다 높을 때 >> 읽음 표시
             element.time.slice(0, 19) <= currentMessage.time.slice(0, 19)
           ) {
             element.bRead = true;
-            console.log("READ complete");
           }
         }
       });
     }
 
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
-
     if (
+      // 메세지가 있는 경우 && "접속완료" 메세지가 온 경우 && 마지막 메세지만 읽지 않은 경우 => 읽지 않은 메세지가 여러 개일 때, 1개만 보내기 위함
       fullMessage.length > 0 &&
       currentMessage.message != "접속완료" &&
       toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
       toJS(fullMessage)[fullMessage.length - 2].bRead == true
     ) {
-      //접속되어있는지 판단하기 위해 조건이 참이 됐을 때의 마지막 메시지 인덱스를 저장
+      //접속되어있는지 판단하기 위해 조건이 참이 됐을 때의 마지막 메시지 인덱스를 저장 => 메세지를 또 보내면 fullMessage가 갱신되므로
       const checkIdx = fullMessage.length - 1;
 
       setTimeout(() => {
-        //5초 뒤에도 그 인덱스가 false면 보냄
+        // 5초 뒤에도 그 인덱스가 false면 => 읽지 않음 상태면 카카오톡 보내기
         if (!fullMessage[checkIdx].bRead) {
-          //파트너에게 보내기
+          
+          //파트너에게 카카오톡 보내기
           let req;
           if (this.userType === 0) {
             req = {
@@ -183,7 +165,9 @@ class ChatTestContainer extends React.Component {
               name: "클라이언트 님", //클라이언트 이름
               text: fullMessage[checkIdx].text,
             };
-          } //클라이언트에게 보내기
+          } 
+          
+          //클라이언트에게 카카오톡 보내기
           else {
             req = {
               phoneNum: this.props.Partner.clientInfo.user.phone,
@@ -201,6 +185,7 @@ class ChatTestContainer extends React.Component {
               console.log(e.response);
             });
 
+          // 잔디 hook으로 메세지 보내기
           const jandiReq = {
             // headers
             headers: {
@@ -219,18 +204,12 @@ class ChatTestContainer extends React.Component {
               console.log(e);
               console.log(e.response);
             });
-
-          console.log("Send Kakao and Jandi");
         }
       }, 5000);
     }
-
-    console.log(toJS(fullMessage));
-
-    console.log("================= Exit CheckRead ========================");
-    console.log(fullMessage);
   };
 
+  // 렌더링될 때마다 현재 시간 갱신
   async componentDidUpdate() {
     let temp = new Date();
 
@@ -239,6 +218,7 @@ class ChatTestContainer extends React.Component {
     this.props.Chat.current_time = temp;
   }
 
+  // 이전 채팅 메세지 가져오기
   loadPrevMessages = async (count) => {
     const loadChatReq = {
       extraUrl: `${this.props.roomName}`,
@@ -247,9 +227,11 @@ class ChatTestContainer extends React.Component {
       },
     };
 
+    // 채팅방(answerId에 따라 채팅 로그 불러오기)
     ChatAPI.loadChat(loadChatReq)
       .then((res) => {
         const reverseChat = res.data.results;
+        // 채팅 개수 가져오기
         ChatAPI.loadChatCount(this.props.roomName).then((m_res) => {
           // answer data 가져오기
           const req = {
@@ -261,9 +243,6 @@ class ChatTestContainer extends React.Component {
           reverseChat.forEach(async (message) => {
             let readState = true;
             if (message.user_type === 0) {
-              // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
-              // console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
-              //여기서 바꿔줘야함
 
               if (
                 m_res.data.check_time_partner.slice(0, 19) <
@@ -280,6 +259,7 @@ class ChatTestContainer extends React.Component {
               }
             }
 
+            // 배열 값 앞에 추가하기
             await Messages.unshift({
               member: message.user_type,
               text: message.text_content,
@@ -294,27 +274,25 @@ class ChatTestContainer extends React.Component {
         console.log(e);
       });
   };
+
   async componentDidMount() {
     // RoomNumber 체크하기
     const { Partner, Project } = this.props;
     const roomNum = this.props.roomName;
     let clientPhone = "";
+    // 현재 시간 초기화
     this.props.Chat.current_time = null;
+
+    // 시간 셋팅하기
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
-    console.log(temp);
-    // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
     this.props.Chat.current_time = temp;
-    console.log(toJS(this.props.Chat.current_time));
+    
     this.props.Project.chatMessages = [];
-    //창 크기
-    window.addEventListener("resize", this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-
-    console.log(this.state.currentTime);
-
+   
+    // 채팅 로그 가져오기
     const loadChatReq = {
       extraUrl: `${this.props.roomName}`,
       params: {
@@ -324,12 +302,17 @@ class ChatTestContainer extends React.Component {
     };
 
     ChatAPI.loadChat(loadChatReq).then((res) => {
+      // 채팅 리스트 역순으로 만들기
       const reverseChat = res.data.results.reverse();
+      
+      // 채팅 카운트 관련
       if (res.data.count % 10 === 0) {
         this.setState({ chatPageLimit: res.data.count / 10 });
       } else {
         this.setState({ chatPageLimit: Math.floor(res.data.count / 10) + 1 });
       }
+
+      // 이전 메세지 로딩하기
       for (let i = 2; i <= this.state.chatPageLimit; i++) {
         this.loadPrevMessages(i);
       }
@@ -339,6 +322,7 @@ class ChatTestContainer extends React.Component {
           extraUrl: m_res.data.partner + `/`,
           params: {},
         };
+        // 파트너 데이터 가져오기
         PartnerAPI.getPartner(req).then((res) => {
           Partner.partnerdata = res.data;
           console.log(res.data);
@@ -392,29 +376,20 @@ class ChatTestContainer extends React.Component {
       });
     });
 
-    //============================================= onopen 시작 ============================================================
+    // 소켓 OPEN 
     this.chatSocket.onopen = async () => {
-      // alert("Open");
-      console.log(this.props.projectId);
-      await this.props.Project.getProjectDetail(this.props.projectId);
-      console.log(Project.projectDetailData);
+
+      // 클라이언트 정보 가져오기
       await this.props.Partner.getClientInfo(
         Project.projectDetailData.request_set[0].client
       );
-      console.log("onopen");
-      console.log(toJS(this.props.Project.chatMessages));
+
+      // 유저 타입 체크
       if (this.props.Auth.logged_in_user) {
         this.userType = this.props.Auth.logged_in_user.type;
-        console.log(this.userType);
-        if (this.userType === 0) {
-          MyDataLayerPush({ event: "ClientChat" });
-        } else {
-          MyDataLayerPush({ event: "PartnerChat" });
-        }
-        console.log("로그인된 유저는 " + this.userType);
       }
-      console.log("onOpen() 호출");
 
+      // 0.5초 이후(비동기 방지) 접속완료 메세지 보내기
       setTimeout(() => {
         this.chatSocket.send(
           JSON.stringify({
@@ -428,23 +403,20 @@ class ChatTestContainer extends React.Component {
         );
       }, 500);
     };
+    // 소켓 OPEN 끝
 
-    //============================================= onopen 끝 ============================================================
-    console.log(this.chatSocket);
-
-    //============================================= onmessage 시작 ============================================================
+    // 소켓 onmessage
     this.chatSocket.onmessage = (e) => {
+      // redis에서 온 data
       const data = JSON.parse(e.data);
-      console.log("===========redis에서 들어온 내용=============");
-      console.log(data);
-      console.log("===========redis에서 들어온 내용============");
       const messages = this.props.Project.chatMessages;
+
       console.log(toJS(messages));
+      // 읽음 표시가 안되있다면
       if (!data.bReceive) {
+        // 해당 메세지가 본인의 type이 아니라면
         if (data.type != this.userType) {
-          console.log(
-            "수신완료체크!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-          );
+          // 수신 완료 메세지를 보내서 체크하기
           this.chatSocket.send(
             JSON.stringify({
               message: "수신완료",
@@ -456,14 +428,16 @@ class ChatTestContainer extends React.Component {
             })
           );
         }
-        console.log(toJS(messages));
-
+        
+        // 최근 메세지가 현재 메시지가 아니라면
         if (
           !(
             data.time === messages[messages.length - 1].time &&
             data.type === messages[messages.length - 1].member
           )
-        ) {
+        ) 
+        // 메세지 저장하기
+          {
           messages.push({
             member: data["type"],
             text: data["message"],
@@ -477,16 +451,19 @@ class ChatTestContainer extends React.Component {
         }
       }
 
-      {
-        this.checkRead(this.props.Project.chatMessages, data);
-      }
+      // 읽음 표시 처리하기
+      this.checkRead(this.props.Project.chatMessages, data);
+      
+
 
       let tempAnswerNum = roomNum;
       let chatCount = 0;
-      console.log(data.message);
+
+      // 데이터 메세지가 "접속완료" "수신완료"가 아닌 실제 메세지인 경우
       if (data.message != "접속완료" && data.message != "수신완료") {
+        // 내가 보낸 메세지면
         if (data.type === this.userType) {
-          console.log("채팅 저장");
+          // 현재 메세지 저장하기
           const req = {
             text_content: data.message,
             user_type: data.type,
@@ -498,39 +475,18 @@ class ChatTestContainer extends React.Component {
           });
         }
       }
-      ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
-        let clientChatCount = res.data.check_time_client;
-        let partnerChatCount = res.data.check_time_partner;
-        this.userType === 0
-          ? (clientChatCount = new Date())
-          : (partnerChatCount = new Date());
-        const answerReq = {
-          extraUrl: `${tempAnswerNum}/`,
-          params: {
-            partner: res.data.partner,
-            check_time_client: clientChatCount,
-            check_time_partner: partnerChatCount,
-          },
-        };
-        ChatAPI.saveChatCount(answerReq);
-        this.setState({ f: 3 });
-      });
-    };
-
-    //============================================= onmessage 끝 ============================================================
-
+    // 소켓 onclose 시작
     this.chatSocket.onclose = (e) => {
-      console.error("Chat socket closed unexpectedly");
-      console.log("Chat Socket Closed!!!!!!!!!!!!!!!!!!!!");
     };
+    // 소켓 onclose 끝
   }
+  // 소켓 onmessage 끝
+  
 
-  //redis에서 뿌려줄 때
+  //redis에서 메세지 뿌려줄 때
   onSendMessage = (myMessage) => {
-    console.log(myMessage);
-    console.log(this.userType);
-    console.log(this.state.currentTime); // null
 
+    // 서버에 저장하기
     this.chatSocket.send(
       JSON.stringify({
         message: myMessage,
@@ -542,7 +498,8 @@ class ChatTestContainer extends React.Component {
       })
     );
   };
-
+  }
+  
   render() {
     return (
       <>

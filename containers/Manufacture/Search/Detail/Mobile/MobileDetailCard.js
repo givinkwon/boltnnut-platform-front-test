@@ -122,12 +122,12 @@ class MobileDetailCardContainer extends React.Component {
       portfolioPosY += portfolioObject.offsetParent.offsetTop;
     }
 
-    // let introductionObject = document.getElementById("introduction");
+    let introductionObject = document.getElementById("introduction");
 
-    // let introductionPosY = introductionObject.offsetTop;
-    // if (introductionObject.offsetParent) {
-    //   introductionPosY += introductionObject.offsetParent.offsetTop;
-    // }
+    let introductionPosY = introductionObject.offsetTop;
+    if (introductionObject.offsetParent) {
+      introductionPosY += introductionObject.offsetParent.offsetTop;
+    }
 
     let reviewObject = document.getElementById("review");
 
