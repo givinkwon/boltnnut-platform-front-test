@@ -74,6 +74,7 @@ class ChattingHeader extends React.Component {
     Chat.chatSocket = new WebSocket(
       `wss://api.boltnnut.com/ws/chat/` + `${Chat.answerId}` + "/"
     );
+    
     // 시간 설정하기
     let temp = new Date();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
