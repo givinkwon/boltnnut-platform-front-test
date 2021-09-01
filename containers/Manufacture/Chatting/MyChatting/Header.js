@@ -72,31 +72,26 @@ class ChattingHeader extends React.Component {
 
     // 채팅 소켓 링크 설정
     Chat.chatSocket = new WebSocket(
-      `wss://api.boltnnut.com/ws/chat/` + `${Chat.answerId}` + "/"
+      `ws://52.79.230.30:8081/ws/chat/` + `${Chat.answerId}` + "/"
     );
+    
     // 시간 설정하기
     let temp = new Date();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
     Chat.current_time = temp;
 
     // 소켓 OPEN 
-    this.chatSocket.onopen = async () => {
-
-    // 클라이언트 정보 가져오기
-    await Partner.getClientInfo(
-        Project.projectDetailData.request_set[0].client
-    );
+    Chat.chatSocket.onopen = async () => {
 
     // 0.5초 이후(비동기 방지) 접속완료 메세지 보내기
     setTimeout(() => {
-        console.log(1)
-        this.chatSocket.send(
+        Chat.chatSocket.send(
         JSON.stringify({
             message: "접속완료",
             type: Auth.logged_in_user.type,
             time: Chat.current_time,
             bReceive: true,
-            file: this.state.currentFile,
+            file: Chat.currentFile,
             chatType: 0,
         })
         );
@@ -104,29 +99,30 @@ class ChattingHeader extends React.Component {
     };
     // 소켓 OPEN 끝
 
-    // // 소켓 onmessage
-    // this.chatSocket.onmessage = (e) => {
-    // // redis에서 온 data
-    // const data = JSON.parse(e.data);
-    // const messages = this.props.Project.chatMessages;
+    // 소켓 onmessage
+    Chat.chatSocket.onmessage = (e) => {
+    // redis에서 온 data
+    const data = JSON.parse(e.data);
 
-    // console.log(toJS(messages));
-    // // 읽음 표시가 안되있다면
-    // if (!data.bReceive) {
-    //     // 해당 메세지가 본인의 type이 아니라면
-    //     if (data.type != this.userType) {
-    //     // 수신 완료 메세지를 보내서 체크하기
-    //     this.chatSocket.send(
-    //         JSON.stringify({
-    //         message: "수신완료",
-    //         type: this.userType,
-    //         time: this.props.Chat.current_time,
-    //         bReceive: true,
-    //         file: this.state.currentFile,
-    //         chatType: 0,
-    //         })
-    //     );
-    //     }
+    console.log(data);
+    // 읽음 표시가 안되있다면
+    if (!data.bReceive) {
+        // 해당 메세지가 본인의 type이 아니라면
+        if (data.type != Auth.logged_in_user.type) {
+        // 수신 완료 메세지를 보내서 체크하기
+        this.chatSocket.send(
+            JSON.stringify({
+            message: "수신완료",
+            type: Auth.logged_in_user.type,
+            time: Chat.current_time,
+            bReceive: true,
+            file: Chat.currentFile,
+            chatType: 0,
+            })
+        );
+        }
+      }
+    }
         
     //     // 최근 메세지가 현재 메시지가 아니라면
     //     if (
@@ -185,7 +181,7 @@ class ChattingHeader extends React.Component {
 
   render() {
     const { Auth, Project, Chat } = this.props;
-    console.log(Project.projectDataList)
+
     return (
       <Background
       
@@ -238,7 +234,7 @@ class ChattingHeader extends React.Component {
                     {/* 최근 채팅 시간 보여주기 */}
                     {data.answer_set.map((answer_data) => {
                       return (
-                        <RecentTime>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set[answer_data.chat_set.length - 1] && answer_data.chat_set[answer_data.chat_set.length - 1].createdAt.substring(11,16)}</RecentTime>
+                        <RecentTime>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set && answer_data.chat_set[answer_data.chat_set.length - 1].createdAt.substring(11,16)}</RecentTime>
                       ) 
                     })
                     } 
@@ -248,7 +244,7 @@ class ChattingHeader extends React.Component {
                   {data.answer_set.map((answer_data) => {
 
                     return (
-                      <SubTitle>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set[answer_data.chat_set.length - 1] && answer_data.chat_set[answer_data.chat_set.length - 1].text_content}</SubTitle>
+                      <SubTitle>{answer_data.partner == Auth.logged_in_partner.id && answer_data.chat_set && answer_data.chat_set[answer_data.chat_set.length - 1].text_content}</SubTitle>
                     ) 
                   })
                   

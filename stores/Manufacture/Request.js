@@ -293,8 +293,6 @@ class Request {
       const req = {
         data: formData,
       };
-      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
-      this.requestTabIdx = 2;
       console.log(req);
 
       RequestAPI.create(req)
@@ -306,8 +304,14 @@ class Request {
           MyDataLayerPush({ event: "request_Drawing" });
         })
         .catch((e) => {
-          console.log(e);
-          console.log(e.response);
+          try {
+            console.log(e);
+            console.log(e.response);
+            alert(e.response.data.message);
+          } catch {
+            console.log(e);
+            console.log(e.response);
+          }
         });
     }
 

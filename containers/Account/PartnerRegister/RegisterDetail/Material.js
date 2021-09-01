@@ -5,6 +5,8 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import CheckBoxComponent from "./CheckBoxComponent";
+import Router from "next/router";
+
 const topCategoryOuterStyles = {
   borderRadius: "5px",
   border: "1px solid #e1e2e4",
@@ -24,11 +26,20 @@ const innerStyles = {
 @observer
 class MaterialContainer extends Component {
   componentDidMount() {
-    // console.log("===================================");
-    // console.log(toJS(this.props.Category.mainbusiness_list));
-    // console.log(toJS(this.props.Category.maincategory_list));
-    // console.log(toJS(this.props.Category.category_list));
-    // console.log("===================================");
+    const { Category } = this.props;
+
+    // 새로고침하여 데이터가 초기화된 경우에 첫페이지로 돌려보내기
+    for (let i = 0; i < Category.RegisterTypeArray.length; i++) { 
+      if(Category.RegisterTypeArray[i].checked){
+        return false;
+      }
+
+      // checked 값이 모두 false인 경우에
+      if(i == Category.RegisterTypeArray.length - 1){
+        Router.push("/partnerregister")
+      }
+
+    }
     this.props.Category.isChecked("category");
   }
   render() {

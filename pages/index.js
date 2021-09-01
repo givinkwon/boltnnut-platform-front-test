@@ -15,7 +15,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-
+const AD = "/static/images/Home/AD.png"
 @inject("Home", "Loading", "Auth", "Category")
 @observer
 class Home extends React.Component {
@@ -83,6 +83,11 @@ class Home extends React.Component {
             {width && width < 768 && <MobileNav src={logo_ic} width={width} />}
             {width && width > 767.98 && <Nav width={width} />}
           </>
+            {width && width > 768 && 
+            <Ad href="https://online.automationworld.co.kr/fairDash.do?hl=KOR" >
+            <img src={AD}/>
+            </Ad>
+            }
           <>
             {width && (
               <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
@@ -96,3 +101,13 @@ class Home extends React.Component {
 }
 
 export default Home;
+
+const Ad = styled.a`
+  width : 100%;
+  justify-content : center;
+  >img {
+
+    margin-left : auto;
+    height : 64px;
+  }
+`
