@@ -36,6 +36,7 @@ class ChattingContent extends React.Component {
                   {Auth.logged_in_partner ? 
                     ( data.user_type == 0 ? 
                       <Left>
+                      <div>{data.bRead && "읽음"}</div>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
@@ -48,6 +49,7 @@ class ChattingContent extends React.Component {
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
+                      <div>{data.bRead && "읽음"}</div>
                       </Right> 
                     )
                   :
@@ -58,9 +60,11 @@ class ChattingContent extends React.Component {
                       </ContentLogo>
  
                       <Text state={"Right"}>{data.text}</Text>
+                      <div>{data.bRead && "읽음"}</div>
                       </Right>
                     : 
                       <Left>
+                      <div>{data.bRead && "읽음"}</div>
                       <Text state={"Left"}>{data.text}</Text>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
