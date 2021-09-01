@@ -4,8 +4,9 @@ import ChattingHeader from "./MyChatting/Header";
 import ChattingContent from "./MyChatting/Content";
 // 로딩용
 import ButtonSpinnerComponent from "components/ButtonSpinner";
+import NoChatting from "./MyChatting/NoChatting";
 
-@inject("Project", "Auth", "Partner")
+@inject("Project", "Auth", "Partner", "Chat")
 @observer
 class ChattingContainer extends React.Component{
   async componentDidMount() {
@@ -29,7 +30,7 @@ class ChattingContainer extends React.Component{
 
   
   render(){
-    const {Auth, width, Partner } = this.props;
+    const {Auth, width, Partner, Project } = this.props;
     return(
       <>
       {width && width > 767.98 &&
@@ -42,7 +43,7 @@ class ChattingContainer extends React.Component{
             (
               <>
               <ChattingHeader width={width}/>
-              <ChattingContent width={width}/>
+              {Project.projectDataList.length > 0 ? ( <ChattingContent width={width}/> ) : ( <NoChatting/> ) }
               </>
             ) 
           }
