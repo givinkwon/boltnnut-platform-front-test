@@ -369,10 +369,9 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li onClick={() => alert("서비스 준비 중입니다.")}>
+                            <li>
                               <KSLink
-                                //url={"chatting"}
-                                url={""}
+                                url={"chatting"}
                                 FontContent={() => {
                                   return <Font14>채팅하기</Font14>;
                                 }}
@@ -568,10 +567,9 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li onClick={() => alert("서비스 준비 중입니다.")}>
+                            <li>
                               <KSLink
-                                //url={"chatting"}
-                                url={""}
+                                url={"chatting"}
                                 FontContent={() => {
                                   return <Font14>채팅하기</Font14>;
                                 }}
