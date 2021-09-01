@@ -125,7 +125,7 @@ class Signup {
     console.log("marketing : ", this.marketing);
 
     // alert(this.type);
-    if (this.type != "partner") {
+    if (this.type !== "partner") {
       if (!this.company_name) {
         await alert("회사명을 입력해주세요.");
         return;
@@ -160,7 +160,7 @@ class Signup {
             this.reset();
 
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
-            if (container == "signup") {
+            if (container === "signup") {
               Router.push("/login");
               alert("회원가입 성공");
             }
