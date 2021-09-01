@@ -5,7 +5,8 @@ import styled from "styled-components";
 import Background from "components/Background";
 
 import { inject, observer } from "mobx-react";
-import Chat from "../../../../stores/Manufacture/Chat";
+import Chat from "stores/Manufacture/Chat";
+import * as ChatAPI from "axios/Manufacture/Chat"
 
 const LogoNo = "/static/images/chat/logono.png"
 
@@ -35,7 +36,13 @@ class ChattingHeader extends React.Component {
   // 채팅 카드를 클릭했을 때 => 카드 활성화 및 채팅 로그 가져오기
   clickchatcard  = (answer_data, request_data="") => {
     const {Auth, Project, Chat, Partner} = this.props;
-    
+
+    // 로딩
+    Partner.loadingFlag = true;
+      setTimeout(() => {
+        Partner.loadingFlag = false;
+      } , 500);
+
     // answer는 여러 개여서 파트너의 경우 본인의 answer를 id 찾아야함
     // 파트너인 경우
     if(Auth.logged_in_partner){
@@ -103,7 +110,6 @@ class ChattingHeader extends React.Component {
     Chat.chatSocket.onmessage = (e) => {
     // redis에서 온 data
     const data = JSON.parse(e.data);
-    const messages = this.props.Project.chatMessages;
 
     console.log(data);
     // 읽음 표시가 안되있다면
@@ -123,29 +129,37 @@ class ChattingHeader extends React.Component {
         );
         }
 
-        // 최근 메세지인 경우 => 메세지 배열에 저장하기
-        if (!(data.time === messages[messages.length - 1].time && data.type === messages[messages.length - 1].member)) 
-          // 메세지 배열에 저장하기
+        if(Chat.chatMessages.length > 0 ){
+          console.log(data.time , Chat.chatMessages[Chat.chatMessages.length - 1].time, data.message, Chat.chatMessages[Chat.chatMessages.length - 1].message)
+        }
+
+        // 메세지가 없는 경우 그냥 메세지 배열에 저장하기
+        if (Chat.chatMessages.length == 0)          
+        // 메세지 배열에 저장하기
           {
-            messages.push({
+            Chat.chatMessages.push({
                 member: data["type"],
                 text: data["message"],
                 time: data["time"],
                 bRead: false,
               });
-              } 
-
-        else 
+          } 
+        // 최근 메세지인지 확인하고 메세지 배열에 저장하기
+        else if (!(data.time === Chat.chatMessages[Chat.chatMessages.length - 1].time && data.message === Chat.chatMessages[Chat.chatMessages.length - 1].message)) 
+          // 메세지 배열에 저장하기
           {
-              console.log(data);
-              console.log(messages[messages.length - 1]);
-              console.log("중복 발생!");
-          }
-        }
+
+            Chat.chatMessages.push({
+                member: data["type"],
+                text: data["message"],
+                time: data["time"],
+                bRead: false,
+              });
+          } 
 
         // 읽음 표시 처리하기
         {
-            Chat.checkRead(Project.chatMessages, data);
+            Chat.checkRead(Chat.chatMessages, data);
         }
 
         // 데이터 메세지가 "접속완료" "수신완료"가 아닌 실제 메세지인 경우
@@ -170,6 +184,7 @@ class ChattingHeader extends React.Component {
         };
 
         }
+      }
     
   }
 

@@ -27,7 +27,7 @@ class ChattingContent extends React.Component {
         </ContentTitle>
 
         <ContentBody>
-          {Chat.chatcontent_arr.count > 0 && Chat.chatcontent_arr.results.map((data) => {
+          {Chat.chatMessages.length > 0 && Chat.chatMessages.map((data) => {
             console.log(data)
             return (
                 <>
@@ -40,11 +40,11 @@ class ChattingContent extends React.Component {
                         <img src = {LogoNo}></img>
                       </ContentLogo>
  
-                      <Text state={"Left"} >{data.text_content}</Text>
+                      <Text state={"Left"} >{data.text}</Text>
                       </Left>
                     : 
                       <Right>
-                      <Text state={"Right"}>{data.text_content}</Text>
+                      <Text state={"Right"}>{data.text}</Text>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
@@ -57,11 +57,11 @@ class ChattingContent extends React.Component {
                         <img src = {LogoNo}></img>
                       </ContentLogo>
  
-                      <Text state={"Right"}>{data.text_content}</Text>
+                      <Text state={"Right"}>{data.text}</Text>
                       </Right>
                     : 
                       <Left>
-                      <Text state={"Left"}>{data.text_content}</Text>
+                      <Text state={"Left"}>{data.text}</Text>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
