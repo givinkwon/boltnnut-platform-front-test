@@ -186,7 +186,7 @@ class RegisterDetailContainer extends React.Component {
                           window.scrollTo(0, 0);
                         }}
                       >
-                        다음 단계
+                        {Auth.pageState === 3 ? "완료" : "다음 단계"}
                       </Button>
                     ) : (
                       <DisabledButton onClick={() => this.ScrollTop()}>

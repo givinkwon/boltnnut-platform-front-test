@@ -278,7 +278,7 @@ class PartnerCard extends React.Component {
                 </Title>
 
                 <Introduce>
-                  {data && data.history && data.history.length > 35
+                  {data.history && data.history.length > 35
                     ? data.history.slice(0, 35) + "..."
                     : data.history}
                 </Introduce>
