@@ -115,7 +115,7 @@ class AboutUsContainer extends Component {
 
   render() {
     const { Category, Partner } = this.props;
-
+    console.log("asdasd", Category.partnerPortfolioArray);
     return (
       <>
         <Font18
@@ -265,8 +265,9 @@ class AboutUsContainer extends Component {
 
         <PartnerPortfolioBox>
           {Category.imgUrl.length > 0 &&
-            Category.imgUrl.map((item) => (
+            Category.imgUrl.map((item, idx) => (
               <div
+                key={idx}
                 style={{
                   border: "solid 1px #c6c7cc",
                   borderRadius: 3,
@@ -284,6 +285,7 @@ class AboutUsContainer extends Component {
         <MultipleInput
           file={true}
           onChange={(e) => {
+            console.log("qweqwe", e);
             Category.setPartnerPortfolioFile(e);
           }}
         />
@@ -332,8 +334,8 @@ class AboutUsContainer extends Component {
             color: "#767676",
           }}
         >
-          - 포트폴리오에 등록될 제품 사진들을 첨부해주세요. 최소 5개 이상의 사진
-          파일을 업로드 해주세요.
+          - 지금까지 진행해온 제품군을 상세히 작성해주세요. 최소 3개 이상의
+          제품을 작성해주세요.
         </Font16>
 
         <TextAreaComponent
@@ -470,9 +472,8 @@ const Font16 = styled(Content.FontSize16)`
 `;
 
 const Font14 = styled(Content.FontSize14)`
+  font-family: NotoSansCJKkr;
   font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
   text-align: left;
   color: #c6c7cc;
 `;

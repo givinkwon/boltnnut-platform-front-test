@@ -97,8 +97,8 @@ class Category {
   };
 
   @action setPartnerInfo = (e) => {
-    this.partnerInfo = e[0];
-    console.log(e[0]);
+    this.partnerInfo = e;
+    console.log(e);
   };
   @action setPartnerHistory = (e) => {
     console.log(e);
@@ -613,9 +613,10 @@ class Category {
         // 포토폴리오 파일 리스트
         if (this.partnerPortfolioArray.length === 0) {
           formData.append(`portfolio`, "");
-        }
-        for (var i = 0; i < this.partnerPortfolioArray.length; i++) {
-          formData.append(`portfolio`, this.partnerPortfolioArray[i]);
+        } else {
+          for (let i = 0; i < this.partnerPortfolioArray.length; i++) {
+            formData.append(`portfolio`, this.partnerPortfolioArray[i]);
+          }
         }
 
         // 회사 대표 이름

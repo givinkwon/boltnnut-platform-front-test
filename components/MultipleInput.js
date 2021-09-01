@@ -15,6 +15,19 @@ class MultipleInputComponent extends React.Component {
     this.file = React.createRef();
   }
 
+  state = {
+    fileName: "",
+    file: "",
+  };
+
+  onChange = (e) => {
+    if (this.props.type === "file") {
+      this.props.onChange(e.currentTarget.files[0]);
+    } else {
+      this.props.onChange(e.currentTarget.value);
+    }
+  };
+
   onChangeFile = (e) => {
     const { Category } = this.props;
 
@@ -33,6 +46,8 @@ class MultipleInputComponent extends React.Component {
       };
       reader.readAsDataURL(file);
     }
+
+    this.props.onChange(e.currentTarget.files);
   };
 
   render() {
