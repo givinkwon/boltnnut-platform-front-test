@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { Component, useRef } from "react";
+import React, { Component } from "react";
 import moment from "moment";
 import { inject, observer } from "mobx-react";
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
@@ -14,6 +14,7 @@ class Week extends Component {
     now: moment(),
     selectedDay: null,
   };
+
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
     const days = [];
@@ -31,6 +32,7 @@ class Week extends Component {
     }
     return days;
   };
+
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
@@ -50,6 +52,7 @@ class Week extends Component {
       console.log(Schedule.calendarHandler);
     }
   };
+
   activeHandler = (currentDay) => {
     if (this.props.Schedule.selectedDay === currentDay) {
       return true;
@@ -133,6 +136,7 @@ class Week extends Component {
       }
     });
   };
+
   render() {
     return (
       <>
@@ -143,18 +147,21 @@ class Week extends Component {
     );
   }
 }
+
 @inject("Schedule")
 @observer
 class Calendar extends Component {
   state = {
     now: moment(),
   };
+
   componentDidMount() {
     const { Schedule } = this.props;
     this.setState({
       now: Schedule.nowMoment,
     });
   }
+
   moveMonth = (month) => {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, "M");
@@ -163,6 +170,7 @@ class Calendar extends Component {
       now: Schedule.nowMoment,
     });
   };
+
   //요일
   dateToArray = (dates) => {
     if (Array.isArray(dates)) {
@@ -173,6 +181,7 @@ class Calendar extends Component {
       return ["일", "월", "화", "수", "목", "금", "토"];
     }
   };
+
   mapArrayToDate = (dateArray) => {
     if (dateArray.length !== 7) {
       dateArray = ["일", "월", "화", "수", "목", "금", "토"];
@@ -190,6 +199,7 @@ class Calendar extends Component {
       return <div className={className()}>{date}</div>;
     });
   };
+
   calendarOnOff = () => {
     const { Schedule } = this.props;
     if (Schedule.calendarOnOffV2 == true) {
@@ -238,13 +248,13 @@ class Calendar extends Component {
     }
     return Weeks;
   };
+
   render() {
     const { now } = this.state;
     const { Schedule, mobile } = this.props;
     return (
       <>
-        <FoldedComponent               
-              mobile={mobile}>
+        <FoldedComponent mobile={mobile}>
           <div
             style={{
               display: "flex",
@@ -258,10 +268,7 @@ class Calendar extends Component {
               this.calendarHandler();
             }}
           >
-            <img
-              src={calendar}
-              style={{ cursor: "pointer" }}
-            />
+            <img src={calendar} style={{ cursor: "pointer" }} />
             <span
               style={{
                 color: "#999999",

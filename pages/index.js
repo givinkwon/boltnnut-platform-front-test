@@ -15,7 +15,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-const AD = "/static/images/Home/AD.png";
+const AD = "/static/images/Home/AD.svg";
+const ADback = "/static/images/Home/ADback.png";
 const ADbackground = "/static/images/Home/ADbackground.svg";
 
 @inject("Home", "Loading", "Auth", "Category")
@@ -87,7 +88,9 @@ class Home extends React.Component {
           </>
           {width && width > 768 && (
             <Ad href="https://online.automationworld.co.kr/fairDash.do?hl=KOR">
-              <img src={AD} />
+              <div>
+                <img src={AD} />
+              </div>
             </Ad>
           )}
           <>
@@ -107,9 +110,13 @@ export default Home;
 const Ad = styled.a`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  background-image: url(${ADbackground});
-  > img {
-    height: 64px;
+  height: 60px;
+  background-color: #1d2b57;
+
+  > div {
+    height: 100%;
+    background-image: url(${ADback});
   }
 `;

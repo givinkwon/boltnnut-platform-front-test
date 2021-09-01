@@ -103,34 +103,35 @@ class ProjectCardContainer extends React.Component {
             </ContentBox>
 
             <ContentBox style={{ marginTop: 32, width: 400, gap: 20 }}>
-              <ImgInnerBox style={{ flexDirection: "column" }}>
+              <ImgInnerBox>
                 <InnerBox>
                   <img src="static/images/class.svg" />
                   <Title16>업체분류</Title16>
                 </InnerBox>
-                <div style={{ marginTop: 8 }}>{category && category}</div>
+
+                <MiddleTitle>{category && category}</MiddleTitle>
               </ImgInnerBox>
 
               <img src="static/images/contentline.svg" />
 
-              <ImgInnerBox style={{ flexDirection: "column" }}>
+              <ImgInnerBox>
                 <InnerBox>
                   <img src="static/images/purpose.svg" />
                   <Title16>문의목적</Title16>
                 </InnerBox>
-                <div style={{ marginTop: 8 }}>{status && status}</div>
+
+                <MiddleTitle>{status && status}</MiddleTitle>
               </ImgInnerBox>
 
               <img src="static/images/contentline.svg" />
 
-              <ImgInnerBox style={{ flexDirection: "column" }}>
+              <ImgInnerBox>
                 <InnerBox>
                   <img src="static/images/price.svg" />
                   <Title16>예상금액</Title16>
                 </InnerBox>
-                <div style={{ marginTop: 8 }}>
-                  {price != "" ? price : "미정"}
-                </div>
+
+                <MiddleTitle>{price != "" ? price : "미정"}</MiddleTitle>
               </ImgInnerBox>
             </ContentBox>
 
@@ -243,8 +244,7 @@ const ContentBox = styled.div`
 
 const ImgInnerBox = styled.div`
   display: inline-flex;
-  justify-content: flex-start
-  align-items: center;
+  flex-direction: column;
 `;
 
 const InnerBox = styled.div`
@@ -262,4 +262,8 @@ const AssistantInnerBox = styled.div`
 const AssistantTitle14 = styled(Title.FontSize14)`
   font-weight: 400;
   color: #282c36;
+`;
+
+const MiddleTitle = styled.div`
+  margin-top: 8px;
 `;

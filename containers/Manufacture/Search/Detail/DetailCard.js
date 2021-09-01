@@ -777,7 +777,7 @@ class DetailCardContainer extends React.Component {
                     />
                   )}
 
-                  {!Auth.logged_in_client ? (
+                  {/* {!Auth.logged_in_client ? (
                     <Layer>
                       <span>
                         <Modal
@@ -810,7 +810,7 @@ class DetailCardContainer extends React.Component {
                         </span>
                       </Layer>
                     )
-                  )}
+                  )} */}
 
                   <PageBar
                     login={

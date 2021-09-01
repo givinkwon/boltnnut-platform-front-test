@@ -4,13 +4,16 @@ import Router from "next/router";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import Buttonv1 from "components/Buttonv1";
+import { inject, observer } from "mobx-react";
 
 const boltnnut = "static/images/request/boltnnut.svg";
 const factory = "static/images/request/factory.svg";
 const bluearrow = "static/images/request/bluearrow.svg";
 
+@inject("Request")
 class RequestMain extends React.Component {
   render() {
+    const { Request } = this.props;
     return (
       <Background>
         <Container>
@@ -26,7 +29,9 @@ class RequestMain extends React.Component {
                   <br />
                   제조사 파트너로부터 의뢰 받는 형식입니다.
                 </Text>
-                <Button>
+                <Button
+                  onClick={() => ((Request.requestTabIdx = 1), scrollTo(0, 0))}
+                >
                   지금 무료로 의뢰하기
                   <img src={bluearrow} style={{ marginLeft: 8 }} />
                 </Button>

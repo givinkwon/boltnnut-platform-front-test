@@ -14,7 +14,10 @@ import RequestMain from "./Home/index";
 class RequestContainer extends React.Component {
   componentDidMount() {
     const { Request } = this.props;
-    Request.requestTabIdx = 0;
+
+    if (Request.requestTabIdx === 0) {
+      Request.requestTabIdx = 0;
+    }
   }
   render() {
     const { Request } = this.props;
