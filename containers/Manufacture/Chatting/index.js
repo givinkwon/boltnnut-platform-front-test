@@ -9,8 +9,14 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 @observer
 class ChattingContainer extends React.Component{
   async componentDidMount() {
-    const { Auth } = this.props;
+    const { Auth, Partner } = this.props;
     await Auth.checkLogin();
+
+    // 로딩
+    Partner.loadingFlag = true;
+    setTimeout(() => {
+      Partner.loadingFlag = false;
+    } , 500);
   };
   // width 체크하기
   componentWillUnmount() {
