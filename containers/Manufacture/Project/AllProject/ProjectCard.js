@@ -86,7 +86,7 @@ class ProjectCardContainer extends React.Component {
     const { Project } = this.props;
 
     return (
-      <Background style={{marginTop: 0, width: '996px'}}>
+      <Background style={{ marginTop: 0, width: "996px" }}>
         <Container style={{ width: "95%" }}>
           <MainContainer>
             <ContentBox style={{ width: 110, alignItems: "center" }}>
@@ -150,19 +150,21 @@ class ProjectCardContainer extends React.Component {
             <AssistantInnerBox>
               <img src="static/images/eye.svg" />
               <AssistantTitle14>
-              {data && data.view <= 1 ? (
-                        <div>낮음</div>
-                      ) : 1 <= data.view && data.view <= 4 ? (
-                        <div>보통</div>
-                      ) : data.view >= 5 ? (
-                        <div>높음</div>
-                      ) : null}
+                {data && data.view <= 1 ? (
+                  <div>낮음</div>
+                ) : 1 <= data.view && data.view <= 4 ? (
+                  <div>보통</div>
+                ) : data.view >= 5 ? (
+                  <div>높음</div>
+                ) : null}
               </AssistantTitle14>
             </AssistantInnerBox>
 
             <AssistantInnerBox>
               <img src="static/images/person.svg" />
-              <AssistantTitle14>총 {data && data.answer_set.length} 명 지원</AssistantTitle14>
+              <AssistantTitle14>
+                총 {data && data.answer_set.length} 명 지원
+              </AssistantTitle14>
             </AssistantInnerBox>
 
             <img src="static/images/underline.svg" style={{ marginTop: 9 }} />
@@ -241,6 +243,7 @@ const ContentBox = styled.div`
 
 const ImgInnerBox = styled.div`
   display: inline-flex;
+  justify-content: flex-start
   align-items: center;
 `;
 
