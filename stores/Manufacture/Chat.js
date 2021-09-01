@@ -60,7 +60,7 @@ class Chat {
             })
          }
 
-  // 메세지 읽음 표시 함수 => currentMessage는 수신 완료 메세지, fullMessage는 지금 있는 전체 메세지
+  // 메세지 읽음 표시 함수 => currentMessage는 onmessage로 온 채팅(실제 채팅 / 수신 완료 / 접속 완료 포함), fullMessage는 지금 있는 전체 메세지
   @action checkRead = async (fullMessage, currentMessage, flag = 1) => {
 
     // 전체 메세지(기존 메세지)에 메세지가 있으면
@@ -72,7 +72,7 @@ class Chat {
         // 두 개의 메세지 모두 도착하면 
         if (element.time && currentMessage.time) {
           
-          // 수신 완료 메세지의 type이 다른 경우 => 본인 메세지가 아닌 경우   
+          // 메세지의 type이 다른 경우 => 본인 메세지가 아닌 경우   
           if (
             currentMessage.type != element.member &&
             // currentMessage 시간이 element 시간보다 높을 때 >> 읽음 표시
