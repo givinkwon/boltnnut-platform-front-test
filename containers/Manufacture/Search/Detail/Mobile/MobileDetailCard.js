@@ -149,7 +149,7 @@ class MobileDetailCardContainer extends React.Component {
         //   .getElementById("portfolio")
         //   .getBoundingClientRect().top,
         portfoliLocation: portfolioPosY,
-        introductionLocation: introductionPosY,
+        // introductionLocation: introductionPosY,
         reviewLocation: reviewPosY,
         mapLocation: mapsPosY,
       };
