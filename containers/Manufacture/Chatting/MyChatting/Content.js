@@ -14,115 +14,6 @@ const LogoNo = "/static/images/chat/logono.png"
 @inject("Auth", "Project", "Chat")
 @observer
 class ChattingContent extends React.Component {
-  ChatAreaRef = React.createRef();
-  constructor(props) {
-    super(props);
-    this.myRef = React.createRef();
-    this.handleScrollChange = this.handleScrollChange.bind(this);
-  }
-
-  state = {
-    text: "",
-    value: "",
-    rows: 1,
-    minRows: 1,
-    maxRows: 20,
-    height: 576,
-    chatPageCount: 1,
-  };
-
-  // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
-  handleScrollChange() {
-    if (this.ChatAreaRef.current) {
-      if (
-        this.ChatAreaRef.current.scrollTop <= 0 &&
-        this.props.chatPageLimit - 1 > this.state.chatPageCount
-      ) {
-      }
-    }
-  }
-
-  async componentDidMount() {
-    const { Chat } = this.props;
-    //창 크기
-    window.addEventListener("resize", this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-    // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
-    document.addEventListener("scroll", this.handleScrollChange, true);
-
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-    document.removeEventListener("scroll", this.handleScrollChange);
-  }
-
-  // width 조절
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
-
-
-  onChangeHandler = (event) => {
-    const textareaLineHeight = 34;
-    const { minRows, maxRows } = this.state;
-    const previousRows = event.target.rows;
-    event.target.rows = minRows; // reset number of rows in textarea
-
-    const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
-
-    if (currentRows === previousRows) {
-      event.target.rows = currentRows;
-    }
-
-    if (currentRows >= maxRows) {
-      event.target.rows = maxRows;
-      event.target.scrollTop = event.target.scrollHeight;
-    }
-
-    this.setState({
-      text: event.target.value,
-      rows: currentRows < maxRows ? currentRows : maxRows,
-      height:
-        currentRows < maxRows
-          ? currentRows === 1
-            ? 576 - (currentRows - 1) * 32
-            : 576 - (currentRows - 2) * 32
-          : 0,
-    });
-  };
-
-  // 메세지를 입력할 때
-  onChange(e) {
-    this.setState({ text: e.target.value });
-  }
-
-  // 메세지를 보낼 때
-  onSubmit(e) {
-    e.preventDefault();
-
-    // 텍스트 초기화
-    this.setState({ text: "" });
-
-    // 빈메세지 제거
-    if (this.state.text.length > 0) {
-      this.props.onSendMessage(this.state.text);
-    }
-  }
-
-  // 메세지 읽음 처리
-  checkRead = (fullMessage, currentMessage) => {
-
-    fullMessage.forEach((element) => {
-      if (
-        currentMessage.member != element.member &&
-        element.time <= currentMessage.time
-      ) {
-        element.bRead = true;
-      }
-    });
-  };
-
   render() {
     const { Auth, Project, Chat } = this.props;
     console.log(Chat.chatcontent_arr.count)
@@ -136,7 +27,7 @@ class ChattingContent extends React.Component {
         </ContentTitle>
 
         <ContentBody>
-          {Chat.chatcontent_arr.count > 0 && Chat.chatcontent_arr.results.map((data) => {
+          {Chat.chatMessages.length > 0 && Chat.chatMessages.map((data) => {
             console.log(data)
             return (
                 <>
@@ -145,18 +36,20 @@ class ChattingContent extends React.Component {
                   {Auth.logged_in_partner ? 
                     ( data.user_type == 0 ? 
                       <Left>
+                      <div>{data.bRead && "읽음"}</div>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
  
-                      <Text state={"Left"} >{data.text_content}</Text>
+                      <Text state={"Left"} >{data.text}</Text>
                       </Left>
                     : 
                       <Right>
-                      <Text state={"Right"}>{data.text_content}</Text>
+                      <Text state={"Right"}>{data.text}</Text>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
+                      <div>{data.bRead && "읽음"}</div>
                       </Right> 
                     )
                   :
@@ -166,11 +59,13 @@ class ChattingContent extends React.Component {
                         <img src = {LogoNo}></img>
                       </ContentLogo>
  
-                      <Text state={"Right"}>{data.text_content}</Text>
+                      <Text state={"Right"}>{data.text}</Text>
+                      <div>{data.bRead && "읽음"}</div>
                       </Right>
                     : 
                       <Left>
-                      <Text state={"Left"}>{data.text_content}</Text>
+                      <div>{data.bRead && "읽음"}</div>
+                      <Text state={"Left"}>{data.text}</Text>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
