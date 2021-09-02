@@ -16,6 +16,7 @@ import Schedule from "./Manufacture/Schedule";
 import Category from "./Manufacture/Category";
 import Cookie from "./Manufacture/Cookie";
 import Signup from "./Account/Signup";
+import AutoEstimate from "./Manufacture/AutoEstimate"
 
 export default {
   Loading,
@@ -28,7 +29,7 @@ export default {
   Offered,
   Notice,
   Magazine,
-
+  AutoEstimate,
   Project,
   Chat,
   Common,
