@@ -7,8 +7,8 @@ import { WHITE, PRIMARY } from "static/style";
 
 const WhiteCheckbox = withStyles({
   root: {
-    padding: "0px 9px",
-    // paddingRight: 10,
+    marginLeft: 9,
+    padding: "0px",
     color: "#c7c7c7",
     borderRadius: "3px",
     "&$checked": {
