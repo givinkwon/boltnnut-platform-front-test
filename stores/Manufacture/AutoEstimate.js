@@ -106,15 +106,15 @@ class AutoEstimate {
   }
 
   @action reset = async () => {
-    @observable loadingEstimate = false;
-    @observable checkFileUpload = false;
-    @observable CNCPrice = 0;
-    @observable MoldPrice = 0;
-    @observable InjectionPrice = 0;
-    @observable BigCategory = 0;
-    @observable MidCategory = 0;
-    @observable Material = 0;
-    @observable quantity = 0;
+    this.loadingEstimate = false;
+    this.checkFileUpload = false;
+    this.CNCPrice = 0;
+    this.MoldPrice = 0;
+    this.InjectionPrice = 0;
+    this.BigCategory = 0;
+    this.MidCategory = 0;
+    this.Material = 0;
+    this.quantity = 0;
     }
 }
 
