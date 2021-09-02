@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29.66" height="33" viewBox="0 0 29.66 33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #1e2222;
+      }
+    </style>
+  </defs>
+  <g id="그룹_6722" data-name="그룹 6722" transform="translate(-1789.34 -574.95)">
+    <rect id="사각형_8598" data-name="사각형 8598" class="cls-1" width="29" height="32.95" rx="3" transform="translate(1790 575)"/>
+    <path id="사각형_8598_-_윤곽선" data-name="사각형 8598 - 윤곽선" class="cls-2" d="M2.542,1.692a.848.848,0,0,0-.847.846V30.462a.848.848,0,0,0,.847.846H27.118a.848.848,0,0,0,.847-.846V2.538a.848.848,0,0,0-.847-.846H2.542M2.542,0H27.118A2.54,2.54,0,0,1,29.66,2.538V30.462A2.54,2.54,0,0,1,27.118,33H2.542A2.54,2.54,0,0,1,0,30.462V2.538A2.54,2.54,0,0,1,2.542,0Z" transform="translate(1789.34 574.95)"/>
+    <rect id="사각형_8599" data-name="사각형 8599" class="cls-2" width="23" height="2" rx="1" transform="translate(1793 583.984)"/>
+    <circle id="타원_1574" data-name="타원 1574" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1794 590.974)"/>
+    <circle id="타원_1575" data-name="타원 1575" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1794 596.967)"/>
+    <circle id="타원_1576" data-name="타원 1576" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1800 590.974)"/>
+    <circle id="타원_1577" data-name="타원 1577" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1800 596.967)"/>
+    <circle id="타원_1578" data-name="타원 1578" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1806 590.974)"/>
+    <circle id="타원_1579" data-name="타원 1579" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1806 596.967)"/>
+    <circle id="타원_1572" data-name="타원 1572" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1812 590.974)"/>
+    <circle id="타원_1573" data-name="타원 1573" class="cls-2" cx="1.5" cy="1.5" r="1.5" transform="translate(1812 596.967)"/>
+  </g>
+</svg>
