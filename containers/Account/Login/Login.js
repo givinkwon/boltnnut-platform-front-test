@@ -40,23 +40,22 @@ class LoginContainer extends React.Component {
 
           {/* email */}
           <EmailContainer>
-            <Title18 style={{ color: "#505050" }}>이메일</Title18>
-            <CustomInput
-              placeholder="이메일"
-              onChange={Auth.setEmail}
-              style={{ marginTop: "0px" }}
-            />
+            <Title18 style={{ color: "#505050", marginBottom: 10 }}>
+              이메일
+            </Title18>
+            <CustomInput placeholder="이메일" onChange={Auth.setEmail} />
           </EmailContainer>
 
           {/* password */}
           <PasswordContainer>
-            <Title18 style={{ color: "#505050" }}>비밀번호</Title18>
+            <Title18 style={{ color: "#505050", marginBottom: 10 }}>
+              비밀번호
+            </Title18>
             <CustomInput
               placeholder="비밀번호"
               onChange={Auth.setPassword}
               onKeyDown={this.handleKeyDown}
               type="password"
-              style={{ marginTop: "0px" }}
             />
           </PasswordContainer>
 
@@ -185,7 +184,7 @@ const Title14 = styled(Title.FontSize14)`
 `;
 
 const CustomInput = styled(InputComponent)`
-  height: 42px;
+  /* height: 42px;
   border-radius: 3px;
   border: solid 1px #c6c7cc;
   background-color: #edf4fe;
@@ -195,7 +194,7 @@ const CustomInput = styled(InputComponent)`
 
   ::placeholder {
     font-size: 16px;
-  }
+  } */
 `;
 
 const CustomCheckBox = styled.input`
