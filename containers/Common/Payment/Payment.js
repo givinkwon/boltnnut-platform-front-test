@@ -64,9 +64,9 @@ const getNumber = [
   { label: "9", value: 9 },
   { label: "직접 입력", value: 0 },
 ];
-@inject("Request", "Proposal", "Payment")
+@inject("Request")
 @observer
-class PaymentBox extends Component {
+class PaymentContainer extends Component {
   state = {
     display: false,
   };
@@ -79,19 +79,19 @@ class PaymentBox extends Component {
     }
   };
   PayFunction() {
-    const { Payment, Request, Proposal } = this.props;
-    const estimateData = Proposal.estimateData;
+    const { Request } = this.props;
+    // const estimateData = Proposal.estimateData;
     // Payment.setProductPrice(
     //   Math.round(ManufactureProcess.MinPrice / 100) *
     //     100 *
     //     Request.numCount.value
     // );
-    Payment.setProjectName(estimateData.projectTitle);
-    Payment.setCountNumber(Request.numCount);
-    Payment.setPhoneNumber(
-      Request.input_phone.replace("-", "").replace("-", "")
-    );
-    Payment.clientOrder("html5_inicis");
+    // Payment.setProjectName(estimateData.projectTitle);
+    // Payment.setCountNumber(Request.numCount);
+    // Payment.setPhoneNumber(
+    //   Request.input_phone.replace("-", "").replace("-", "")
+    // );
+    // Payment.clientOrder("html5_inicis");
   }
   inputHandler = () => {
     const { Request } = this.props;
@@ -107,14 +107,12 @@ class PaymentBox extends Component {
     return false;
   };
   render() {
-    const { Proposal, Request, Payment } = this.props;
-    const estimateData = Proposal.estimateData;
-    console.log(Payment);
-    console.log(estimateData);
+    const { Request } = this.props;
+    // const estimateData = Proposal.estimateData;
 
     return (
       <div style={{ margin: "100px 0px 0px 48px" }}>
-        <ProjectName>{estimateData.projectTitle}</ProjectName>
+        <ProjectName></ProjectName>
         <div
           style={{
             borderBottom: "1px solid #282c36",
@@ -220,7 +218,7 @@ class PaymentBox extends Component {
     );
   }
 }
-export default PaymentBox;
+export default PaymentContainer;
 
 const ProjectName = styled.p`
   font-family: NotoSansCJKkr;
