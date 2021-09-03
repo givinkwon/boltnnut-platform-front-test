@@ -5,14 +5,12 @@ import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
-import Postcode from "./PostCode";
-import { XRHitTestTrackableType } from "three";
 
 const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
 const pass3 = "static/images/pass3.png";
 
-@inject("Payment")
+// @inject("Payment")
 @observer
 class PaymentPageContainer extends React.Component {
   state = {
@@ -24,7 +22,7 @@ class PaymentPageContainer extends React.Component {
   };
 
   payButtonClick = () => {
-    const { Payment } = this.props;
+    // const { Payment } = this.props;
     var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
     let cellphone = `${this.state.defaultNum}-${this.state.middleNum}-${this.state.lastNum}`;
     console.log(cellphone);
@@ -34,17 +32,19 @@ class PaymentPageContainer extends React.Component {
     } else if (!this.state.checkbox) {
       return alert("구매진행 동의에 체크를 하셔야 결제가 진행됩니다.");
     }
-    Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
-    Payment.product_price = 10;
-    Payment.setProjectName("MASDASCNASKLCNASKLCNL");
-    Payment.setCountNumber(3);
-    Payment.clientOrder("html5_inicis");
+    // Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
+    // Payment.product_price = 10;
+    // Payment.setProjectName("MASDASCNASKLCNASKLCNL");
+    // Payment.setCountNumber(3);
+    // Payment.clientOrder("html5_inicis");
   };
 
   modalHandler = () => {
-    const { Payment } = this.props;
-    Payment.modalActive = !Payment.modalActive;
+    console.log("modalHandler");
+    // const { Payment } = this.props;
+    // Payment.modalActive = !Payment.modalActive;
   };
+
   paymentWayClick = (idx) => {
     this.setState({ selectedIdx: idx });
   };
@@ -58,6 +58,8 @@ class PaymentPageContainer extends React.Component {
   };
 
   render() {
+    const { Payment } = this.props;
+
     let activeHandler = (idx) => {
       if (this.state.selectedIdx === idx) {
         return true;
@@ -66,13 +68,12 @@ class PaymentPageContainer extends React.Component {
       }
     };
 
-    const { Payment } = this.props;
     return (
       <Background>
         <PaymentPageDiv>
-          {Payment.modalActive && (
+          {/* {Payment.modalActive && (
             <Layer onClick={this.modalHandler}>{<Postcode />}</Layer>
-          )}
+          )} */}
 
           <PaymentPageLeft>
             <LeftHeader>결제 정보 입력</LeftHeader>
@@ -131,14 +132,14 @@ class PaymentPageContainer extends React.Component {
             </InlineFlexDiv>
             <InlineFlexDiv style={{ justifyContent: "space-between" }}>
               <DeliveryAddressBox1>
-                {this.props.Payment.zipCode}
+                {/* {this.props.Payment.zipCode} */}
               </DeliveryAddressBox1>
               <SearchBtn onClick={this.modalHandler}>주소검색</SearchBtn>
             </InlineFlexDiv>
             <DeliveryAddressBox2>
-              {this.props.Payment.address}
+              {/* {this.props.Payment.address} */}
             </DeliveryAddressBox2>
-            {this.props.Payment.address != "" && (
+            {/* {this.props.Payment.address != "" && (
               <div style={{ marginBottom: "26px" }}>
                 <InputComponent
                   class="Input"
@@ -149,7 +150,7 @@ class PaymentPageContainer extends React.Component {
                   }}
                 />
               </div>
-            )}
+            )} */}
 
             <InlineFlexDiv>
               <FontSize20>결제방법</FontSize20>
