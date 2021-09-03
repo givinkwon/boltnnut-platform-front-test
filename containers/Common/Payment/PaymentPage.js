@@ -6,13 +6,13 @@ import * as Title from "components/Title";
 import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
 import AutoEstimate from "../../../stores/Manufacture/AutoEstimate";
-import Auth from "../../../stores/Account/Auth";
+import Router from "next/router"
 
 const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
 const pass3 = "static/images/pass3.png";
 
-@inject("Payment")
+@inject("Payment", "AutoEstimate")
 @observer
 class PaymentPageContainer extends React.Component {
   state = {
@@ -56,7 +56,7 @@ class PaymentPageContainer extends React.Component {
   };
 
   render() {
-    const { Payment } = this.props;
+    const { Payment, AutoEstimate } = this.props;
 
     let activeHandler = (idx) => {
       if (Payment.PaymentMethod === idx) {
@@ -290,8 +290,9 @@ class PaymentPageContainer extends React.Component {
               </PaymentInfoWrap>
             </PaymentInfo3>
 
-            <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}>
-              <PaymenBtnText24>결제하기</PaymenBtnText24>
+            {/* <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}> */}
+            <PaymentBtn onClick={() => Router.push("/payment/complete")}>
+              <PaymenBtnText24>발주 요청하기</PaymenBtnText24>
             </PaymentBtn>
           </PaymentPageRight>
         </PaymentPageDiv>

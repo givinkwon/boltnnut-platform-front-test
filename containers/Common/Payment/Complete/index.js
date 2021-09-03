@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import Background from 'components/Background';
 import Containerv1 from 'components/Containerv1';
 import * as Title from 'components/Title';
+import { Router } from 'react-router-dom';
+import { inject, observer } from "mobx-react";
 
 const success = '/static/images/request/PaymentComplete/success.png';
 
@@ -23,8 +25,11 @@ const CompleteInfoDesc = styled.div`
 	margin-top: 20px;
 `;
 
+@inject("Payment", "AutoEstimate")
+@observer
 class PaymentCompleteContainer extends React.Component {
 	render() {
+        const { Payment, AutoEstimate } = this.props;
 		return (
 			<Background>
 				<Containerv1 style={{ flexDirection: 'column' }}>
@@ -32,10 +37,11 @@ class PaymentCompleteContainer extends React.Component {
 						<CompleteInfoImg style={{ display: 'flex', justifyContent: 'center' }}>
 							<img src={success}></img>
 						</CompleteInfoImg>
-						<CompleteInfoDesc style={{ display: 'inline-flex', marginTop: '20px' }}>
-							<FontSize32>주문이 정상적으로 완료</FontSize32>
-							<FontSize32 style={{ color: '#282c36' }}>되었습니다.</FontSize32>
-						</CompleteInfoDesc>
+						<CompleteInfoDesc style={{ display: 'block', marginTop: '20px' }}>
+							<FontSize32>발주 요청이 정상적으로 완료되었습니다.</FontSize32>
+                            <br/>
+                            <FontSize32 style={{ color: '#282c36' }}>배정된 프로젝트 매니저가 검토 후 1영업일 내로 연락드립니다.</FontSize32>
+                        </CompleteInfoDesc>
 					</CompleteInfoTitle>
 
 					<CompleteInfoBackground>
@@ -43,28 +49,28 @@ class PaymentCompleteContainer extends React.Component {
 							<CompleteInfoLeft>
 								<InlineFlexDiv style={{ marginTop: '76px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>주문번호</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>2021032947895761</FontSize18>
+									<FontSize18 style={{ marginBottom: '12px' }}>2947895761</FontSize18>
 								</InlineFlexDiv>
 
 								<InlineFlexDiv style={{ marginTop: '154px', marginBottom: '10px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>배송지정보</FontSize20>
-									<FontSize18 style={{ color: '#414550', fontWeight: 'normal', marginBottom: '12px' }}>박찬아 (010-4114-9296)</FontSize18>
+									<FontSize18 style={{ color: '#414550', fontWeight: 'normal', marginBottom: '12px' }}>{Payment.Name} ( {Payment.PhoneNumber} )</FontSize18>
 								</InlineFlexDiv>
 
 								<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-									<FontSize18 style={{ color: '#767676', width: '312px', fontWeight: 'normal', textAlign: 'right' }}>(03111) 서울 특별시 종로구 보문로 7길 4-4 (숭인동) 아쿠아빌 202호</FontSize18>
+									<FontSize18 style={{ color: '#767676', width: '312px', fontWeight: 'normal', textAlign: 'right' }}>{Payment.Location}</FontSize18>
 								</div>
 							</CompleteInfoLeft>
 
 							<CompleteInfoRight>
 								<InlineFlexDiv style={{ marginTop: '76px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>주문금액</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>3,518,000원</FontSize18>
+									<FontSize18 style={{ marginBottom: '12px' }}>{(Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000).toLocaleString("ko-KR")} 원</FontSize18>
 								</InlineFlexDiv>
 
 								<InlineFlexDiv>
 									<FontSize18 style={{ color: '#767676', fontWeight: 'normal', marginTop: '10px' }}>부품가격</FontSize18>
-									<FontSize18 style={{ color: '#414550', marginTop: '10px' }}>3,513,000원</FontSize18>
+									<FontSize18 style={{ color: '#414550', marginTop: '10px' }}>{(Math.round(AutoEstimate.totalPrice/1000) * 1000).toLocaleString("ko-KR")}원</FontSize18>
 								</InlineFlexDiv>
 								<InlineFlexDiv>
 									<FontSize18 style={{ color: '#767676', fontWeight: 'normal', marginTop: '12px' }}>배송비</FontSize18>
@@ -72,27 +78,25 @@ class PaymentCompleteContainer extends React.Component {
 								</InlineFlexDiv>
 
 								<InlineFlexDiv style={{ marginTop: '73px', borderBottom: `1px solid #c6c7cc` }}>
-									<FontSize20 style={{ marginBottom: '12px' }}>결제 내역</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>3,518,000원</FontSize18>
+									<FontSize20 style={{ marginBottom: '12px' }}>예상 납기일</FontSize20>
+									<FontSize18 style={{ marginBottom: '12px' }}>{AutoEstimate.totalPeriod} 영업일</FontSize18>
 								</InlineFlexDiv>
 
 								<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>국민 9490-****-****-****</FontSize18>
-									<FontSize18 style={{ color: '#767676', fontWeight: 'normal', marginLeft: '20px' }}>일시불</FontSize18>
+									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>배송 예정일 : 생산완료 후 1영업일 이내</FontSize18>
+
 								</div>
-								<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>승인일시 : 2021.03.26 12:30</FontSize18>
-								</div>
+
 							</CompleteInfoRight>
 						</CompleteInfoBox>
 					</CompleteInfoBackground>
 
-					<div style={{ display: 'inline-flex', marginTop: '60px', justifyContent: 'center' }}>
-						<CompleteBtn onClick={() => alert('구매내역 보기')}>
-							<FontSize20 style={{ color: '#0933b3', fontWeight: 'bold', textAlign: 'center' }}>구매내역 보기</FontSize20>
+					<div style={{ display: 'inline-flex', marginTop: '60px', marginBottom: 230, justifyContent: 'center' }}>
+						<CompleteBtn onClick={() => Router.push('/request')}>
+							<FontSize20 style={{ color: '#0933b3', fontWeight: 'bold', textAlign: 'center' }}>제조사 찾아보기</FontSize20>
 						</CompleteBtn>
 
-						<CompleteBtn onClick={() => alert('홈으로가기')} style={{ backgroundColor: '#0933b3', marginLeft: '22px' }}>
+						<CompleteBtn onClick={() => Router.push('/')} style={{ backgroundColor: '#0933b3', marginLeft: '22px' }}>
 							<FontSize20 style={{ color: '#ffffff', fontWeight: 'bold', textAlign: 'center' }}>홈으로가기</FontSize20>
 						</CompleteBtn>
 					</div>
@@ -114,6 +118,7 @@ const FontSize32 = styled(Title.FontSize32)`
 	line-height: 1.06;
 	letter-spacing: -0.8px;
 	color: #0933b3;
+    text-align : center!important;
 `;
 
 const FontSize20 = styled(Title.FontSize20)`
@@ -135,7 +140,6 @@ const CompleteInfoBackground = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 556px;
-	background-color: #f6f6f6;
 `;
 
 const CompleteInfoBox = styled.div`

@@ -132,7 +132,7 @@ class AutoEstimate {
         this.countPrice();
 
         // 개수 초기화
-        this.checkQuantity();
+        this.checkQuantity(0,1,0);
 
       })
       .catch((e) => {
