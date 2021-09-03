@@ -1,7 +1,7 @@
 import React, { Component, useCallback } from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import FileImage from "FileImage.js";
+import FileImage from "./FileImage.js";
 import { useDropzone } from "react-dropzone";
 import AutoEstimateCard from "./AutoEstimateCard";
 import STLViewer from "stl-viewer";
