@@ -57,6 +57,7 @@ class HomeConatiner extends React.Component {
     const req2 = {
       data: formData2,
     };
+
     AccountAPI.setUserIP(req)
       .then((res) => {
         console.log(res);

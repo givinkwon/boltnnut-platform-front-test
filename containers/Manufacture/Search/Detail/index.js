@@ -2,6 +2,7 @@ import React from "react";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
+// import NewDetailCardContainer from "./NewDetailCard";
 import MobileDetailCardContainer from "./Mobile/MobileDetailCard";
 import ReviewContainer from "./Review/ReviewPage";
 import CompleteContainer from "components/Complete";
@@ -46,6 +47,8 @@ class SearchDetailConatiner extends React.Component {
           (width && width > 767.98 ? (
             <DetailCardContainer width={this.props.width} />
           ) : (
+            // <NewDetailCardContainer width={this.props.width} />
+            // <div></div>
             <MobileDetailCardContainer width={this.props.width} />
           ))}
         <Background>
