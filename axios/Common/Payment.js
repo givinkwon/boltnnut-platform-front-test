@@ -6,7 +6,6 @@ export function order(req) {
     method: "POST",
     url: `${ROOT_URL}/paylist/order/`,
     data: req.data,
-    headers: req.headers ? req.headers : null,
   });
 }
 

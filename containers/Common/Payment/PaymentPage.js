@@ -7,6 +7,8 @@ import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
 import AutoEstimate from "../../../stores/Manufacture/AutoEstimate";
 import Router from "next/router"
+import * as PaymentAPI from "axios/Common/Payment" 
+import Payment from "../../../stores/Common/Payment";
 
 const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
@@ -54,6 +56,29 @@ class PaymentPageContainer extends React.Component {
       this.setState({ checkbox: false });
     }
   };
+
+  // 결제 모듈 달 때까지 임시적으로 데이터 저장하는 함수
+  PaymentComplete = () => {
+     
+    const req = {
+      data: {
+        product_name: Payment.Name + "|" + Payment.Location + "|" + AutoEstimate.totalPeriod + "영업일" ,
+        product_price: Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000,
+        count: AutoEstimate.total_quantity,
+        phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
+      },
+    };
+
+    console.log(req)
+    PaymentAPI.order(req)
+      .then((res) =>
+      { console.log(res);
+        Router.push("/payment/complete");
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  }
 
   render() {
     const { Payment, AutoEstimate } = this.props;
@@ -129,7 +154,7 @@ class PaymentPageContainer extends React.Component {
               onChange={(e) => Payment.setLocation(e)}
             />
 
-            <InlineFlexDiv>
+            {/* <InlineFlexDiv>
               <FontSize20>결제방법</FontSize20>
               <img src={img} />
             </InlineFlexDiv>
@@ -155,7 +180,7 @@ class PaymentPageContainer extends React.Component {
                 <PaymentCheckImg src={passimg} active={activeHandler(3)} />
                 <PaymentWayTitle>후불결제</PaymentWayTitle>
               </PaymentWay>
-            </PaymentWayBox>
+            </PaymentWayBox> */}
           </PaymentPageLeft>
 
           <PaymentPageRight>
@@ -291,7 +316,7 @@ class PaymentPageContainer extends React.Component {
             </PaymentInfo3>
 
             {/* <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}> */}
-            <PaymentBtn onClick={() => Router.push("/payment/complete")}>
+            <PaymentBtn onClick={() => this.PaymentComplete()}>
               <PaymenBtnText24>발주 요청하기</PaymenBtnText24>
             </PaymentBtn>
           </PaymentPageRight>
