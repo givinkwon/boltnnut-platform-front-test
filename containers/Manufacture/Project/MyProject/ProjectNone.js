@@ -28,7 +28,7 @@ class ProjectNone extends React.Component {
             Project.set_step_index(1)
             }
             }>
-              프로젝트 찾기
+              제조문의 찾기
           </Button>
           </>
           }

@@ -88,7 +88,7 @@ class AllProject extends React.Component {
                 marginBottom: 80,
               }}
             >
-              <Font32 style={{ marginBottom: 60 }}>프로젝트 찾기</Font32>
+              <Font32 style={{ marginBottom: 60 }}>제조문의 찾기</Font32>
               <SearchBar />
             </div>
             <Header>
@@ -187,7 +187,7 @@ class AllProject extends React.Component {
                     )}
                   </UserBox>
                   <SubItem>
-                    <span>프로젝트 의뢰</span>
+                    <span>제조 문의</span>
                     <span>{Project.subbox_project_count}</span>
                   </SubItem>
                   <SubItem>

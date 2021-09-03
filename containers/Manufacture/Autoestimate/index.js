@@ -5,6 +5,12 @@ import FileImage from "FileImage.js";
 import { useDropzone } from "react-dropzone";
 import AutoEstimateCard from "./AutoEstimateCard";
 import STLViewer from "stl-viewer";
+import Banner0 from "./Home/Banner0";
+import Banner1 from "./Home/Banner1";
+import Banner2 from "./Home/Banner2";
+import Banner3 from "./Home/Banner3";
+import Banner4 from "./Home/Banner4";
+import Banner5 from "./Home/Banner5";
 
 // Components
 import Buttonv1 from "components/Buttonv1";
@@ -213,12 +219,16 @@ class AutoestimateContainer extends React.Component {
   return (
     <>
         <Container>
+
+        <Banner0/>
         {/* 자동 견적 헤더 */}
-          <Header>
-            {AutoEstimate.checkFileUpload
-              ? "도면 추가"
-              : "도면 파일을 업로드 해주세요."}
-          </Header>
+          <HeaderBox>
+            <Header>
+              {AutoEstimate.checkFileUpload
+                ? "도면 추가"
+                : "도면 파일을 업로드 해주세요."}
+            </Header>
+          </HeaderBox>
           <TableHeader
                 checkFileUpload={AutoEstimate.checkFileUpload}
               >
@@ -419,9 +429,18 @@ class AutoestimateContainer extends React.Component {
 
           {/* 파일 업로드 창 */}
           <ContentBox checkFileUpload={AutoEstimate.checkFileUpload} >
-            <this.MyDropzone/>      
+            <this.MyDropzone/>
           </ContentBox>
+          {/* 자동 견적 소개 창*/}
 
+          {!AutoEstimate.checkFileUpload && 
+            <>
+            <Banner2/>
+            <Banner3/>
+            <Banner4/>
+            <Banner5/>
+            </>
+          }
 
           {/* 도면이 업로드된 상태면 견적 카드 보여주기 */}
           {AutoEstimate.checkFileUpload && 
@@ -539,9 +558,11 @@ const Box = styled.div`
     `}
 `;
 const ItemList = styled.div`
-  width: 101%;
+  width: 1200px;
   height: 100%;
   padding-left: 3px;
+  margin-left : auto;
+  margin-right : auto;
   //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
   //padding-top: ${(props) =>
     props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
@@ -590,7 +611,9 @@ const MainBox = styled.div`
 `;
 
 const NoticeBox = styled.div`
-  width: 100%;
+  width : 1200px;
+  margin-left : auto;
+  margin-right : auto;
   height: 92px;
   //border: 3px solid red;
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
@@ -621,15 +644,25 @@ const EntireDelete = styled.div`
   }
 `;
 
+
+const HeaderBox = styled.div`
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 const ContentBox = styled.div`
-  width: 1199px;
+  width: 1200px;
   height: ${(props) => (props.checkFileUpload ? "100px" : "313px")};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
   border-radius: 5px;
   background-color: #f6f6f6;
-  margin-left: 1px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "66px")};
   :focus {
     outline: none;
@@ -795,7 +828,7 @@ const FileImageContainer = styled.div`
 
 const Container = styled.div`
   margin : auto;
-  width: 1200px;
+  width: 100%;
   height: 100%;
 `;
 const CheckBox = styled.div`
@@ -877,7 +910,9 @@ const DropZoneContainer = styled.div`
 const TableHeader = styled.div`
   margin-top: 30px;
   align-items: center;
-  width: 100%;
+  width: 1200px;
+  margin-left : auto;
+  margin-right : auto;
   border-bottom: 1px solid #c6c7cc;
   padding-bottom: 18px;
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
@@ -918,8 +953,10 @@ const TableHeader = styled.div`
 `;
 
 const Price = styled.div`
+  width : 1200px;
+  margin-left : auto;
+  margin-right : auto;
   flex-direction: column;
-  width: 100%;
   //height: 197px;
   border-top: 3px solid #414550;
   border-bottom: 2px solid #c6c7cc;

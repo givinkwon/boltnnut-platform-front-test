@@ -131,6 +131,8 @@ class AutoEstimate {
         // 가격 리로딩
         this.countPrice();
 
+        // 개수 초기화
+        this.checkQuantity();
 
       })
       .catch((e) => {
@@ -174,8 +176,8 @@ class AutoEstimate {
           this.CNCPrice = 0;
           this.MoldPrice = res.data.mold_price;
           this.InjectionPrice = res.data.injection_price;
-          // 납기일 => 90일
-          this.fileList[fileIdx].period = 90;
+          // 납기일 => 60영업일
+          this.fileList[fileIdx].period = 60;
         }
 
         // CNC 가격
@@ -296,6 +298,7 @@ class AutoEstimate {
     this.totalInjectionPrice = 0;
     this.totalCNCPrice = 0;
     this.totalPrice = 0;
+    // 납기일 초기화
     this.totalPeriod = 0;
 
     this.fileList.map((data, idx) => {
