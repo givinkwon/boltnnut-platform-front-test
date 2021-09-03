@@ -330,9 +330,8 @@ class AutoestimateContainer extends React.Component {
                                    {
                                     AutoEstimate.countQuantity(idx, e.target.value);
                                   } else {
-                                    e.target.value = 0;
+                                    e.target.value = "";
                                     AutoEstimate.countQuantity(idx, e.target.value);
-                                    alert("숫자를 입력하세요");
                                   }
                                 }}
                               />
@@ -366,17 +365,25 @@ class AutoestimateContainer extends React.Component {
 
                                   <div>
                                     <span>가격 </span>
-                                    <span>
+                                    <span style={{marginRight : 20}}>
                                       {((Math.round(data.moldPrice/1000) * 1000 + Math.round(data.injectionPrice) * data.quantity)).toLocaleString("ko-KR") + " 원"}
+                                    </span>
+                                    <span>예상 납기일 </span>
+                                    <span>
+                                      {data.period+ " 영업일"}
                                     </span>
                                   </div>
                                 </>
                               ) : (
                                 <>
                                   <span>가격 </span>
-                                  <span>
+                                  <span style={{marginRight : 20}}>
                                     {/* 1000의 자리까지 반올림 */}
                                     {(Math.round((data.price)/1000) * 1000 * data.quantity).toLocaleString("ko-KR") + " 원"}
+                                  </span>
+                                  <span>예상 납기일 </span>
+                                    <span>
+                                      {data.period+ " 영업일"}
                                   </span>
                                 </>
                               )}
@@ -424,7 +431,7 @@ class AutoestimateContainer extends React.Component {
             >
               <PriceLabel active={checkBox_one}>
                 <div>
-                  <span>자동 견적 가격</span>
+                  <span>자동 견적 가격 (예상 납기일)</span>
                   <span
                     onMouseOver={() => {
                       this.setIsShown(true, 1);
@@ -439,7 +446,7 @@ class AutoestimateContainer extends React.Component {
                   </span>
                 </div>
                 <div>
-                  <p>해당 사항은 볼트앤너트 알고리즘이 도출한 견적으로</p>
+                  <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>
                   <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
                   <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
                 </div>
@@ -448,6 +455,13 @@ class AutoestimateContainer extends React.Component {
                 <span>
                   {(Math.round(AutoEstimate.totalPrice/1000) * 1000).toLocaleString("ko-KR")}
                   <span> 원</span>
+                  
+                </span>
+                <span>
+                  (
+                  {AutoEstimate.totalPeriod}
+                  <span> 영업일)</span>
+                  
                 </span>
               </PriceData>
             </Price>
