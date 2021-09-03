@@ -163,12 +163,16 @@ class AutoEstimate {
           this.CNCPrice = res.data.price;
           this.MoldPrice = 0;
           this.InjectionPrice = 0;
+          // 납기일 => 20만원당 하루
+          this.fileList[fileIdx].Period = Math.ceil(res.data.price/200000)
         } 
         // 금형인 경우
         else {
           this.CNCPrice = 0;
           this.MoldPrice = res.data.mold_price;
           this.InjectionPrice = res.data.injection_price;
+          // 납기일 => 90일
+          this.fileList[fileIdx].Period = 90;
         }
 
         // CNC 가격
@@ -220,22 +224,36 @@ class AutoEstimate {
   @observable totalInjectionPrice = 0 // 전체 사출 가격
   @observable totalCNCPrice = 0 // 전체 CNC 가격
 
+  // 전체 납기 관련
+  @observable totalPeriod = 0;
+
   // 체크에 따라 총 주문 개수를 세는 함수
   @action checkQuantity = (idx = 0, current_value = 0, checked = 0) => {
   
     if (checked === 1) {
       // 체크가 되어 있는 경우 => 제외해야하므로
       this.fileList[idx].quantity = 0;
+      this.fileList[idx].Period = 0;
     } else {
       // 체크가 되어 있지 않던 경우
       this.fileList[idx].quantity = current_value;
+      
+      // CNC 체크인 경우
+      if(this.fileList[idx].selectedManufacture.id == 1){
+        // 20만원당 하루
+        this.fileList[idx].Period = Math.ceil(this.fileList[idx].CNCPrice * this.fileList[idx].quantity / 200000) 
+      }
     }
 
     // 전체 수량 세기
     this.total_quantity = 0
+    // 전체 납기 세기
+    this.totalPeriod = 0
+
     for (let i = 0; i < this.fileList.length; i++) {
       // 도면 개수 전체 합한 것
       this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
+      this.totalPeriod += parseInt(this.fileList[i].Period)
     };
 
     // 가격 리로딩
@@ -250,8 +268,12 @@ class AutoEstimate {
     
     // 전체 수량 세기
     this.total_quantity = 0
+    // 전체 납기 세기
+    this.totalPeriod = 0
+
     for (let i = 0; i < this.fileList.length; i++) {
       this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
+      this.totalPeriod += parseInt(this.fileList[i].Period)
     };
 
     // 가격 리로딩
