@@ -13,38 +13,21 @@ class AutoEstimate {
   @observable checkFileUpload = false;
 
   // 견적 생성 관련
-  @observable file_list = [] // 도면 파일 리스트
-  @observable process = 0 // 공정 => 미선택 0, CNC 가공 1 / 금형 가공 2
-  @observable material = 0 // 재료 => CNC 0~6, 금형 0~1.
+  @observable fileList = [] // 도면 파일 리스트
 
-  // 도면 파일 리스트 저장
-  @action set_file_list = (obj) => {
+  // 현재 가장 최근 도면 파일
+  @observable file = 0 
+
+  // 도면 파일 저장
+  @action set_file = (obj) => {
     // obj 형태일 때만 저장
     if (typeof obj == "object") {
-      this.file_list.push(obj);
+      this.file = obj;
     }
   };
-
-  // 공정 저장
-  @action set_process = (idx) => {
-    this.process = idx;
-    console.log(this.process)
-  };
-
-  // 재료 저장
-  @action set_material = (idx) => {
-    this.material = idx;
-    console.log(this.material)
-  };
   
-  // 수량 변수
-  @observable quantity = 0;
-
-  // 수량 저장
-  @action set_quantity = (idx) => {
-    this.Quantity = idx;
-    console.log(this.Quantity)
-  };
+  // 전체 수량 변수
+  @observable total_quantity = 0;
 
 
   // 파일 사이즈 관련
@@ -60,6 +43,35 @@ class AutoEstimate {
   // 사출 견적
   @observable InjectionPrice = 0;
 
+  // 자동 견적 카드에서 공정 / 소재 선택
+  @observable ManufactureOption = [
+    { id: 1, name: "절삭가공" },
+    { id: 2, name: "금형사출" },
+  ] 
+
+  // 금형 사출일 때 소재
+  @observable MoldMaterialOption = [
+    { id: 0, name: "플라스틱" },
+    { id: 1, name: "실리콘" },
+  ] 
+  
+  // CNC 일 때 소재
+  @observable CNCMaterialOption= [
+    { id: 2, name: "철/스텐" },
+    { id: 2, name: "탄소강/냉연강/열연강" },
+    { id: 2, name: "티타늄/갈바륨" },
+    { id: 2, name: "비철금속"},
+    { id: 2, name: "주철/주석"}
+  ] 
+
+  
+
+  // 공정 선택 시 값 저장 => 초기값 CNC
+  @observable selectedManufacture = { id: 1, name: "절삭가공" };
+
+
+  @observable selectedMaterial = { id: 2, name: "철/스텐" };
+
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
 
@@ -67,11 +79,12 @@ class AutoEstimate {
     var formData = new FormData();
 
     // 도면 파일 리스트
-    formData.append("blueprint", this.file_list);
+    formData.append("blueprint", this.file);
+    
     // 공정 id
-    formData.append("process", this.process);
+    formData.append("process", 1);
     // 재료 id
-    formData.append("material", this.material);
+    formData.append("material", 2);
 
     const req = {
       data: formData,
@@ -80,22 +93,40 @@ class AutoEstimate {
     AutoEstimateAPI.create(req)
       .then((res) => {
 
-        console.log(res);
-        // 데이터 저장
-        this.x_length = res.data.x_length;
-        this.y_length = res.data.y_length;
-        this.z_length = res.data.z_length;
-        this.volume = res.data.volume;
+        console.log(res);        
+        // 기본 호출은 CNC로 가정
+        this.CNCPrice = res.data.price;
 
-        // CNC인 경우
-        if(this.process==1){
-          this.CNCPrice = res.data.price;
-        } 
-        // 금형인 경우
-        else {
-          this.MoldPrice = res.data.mold_price;
-          this.InjectionPrice = res.data.injection_price;
-        }
+
+        // 데이터 저장
+        this.fileList.push({
+          // 크기 관련
+          x_length : res.data.data.x_length,
+          y_length : res.data.data.y_length,
+          z_length : res.data.data.z_length,
+          volume : res.data.data.volume,
+          // 파일 관련
+          stl_file : res.data.stl,
+          originFile: this.file,
+          fileName : this.file.name,
+          // CNC 가격
+          price : this.CNCPrice,
+          // 금형 가격
+          moldPrice : this.MoldPrice,
+          injectionPrice : this.InjectionPrice,
+
+          // 선택 수량 관련
+          quantity: 1,
+
+          // 공정 선택 관련
+          selectedManufacture: { id: 1, name: "절삭가공" },
+          selectedMaterial : { id: 2, name: "철/스텐" },
+
+          // 기타
+          checked : true,
+        })
+        // 가격 리로딩
+        this.countPrice();
 
 
       })
@@ -105,7 +136,153 @@ class AutoEstimate {
       });
   }
 
+  // 견적 카드에서 카테고리를 변경할 때 사용하는 함수
+  @action ReloadAutoEstimate = (fileIdx) => {
+  // 데이터 생성
+  var formData = new FormData();
+
+
+
+  // 도면 파일 리스트
+  formData.append("blueprint", this.fileList[fileIdx].originFile);
+  // 공정 id
+  formData.append("process", this.fileList[fileIdx].selectedManufacture.id);
+  // 재료 id
+  formData.append("material", this.fileList[fileIdx].selectedMaterial.id);
+
+  const req = {
+    data: formData,
+  };
+
+  AutoEstimateAPI.create(req)
+      .then((res) => {
+        console.log(res);
+        
+        // CNC인 경우
+        if(this.fileList[fileIdx].selectedManufacture.id == 1){
+          this.CNCPrice = res.data.price;
+          this.MoldPrice = 0;
+          this.InjectionPrice = 0;
+        } 
+        // 금형인 경우
+        else {
+          this.CNCPrice = 0;
+          this.MoldPrice = res.data.mold_price;
+          this.InjectionPrice = res.data.injection_price;
+        }
+
+        // CNC 가격
+        this.fileList[fileIdx].price = this.CNCPrice,
+        // 금형 가격
+        this.fileList[fileIdx].moldPrice = this.MoldPrice,
+        this.fileList[fileIdx].injectionPrice = this.InjectionPrice,
+
+        // 가격 리로딩
+        this.countPrice();
+
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setManufacture = (e, idx) => {
+    this.fileList[idx].selectedManufacture = e; // 공정 선택
+    
+    // 절삭가공을 선택한 경우 => 소재 변경해주기
+    if(this.fileList[idx].selectedManufacture.id == 1){
+      this.fileList[idx].selectedMaterial = { id: 2, name: "철/스텐" };
+      console.log(this.fileList[idx].selectedMaterial)
+    } 
+    // 금형 사출을 선택한 경우 => 소재 변경해주기
+    else {
+      this.fileList[idx].selectedMaterial = { id: 0, name: "플라스틱" };
+      console.log(this.fileList[idx].selectedMaterial)
+    }
+
+    // 가격 리로딩
+    this.countPrice();
+
+  };
+
+  @action setMaterial = (e, idx) => {
+    this.fileList[idx].selectedMaterial = e; // 소재 선택
+    // 가격 리로딩
+    this.countPrice();
+
+  };
+
+  @observable quantity = 0; // 주문 개수
+  // 전체 가격 관련
+  @observable totalPrice = 0; // 전체 주문 가격
+  @observable totalMoldPrice = 0 // 전체 금형 가격
+  @observable totalInjectionPrice = 0 // 전체 사출 가격
+  @observable totalCNCPrice = 0 // 전체 CNC 가격
+
+  // 체크에 따라 총 주문 개수를 세는 함수
+  @action checkQuantity = (idx = 0, current_value = 0, checked = 0) => {
+  
+    if (checked === 1) {
+      // 체크가 되어 있는 경우 => 제외해야하므로
+      this.fileList[idx].quantity = 0;
+    } else {
+      // 체크가 되어 있지 않던 경우
+      this.fileList[idx].quantity = current_value;
+    }
+
+    // 전체 수량 세기
+    this.total_quantity = 0
+    for (let i = 0; i < this.fileList.length; i++) {
+      // 도면 개수 전체 합한 것
+      this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
+    };
+
+    // 가격 리로딩
+    this.countPrice();
+
+  }
+
+  // 주문 개수 변경에 따라 총 주문 개수를 세는 함수
+  @action countQuantity = (idx, current_value) => {
+
+    this.fileList[idx].quantity = current_value;
+    
+    // 전체 수량 세기
+    this.total_quantity = 0
+    for (let i = 0; i < this.fileList.length; i++) {
+      this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
+    };
+
+    // 가격 리로딩
+    this.countPrice();
+
+  }
+
+  // 각각의 도면 데이터들의 가격과 총 주문금액을 계산하는 함수
+  @action countPrice() {
+    // 가격 초기화
+    this.totalMoldPrice = 0;
+    this.totalInjectionPrice = 0;
+    this.totalCNCPrice = 0;
+    this.totalPrice = 0;
+
+    this.fileList.map((data, idx) => {
+        // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
+        if (data.checked) {
+          this.totalMoldPrice += data.moldPrice;
+          this.totalInjectionPrice += data.injectionPrice * data.quantity;
+          this.totalCNCPrice += data.price * data.quantity;
+          }  
+    });
+    // 전체 주문 가격
+    this.totalPrice = this.totalMoldPrice + this.totalInjectionPrice + this.totalCNCPrice;
+
+    //console.log(this.totalMoldPrice, this.totalInjectionPrice, this.totalCNCPrice, this.totalPrice)
+  }
+
   @action reset = async () => {
+    this.fileList = [];
     this.loadingEstimate = false;
     this.checkFileUpload = false;
     this.CNCPrice = 0;
