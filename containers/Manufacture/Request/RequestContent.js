@@ -884,7 +884,7 @@ const ClientInfoBox = styled.div`
   width: 100%;
   .MuiInputBase-root {
     height: 42px;
-    width: 100%;
+    width: 384px;
   }
 `;
 

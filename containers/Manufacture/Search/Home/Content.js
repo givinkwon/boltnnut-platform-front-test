@@ -201,7 +201,7 @@ class ManufacturerContentContainer extends React.Component {
               )}
 
               <Header>
-                <Font20 style={{ marginLeft: "20px" }}>
+                <Font20>
                   <span style={{ fontWeight: "bold" }}>
                     {Partner.partner_count}개
                   </span>
@@ -211,14 +211,13 @@ class ManufacturerContentContainer extends React.Component {
 
               <Main>
                 <MainBody>
-                  <Border style={{ border: "solid 1px #e1e2e4" }}></Border>
                   {Partner.partner_list &&
                     Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
                       <ButtonSpinnerComponent scale="30%" primary />
                     ) : (
                       <NoResultBox>
-                        <img src={nosearch}></img>
+                        <img src={nosearch} />
                         <NoSearch>
                           <span style={{ fontWeight: "bold" }}>
                             '{Partner.search_text}'
@@ -234,6 +233,7 @@ class ManufacturerContentContainer extends React.Component {
                       </NoResultBox>
                     ))}
 
+                  <Border />
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
                       return (
@@ -411,6 +411,34 @@ class ManufacturerContentContainer extends React.Component {
                 </Aside>
               </Main>
             </Body>
+
+            <AiButton
+              onClick={() => {
+                Router.push("/autoestimate");
+              }}
+            >
+              <AiFontBox style={{ width: 114, height: 40 }}>
+                <Font14>
+                  CNC 자동 견적으로
+                  <br />
+                  바로 발주하기
+                </Font14>
+
+                <img
+                  src="static/images/search/aiicon.svg"
+                  style={{ margin: "12px 0px 12px 0px" }}
+                />
+
+                <Font13 align="justify">
+                  AI견적 시스템으로
+                  <br />
+                  1초만에 견적 받고
+                  <br />
+                  바로 납품 받자!
+                </Font13>
+              </AiFontBox>
+            </AiButton>
+
             <TopButton onClick={this.TopScroll} style={{ cursor: "pointer" }}>
               <img src={toparrowblue}></img>
               <div style={{ marginTop: 5 }}>Top</div>
@@ -803,24 +831,13 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   padding-top: 32px;
   margin-bottom: 5px;
-  > span {
-    position: absolute;
-    left: 88%;
-    display: flex;
-    align-items: center;
-    > img {
-      width: 14px;
-      height: 7px;
-      margin-left: 10px;
-    }
-  }
 `;
 
 const Border = styled.div`
   width: 100%;
+  margin: auto;
   border: solid 1px #e1e2e4;
 `;
 
@@ -965,6 +982,47 @@ const BackgroundContainer = styled.div`
 const ScrollActiveBoxInnerBox = styled.div`
   position: ${(props) => (props.scrollActive ? "absolute" : "none")};
   left: ${(props) => (props.scrollActive ? "18.5%" : "none")};
+`;
+
+const AiButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 134px;
+  height: 184px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 3px;
+  background-color: #f6f6f6;
+  cursor: pointer;
+
+  top: 30%;
+  left: 90%;
+  position: fixed;
+  z-index: 2;
+`;
+
+const AiFontBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Font14 = styled.p`
+  font-family: NotoSansCJKkr;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+  text-align: center;
+`;
+
+const Font13 = styled.p`
+  font-family: NotoSansCJKkr;
+  font-size: 13px;
+  font-weight: normal;
+  color: #86888c;
+  text-align: center;
 `;
 
 export default ManufacturerContentContainer;
