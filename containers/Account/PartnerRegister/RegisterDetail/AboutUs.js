@@ -115,7 +115,6 @@ class AboutUsContainer extends Component {
 
   render() {
     const { Category, Partner } = this.props;
-    console.log("asdasd", Category.partnerPortfolioArray);
     return (
       <>
         <Font18

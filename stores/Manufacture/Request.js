@@ -169,6 +169,22 @@ class Request {
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
+    // google ads script
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof url != "undefined") {
+          window.location = url;
+        }
+      };
+      gtag("event", "conversion", {
+        send_to: "AW-711089872/ZKhLCJDEvfECENC9idMC",
+        value: 1.0,
+        currency: "KRW",
+        event_callback: callback,
+      });
+      return false;
+    }
+
     // error 처리
     if (this.request_state == -1) {
       alert("문의 목적을 선택해주세요");
@@ -298,6 +314,7 @@ class Request {
 
       RequestAPI.create(req)
         .then((res) => {
+          gtag_report_conversion();
           console.log("create: ", res);
           // page 넘기기 위한 트리거 만들기
           this.requestTabIdx = 2;
