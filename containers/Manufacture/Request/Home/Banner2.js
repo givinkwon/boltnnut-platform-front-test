@@ -26,9 +26,9 @@ class RequestMain extends React.Component {
             </StepBox>
             <TextBox>
               <TextSubBox>
-                <Title>의뢰 요청</Title>
+                <Title>제조 문의</Title>
                 <Content>
-                  의뢰를 요청하면 볼트앤너트의 전문가가
+                  제조문의 시 볼트앤너트의 전문가가
                   <br />
                   상담을 통해 내용 보완 후 제조사와 연결해드립니다.
                 </Content>
@@ -80,12 +80,38 @@ const StepBox = styled.div`
   width: 700px;
   display: flex;
   justify-content: space-around;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width : 400px !important;
+    max-width : 400px !important;
+    > img {
+      width : 100px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;
 
 const TextBox = styled.div`
   display: flex;
   width: 870px;
   justify-content: space-around;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    max-width: 600px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;
 
 const TextSubBox = styled.div`
@@ -104,6 +130,7 @@ const Title = styled.span`
 `;
 
 const Content = styled.span`
+
   font-size: 17px;
   font-weight: normal;
   font-stretch: normal;
@@ -112,4 +139,15 @@ const Content = styled.span`
   letter-spacing: -0.43px;
   text-align: center;
   color: #767676;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;

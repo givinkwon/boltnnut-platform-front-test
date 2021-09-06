@@ -119,6 +119,9 @@ const Body = styled.div`
   align-items: center;
   justify-content: center;
   font-family: NotoSansCJKkr;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-bottom: 100px;
+  }
 `;
 
 const Header = styled.span`
@@ -134,7 +137,7 @@ const QnABox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-
+  
 `;
 
 const QnATitle = styled.div`
@@ -149,6 +152,19 @@ const QnATitle = styled.div`
   &:hover {
     border-radius: 10px;
     background-color: #edf4fe;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
   }
 `;
 
@@ -170,6 +186,19 @@ const QnABody = styled.div`
       padding: 0;
       visibility: hidden;
     `};
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;
 
 const ArrowIcon = styled.img`

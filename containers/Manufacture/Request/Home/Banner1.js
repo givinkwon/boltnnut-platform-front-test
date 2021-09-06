@@ -106,6 +106,19 @@ const Title = styled.div`
   line-height: 3.18;
   letter-spacing: -0.88px;
   text-align: center;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+    font-size: 22px;
+  }
 `;
 
 const Text = styled.div`
@@ -114,6 +127,18 @@ const Text = styled.div`
   letter-spacing: -0.43px;
   text-align: center;
   color: #555963;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+    font-size: 17px;
+  }
 `;
 
 const Button = styled.div`

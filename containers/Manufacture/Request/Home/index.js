@@ -16,7 +16,7 @@ class RequestMain extends React.Component {
     return (
       <>
         <Background>
-          <Container style={{ width: 4980 }}>
+          <Container_Custom>
             <Body>
               <Banner0 />
               <Banner1 />
@@ -25,7 +25,7 @@ class RequestMain extends React.Component {
               <Banner4 />
               <Banner5 />
             </Body>
-          </Container>
+          </Container_Custom>
         </Background>
       </>
     );
@@ -33,6 +33,21 @@ class RequestMain extends React.Component {
 }
 
 export default RequestMain;
+
+const Container_Custom = styled.div`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width : 100%;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width : 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width : 4980px;
+  }
+  @media (min-width: 1300px) {
+    width : 4980px;
+  }
+`
 
 const Body = styled.div`
   display: flex;
