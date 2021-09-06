@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Background from 'components/Background';
 import Containerv1 from 'components/Containerv1';
 import * as Title from 'components/Title';
-import { Router } from 'react-router-dom';
+import Router from 'next/router';
 import { inject, observer } from "mobx-react";
 
 const success = '/static/images/request/PaymentComplete/success.png';
