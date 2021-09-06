@@ -87,7 +87,7 @@ class Home extends React.Component {
             {width && width > 767.98 && <Nav width={width} />}
           </>
           {width && width > 768 && (
-            <Ad href="https://online.automationworld.co.kr/fairDash.do?hl=KOR">
+            <Ad href="https://techfair.kaist.ac.kr/sub0906/view/id/75">
               <div>
                 <img src={AD} />
               </div>
