@@ -169,7 +169,7 @@ class AutoEstimate {
           this.MoldPrice = 0;
           this.InjectionPrice = 0;
           // 납기일 => 20만원당 하루
-          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000)
+          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000) + 1
         } 
         // 금형인 경우
         else {
@@ -246,7 +246,7 @@ class AutoEstimate {
       // CNC 체크인 경우
       if(this.fileList[idx].selectedManufacture.id == 1){
         // 20만원당 하루
-        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) 
+        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) + 1
       }
     }
 
