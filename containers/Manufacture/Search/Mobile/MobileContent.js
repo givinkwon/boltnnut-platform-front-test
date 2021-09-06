@@ -81,11 +81,8 @@ class MobileManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {Home.mobile_warning_modal_state ? (
-          <MobileWarningModalContainer />
-        ) : (
-          "none"
-        )}
+        {Home.mobile_warning_modal_state && <MobileWarningModalContainer />}
+        
 
         <Background id="MyBackground">
           <Container style={{ display: "block" }}>
@@ -111,7 +108,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     <div>
                       <button
                         onClick={() => {
-                          Router.push("/request");
+                          Router.push("/autoestimate");
                         }}
                       >
                         <span>바로 AI 견적 받기</span>
@@ -125,7 +122,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     <div>
                       <button
                         onClick={() => {
-                          Partner.mobileRequestIndex = 1;
+                          Router.push("/request")
                         }}
                       >
                         <span>업체수배&견적 무료의뢰 </span>

@@ -223,7 +223,6 @@ class MobileSearchFilterConatiner extends React.Component {
               ></img>
             </Field>
           </Category>
->
           <Category>
             <CategoryName>지역</CategoryName>
             <Field>

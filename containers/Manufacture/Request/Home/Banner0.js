@@ -32,7 +32,7 @@ class RequestMain extends React.Component {
     Project.getProject()
 
     return (
-      <Background>
+      <Background2>
         <Container>
           <Body>
             <Header>
@@ -54,12 +54,16 @@ class RequestMain extends React.Component {
             </BackImg>
           </Body>
         </Container>
-      </Background>
+      </Background2>
     );
   }
 }
 
 export default RequestMain;
+
+const Background2 = styled(Background)`
+  width: 100%;
+`;
 
 const Body = styled.div`
   width: 100%;
