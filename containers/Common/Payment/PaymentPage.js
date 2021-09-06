@@ -59,7 +59,25 @@ class PaymentPageContainer extends React.Component {
 
   // 결제 모듈 달 때까지 임시적으로 데이터 저장하는 함수
   PaymentComplete = () => {
-     
+    
+    // 예외처리
+    // 이름
+    if(Payment.Name == ""){
+      alert("이름을 입력해주세요")
+      return false
+    }
+    
+    // 전화번호
+    if(Payment.PhoneNumber[0] == "" || Payment.PhoneNumber[1] == "" || Payment.PhoneNumber[2] == ""){
+      alert("올바른 전화번호를 입력해주세요")
+      return false
+    }
+    // 배송 주소
+    if(Payment.Location == ""){
+      alert("주소를 입력해주세요")
+      return false
+    }
+
     const req = {
       data: {
         product_name: Payment.Name + "|" + Payment.Location + "|" + AutoEstimate.totalPeriod + "영업일" ,
@@ -181,6 +199,20 @@ class PaymentPageContainer extends React.Component {
                 <PaymentWayTitle>후불결제</PaymentWayTitle>
               </PaymentWay>
             </PaymentWayBox> */}
+            
+            <br/>
+            <InlineFlexDiv>
+              <FontSize20>서류 처리 등의 후불 결제가 필요하다면?</FontSize20>
+              <img src={img} />
+            </InlineFlexDiv>
+            <PaymentWayBox>
+              <PaymentWay
+                  onClick={() => this.PaymentComplete()}
+                >
+                <PaymentCheckImg />
+                <PaymentWayTitle>후불결제</PaymentWayTitle>
+              </PaymentWay>
+            </PaymentWayBox>
           </PaymentPageLeft>
 
           <PaymentPageRight>
