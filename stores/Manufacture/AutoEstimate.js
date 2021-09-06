@@ -123,7 +123,7 @@ class AutoEstimate {
           selectedMaterial : { id: 2, name: "철/스텐" },
           
           // 납기
-          period : Math.ceil(res.data.price/200000),
+          period : Math.ceil(res.data.price/200000) + 1,
 
           // 기타
           checked : true,
