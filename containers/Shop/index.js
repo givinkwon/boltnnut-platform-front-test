@@ -1,9 +1,9 @@
 import React from "react";
 
-// import BannerConatiner from "./Home/Banner";
+import BannerConatiner from "./Home/Banner";
 // import MobileSearchFilterBox from "./Mobile/MobileSearchFilterBox";
 
-// import ContentContainer from "./Home/Content";
+import ContentContainer from "./Home/Content";
 // import MobileContentContainer from "./Mobile/MobileContent";
 import { inject, observer } from "mobx-react";
 
@@ -21,10 +21,10 @@ class SearchConatiner extends React.Component {
         {this.props.width &&
           (this.props.width > 767.99 ? (
             <div>
-                {/* <> */}
-                  {/* <BannerConatiner />
+                <>
+                  <BannerConatiner />
                   <ContentContainer width={this.props.width} />
-                </> */}
+                </>
             </div>
           ) : (
             <>

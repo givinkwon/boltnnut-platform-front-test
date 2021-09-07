@@ -80,7 +80,10 @@ class PaymentPageContainer extends React.Component {
 
     const req = {
       data: {
-        product_name: Payment.Name + "|" + Payment.Location + "|" + AutoEstimate.totalPeriod + "영업일" ,
+        product_name: "AI 견적 결제",
+        client_name: Payment.Name,
+        location: Payment.Location,
+        period : AutoEstimate.totalPeriod + "영업일" ,
         product_price: Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000,
         count: AutoEstimate.total_quantity,
         phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
