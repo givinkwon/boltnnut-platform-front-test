@@ -16,7 +16,7 @@ class RequestMain extends React.Component {
       <Background style={{ backgroundColor: "#f6f6f6" }}>
         <Container>
           <Body>
-            <Header>확실한 의뢰 프로세스로 진행됩니다.</Header>
+            <Header>3단계 제조 프로세스로 진행됩니다.</Header>
             <StepBox>
               <img src={step1} />
               <img src={blueline} />
@@ -26,26 +26,26 @@ class RequestMain extends React.Component {
             </StepBox>
             <TextBox>
               <TextSubBox>
-                <Title>제조 문의</Title>
+                <Title>발주 요청</Title>
                 <Content>
-                  제조문의 시 볼트앤너트의 전문가가
+                  발주요청 시 볼트앤너트의 전문가가
                   <br />
-                  상담을 통해 내용 보완 후 제조사와 연결해드립니다.
+                  상담을 통해 당일 발주를 진행합니다.
                 </Content>
               </TextSubBox>
               <TextSubBox>
-                <Title>제조사와 직접 채팅</Title>
+                <Title>제조 발주 모니터링</Title>
                 <Content>
-                  연결된 제조사와 채팅을 통해
+                  발주 요청, 1차 제작, 제품 검수 등
                   <br />
-                  의뢰에 대한 소통을 진행합니다.
+                  모든 제조 진행사항을 보고드립니다.
                 </Content>
               </TextSubBox>
               <TextSubBox>
-                <Title>업체 확정</Title>
+                <Title>제품 납품</Title>
                 <Content>
-                  채팅 페이지 상단의 '업체 확정' <br />
-                  버튼을 클릭해 계약을 완료하세요.
+                  볼트앤너트 납품 프로세스를 통해 <br />
+                  납기일을 준수하여 납품합니다.
                 </Content>
               </TextSubBox>
             </TextBox>
@@ -80,38 +80,12 @@ const StepBox = styled.div`
   width: 700px;
   display: flex;
   justify-content: space-around;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width : 400px !important;
-    max-width : 400px !important;
-    > img {
-      width : 100px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-  }
-
-  @media (min-width: 1300px) {
-  }
 `;
 
 const TextBox = styled.div`
   display: flex;
   width: 870px;
   justify-content: space-around;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    max-width: 600px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-  }
-
-  @media (min-width: 1300px) {
-  }
 `;
 
 const TextSubBox = styled.div`
@@ -130,7 +104,6 @@ const Title = styled.span`
 `;
 
 const Content = styled.span`
-
   font-size: 17px;
   font-weight: normal;
   font-stretch: normal;
@@ -139,15 +112,4 @@ const Content = styled.span`
   letter-spacing: -0.43px;
   text-align: center;
   color: #767676;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-  }
-
-  @media (min-width: 1300px) {
-  }
 `;

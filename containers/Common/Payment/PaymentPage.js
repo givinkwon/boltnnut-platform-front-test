@@ -5,12 +5,16 @@ import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
+import AutoEstimate from "../../../stores/Manufacture/AutoEstimate";
+import Router from "next/router"
+import * as PaymentAPI from "axios/Common/Payment" 
+import Payment from "../../../stores/Common/Payment";
 
 const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
 const pass3 = "static/images/pass3.png";
 
-// @inject("Payment")
+@inject("Payment", "AutoEstimate")
 @observer
 class PaymentPageContainer extends React.Component {
   state = {
@@ -22,7 +26,7 @@ class PaymentPageContainer extends React.Component {
   };
 
   payButtonClick = () => {
-    // const { Payment } = this.props;
+    const { Payment } = this.props;
     var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
     let cellphone = `${this.state.defaultNum}-${this.state.middleNum}-${this.state.lastNum}`;
     console.log(cellphone);
@@ -32,21 +36,17 @@ class PaymentPageContainer extends React.Component {
     } else if (!this.state.checkbox) {
       return alert("구매진행 동의에 체크를 하셔야 결제가 진행됩니다.");
     }
-    // Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
-    // Payment.product_price = 10;
-    // Payment.setProjectName("MASDASCNASKLCNASKLCNL");
-    // Payment.setCountNumber(3);
-    // Payment.clientOrder("html5_inicis");
+    Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
+    Payment.payment_price = 10;
+    Payment.setProjectName("MASDASCNASKLCNASKLCNL");
+    Payment.setCountNumber(3);
+    Payment.clientOrder("html5_inicis");
   };
 
   modalHandler = () => {
     console.log("modalHandler");
     // const { Payment } = this.props;
     // Payment.modalActive = !Payment.modalActive;
-  };
-
-  paymentWayClick = (idx) => {
-    this.setState({ selectedIdx: idx });
   };
 
   checkboxHandler = () => {
@@ -57,11 +57,52 @@ class PaymentPageContainer extends React.Component {
     }
   };
 
+  // 결제 모듈 달 때까지 임시적으로 데이터 저장하는 함수
+  PaymentComplete = () => {
+    
+    // 예외처리
+    // 이름
+    if(Payment.Name == ""){
+      alert("이름을 입력해주세요")
+      return false
+    }
+    
+    // 전화번호
+    if(Payment.PhoneNumber[0] == "" || Payment.PhoneNumber[1] == "" || Payment.PhoneNumber[2] == ""){
+      alert("올바른 전화번호를 입력해주세요")
+      return false
+    }
+    // 배송 주소
+    if(Payment.Location == ""){
+      alert("주소를 입력해주세요")
+      return false
+    }
+
+    const req = {
+      data: {
+        product_name: Payment.Name + "|" + Payment.Location + "|" + AutoEstimate.totalPeriod + "영업일" ,
+        product_price: Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000,
+        count: AutoEstimate.total_quantity,
+        phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
+      },
+    };
+
+    console.log(req)
+    PaymentAPI.order(req)
+      .then((res) =>
+      { console.log(res);
+        Router.push("/payment/complete");
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  }
+
   render() {
-    const { Payment } = this.props;
+    const { Payment, AutoEstimate } = this.props;
 
     let activeHandler = (idx) => {
-      if (this.state.selectedIdx === idx) {
+      if (Payment.PaymentMethod === idx) {
         return true;
       } else {
         return false;
@@ -76,7 +117,7 @@ class PaymentPageContainer extends React.Component {
           )} */}
 
           <PaymentPageLeft>
-            <LeftHeader>결제 정보 입력</LeftHeader>
+            <LeftHeader>결제 정보 입력</LeftHeader>
             <OrderInfoBox>
               <OrderInfoTitle>주문자 정보</OrderInfoTitle>
             </OrderInfoBox>
@@ -89,9 +130,8 @@ class PaymentPageContainer extends React.Component {
               <InputComponent
                 class="Input"
                 placeholder="옵션을 선택해주세요."
-                onChange={() => {
-                  console.log("r");
-                }}
+                onChange={(e) => Payment.setName(e)}
+                value={Payment.Name}
               />
             </div>
 
@@ -101,28 +141,24 @@ class PaymentPageContainer extends React.Component {
             </InlineFlexDiv>
             <InlineFlexDiv style={{ marginTop: "10px", marginBottom: "26px" }}>
               <InputComponent
-                value={this.state.defaultNum}
+                placeholder={"010"}
+                value={Payment.PhoneNumber[0]}
                 width="90px"
-                onChange={(e) => {
-                  console.log(e);
-                  this.setState({ defaultNum: e });
-                }}
+                onChange={(e) => Payment.setPhoneNumber(e, 0)}
               />
               <PhoneNumDash />
               <InputComponent
+                value={Payment.PhoneNumber[1]}
                 placeholder={"1234"}
                 width="90px"
-                onChange={(e) => {
-                  this.setState({ middleNum: e });
-                }}
+                onChange={(e) => Payment.setPhoneNumber(e, 1)}
               />
               <PhoneNumDash />
               <InputComponent
+                value={Payment.PhoneNumber[2]}
                 placeholder={"5678"}
                 width="90px"
-                onChange={(e) => {
-                  this.setState({ lastNum: e });
-                }}
+                onChange={(e) => Payment.setPhoneNumber(e, 2)}
               />
             </InlineFlexDiv>
 
@@ -130,52 +166,50 @@ class PaymentPageContainer extends React.Component {
               <FontSize20>배송주소</FontSize20>
               <img src={img} />
             </InlineFlexDiv>
-            <InlineFlexDiv style={{ justifyContent: "space-between" }}>
-              <DeliveryAddressBox1>
-                {/* {this.props.Payment.zipCode} */}
-              </DeliveryAddressBox1>
-              <SearchBtn onClick={this.modalHandler}>주소검색</SearchBtn>
-            </InlineFlexDiv>
-            <DeliveryAddressBox2>
-              {/* {this.props.Payment.address} */}
-            </DeliveryAddressBox2>
-            {/* {this.props.Payment.address != "" && (
-              <div style={{ marginBottom: "26px" }}>
-                <InputComponent
-                  class="Input"
-                  placeholder="상세주소를 입력해 주세요"
-                  // value={Request.input_name}
-                  onChange={() => {
-                    console.log("r");
-                  }}
-                />
-              </div>
-            )} */}
+            <InputComponent
+              value={Payment.location}
+              placeholder={"정확한 주소를 입력해주세요."}
+              onChange={(e) => Payment.setLocation(e)}
+            />
 
-            <InlineFlexDiv>
+            {/* <InlineFlexDiv>
               <FontSize20>결제방법</FontSize20>
               <img src={img} />
             </InlineFlexDiv>
             <PaymentWayBox>
               <PaymentWay
-                onClick={() => this.paymentWayClick(1)}
+                onClick={() => Payment.setPaymentMethod(1)}
                 active={activeHandler(1)}
               >
                 <PaymentCheckImg src={passimg} active={activeHandler(1)} />
                 <PaymentWayTitle>신용카드</PaymentWayTitle>
               </PaymentWay>
               <PaymentWay
-                onClick={() => this.paymentWayClick(2)}
+                onClick={() => Payment.setPaymentMethod(2)}
                 active={activeHandler(2)}
               >
                 <PaymentCheckImg src={passimg} active={activeHandler(2)} />
                 <PaymentWayTitle>실시간 계좌이체</PaymentWayTitle>
               </PaymentWay>
               <PaymentWay
-                onClick={() => this.paymentWayClick(3)}
+                onClick={() => Payment.setPaymentMethod(3)}
                 active={activeHandler(3)}
               >
                 <PaymentCheckImg src={passimg} active={activeHandler(3)} />
+                <PaymentWayTitle>후불결제</PaymentWayTitle>
+              </PaymentWay>
+            </PaymentWayBox> */}
+            
+            <br/>
+            <InlineFlexDiv>
+              <FontSize20>서류 처리 등의 후불 결제가 필요하다면?</FontSize20>
+              <img src={img} />
+            </InlineFlexDiv>
+            <PaymentWayBox>
+              <PaymentWay
+                  onClick={() => this.PaymentComplete()}
+                >
+                <PaymentCheckImg />
                 <PaymentWayTitle>후불결제</PaymentWayTitle>
               </PaymentWay>
             </PaymentWayBox>
@@ -196,10 +230,10 @@ class PaymentPageContainer extends React.Component {
                   }}
                 >
                   <FontSize18 style={{ marginBottom: "20px" }}>
-                    생산 소요 시간
+                    생산 소요 시간
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    7일
+                    {AutoEstimate.totalPeriod} 영업일
                   </FontSize18>
                 </InlineFlexDiv>
 
@@ -211,7 +245,7 @@ class PaymentPageContainer extends React.Component {
                 >
                   <FontSize18>도착 예정일</FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    4.1(목)~4.3(토)
+                    생산 완료 후 1 영업일 이내
                   </FontSize18>
                 </InlineFlexDiv>
               </PaymentInfo1>
@@ -223,20 +257,20 @@ class PaymentPageContainer extends React.Component {
                   <FontSize18
                     style={{ color: "#767676", marginBottom: "20px" }}
                   >
-                    부품 갯수
+                    생산품 갯수
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    3개
+                    {AutoEstimate.total_quantity} 개
                   </FontSize18>
                 </InlineFlexDiv>
                 <InlineFlexDiv style={{ justifyContent: "space-between" }}>
                   <FontSize18
                     style={{ color: "#767676", marginBottom: "20px" }}
                   >
-                    부품 가격
+                    생산품 가격
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    3,513,000원
+                    {(Math.round(AutoEstimate.totalPrice/1000) * 1000).toLocaleString("ko-KR")} 원
                   </FontSize18>
                 </InlineFlexDiv>
                 <InlineFlexDiv
@@ -261,7 +295,7 @@ class PaymentPageContainer extends React.Component {
               >
                 <PaymentInfoText24>최종 결제가격</PaymentInfoText24>
                 <PaymentInfoText24 style={{ color: "#282c36" }}>
-                  3,518,000원
+                  {(Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000).toLocaleString("ko-KR")} 원
                 </PaymentInfoText24>
               </InlineFlexDiv>
             </PaymentInfoWrap>
@@ -313,8 +347,9 @@ class PaymentPageContainer extends React.Component {
               </PaymentInfoWrap>
             </PaymentInfo3>
 
-            <PaymentBtn onClick={this.payButtonClick}>
-              <PaymenBtnText24>결제하기</PaymenBtnText24>
+            {/* <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}> */}
+            <PaymentBtn onClick={() => this.PaymentComplete()}>
+              <PaymenBtnText24>발주 요청하기</PaymenBtnText24>
             </PaymentBtn>
           </PaymentPageRight>
         </PaymentPageDiv>

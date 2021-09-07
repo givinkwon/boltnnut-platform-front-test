@@ -419,7 +419,7 @@ class ManufacturerContentContainer extends React.Component {
             >
               <AiFontBox style={{ width: 114, height: 40 }}>
                 <Font14>
-                  CNC 자동 견적으로
+                  AI 견적으로
                   <br />
                   바로 발주하기
                 </Font14>

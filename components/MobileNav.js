@@ -176,6 +176,7 @@ class MobileNav extends React.Component {
                     <KSLink url={"search"} content={"제조사 찾기"} />
                   )}
                   <KSLink url={"magazine"} content={"제조 인사이트"} />
+                  <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
                   {Auth.logged_in_user && (
                     <KSLink url={"chatting"} content={"채팅하기"} />
@@ -183,8 +184,8 @@ class MobileNav extends React.Component {
                 </ModalContent>
               </>
               <ModalContent2>
-                <KSLink url={"faq"} content={"자주찾는 질문"} />
                 <KSLink url={"term/policy"} content={"이용약관"} />
+                <br/>
                 <KSLink url={"term/personal"} content={"개인정보 처리 방침"} />
               </ModalContent2>
               {Auth.logged_in_user ? (
@@ -295,7 +296,7 @@ const ModalContent = styled.button`
   border: none;
   background: none;
   width: 100%;
-  height: 158px;
+  height: 100px;
   // height: 110px;
   display: flex;
   border-bottom: solid 1px #e1e2e4;

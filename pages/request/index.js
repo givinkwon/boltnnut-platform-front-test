@@ -91,7 +91,7 @@ class Request extends React.Component {
           />
           <meta property="og:url" content="https://www.boltnnut.com/request" />
           {/* Title */}
-          <title>볼트앤너트|견적받기</title>
+          <title>볼트앤너트|제조문의</title>
         </Head>
         <>
           {width && width > 767.98 && <Nav style={{ zIndex: "1000" }} />}

@@ -57,11 +57,37 @@ class AutoEstimate {
   
   // CNC 일 때 소재
   @observable CNCMaterialOption= [
-    { id: 2, name: "철/스텐" },
-    { id: 2, name: "탄소강/냉연강/열연강" },
-    { id: 2, name: "티타늄/갈바륨" },
-    { id: 2, name: "비철금속"},
-    { id: 2, name: "주철/주석"}
+    { id: 0, name: "알루미늄 6061" },
+    { id: 0, name: "알루미늄 6063" },
+    { id: 0, name: "알루미늄 2024" },
+    { id: 0, name: "알루미늄 7050"},
+    { id: 0, name: "알루미늄 7075"},
+    { id: 2, name: "구리 101" },
+    { id: 2, name: "구리 260(황동)" },
+    { id: 2, name: "구리 C110" },
+    { id: 2, name: "구리 C360(황동)"},
+    { id: 2, name: "구리 C932(청동)"},
+    { id: 5, name: "플라스틱(ABS/PP/PC/PVC)" },
+    { id: 3, name: "아크릴" },
+    { id: 3, name: "아세틸/나일론" },
+    { id: 6, name: "스테인리스 15-5"},
+    { id: 6, name: "스테인리스 17-4"},
+    { id: 6, name: "스테인리스 303" },
+    { id: 6, name: "스테인리스 304" },
+    { id: 6, name: "스테인리스 316" },
+    { id: 6, name: "스테인리스 410"},
+    { id: 6, name: "스테인리스 416"},
+    { id: 6, name: "스테인리스 420"},
+    { id: 6, name: "스테인리스 440"},
+    { id: 1, name: "철 1018"},
+    { id: 1, name: "철 1215"},
+    { id: 1, name: "철 4130"},
+    { id: 1, name: "철 4140"},
+    { id: 1, name: "철 4140PH"},
+    { id: 1, name: "철 4340"},
+    { id: 1, name: "철 A36"},
+    { id: 1, name: "티타늄"},
+    { id: 6, name: "기타 소재"},
   ] 
 
   
@@ -131,6 +157,8 @@ class AutoEstimate {
         // 가격 리로딩
         this.countPrice();
 
+        // 개수 초기화
+        this.checkQuantity(0,1,0);
 
       })
       .catch((e) => {
@@ -174,8 +202,8 @@ class AutoEstimate {
           this.CNCPrice = 0;
           this.MoldPrice = res.data.mold_price;
           this.InjectionPrice = res.data.injection_price;
-          // 납기일 => 90일
-          this.fileList[fileIdx].period = 90;
+          // 납기일 => 60영업일
+          this.fileList[fileIdx].period = 60;
         }
 
         // CNC 가격
@@ -228,7 +256,7 @@ class AutoEstimate {
   @observable totalCNCPrice = 0 // 전체 CNC 가격
 
   // 전체 납기 관련
-  @observable totalPeriod = 0;
+  @observable totalPeriod = 1;
 
   // 체크에 따라 총 주문 개수를 세는 함수
   @action checkQuantity = (idx = 0, current_value = 0, checked = 0) => {
@@ -251,7 +279,7 @@ class AutoEstimate {
     // 전체 수량 세기
     this.total_quantity = 0
     // 전체 납기 세기
-    this.totalPeriod = 0
+    this.totalPeriod = 1
 
     for (let i = 0; i < this.fileList.length; i++) {
       // 도면 개수 전체 합한 것
@@ -277,7 +305,7 @@ class AutoEstimate {
     // 전체 수량 세기
     this.total_quantity = 0
     // 전체 납기 세기
-    this.totalPeriod = 0
+    this.totalPeriod = 1
 
     for (let i = 0; i < this.fileList.length; i++) {
       this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
@@ -296,7 +324,8 @@ class AutoEstimate {
     this.totalInjectionPrice = 0;
     this.totalCNCPrice = 0;
     this.totalPrice = 0;
-    this.totalPeriod = 0;
+    // 납기일 초기화
+    this.totalPeriod = 1;
 
     this.fileList.map((data, idx) => {
         // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산

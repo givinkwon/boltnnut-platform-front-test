@@ -24,29 +24,27 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 };
 
 
-@inject("Request", "Project")
+@inject("Request")
 @observer
 class RequestMain extends React.Component {
   render() {
-    const { Request, Project } = this.props;
-    Project.getProject()
+
 
     return (
-      <Background2>
+      <Background>
         <Container>
           <Body>
             <Header>
-              제조업체가 필요한 모든 순간,
+              AI 견적 알고리즘으로
               <br />
-              볼트앤너트가 함께 합니다.
+              1초만에 견적내고, 바로 납품받기 
             </Header>
             <RequestCount>
-            <CountFunc index={0} projCount={Project.project_count}/>
+            <CountFunc index={0} projCount={5285}/>
               <span style={{ fontSize: 25, letterSpacing: -0.63 }}> 건</span>
             </RequestCount>
-            <Text>볼트앤너트에 등록된 제조 문의 건 수</Text>
-            <Button onClick={() => (Request.requestTabIdx = 1)}>
-              지금 무료로 제조 문의
+            <Text>볼트앤너트에 등록된 견적 문의 건 수</Text>
+            <Button>
               <img src={arrow} style={{ marginLeft: 10 }} />
             </Button>
             <BackImg>
@@ -54,16 +52,12 @@ class RequestMain extends React.Component {
             </BackImg>
           </Body>
         </Container>
-      </Background2>
+      </Background>
     );
   }
 }
 
 export default RequestMain;
-
-const Background2 = styled(Background)`
-  width: 100%;
-`;
 
 const Body = styled.div`
   width: 100%;
@@ -104,6 +98,12 @@ const Text = styled.span`
 `;
 
 const Button = styled(Buttonv1)`
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent;
+  border: none;
+
+  color: #FFFFFF;
   width: 263px !important;
   height: 58px !important;
   font-size: 20px;
