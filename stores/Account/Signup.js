@@ -89,22 +89,6 @@ class Signup {
 
   // 회원가입 함수 시작
   @action signup = async (container = "signup") => {
-    // google ads script
-    function gtag_report_conversion(url) {
-      var callback = function () {
-        if (typeof url != "undefined") {
-          window.location = url;
-        }
-      };
-      gtag("event", "conversion", {
-        send_to: "AW-711089872/k5kNCKKVk_ECENC9idMC",
-        value: 1.0,
-        currency: "KRW",
-        event_callback: callback,
-      });
-      return false;
-    }
-
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -169,7 +153,6 @@ class Signup {
       };
       AccountAPI.clientSignup(req)
         .then((res) => {
-          gtag_report_conversion();
           setTimeout(() => {
             this.loading = false;
             console.log(res);
@@ -218,7 +201,6 @@ class Signup {
       };
       AccountAPI.partnerSignup(req)
         .then((res) => {
-          gtag_report_conversion();
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");

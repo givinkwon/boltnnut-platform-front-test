@@ -284,7 +284,6 @@ class AboutUsContainer extends Component {
         <MultipleInput
           file={true}
           onChange={(e) => {
-            console.log("qweqwe", e);
             Category.setPartnerPortfolioFile(e);
           }}
         />
