@@ -167,6 +167,31 @@ class AutoEstimate {
       });
   }
 
+  // 도면 및 발주 요청 파일 저장
+  @action create_dwg = () => {
+
+    // 데이터 생성
+    var formData = new FormData();
+
+    // 도면 및 발주 요청 파일 리스트
+    for (var i = 0; i < this.request_file_set.length; i++) {
+      formData.append(`dwg`, this.request_file_set[i]);
+    }
+
+    const req = {
+      data: formData,
+    };
+
+    AutoEstimateAPI.create_dwg(req)
+      .then((res) => {
+          console.log(res)
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
+
   // 견적 카드에서 카테고리를 변경할 때 사용하는 함수
   @action ReloadAutoEstimate = (fileIdx) => {
   // 데이터 생성
@@ -341,6 +366,26 @@ class AutoEstimate {
 
     //console.log(this.totalMoldPrice, this.totalInjectionPrice, this.totalCNCPrice, this.totalPrice)
   }
+
+  // 자동견적에 넣는 발주 요청 파일
+  @observable request_file_set = [];
+
+  // 의뢰 파일 추가하기
+  @action set_file_set = (obj) => {
+    if (typeof obj == "object") {
+      this.request_file_set.push(obj);
+      console.log("file uploaded");
+    } else {
+      this.request_file = null;
+    }
+  };
+
+  // 의뢰 파일 삭제하기
+  @action delete_File = (deleteIdx) => {
+    // 파일 삭제하기
+    this.request_file_set.splice(deleteIdx, 1);
+    console.log(deleteIdx, this.request_file_set);
+  };
 
   @action reset = async () => {
     this.fileList = [];

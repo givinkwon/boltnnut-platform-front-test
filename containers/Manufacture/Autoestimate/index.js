@@ -27,6 +27,8 @@ const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.svg";
 const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
+const clip = "./static/images/request/clip.svg";
+const addfile = "./static/images/request/addfile.svg";
 
 
 // selectbox 디자인
@@ -212,6 +214,54 @@ class AutoestimateContainer extends React.Component {
     );
   }
   // 파일 업로드 && 드랍 함수 끝
+
+  
+  // 도면 및 관련파일 & 저장
+  DWGDropzone = () => {
+    const { AutoEstimate } = this.props;
+    const dropHandler = (files) => {
+      // 파일 값 저장
+      files.forEach((file, fileIdx) => {
+          AutoEstimate.set_file_set(file)
+        
+        })
+    };
+      // 파일 업로드 && 드랍 함수 시작
+      const onDrop = useCallback((acceptedFiles) => {
+          dropHandler(acceptedFiles);
+        // 끝
+      }, []);
+
+      const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+      });
+
+      return (
+        <>
+        <div {...getRootProps()}>
+            <input {...getInputProps()} />
+              <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
+                  <DropZoneContainer>
+                        {/*파일이 있을 때 */}
+                        {AutoEstimate.checkFileUpload && (
+                          <div>
+                            <span>
+                              <div></div>
+                              <div></div>
+                            </span>
+                            <p>
+                              도면(DWG) 및 관련 파일을 이곳에 드래그 또는{" "}
+                              <span>파일찾기</span>
+                            </p>
+                          </div>
+                        )}
+                  </DropZoneContainer>
+            </InputBox>
+        </div>
+        </>
+      );
+      }
+  // 도면 및 관련파일 && 드랍 함수 끝
 
   render () {
     const { AutoEstimate } = this.props;
@@ -425,6 +475,7 @@ class AutoestimateContainer extends React.Component {
                 <span>전체 삭제</span>
               </EntireDelete>
               <div>* 금형사출의 경우 최소수량 100개 이상만 가능합니다.</div>
+              
             </NoticeBox>     
 
           {/* 파일 업로드 창 */}
@@ -484,7 +535,57 @@ class AutoestimateContainer extends React.Component {
                 </span>
               </PriceData>
             </Price>
-            <Button onClick={() => {Router.push('/payment')}}>결제하기</Button>  
+
+            {/* 파일 업로드 창 */}
+            <HeaderBox>
+              <Header>
+                {AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}
+              </Header>
+            {AutoEstimate.request_file_set.map((item, idx) => {
+                  return (
+                    <>
+                      <AddFileList>
+                        <span
+                          onClick={() => {
+                            if (AutoEstimate.request_file_set.length > 0) {
+                              AutoEstimate.request_file_set.splice(idx, 1);
+                            }
+                          }}
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <span>
+                            <img
+                              src={clip}
+                              style={{
+                                marginLeft: 17,
+                                marginRight: 17,
+                              }}
+                            ></img>
+                            <span>{item.name}</span>
+                            <DeleteFile
+                              onClick={() => AutoEstimate.delete_File(idx)}
+                              src={deleteButtonImg}
+                              style={{
+                                marginLeft: 17,
+                              }}
+                            />
+                          </span>
+                        </span>
+                      </AddFileList>
+                    </>
+                  );
+                })}
+            </HeaderBox>
+            <ContentBox checkFileUpload={AutoEstimate.checkFileUpload} >
+              <this.DWGDropzone/>
+            </ContentBox>
+            {/* 자동 견적 소개 창*/}
+
+            <Button onClick={() => {
+              // 도면 및 발주요청 파일 저장
+              AutoEstimate.create_dwg()    
+              Router.push('/payment')
+              }}>결제하기</Button>  
             </>
           }
         </Container>
@@ -1445,4 +1546,38 @@ const Layer = styled.div`
     align-items: center;
     height: 100vh;
   }
+`;
+
+
+const AddFileList = styled.div`
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  object-fit: contain;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #1e2222;
+  margin-bottom: 8px;
+`;
+
+const DeleteFile = styled.img`
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background-color: #e1e2e4;
+  align-self: center;
+  line-height: 40px;
+  letter-spacing: -0.45px;
+  margin-right: 29px;
+  vertical-align: middle;
+  cursor: pointer;
 `;

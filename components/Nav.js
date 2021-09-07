@@ -209,6 +209,15 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
+                      <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={""} content={"공장 직거래"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 공장 직거래 */}
+                      </NavLink>
+
                       <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
                           <Font16>
@@ -217,6 +226,8 @@ class Nav extends React.Component {
                         </RouterWrapper>
                         {/* 제조 매거진 */}
                       </NavLink>
+
+                      
                     </ul>
                   ) : (
                     /* partner로 로그인 */
@@ -272,6 +283,15 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
+                      <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={""} content={"공장 직거래"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 공장 직거래 */}
+                      </NavLink>
+
                       <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
                           <Font16>
@@ -280,6 +300,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                         {/* 제조 매거진 */}
                       </NavLink>
+
                     </ul>
                   )
                 ) : (
@@ -347,6 +368,16 @@ class Nav extends React.Component {
                       </RouterWrapper>
                     </NavLink>
 
+                    <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={""} content={"공장 직거래"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 공장 직거래 */}
+                      </NavLink>
+
+
                     <NavLink active={url.indexOf("magazine") > -1}>
                       <RouterWrapper>
                         <KSLink
@@ -358,6 +389,8 @@ class Nav extends React.Component {
                       </RouterWrapper>
                       {/* 제조 매거진 */}
                     </NavLink>
+
+                  
                   </ul>
                 )}
               </Menu>
