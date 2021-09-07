@@ -7,7 +7,6 @@ import Background from "components/Background";
 
 import Buttonv1 from "components/Buttonv1";
 import UseScrollCount from "components/AnimationCount"
-import Background2 from "components/Background"
 
 const arrow = "static/images/request/arrow.svg";
 const background = "static/images/request/background.png";
@@ -61,10 +60,6 @@ class RequestMain extends React.Component {
 }
 
 export default RequestMain;
-
-const Background = styled.div`
-  width: 100%;
-`;
 
 const Body = styled.div`
   width: 100%;

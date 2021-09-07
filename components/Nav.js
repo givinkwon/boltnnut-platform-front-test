@@ -218,14 +218,14 @@ class Nav extends React.Component {
                         {/* 공장 직거래 */}
                       </NavLink>
 
-                      <NavLink active={url.indexOf("magazine") > -1}>
+                      {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={"magazine"} content={"제조 매거진"} />
                           </Font16>
-                        </RouterWrapper>
+                        </RouterWrapper> */}
                         {/* 제조 매거진 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                       
                     </ul>
@@ -292,14 +292,14 @@ class Nav extends React.Component {
                         {/* 공장 직거래 */}
                       </NavLink>
 
-                      <NavLink active={url.indexOf("magazine") > -1}>
+                      {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={"magazine"} content={"제조 매거진"} />
                           </Font16>
-                        </RouterWrapper>
+                        </RouterWrapper> */}
                         {/* 제조 매거진 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                     </ul>
                   )
@@ -378,7 +378,7 @@ class Nav extends React.Component {
                       </NavLink>
 
 
-                    <NavLink active={url.indexOf("magazine") > -1}>
+                    {/* <NavLink active={url.indexOf("magazine") > -1}>
                       <RouterWrapper>
                         <KSLink
                           url={"magazine"}
@@ -386,9 +386,9 @@ class Nav extends React.Component {
                             return <Font16>제조 매거진</Font16>;
                           }}
                         />
-                      </RouterWrapper>
+                      </RouterWrapper> */}
                       {/* 제조 매거진 */}
-                    </NavLink>
+                    {/* </NavLink> */}
 
                   
                   </ul>
