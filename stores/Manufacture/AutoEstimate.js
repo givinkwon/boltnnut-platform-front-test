@@ -232,7 +232,7 @@ class AutoEstimate {
     } 
     // 금형 사출을 선택한 경우 => 소재 변경해주기
     else {
-      this.fileList[idx].selectedMaterial = { id: 0, name: "플라스틱" };
+      this.fileList[idx].selectedMaterial = { id: 0, name: "플라스틱" },
       console.log(this.fileList[idx].selectedMaterial)
     }
 
