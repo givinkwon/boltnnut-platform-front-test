@@ -41,8 +41,14 @@ class MultipleInputComponent extends React.Component {
 
       let reader = new FileReader();
       reader.onload = () => {
-        fileURLs[i] = reader.result;
-        Category.imgUrl = [...fileURLs];
+        const fileType = file.name.split(".")[1].toLowerCase();
+
+        if (Category.possiblePartnerPortfolioType.indexOf(fileType) > -1) {
+          fileURLs[i] = reader.result;
+          Category.imgUrl = [...fileURLs];
+        } else {
+          console.log("파일확장자 불일치");
+        }
       };
       reader.readAsDataURL(file);
     }

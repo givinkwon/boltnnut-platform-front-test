@@ -281,7 +281,10 @@ class SignupContent extends React.Component {
             })}
           </AgreeContainer>
 
-          <SubmitButton onClick={() => Signup.signupSubmit()}>
+          <SubmitButton
+            id="signup_ successful"
+            onClick={() => Signup.signupSubmit()}
+          >
             <ButtonText>가입하기</ButtonText>
           </SubmitButton>
         </Container>

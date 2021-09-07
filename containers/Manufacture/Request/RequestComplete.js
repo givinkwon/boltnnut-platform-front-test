@@ -24,6 +24,12 @@ class RequestComplete extends React.Component {
     Request.loadingFlag = false;
   }
 
+  componentWillUnmount() {
+    const { Request } = this.props;
+
+    Request.requestTabIdx = 0;
+  }
+
   render() {
     return (
       <>

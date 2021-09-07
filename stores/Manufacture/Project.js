@@ -141,7 +141,6 @@ class Project {
 
   // 카드를 클릭했을 때 호출하는 함수
   @action pushToDetail = async (id) => {
-    console.log("qweqweqwe", id);
     // 비로그인 시에 경고창 띄우고 종료
     if (!Auth.logged_in_user) {
       alert(

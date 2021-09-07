@@ -173,7 +173,7 @@ class RequestContent extends Component {
       <>
         <Container>
           <RequestHeader>
-            <img src={reqeustlogo} style={{ widht: 45, height: 45 }}></img>
+            <img src={reqeustlogo} style={{ widht: 45, height: 45 }} />
             <RequestTitle>
               <span style={{ color: "#0933b3" }}>프로젝트 정보</span>를
               입력해주세요.
@@ -663,6 +663,7 @@ class RequestContent extends Component {
 
               <RequestBtn>
                 <RequestButton
+                  id="request_submit_button"
                   onClick={() => {
                     Request.requestSubmit();
                   }}

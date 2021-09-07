@@ -115,7 +115,6 @@ class AboutUsContainer extends Component {
 
   render() {
     const { Category, Partner } = this.props;
-    console.log("asdasd", Category.partnerPortfolioArray);
     return (
       <>
         <Font18
@@ -285,7 +284,6 @@ class AboutUsContainer extends Component {
         <MultipleInput
           file={true}
           onChange={(e) => {
-            console.log("qweqwe", e);
             Category.setPartnerPortfolioFile(e);
           }}
         />
