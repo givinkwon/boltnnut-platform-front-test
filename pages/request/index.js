@@ -12,20 +12,15 @@ import * as AccountAPI from "axios/Account/Account";
 import RequestConatiner from "containers/Manufacture/Request";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject(
-  "Request",
-  "Partner",
-  "Auth",
-  "Schedule",
-)
+@inject("Request", "Partner", "Auth", "Schedule")
 @observer
 class Request extends React.Component {
   state = {};
 
   componentDidMount() {
-    const {Partner, Request} = this.props;
+    const { Partner, Request } = this.props;
     this.props.Partner.init();
-    console.log(Request.selected_partner)
+    console.log(Request.selected_partner);
 
     this.props.Schedule.init();
 
