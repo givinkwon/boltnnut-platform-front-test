@@ -96,7 +96,7 @@ class AutoEstimate {
   @observable selectedManufacture = { id: 1, name: "절삭가공" };
 
 
-  @observable selectedMaterial = { id: 0, name: "알루미늄 6061" },
+  @observable selectedMaterial = { id: 0, name: "알루미늄 6061" };
 
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
