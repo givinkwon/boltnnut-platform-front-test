@@ -96,7 +96,7 @@ class AutoEstimate {
   @observable selectedManufacture = { id: 1, name: "절삭가공" };
 
 
-  @observable selectedMaterial = { id: 2, name: "철/스텐" };
+  @observable selectedMaterial = { id: 0, name: "알루미늄 6061" };
 
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
@@ -146,7 +146,7 @@ class AutoEstimate {
 
           // 공정 선택 관련
           selectedManufacture: { id: 1, name: "절삭가공" },
-          selectedMaterial : { id: 2, name: "철/스텐" },
+          selectedMaterial : { id: 0, name: "알루미늄 6061" },
           
           // 납기
           period : Math.ceil(res.data.price/200000),
@@ -160,6 +160,31 @@ class AutoEstimate {
         // 개수 초기화
         this.checkQuantity(0,1,0);
 
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
+
+  // 도면 및 발주 요청 파일 저장
+  @action create_dwg = () => {
+
+    // 데이터 생성
+    var formData = new FormData();
+
+    // 도면 및 발주 요청 파일 리스트
+    for (var i = 0; i < this.request_file_set.length; i++) {
+      formData.append(`dwg`, this.request_file_set[i]);
+    }
+
+    const req = {
+      data: formData,
+    };
+
+    AutoEstimateAPI.create_dwg(req)
+      .then((res) => {
+          console.log(res)
       })
       .catch((e) => {
         console.log(e);
@@ -227,12 +252,12 @@ class AutoEstimate {
     
     // 절삭가공을 선택한 경우 => 소재 변경해주기
     if(this.fileList[idx].selectedManufacture.id == 1){
-      this.fileList[idx].selectedMaterial = { id: 2, name: "철/스텐" };
+      this.fileList[idx].selectedMaterial = { id: 0, name: "알루미늄 6061" },
       console.log(this.fileList[idx].selectedMaterial)
     } 
     // 금형 사출을 선택한 경우 => 소재 변경해주기
     else {
-      this.fileList[idx].selectedMaterial = { id: 0, name: "플라스틱" };
+      this.fileList[idx].selectedMaterial = { id: 0, name: "플라스틱" },
       console.log(this.fileList[idx].selectedMaterial)
     }
 
@@ -341,6 +366,26 @@ class AutoEstimate {
 
     //console.log(this.totalMoldPrice, this.totalInjectionPrice, this.totalCNCPrice, this.totalPrice)
   }
+
+  // 자동견적에 넣는 발주 요청 파일
+  @observable request_file_set = [];
+
+  // 의뢰 파일 추가하기
+  @action set_file_set = (obj) => {
+    if (typeof obj == "object") {
+      this.request_file_set.push(obj);
+      console.log("file uploaded");
+    } else {
+      this.request_file = null;
+    }
+  };
+
+  // 의뢰 파일 삭제하기
+  @action delete_File = (deleteIdx) => {
+    // 파일 삭제하기
+    this.request_file_set.splice(deleteIdx, 1);
+    console.log(deleteIdx, this.request_file_set);
+  };
 
   @action reset = async () => {
     this.fileList = [];

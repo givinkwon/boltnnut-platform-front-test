@@ -174,7 +174,7 @@ class ManufacturerContentContainer extends React.Component {
                   </Font22>
 
                   <Font16>
-                    30분 이내로 볼트앤너트 전문가가 유선으로 상담을
+                    볼트앤너트 전문가를 배정하여 유선으로 상담을
                     도와드립니다.
                   </Font16>
                 </ResultBannerInnerBox>

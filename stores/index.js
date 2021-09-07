@@ -17,7 +17,8 @@ import Category from "./Manufacture/Category";
 import Cookie from "./Manufacture/Cookie";
 import Signup from "./Account/Signup";
 import Payment from "./Common/Payment";
-import AutoEstimate from "./Manufacture/AutoEstimate"
+import AutoEstimate from "./Manufacture/AutoEstimate";
+import Shop from "./Shop/Shop";
 
 export default {
   Loading,
@@ -40,4 +41,5 @@ export default {
   Cookie,
   Signup,
   Payment,
+  Shop,
 };
