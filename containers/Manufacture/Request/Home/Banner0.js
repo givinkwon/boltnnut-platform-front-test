@@ -7,6 +7,7 @@ import Background from "components/Background";
 
 import Buttonv1 from "components/Buttonv1";
 import UseScrollCount from "components/AnimationCount"
+import Background2 from "components/Background"
 
 const arrow = "static/images/request/arrow.svg";
 const background = "static/images/request/background.png";
@@ -32,7 +33,7 @@ class RequestMain extends React.Component {
     Project.getProject()
 
     return (
-      <Background2>
+      <Background>
         <Container>
           <Body>
             <Header>
@@ -54,14 +55,14 @@ class RequestMain extends React.Component {
             </BackImg>
           </Body>
         </Container>
-      </Background2>
+      </Background>
     );
   }
 }
 
 export default RequestMain;
 
-const Background2 = styled(Background)`
+const Background = styled.div`
   width: 100%;
 `;
 

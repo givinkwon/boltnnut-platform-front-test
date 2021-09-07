@@ -96,7 +96,7 @@ class AutoEstimate {
   @observable selectedManufacture = { id: 1, name: "절삭가공" };
 
 
-  @observable selectedMaterial = { id: 2, name: "철/스텐" };
+  @observable selectedMaterial = { id: 0, name: "알루미늄 6061" },
 
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
@@ -146,7 +146,7 @@ class AutoEstimate {
 
           // 공정 선택 관련
           selectedManufacture: { id: 1, name: "절삭가공" },
-          selectedMaterial : { id: 2, name: "철/스텐" },
+          selectedMaterial : { id: 0, name: "알루미늄 6061" },
           
           // 납기
           period : Math.ceil(res.data.price/200000),
@@ -227,7 +227,7 @@ class AutoEstimate {
     
     // 절삭가공을 선택한 경우 => 소재 변경해주기
     if(this.fileList[idx].selectedManufacture.id == 1){
-      this.fileList[idx].selectedMaterial = { id: 2, name: "철/스텐" };
+      this.fileList[idx].selectedMaterial = { id: 0, name: "알루미늄 6061" },
       console.log(this.fileList[idx].selectedMaterial)
     } 
     // 금형 사출을 선택한 경우 => 소재 변경해주기
