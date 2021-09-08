@@ -246,9 +246,9 @@ class PaymentPageContainer extends React.Component {
                     marginBottom: "30px",
                   }}
                 >
-                  <FontSize18>도착 예정일</FontSize18>
+                  <FontSize18>출하 예정일</FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    생산 완료 후 1 영업일 이내
+                    생산 완료 후 1 영업일 이내(검수 요청 완료 후)
                   </FontSize18>
                 </InlineFlexDiv>
               </PaymentInfo1>
