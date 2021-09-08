@@ -6,6 +6,8 @@ import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import Button from "components/Button";
 import * as Content from "components/Content";
+import Sample from "../../../stores/Shop/Sample";
+import RequestModal from "./RequestModal";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
@@ -14,7 +16,7 @@ const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 
-@inject("Partner", "Auth", "Common", "Search")
+@inject("Partner", "Auth", "Common", "Search", "Sample")
 @observer
 class PartnerCard extends React.Component {
   state = {
@@ -201,7 +203,7 @@ class PartnerCard extends React.Component {
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx, Auth } = this.props;
+    const { data, width, Partner, categoryData, idx, Auth, Sample } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
     const loggedInPartnerId =
@@ -210,6 +212,7 @@ class PartnerCard extends React.Component {
 
     return (
       <>
+        <RequestModal width = {width}/>
         {width > 767.98 && data ? (
           <>
             <Card
@@ -269,7 +272,7 @@ class PartnerCard extends React.Component {
                 <Introduce style={{textAlign : "right"}}>
                     3000개 이상 : 38,000원
                 </Introduce>
-                <ButtonBox>
+                <ButtonBox onClick = {() => Sample.openModal()} >
                   <ButtonComponent
                       style={{ width: "200px", height: "42px" }}
                       backgroundColor={"#0933b3"}

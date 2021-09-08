@@ -239,15 +239,6 @@ class ManufacturerContentContainer extends React.Component {
                       return (
                         <Background>
                           <div
-                            onClick={async () => {
-                              if (Auth.logged_in_client) {
-                                await Project.getProject(
-                                  "allproject",
-                                  Auth.logged_in_client.id
-                                );
-                              }
-                              Partner.pushToDetail(item, idx);
-                            }}
                             style={{ width: "996px" }}
                           >
                             <PartnerCard
