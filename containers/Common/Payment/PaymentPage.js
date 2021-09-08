@@ -287,6 +287,14 @@ class PaymentPageContainer extends React.Component {
                     5,000원
                   </FontSize18>
                 </InlineFlexDiv>
+                <InlineFlexDiv
+                  style={{
+                    justifyContent: "space-between",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <FontSize18 style={{ color: "#767676" }}>* 일반 택배로 배달되지 않는 일부 가공품은 용달 비용이 추가됩니다.</FontSize18>
+                </InlineFlexDiv>
               </PaymentInfo2>
 
               <InlineFlexDiv
