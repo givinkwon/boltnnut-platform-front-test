@@ -110,7 +110,7 @@ class AutoEstimate {
     // 공정 id
     formData.append("process", 1);
     // 재료 id
-    formData.append("material", 2);
+    formData.append("material", 0);
 
     const req = {
       data: formData,
