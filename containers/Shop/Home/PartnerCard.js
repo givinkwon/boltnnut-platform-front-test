@@ -4,6 +4,8 @@ import { inject, observer } from "mobx-react";
 import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
+import Button from "components/Button";
+import * as Content from "components/Content";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
@@ -247,98 +249,41 @@ class PartnerCard extends React.Component {
               <Main>
                 <Title>
                   <div>
-                    <Name>{data && data.name}</Name>
-                    {data && data.identification_state === true ? (
-                      <Certification>
-                        <img src="/static/icon/certification_img.svg"></img>
-                        <div>신원 인증</div>
-                      </Certification>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  {Auth.logged_in_user && (
-                    <BookMark>
-                      <img
-                        src={
-                          Partner.check_bookmark[idx] === idx
-                            ? bookmarkBlueImg
-                            : bookmarkImg
-                        }
-                        onClick={async (e) => {
-                          if (!loggedInPartnerId && clientId) {
-                            e.stopPropagation();
-                            Partner.BookmarkHandler(idx);
-                            Partner.checkedBookmark(clientId, partnerId, idx);
-                          }
-                        }}
-                      ></img>
-                    </BookMark>
-                  )}
-                </Title>
-
-                <Introduce>
-                  {data.history && data.history.length > 35
+                    <Name>{data.history && data.history.length > 35
                     ? data.history.slice(0, 35) + "..."
                     : data.history}
+                    </Name>
+                  </div>
+                </Title>
+
+                <Introduce style={{ color: "#555963", marginBottom : 20}}>
+                    {data && data.name}
                 </Introduce>
 
-                {this.state.business.length > 0 ? (
-                  <div style={{ display: "flex", marginTop: 11 }}>
-                    {this.state.business.map((item, idx) => (
-                      <Hashtag active={this.state.active}>#{item}</Hashtag>
-                    ))}
-                  </div>
-                ) : (
-                  <BlankHashtag active={this.state.active} />
-                )}
-
-                <Bottom>
-                  <BottomBox>
-                    {this.state.total_review === -1 ? (
-                      <></>
-                    ) : (
-                      <Review>
-                        <img src={star} style={{ marginRight: 5 }}></img>
-                        <Score
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div style={{ fontWeight: "bold" }}>
-                            {this.state.total_review}
-                          </div>
-                          /5.0
-                        </Score>
-                      </Review>
-                    )}
-                    <Location>
-                      <img src={location} />
-                      <div style={{ marginLeft: 10 }}>
-                        {(data && data.region === null) || data.region === "nan"
-                          ? this.state.city
-                          : data.region}
-                      </div>
-                    </Location>
-                  </BottomBox>
-                  <BottomBox>
-                    <ViewCount>
-                      <img src={viewcount} style={{ marginRight: 5 }} />
-                      {data && data.view <= 1 ? (
-                        <div>낮음</div>
-                      ) : 1 <= data.view && data.view <= 4 ? (
-                        <div>보통</div>
-                      ) : data.view >= 5 ? (
-                        <div>높음</div>
-                      ) : null}
-                    </ViewCount>
-                    <BookmarkCount>
-                      <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>{this.state.totalPartnerBookmark}</div>
-                    </BookmarkCount>
-                  </BottomBox>
-                </Bottom>
+                <Introduce style={{textAlign : "right"}}>
+                    단품 가격 : 45,000원
+                </Introduce>
+                <Introduce style={{textAlign : "right"}}>
+                    500개 이상 : 41,000원
+                </Introduce>
+                <Introduce style={{textAlign : "right"}}>
+                    3000개 이상 : 38,000원
+                </Introduce>
+                <ButtonBox>
+                  <ButtonComponent
+                      style={{ width: "200px", height: "42px" }}
+                      backgroundColor={"#0933b3"}
+                      borderRadius={5}
+                    >
+                      <MainCategoryFont
+                        color={"#ffffff"}
+                        fontWeight={500}
+                      >
+                        샘플|제품정보 요청
+                      </MainCategoryFont>
+                  </ButtonComponent>
+                </ButtonBox>
+                
               </Main>
             </Card>
           </>
@@ -627,3 +572,41 @@ const Item = styled.div`
     object-position: center top;
   }
 `;
+
+
+const ButtonComponent = styled(Button)`
+  width: 80px;
+  height: 42px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 65px !important;
+    height: 30px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 73px !important;
+    height: 36px !important;
+  }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 20%;
+  padding-right: 20px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 15%;
+  }
+`;
+
+const MainCategoryFont = styled(Content.FontSize15)`
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "normal")};
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: ${(props) => (props.color ? props.color : "#282c36")};
+  word-break: break-word;
+}`

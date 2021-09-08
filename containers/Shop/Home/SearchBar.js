@@ -24,7 +24,6 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner } = this.props;
 
-    await Router.push("/search");
     // console.log("click");
 
     Partner.loadingFlag = true;
@@ -85,7 +84,7 @@ class SearchBarConatiner extends React.Component {
     window.addEventListener("scroll", this.scrollEventHandler);
 
     this.props.Auth.checkLogin();
-    
+    this.search();
   }
 
   // 검색창에 검색을 할 때 text를 observable에 저장
@@ -121,11 +120,11 @@ class SearchBarConatiner extends React.Component {
               scrollActive={Partner.scrollActive}
             >
               <input
-                placeholder="원하는 분야의 제조업체나 제품을 검색해보세요."
+                placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) =>
                   (e.target.placeholder =
-                    "원하는 분야의 제조업체나 제품을 검색해보세요.")
+                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
                 }
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
