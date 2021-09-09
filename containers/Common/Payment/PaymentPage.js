@@ -80,7 +80,10 @@ class PaymentPageContainer extends React.Component {
 
     const req = {
       data: {
-        product_name: Payment.Name + "|" + Payment.Location + "|" + AutoEstimate.totalPeriod + "영업일" ,
+        product_name: "AI 견적 결제",
+        client_name: Payment.Name,
+        location: Payment.Location,
+        period : AutoEstimate.totalPeriod + "영업일" ,
         product_price: Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000,
         count: AutoEstimate.total_quantity,
         phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
@@ -243,9 +246,9 @@ class PaymentPageContainer extends React.Component {
                     marginBottom: "30px",
                   }}
                 >
-                  <FontSize18>도착 예정일</FontSize18>
+                  <FontSize18>출하 예정일</FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    생산 완료 후 1 영업일 이내
+                    생산 완료 후 1 영업일 이내(검수 요청 완료 후)
                   </FontSize18>
                 </InlineFlexDiv>
               </PaymentInfo1>
@@ -284,6 +287,14 @@ class PaymentPageContainer extends React.Component {
                     5,000원
                   </FontSize18>
                 </InlineFlexDiv>
+                <InlineFlexDiv
+                  style={{
+                    justifyContent: "space-between",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <FontSize18 style={{ color: "#767676" }}>* 일반 택배로 배달되지 않는 일부 가공품은 용달 비용이 추가됩니다.</FontSize18>
+                </InlineFlexDiv>
               </PaymentInfo2>
 
               <InlineFlexDiv
@@ -293,9 +304,9 @@ class PaymentPageContainer extends React.Component {
                   marginBottom: "26px",
                 }}
               >
-                <PaymentInfoText24>최종 결제가격</PaymentInfoText24>
+                <PaymentInfoText24>최종 결제가격(VAT 포함)</PaymentInfoText24>
                 <PaymentInfoText24 style={{ color: "#282c36" }}>
-                  {(Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000).toLocaleString("ko-KR")} 원
+                  {(Math.round((AutoEstimate.totalPrice/1000) * 1000 + 5000) * 1.1).toLocaleString("ko-KR")} 원
                 </PaymentInfoText24>
               </InlineFlexDiv>
             </PaymentInfoWrap>

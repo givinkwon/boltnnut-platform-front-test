@@ -398,7 +398,7 @@ class Signup {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            // MyDataLayerPush({ event: "SignUpComplete_Client" });
+            MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -443,7 +443,7 @@ class Signup {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            // MyDataLayerPush({ event: "SignUpComplete_Partner" });
+            MyDataLayerPush({ event: "SignUpComplete_Partner" });
             // 자동 로그인
             Auth.email = this.email;
             Auth.password = this.password;

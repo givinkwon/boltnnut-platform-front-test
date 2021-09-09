@@ -524,11 +524,10 @@ class AutoestimateContainer extends React.Component {
               <PriceData>
                 <span>
                   {(Math.round(AutoEstimate.totalPrice/1000) * 1000).toLocaleString("ko-KR")}
-                  <span> 원</span>
+                  <span> 원( VAT 미포함,</span>
                   
                 </span>
                 <span>
-                  (
                   {AutoEstimate.totalPeriod}
                   <span> 영업일)</span>
                   

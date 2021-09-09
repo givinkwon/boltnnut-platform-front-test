@@ -19,6 +19,7 @@ import Signup from "./Account/Signup";
 import Payment from "./Common/Payment";
 import AutoEstimate from "./Manufacture/AutoEstimate";
 import Shop from "./Shop/Shop";
+import Sample from "./Shop/Sample";
 
 export default {
   Loading,
@@ -42,4 +43,5 @@ export default {
   Signup,
   Payment,
   Shop,
+  Sample,
 };

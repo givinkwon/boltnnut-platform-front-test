@@ -110,7 +110,7 @@ class AutoEstimate {
     // 공정 id
     formData.append("process", 1);
     // 재료 id
-    formData.append("material", 2);
+    formData.append("material", 0);
 
     const req = {
       data: formData,
@@ -149,7 +149,7 @@ class AutoEstimate {
           selectedMaterial : { id: 0, name: "알루미늄 6061" },
           
           // 납기
-          period : Math.ceil(res.data.price/200000),
+          period : Math.ceil(res.data.price/250000),
 
           // 기타
           checked : true,
