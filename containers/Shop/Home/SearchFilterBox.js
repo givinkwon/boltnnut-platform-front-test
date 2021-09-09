@@ -21,11 +21,12 @@ class SearchFilterBox extends React.Component {
     list: false,
     filter_city_active: false,
     filter_category_active: false,
-    type: "",
+    type: "category",
     category_arrow: false,
     classify_arrow: false,
     location_arrow: false,
     develop_material_arrow: false,
+    
   };
 
   dropdownHandler = (flag) => {
@@ -182,7 +183,7 @@ class SearchFilterBox extends React.Component {
           <FilterModalContainer type={this.state.type}></FilterModalContainer>
         )}
 
-        <SelectedCategoryContainer>
+        {/* <SelectedCategoryContainer>
           {Category.category_selected_tagbox.length > 0 &&
             Category.category_selected_tagbox.map((v, idx) => (
               <SelectedCategoryBox>
@@ -200,7 +201,7 @@ class SearchFilterBox extends React.Component {
                 />
               </SelectedCategoryBox>
             ))}
-        </SelectedCategoryContainer>
+        </SelectedCategoryContainer> */}
 
         {/* 이미지 검색 리스트 */}
         <ImgSearchModalContainer active={Partner.imgSearchModalActive}>

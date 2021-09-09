@@ -395,7 +395,7 @@ class FilterModalContainer extends React.Component {
                 })}
             </SubInnerBox>
           </SubCategoryBox>
-          <ButtonBox>
+          {/* <ButtonBox>
             <ButtonComponent
               style={{ width: "80px", height: "42px", marginRight: "16px" }}
               backgroundColor={"#ffffff"}
@@ -418,7 +418,7 @@ class FilterModalContainer extends React.Component {
                 적용
               </MainCategoryFont>
             </ButtonComponent>
-          </ButtonBox>
+          </ButtonBox> */}
         </div>
       </ModalBox>
     );
