@@ -35,7 +35,7 @@ class RequestModal extends React.Component {
                   </header>
                   <main>
                     <ContainerV2>
-                      <Email>
+                      <Title>
                         <span>이메일</span>
                         <div>
                           <input
@@ -45,8 +45,8 @@ class RequestModal extends React.Component {
                             }}
                           />
                         </div>
-                      </Email>
-                      <Email>
+                      </Title>
+                      <Title>
                         <span>전화번호</span>
                         <div>
                           <input
@@ -56,8 +56,8 @@ class RequestModal extends React.Component {
                             }}
                           />
                         </div>
-                      </Email>
-                      <Email>
+                      </Title>
+                      <Title>
                         <span>회사명</span>
                         <div>
                           <input
@@ -67,7 +67,7 @@ class RequestModal extends React.Component {
                             }}
                           />
                         </div>
-                      </Email>
+                      </Title>
                       <Title>
                         <span>내용</span>
                         <div>
@@ -283,7 +283,7 @@ const ModalBox = styled.div`
   z-index: 101;
   background-color: white;
   height: 60%;
-  width: 50%;
+  width: 50% !important;
   box-shadow: 0 0 1px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
   padding-bottom: 48px;
