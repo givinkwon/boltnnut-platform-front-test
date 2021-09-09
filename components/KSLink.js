@@ -1,43 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import * as Content from "./Content";
 import Router from "next/router";
-@inject("Common", "Project")
+
+@inject("Common", "Project", "Auth", "Signup")
 @observer
 class KSLink extends React.Component {
-
-
   render() {
-    const { FontContent, step_index, Project } = this.props;
+    const { FontContent, step_index, Project, Auth, Signup } = this.props;
 
     return (
       <>
-        {/* <a href={this.props.Common.makeUrl(this.props.url)}> */}
-        <div
+        <Container
           onClick={() => {
-            
-              Project.set_step_index(step_index)
-              
-              Router.push(`/${this.props.url}`);
-          }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
+            Project.set_step_index(step_index);
+            Router.push(`/${this.props.url}`);
           }}
         >
-          {/* <Tttt></Tttt> */}
-
           {FontContent && <FontContent />}
           {this.props.content}
           <Logo src={this.props.logoImg} />
-          <Image src={this.props.Image} />
-        </div>
-
-        {/* </a> */}
+          <img src={this.props.Image} />
+        </Container>
       </>
     );
   }
@@ -45,10 +29,16 @@ class KSLink extends React.Component {
 
 export default KSLink;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+
 const Logo = styled.img`
   cursor: pointer;
   width: auto;
   height: auto;
 `;
-
-const Image = styled.img``;

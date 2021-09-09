@@ -14,6 +14,20 @@ class Partner {
     //makeObservable(this);
   }
 
+  // 파트너 디테일 카드 탭바 상태
+  @observable tabIdx = 1;
+  @action tabClick = (idx) => {
+    this.tabIdx = idx;
+  };
+
+  @action tabStateHandler = (idx) => {
+    if (this.tabIdx === idx) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   // 상세 주소
   @observable detailRegion = "";
   // 비즈니스 관련 카테고리를 가지고 있는 지

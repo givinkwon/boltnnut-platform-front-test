@@ -10,29 +10,18 @@ let dataList = [];
 class ProposalCard extends React.Component {
   componentDidMount = async () => {
     const { Partner, data, idx, categoryData } = this.props;
-    console.log(data);
-    console.log(data.name);
-    console.log(dataList);
-    console.log(dataList[2]);
-    console.log(dataList.length);
-
-    console.log(idx);
-    console.log(categoryData);
-
     await Partner.getBusinessCategory(data.id);
-
-    console.log(toJS(Partner.hashBusinessCategory));
   };
+
   render() {
     const { data, width } = this.props;
-    console.log(data);
-    console.log(data.name);
-    console.log(dataList);
+
     dataList.push(data);
+
     return (
       <>
         {width > 767.98 ? (
-          <Card>
+          <Card height={this.props.height}>
             {data && data.portfolio_set.length !== 0 && (
               <ImgBox>
                 <img src={data.portfolio_set[0].img_portfolio} />
@@ -41,11 +30,10 @@ class ProposalCard extends React.Component {
             <Content>
               <Name>{data.name}</Name>
               <Info>{data.history}</Info>
-              {/* <Category>4</Category> */}
             </Content>
           </Card>
         ) : (
-          <Card>
+          <Card height={this.props.height}>
             {data && data.portfolio_set.length !== 0 && (
               <ImgBox>
                 <img src={data.portfolio_set[0].img_portfolio} />
@@ -55,7 +43,6 @@ class ProposalCard extends React.Component {
               <Content>
                 <Name>{data.name}</Name>
                 <Info>{data.history}</Info>
-                {/* <Category>4</Category> */}
               </Content>
             </Description>
           </Card>
@@ -73,7 +60,7 @@ const Card = styled.div`
   border: 1px solid #ffffff;
   box-shadow: 4px 5px 20px 0px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
-  height: 390px;
+  height: ${(props) => (props.height === 309 ? "309px" : "390px")};
   overflow: hidden;
   align-items: self-start;
   width: 100%;

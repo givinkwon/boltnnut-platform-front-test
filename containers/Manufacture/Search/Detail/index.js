@@ -2,7 +2,7 @@ import React from "react";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
-// import NewDetailCardContainer from "./NewDetailCard";
+import NewDetailCardContainer from "./NewDetailCard";
 import MobileDetailCardContainer from "./Mobile/MobileDetailCard";
 import ReviewContainer from "./Review/ReviewPage";
 import CompleteContainer from "components/Complete";
@@ -16,7 +16,6 @@ import Cookies from "js-cookie";
 class SearchDetailConatiner extends React.Component {
   componentDidMount() {
     const { Auth, Partner, Cookie } = this.props;
-    console.log(this.props.width);
     // 쿠기 값 리스트에 저장
     if (Partner.partner_detail_list[0].item) {
       Cookie.add_partner_view(Partner.partner_detail_list[0].item.id);
@@ -39,17 +38,13 @@ class SearchDetailConatiner extends React.Component {
     console.log(width);
     return (
       <>
-        {/* {Partner.reviewActiveIndex == 0 && (
-          <DetailCardContainer width={this.props.width} />
-        )} */}
-
         {Partner.reviewActiveIndex == 0 &&
           (width && width > 767.98 ? (
             <DetailCardContainer width={this.props.width} />
           ) : (
             // <NewDetailCardContainer width={this.props.width} />
-            // <div></div>
-            <MobileDetailCardContainer width={this.props.width} />
+            // <MobileDetailCardContainer width={this.props.width} />
+            <div></div>
           ))}
         <Background>
           <Containerv1>

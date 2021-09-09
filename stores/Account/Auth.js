@@ -489,10 +489,9 @@ class Auth {
         setTimeout(() => {
           this.loading = false;
           // 파트너 회원가입인 경우 register로
-          if (container == "partnersignup"){
+          if (container == "partnersignup") {
             Router.push("/partnerregister");
-          }
-          else if (this.previous_url == "" || this.previous_url == null) {
+          } else if (this.previous_url == "" || this.previous_url == null) {
             Router.push("/");
           } else {
             // this.makeUrl(this.previous_url);
@@ -549,6 +548,7 @@ class Auth {
                 myStore.logged_in_user = res.data.data.User;
 
                 if (myStore.logged_in_user.type === 0) {
+                  this.logged_in_client = res.data.data.Client[0];
                   myStore.logged_in_client = res.data.data.Client[0];
                   // if (!myStore.logged_in_client) {
                   //   alert(
@@ -558,6 +558,7 @@ class Auth {
                   // }
                   console.log(myStore.logged_in_client);
                 } else if (myStore.logged_in_user.type === 1) {
+                  this.logged_in_partner = res.data.data.Partner[0];
                   myStore.logged_in_partner = res.data.data.Partner[0];
                   console.log(res.data.data.Partner[0]);
                   console.log(myStore.logged_in_partner);
