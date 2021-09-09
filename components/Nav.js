@@ -903,7 +903,7 @@ const RouterWrapper = styled.div`
   /* padding-top: 20px;
   padding-bottom: 20px; */
   height: 100%;
-  padding-right: 40px;
+  padding-right: 34px;
   /* padding-left: 40px; */
   /* margin-right: 40px; */
 `;
@@ -1082,7 +1082,7 @@ const NavLink = styled.li`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     width: 100%;
     justify-content: center;
@@ -1100,12 +1100,12 @@ const NavLink = styled.li`
   @media (min-width: 1300px) and (max-width: 1599.98px) {
     /* padding-left: 17px;
     padding-right: 15px; */
-    font-size: 16px;
+    font-size: 14px;
   }
   @media (min-width: 1600px) {
     /* padding-left: 19px;
     padding-right: 19px; */
-    font-size: 16px;
+    font-size: 14px;
   }
   ${(props) =>
     props.first &&
