@@ -24,7 +24,7 @@ class RequestModal extends React.Component {
                   &times;{" "}
                 </button>
                 <aside>
-                  <img src={request_modal_img} />
+                  {width > 1800 && <img src={request_modal_img} />}
                 </aside>
                 <section>
                   <header>
@@ -183,6 +183,7 @@ const ContainerV2 = styled.div`
   width: 95%;
 
   padding-left: 48px;
+  padding-right: 48px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
     width: 100%;
@@ -345,6 +346,7 @@ const ModalBox = styled.div`
       // font-weight: 600;
     }
     > footer {
+      margin-top: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -438,7 +440,6 @@ const ModalBox = styled.div`
     width: 95%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 95%;
   }
   @media (min-width: 1300px) {
   }

@@ -6,8 +6,8 @@ import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import Button from "components/Button";
 import * as Content from "components/Content";
-import Sample from "../../../stores/Shop/Sample";
-import RequestModal from "../../../pages/chatting/RequestModal";
+import Sample from "stores/Shop/Sample";
+import RequestModal from "./RequestModal";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
