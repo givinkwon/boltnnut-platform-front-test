@@ -2,6 +2,14 @@ import axios from "axios";
 import { ROOT_URL } from "../index";
 import * as StringUtils from "../../utils/string";
 
+export function search_shop(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/shop/`,
+    params: req.data,
+  });
+}
+
 export function search(req) {
   return axios({
     method: "GET",
@@ -252,6 +260,17 @@ export function getRandomPartner(req) {
     method: "POST",
     url: `${ROOT_URL}/partner/category/`,
     data: req.data ? req.data : null,
+  });
+}
+
+export function getPartners_shop(req) {
+  // console.log(req.params);
+
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/shop/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
   });
 }
 

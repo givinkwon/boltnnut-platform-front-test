@@ -82,10 +82,10 @@ class FilterModalContainer extends React.Component {
       // 현재 Active True의 상태이면
       if (Category.categoryActiveHandler(idx, type)) {
         console.log("remove selected");
-        Category.remove_selected(type, idx, "search", data);
+        Category.remove_selected(type, idx, "shop", data);
       } else {
         console.log("add selected");
-        Category.add_selected(type, idx, data);
+        Category.add_selected(type, idx, data, "shop");
       }
       // this.setState({ subSelectIdx: idx });
     }

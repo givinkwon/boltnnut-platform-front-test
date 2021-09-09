@@ -236,6 +236,7 @@ const MobileContainer = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 30px;
 
       //   text-align: center;
       width: 100%;
@@ -277,13 +278,13 @@ const ModalBox = styled.div`
   // display: none;
   position: fixed;
   top: 20%;
-  right: 25%;
+  right: 30%;
   bottom: 0;
-  left: 25%;
+  left: 30%;
   z-index: 101;
   background-color: white;
   height: 60%;
-  width: 50%;
+  width: 40%;
   box-shadow: 0 0 1px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
   padding-bottom: 48px;
@@ -348,6 +349,7 @@ const ModalBox = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 30px;
 
       //   text-align: center;
       width: 100%;

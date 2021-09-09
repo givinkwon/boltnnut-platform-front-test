@@ -24,8 +24,6 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner } = this.props;
 
-    // console.log("click");
-
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -36,7 +34,7 @@ class SearchBarConatiner extends React.Component {
 
     Partner.subButtonActive = true;
 
-    await Partner.search();
+    await Partner.search("shop");
 
     // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {

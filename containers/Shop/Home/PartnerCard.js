@@ -7,7 +7,7 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 import Button from "components/Button";
 import * as Content from "components/Content";
 import Sample from "../../../stores/Shop/Sample";
-import RequestModal from "./RequestModal";
+import RequestModal from "../../../pages/chatting/RequestModal";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
@@ -264,13 +264,13 @@ class PartnerCard extends React.Component {
                 </Introduce>
 
                 <Introduce style={{textAlign : "right"}}>
-                    단품 가격 : 45,000원
+                    단품 가격 : {Math.round(data.shop.price1 * 0.95 / 10 ) * 10}원
                 </Introduce>
                 <Introduce style={{textAlign : "right"}}>
-                    500개 이상 : 41,000원
+                    {data.shop.moq2} : {Math.round(data.shop.price1 * 0.85 / 10) * 10}원
                 </Introduce>
                 <Introduce style={{textAlign : "right"}}>
-                    3000개 이상 : 38,000원
+                    {data.shop.moq3} : {Math.round(data.shop.price1 * 0.7 / 10 )  * 10}원
                 </Introduce>
                 <ButtonBox onClick = {() => Sample.openModal()} >
                   <ButtonComponent

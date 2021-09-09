@@ -1000,7 +1000,7 @@ class Partner {
     this.search();
   };
 
-  @action search = async () => {
+  @action search = async (container = "search") => {
     const name = this.search_text;
     const develop = this.search_develop;
     const region = this.search_region;
@@ -1033,17 +1033,33 @@ class Partner {
       },
     };
 
-    await PartnerAPI.search(req)
+    // shop에서 받았을 때
+    if(container == "shop"){
+      await PartnerAPI.search_shop(req)
       .then((res) => {
         this.partner_list = res.data.results;
         this.partner_count = res.data.count;
         this.partner_next = res.data.next;
+        console.log(res)
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
+    }
 
+    else{
+      await PartnerAPI.search(req)
+        .then((res) => {
+          this.partner_list = res.data.results;
+          this.partner_count = res.data.count;
+          this.partner_next = res.data.next;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    }
     // 검색 시 텍스트 저장
     if (this.search_text) {
       this.saveSearchText(this.search_text);
@@ -1850,6 +1866,38 @@ class Partner {
       req.params.material = this.material_string;
     }
 
+    // shop에서 온 경우
+    if(pre_page === "shop"){
+        // console.log(req.params);
+      PartnerAPI.getPartners_shop(req)
+      .then(async (res) => {
+        // console.log(res);
+        this.partner_list = [];
+        this.category_ary = [];
+        this.category_name_ary = [];
+        this.temp_category_name_ary;
+        this.category_count = 0;
+
+        this.partner_list = await res.data.results;
+        this.originPartnerList = this.partner_list;
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        await this.resetDevCategory();
+
+        //this.category_ary = res.data.results.category_middle;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+        await this.partner_list.map(async (item, idx) => {
+          await this.category_ary.push(item.category_middle);
+          this.category_count += 1;
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    }
+
+    else{
     // console.log(req.params);
     PartnerAPI.getPartners(req)
       .then(async (res) => {
@@ -1877,6 +1925,8 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    }
+
     this.check_loading_develop = true;
 
     this.filterLoading = true;
