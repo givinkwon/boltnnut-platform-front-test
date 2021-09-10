@@ -21,19 +21,37 @@ const ADbackground = "/static/images/Home/ADbackground.svg";
 
 import * as AccountAPI from "axios/Account/Account";
 
+
 @inject("Home", "Loading", "Auth", "Category")
 @observer
 class Home extends React.Component {
+
   state = {
     width: null,
     home_index: 1,
   };
+
+  // 새로고침 방지
+  _handleKeyDown = (event) => {
+    switch( event.keyCode ) {
+        case 116:
+            event.preventDefault();
+            break;
+        default: 
+            break;
+    }
+  };
+
   async componentDidMount() {
+
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
     console.log("home didmount");
     this.props.Auth.previous_url = "";
+
+    // 새로고침 방지
+    document.addEventListener("keydown", this._handleKeyDown);
 
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -95,9 +113,12 @@ class Home extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+
+  
   render() {
     const { Loading, Home } = this.props;
     const { width, home_index } = this.state;
+
     return (
       <>
         <Head>
