@@ -32,9 +32,7 @@ class NewDetailCardContainer extends React.Component {
 
       Partner.selectedIntroductionFile = item.file;
 
-      const fileType = item.file
-        .split(".")
-        [item.file.split(".").length - 1].toLowerCase();
+      const fileType = item.file.split(".")[item.file.split(".").length - 1].toLowerCase();
       Partner.selectedIntroductionFileType = fileType;
 
       Partner.partnerReviewList = [];
@@ -46,9 +44,7 @@ class NewDetailCardContainer extends React.Component {
       await Partner.getCityName(Partner.partner_detail_list[0].item.city);
 
       Partner.business_name = [];
-      toJS(Partner.partner_detail_list[0].item.business).map(
-        async (item) => await Partner.getBusinessName(item)
-      );
+      toJS(Partner.partner_detail_list[0].item.business).map(async (item) => await Partner.getBusinessName(item));
 
       Partner.questionList = [];
       await Partner.getQuestion(Partner.partner_detail_list[0].item.id);
@@ -76,10 +72,7 @@ class NewDetailCardContainer extends React.Component {
 
     // 더 보여줄 포트폴리오가 없는 경우 더보기 버튼 삭제
     if (this.state.portfolioSetMoreState === true) {
-      if (
-        Partner.partner_detail_list[0].item.portfolio_set.length <
-        this.state.portfolioToShow
-      ) {
+      if (Partner.partner_detail_list[0].item.portfolio_set.length < this.state.portfolioToShow) {
         this.setState({ ...this.state, portfolioSetMoreState: false });
       }
       // 최대 100개 까지만 보여준다.
@@ -117,10 +110,7 @@ class NewDetailCardContainer extends React.Component {
       this.setState({ portfolioToShow: 100 });
     }
 
-    if (
-      this.state.portfolioSetMoreState &&
-      this.state.portfolioToShow === 100
-    ) {
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 100) {
       this.setState({ portfolioToShow: 120 });
     }
   }
@@ -150,8 +140,7 @@ class NewDetailCardContainer extends React.Component {
 
     if (Partner.partner_detail_list[0].item) {
       region =
-        Partner.partner_detail_list[0].item.region === null ||
-        Partner.partner_detail_list[0].item.region === "nan"
+        Partner.partner_detail_list[0].item.region === null || Partner.partner_detail_list[0].item.region === "nan"
           ? Partner.city_name
           : Partner.partner_detail_list[0].item.region;
     }
@@ -164,25 +153,17 @@ class NewDetailCardContainer extends React.Component {
             {/* 포트폴리오 */}
             <PortfolioSection>
               <MainContainer>
-                {Partner.partner_detail_list[0].item.portfolio_set
-                  .slice(0, this.state.portfolioToShow)
-                  .map((v, idx) => (
-                    <>
-                      {console.log(Partner.partner_detail_list[0])}
-                      <PortfolioImgBox key={idx} src={v.img_portfolio} />
-                    </>
-                  ))}
+                {Partner.partner_detail_list[0].item.portfolio_set.slice(0, this.state.portfolioToShow).map((v, idx) => (
+                  <>
+                    {console.log(Partner.partner_detail_list[0])}
+                    <PortfolioImgBox key={idx} src={v.img_portfolio} />
+                  </>
+                ))}
               </MainContainer>
 
-              <MoreBtn
-                active={this.state.portfolioSetMoreState}
-                onClick={() => this.portfolioToShowHandler()}
-              >
+              <MoreBtn active={this.state.portfolioSetMoreState} onClick={() => this.portfolioToShowHandler()}>
                 포트폴리오 더보기
-                <img
-                  src="/static/images/partner/moredata.svg"
-                  style={{ marginLeft: 12, paddingBottom: 2 }}
-                />
+                <img src="/static/images/partner/moredata.svg" style={{ marginLeft: 12, paddingBottom: 2 }} />
               </MoreBtn>
             </PortfolioSection>
 
@@ -195,10 +176,7 @@ class NewDetailCardContainer extends React.Component {
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <img
-                    src="/static/images/partner/blueline.svg"
-                    style={{ width: 28, height: 4 }}
-                  />
+                  <img src="/static/images/partner/blueline.svg" style={{ width: 28, height: 4 }} />
 
                   <InnerBox>
                     <Font18>비슷한 업체 더보기</Font18>
@@ -213,14 +191,8 @@ class NewDetailCardContainer extends React.Component {
                   }}
                 >
                   <Font16 style={{ marginRight: 24 }}>1/2</Font16>
-                  <img
-                    src="/static/images/partner/prev.svg"
-                    style={{ cursor: "pointer" }}
-                  />
-                  <img
-                    src="/static/images/partner/next.svg"
-                    style={{ cursor: "pointer" }}
-                  />
+                  <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
+                  <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
                 </div>
               </InnerBox>
 
@@ -245,13 +217,9 @@ class NewDetailCardContainer extends React.Component {
                             <div
                               onClick={(e) => {
                                 Partner.viewerLoading = 0;
-                                Partner.recentPartnerId =
-                                  Partner.partner_detail_list[0].item.id;
+                                Partner.recentPartnerId = Partner.partner_detail_list[0].item.id;
 
-                                this.pushToDetail(
-                                  Partner.partner_list[item],
-                                  item
-                                );
+                                this.pushToDetail(Partner.partner_list[item], item);
                               }}
                               style={{
                                 width: 225,
@@ -277,12 +245,8 @@ class NewDetailCardContainer extends React.Component {
                               onClick={(e) => {
                                 e.stopPropagation();
                                 Partner.viewerLoading = 0;
-                                Partner.recentPartnerId =
-                                  Partner.partner_detail_list[0].item.id;
-                                this.pushToDetail(
-                                  Partner.partner_list[item],
-                                  item
-                                );
+                                Partner.recentPartnerId = Partner.partner_detail_list[0].item.id;
+                                this.pushToDetail(Partner.partner_list[item], item);
                               }}
                               style={{
                                 width: 225,
@@ -309,125 +273,65 @@ class NewDetailCardContainer extends React.Component {
             {/* 탭바 */}
             <TabBarSection>
               <InnerBox>
-                <Tab
-                  onClick={() => Partner.tabClick(1)}
-                  active={Partner.tabStateHandler(1)}
-                >
+                <Tab onClick={() => Partner.tabClick(1)} active={Partner.tabStateHandler(1)}>
                   기본 정보
                 </Tab>
-                <Tab
-                  onClick={() => Partner.tabClick(2)}
-                  active={Partner.tabStateHandler(2)}
-                >
+                <Tab onClick={() => Partner.tabClick(2)} active={Partner.tabStateHandler(2)}>
                   후기
                 </Tab>
-                <Tab
-                  onClick={() => Partner.tabClick(3)}
-                  active={Partner.tabStateHandler(3)}
-                >
+                <Tab onClick={() => Partner.tabClick(3)} active={Partner.tabStateHandler(3)}>
                   문의
                 </Tab>
               </InnerBox>
 
               <Font24 style={{ marginTop: 40 }}>기본 정보</Font24>
-              <Font16 style={{ marginTop: 24 }}>
-                {Partner.partner_detail_list[0].item.info_company}
-              </Font16>
+              <Font16 style={{ marginTop: 24 }}>{Partner.partner_detail_list[0].item.info_company}</Font16>
 
               <BoundaryLine style={{ margin: "20px 0px 20px 0px" }} />
 
               <CompanyInfoContainer>
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    대표자
-                  </Font16>
-                  <Font16 style={{ color: "#414550" }}>
-                    {Partner.partner_detail_list[0].item.CEO
-                      ? Partner.partner_detail_list[0].item.CEO
-                      : "-"}
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>대표자</Font16>
+                  <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.CEO ? Partner.partner_detail_list[0].item.CEO : "-"}</Font16>
                 </CompanyInfoBox>
 
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    지역
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>지역</Font16>
                   <Font16 style={{ color: "#414550" }}>
-                    {Partner.partner_detail_list[0].item.city
-                      ? Partner.partner_detail_list[0].item.city.maincategory
-                      : "-"}
+                    {Partner.partner_detail_list[0].item.city ? Partner.partner_detail_list[0].item.city.maincategory : "-"}
                   </Font16>
                 </CompanyInfoBox>
               </CompanyInfoContainer>
 
               <CompanyInfoContainer>
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    사업 유형
-                  </Font16>
-                  <Font16 style={{ color: "#414550" }}>
-                    제작/생산(api요청)
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>사업 유형</Font16>
+                  <Font16 style={{ color: "#414550" }}>제작/생산(api요청)</Font16>
                 </CompanyInfoBox>
 
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    직원 수
-                  </Font16>
-                  <Font16 style={{ color: "#414550" }}>
-                    {Partner.partner_detail_list[0].item.staff
-                      ? Partner.partner_detail_list[0].item.staff
-                      : "-"}
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>직원 수</Font16>
+                  <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.staff ? Partner.partner_detail_list[0].item.staff : "-"}</Font16>
                 </CompanyInfoBox>
               </CompanyInfoContainer>
 
               <CompanyInfoContainer>
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    총 매출액
-                  </Font16>
-                  <Font16 style={{ color: "#414550" }}>
-                    50~100억(api요청)
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>총 매출액</Font16>
+                  <Font16 style={{ color: "#414550" }}>50~100억(api요청)</Font16>
                 </CompanyInfoBox>
 
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    설립연도
-                  </Font16>
-                  <Font16 style={{ color: "#414550" }}>
-                    {Partner.partner_detail_list[0].item.year
-                      ? Partner.partner_detail_list[0].item.year
-                      : "-"}
-                    년
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>설립연도</Font16>
+                  <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.year ? Partner.partner_detail_list[0].item.year : "-"}년</Font16>
                 </CompanyInfoBox>
               </CompanyInfoContainer>
 
               <CompanyInfoContainer>
                 <CompanyInfoBox>
-                  <Font16
-                    style={{ color: "#282c36", width: 60, fontWeight: "bold" }}
-                  >
-                    인증(2)
-                  </Font16>
+                  <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>인증(2)</Font16>
                   <Font16 style={{ color: "#414550" }}>
-                    {Partner.partner_detail_list[0].item.Certification
-                      ? Partner.partner_detail_list[0].item.Certification
-                      : "-"}
+                    {Partner.partner_detail_list[0].item.Certification ? Partner.partner_detail_list[0].item.Certification : "-"}
                   </Font16>
                 </CompanyInfoBox>
               </CompanyInfoContainer>
@@ -509,17 +413,28 @@ class NewDetailCardContainer extends React.Component {
 
               <RequestBox>
                 <Font16 style={{ color: "#282c36" }}>
-                  이 제조사가 마음에 드시나요?{" "}
-                  <RequestBtn>[견적 요청하기]</RequestBtn> 버튼을 눌러 지금 바로
-                  프로젝트를 시작해보세요!
+                  이 제조사가 마음에 드시나요? <RequestBtn>[견적 요청하기]</RequestBtn> 버튼을 눌러 지금 바로 프로젝트를 시작해보세요!
                 </Font16>
 
                 <div style={{ marginLeft: 64 }}>X</div>
               </RequestBox>
 
               <QnAWriteBoxContainer>
-                <QnAWriteBox />
-                <div style={{ border: "1px solid #c6c7cc" }} />
+                <QnAWriteBox placeholder="궁금하신 내용이 있으신가요?" />
+
+                <InnerBox
+                  style={{
+                    justifyContent: "space-between",
+                    marginTop: 8,
+                  }}
+                >
+                  <InnerBox style={{ alignItems: "center" }}>
+                    <input type="checkbox" />
+                    <Font12>비밀글</Font12>
+                  </InnerBox>
+
+                  <QnAWriteBtn>작성하기</QnAWriteBtn>
+                </InnerBox>
               </QnAWriteBoxContainer>
             </QnASection>
           </div>
@@ -541,8 +456,7 @@ class NewDetailCardContainer extends React.Component {
 
                 <CountBox>
                   <CountBoxImg src={detailviewcount} />
-                  {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.view <= 1 ? (
+                  {Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.view <= 1 ? (
                     <Font14 style={{ color: "#999999" }}>낮음</Font14>
                   ) : 1 <= Partner.partner_detail_list[0].item.view <= 4 ? (
                     <Font14 style={{ color: "#999999" }}>보통</Font14>
@@ -550,49 +464,29 @@ class NewDetailCardContainer extends React.Component {
                     <Font14 style={{ color: "#999999" }}>높음</Font14>
                   ) : null}
 
-                  <CountBoxImg
-                    src={detailbookmarkImg}
-                    style={{ marginLeft: 10 }}
-                  />
+                  <CountBoxImg src={detailbookmarkImg} style={{ marginLeft: 10 }} />
                   <Font14 style={{ color: "#999999" }}>7(api요청)</Font14>
                 </CountBox>
               </SubContainerInnerBox>
 
-              <Font26>
-                {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.name}
-              </Font26>
+              <Font26>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.name}</Font26>
 
               <Font15 style={{ marginTop: 36 }}>설립연도</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.year}
-                년
-              </Font16>
+              <Font16>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.year}년</Font16>
 
               <Font15>총 매출액</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0].item.salses
-                  ? Partner.partner_detail_list[0].item.salses
-                  : "-"}
-              </Font16>
+              <Font16>{Partner.partner_detail_list[0].item.salses ? Partner.partner_detail_list[0].item.salses : "-"}</Font16>
 
               <Font15>인증</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0].item.Certification
-                  ? Partner.partner_detail_list[0].item.Certification
-                  : "-"}
-              </Font16>
+              <Font16>{Partner.partner_detail_list[0].item.Certification ? Partner.partner_detail_list[0].item.Certification : "-"}</Font16>
 
               <Font15>사업 유형</Font15>
               <Font16>개발/설계(api요청)</Font16>
 
               <Font15>진행한 제품군</Font15>
               <Font16>
-                {Partner.partner_detail_list[0] &&
-                Partner.partner_detail_list[0].item.history.length >= 60
-                  ? Partner.partner_detail_list[0].item.history.slice(0, 60) +
-                    "..."
+                {Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.history.length >= 60
+                  ? Partner.partner_detail_list[0].item.history.slice(0, 60) + "..."
                   : Partner.partner_detail_list[0].item.history.length === 0
                   ? "-"
                   : Partner.partner_detail_list[0].item.history}
@@ -617,10 +511,7 @@ class NewDetailCardContainer extends React.Component {
                     marginTop: 12,
                   }}
                 >
-                  <CountBoxImg
-                    src={detailbookmarkImg}
-                    style={{ paddingBottom: 3, marginRight: 3 }}
-                  />
+                  <CountBoxImg src={detailbookmarkImg} style={{ paddingBottom: 3, marginRight: 3 }} />
                   관심 업체 등록하기
                 </SubContainerBtn>
               </SubContainerBtnBox>
@@ -635,6 +526,12 @@ class NewDetailCardContainer extends React.Component {
 export default NewDetailCardContainer;
 
 // Font
+const Font12 = styled(Title.FontSize12)`
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
+  text-align: center;
+`;
+
 const Font14 = styled(Title.FontSize14)`
   font-family: NotoSansCJKkr;
   font-weight: normal;
@@ -834,7 +731,6 @@ const QnASection = styled.section`
 `;
 
 const QnAWriteBoxContainer = styled.div`
-  width: 787px;
   height: 250px;
   margin-top: 24px;
   margin-bottom: 24px;
@@ -843,14 +739,30 @@ const QnAWriteBoxContainer = styled.div`
 `;
 
 const QnAWriteBox = styled.textarea`
-  width: 782px;
-  height: 196px;
+  width: 770px;
+  height: 176px;
   border: none;
   resize: none;
+  padding: 20px 0px 0px 20px;
+  border-top: 0px;
+  border-bottom: 1px solid #c6c7cc;
+  border-right: 0px;
+  border-left: 0px;
 
   :focus {
     outline: none;
   }
+`;
+
+const QnAWriteBtn = styled.button`
+  width: 90px;
+  height: 30px;
+  text-align: center;
+  border-radius: 19px;
+  background-color: #0933b3;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
 `;
 
 // SucContainer
