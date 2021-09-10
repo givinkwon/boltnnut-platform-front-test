@@ -56,25 +56,17 @@ class Account extends React.Component {
     const req = {
       data: formData,
     };
-        // 방문자 트래픽 기록
-        AccountAPI.setUserIP(req)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-      
-      // 전체 이동 기록
-      AccountAPI.setUserPageIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+
+    
+    // 전체 이동 기록
+    AccountAPI.setUserPageIP(req)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      console.log(e);
+      console.log(e.response);
+    });
   }
 
   componentWillUnmount() {
