@@ -209,14 +209,14 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink active={url.indexOf("shop") > -1}>
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
                         {/* 공장 직거래 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -283,14 +283,14 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink active={url.indexOf("shop") > -1}>
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
                         {/* 공장 직거래 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -368,14 +368,14 @@ class Nav extends React.Component {
                       </RouterWrapper>
                     </NavLink>
 
-                    <NavLink active={url.indexOf("shop") > -1}>
+                    {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
                         {/* 공장 직거래 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
 
                     {/* <NavLink active={url.indexOf("magazine") > -1}>
