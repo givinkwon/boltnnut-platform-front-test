@@ -27,11 +27,12 @@ class SearchBarConatiner extends React.Component {
     await Router.push("/search");
     // console.log("click");
 
-    Partner.loadingFlag = true;
-    setTimeout(() => {
-      Partner.loadingFlag = false;
-    }, 3000);
-
+    if(Partner.loadingFlag == false){
+      Partner.loadingFlag = true;
+      setTimeout(() => {
+        Partner.loadingFlag = false;
+      }, 3000);
+    }
     Partner.currentPage = 1;
     Partner.click_count += 1;
 

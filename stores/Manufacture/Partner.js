@@ -1084,11 +1084,23 @@ class Partner {
           console.log(e.response);
         });
     }
-    // 검색 시 텍스트 저장
-    if (this.search_text) {
+    
+    // 검색 시 텍스트 저장 && 3초 내에 재검색 시 검색 안되도록
+    if (this.search_text && !this.SearchLoading) {
       this.saveSearchText(this.search_text);
     }
+
+    if(this.SearchLoading == false){
+      this.SearchLoading = true;
+      setTimeout(() => {
+        this.SearchLoading = false;
+      }, 3000);
+    }
+    
   };
+
+  // 검색 시 중복 검색 제거
+  @observable SearchLoading = false;
 
   @action saveSearchText = (text) => {
     const formData = new FormData();
