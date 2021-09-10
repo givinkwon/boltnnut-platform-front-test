@@ -998,7 +998,7 @@ const Avatar = styled.img`
 `;
 const NavBox = styled.div`
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   /* height: 60px; */
   width: 100%;
   background-color: ${WHITE};

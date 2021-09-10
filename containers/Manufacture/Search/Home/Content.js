@@ -19,6 +19,7 @@ import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
 import { flexbox } from "@material-ui/system";
 import { CenturyView } from "react-calendar";
+import { Image, Shimmer } from 'react-shimmer'
 
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -154,6 +155,7 @@ class ManufacturerContentContainer extends React.Component {
     const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
 
+
     return (
       <>
         <BackgroundContainer>
@@ -234,6 +236,7 @@ class ManufacturerContentContainer extends React.Component {
                     ))}
 
                   <Border />
+
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
                       return (
@@ -448,7 +451,7 @@ class ManufacturerContentContainer extends React.Component {
 
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
         {/* <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div> */}
-
+        {Partner.partner_list && Partner.partner_list.length != 0 &&
         <PageBar>
           <img
             src={pass1}
@@ -607,6 +610,7 @@ class ManufacturerContentContainer extends React.Component {
             onClick={Partner.pageNext}
           />
         </PageBar>
+        }
       </>
     );
   }
