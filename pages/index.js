@@ -67,8 +67,6 @@ class Home extends React.Component {
     const formData = new FormData();
     
     const { history } = this.props;
-    console.log(history, history.length, history[history.length-2])
-    console.log(document.referrer)
 
     // document.referrer은 next.js 페이지 내부에서의 이동이 안잡힘
     // 페이지 내에 이동이 있는 경우 => 신규가 아님
