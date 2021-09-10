@@ -413,7 +413,7 @@ class Partner {
     console.log(this.certification);
   };
 
-  @action movePage = (e) => {
+  @action movePage = (e, container="Search") => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
     this.currentPage = newPage;
@@ -424,13 +424,21 @@ class Partner {
     this.dropDownActive = false;
     this.dropDownIdx = -1;
     this.click_count += 1;
-    this.subButtonActive
+    if(container=="Search"){
+      this.subButtonActive
+        ? this.getOtherPartner(newPage)
+        : this.getPartner(newPage, this.click_count);
+    }
+
+    if(container=="Shop"){
+      this.subButtonActive
       ? this.getOtherPartner(newPage)
-      : this.getPartner(newPage, this.click_count);
+      : this.getPartner(newPage, "Shop");
+    }
     window.scrollTo(0, 0);
   };
 
-  @action pageNext = (e) => {
+  @action pageNext = (e, container="Search") => {
     e.preventDefault();
     if (this.currentPage < this.partner_page) {
       const nextPage = this.currentPage + 1;
@@ -442,13 +450,21 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive
-        ? this.getOtherPartner(this.currentPage)
-        : this.getPartner(this.currentPage, this.click_count);
+      if(container=="Search"){
+        this.subButtonActive
+          ? this.getOtherPartner(newPage)
+          : this.getPartner(newPage, this.click_count);
+      }
+  
+      if(container=="Shop"){
+        this.subButtonActive
+        ? this.getOtherPartner(newPage)
+        : this.getPartner(newPage, "Shop");
+      }
     }
   };
 
-  @action pagePrev = (e) => {
+  @action pagePrev = (e, container="Search") => {
     e.preventDefault();
     if (this.currentPage > 1) {
       const newPage = this.currentPage - 1;
@@ -460,9 +476,17 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive
-        ? this.getOtherPartner(this.currentPage)
-        : this.getPartner(this.currentPage, this.click_count);
+      if(container=="Search"){
+        this.subButtonActive
+          ? this.getOtherPartner(newPage)
+          : this.getPartner(newPage, this.click_count);
+      }
+  
+      if(container=="Shop"){
+        this.subButtonActive
+        ? this.getOtherPartner(newPage)
+        : this.getPartner(newPage, "Shop");
+      }
       window.scrollTo(0, 0);
     }
   };

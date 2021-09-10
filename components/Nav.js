@@ -209,7 +209,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                      <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
@@ -283,7 +283,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                      <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
@@ -368,7 +368,7 @@ class Nav extends React.Component {
                       </RouterWrapper>
                     </NavLink>
 
-                    <NavLink onClick={() => alert("오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요.")} active={url.indexOf("shop") > -1}>
+                    <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />

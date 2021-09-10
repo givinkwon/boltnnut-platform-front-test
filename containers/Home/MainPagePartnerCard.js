@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
 @inject("Partner", "Auth", "Common", "Search")
@@ -86,40 +85,6 @@ class MainPagePartnerCard extends React.Component {
     } else {
       return false;
     }
-  };
-
-  clickLog = (partner) => {
-    const { Auth, Partner } = this.props;
-
-    let formData = new FormData();
-    formData.append("client", Auth.logged_in_client.id);
-    formData.append("search", Partner.search_text);
-    formData.append("partner", partner.id);
-
-    Partner.setclickLog(formData);
-
-    formData = new FormData();
-
-    formData.append(
-      "url",
-      window.location.protocol +
-        "//" +
-        window.location.host +
-        "/" +
-        "phoneClick"
-    );
-    const req = {
-      data: formData,
-    };
-
-    AccountAPI.setUserPageIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
 
   render() {

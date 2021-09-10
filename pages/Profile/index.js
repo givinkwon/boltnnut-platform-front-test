@@ -38,13 +38,38 @@ class Index extends React.Component {
     // page ip 기록
     const formData = new FormData();
 
+    const { history } = this.props;
+    console.log(history, history.length)
+    console.log(document.referrer)
+
+    // document.referrer은 next.js 페이지 내부에서의 이동이 안잡힘
+    // 페이지 내에 이동이 있는 경우 => 신규가 아님
+    if(history.length > 1){
+      formData.append("prevUrl", window.location.href + history[history.length-2])
+    }
+    else {
+      document.referrer === ""
+        ? formData.append("prevUrl", "direct")
+        : formData.append("prevUrl", document.referrer);
+    }
+
     formData.append("url", window.location.href);
-    console.log(window.location.href);
     const req = {
       data: formData,
     };
 
-    AccountAPI.setUserPageIP(req)
+        // 방문자 트래픽 기록
+        AccountAPI.setUserIP(req)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+      
+      // 전체 이동 기록
+      AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })

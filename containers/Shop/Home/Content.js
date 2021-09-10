@@ -274,10 +274,10 @@ class ManufacturerContentContainer extends React.Component {
               opacity: current_set == 1 && Partner.currentPage <= 1 ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={Partner.pagePrev}
+            onClick={(e) => Partner.pagePrev(e, "Shop")}
           />
           <PageCount
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e, "Shop")}
             value={10 * (current_set - 1)}
             active={Partner.currentPage % 10 == 1}
             style={{
@@ -299,7 +299,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 2}{" "}
@@ -313,7 +313,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 3}{" "}
@@ -327,7 +327,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 4}{" "}
@@ -341,7 +341,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 5}{" "}
@@ -355,7 +355,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 6}{" "}
@@ -369,7 +369,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 7}{" "}
@@ -383,7 +383,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 8}{" "}
@@ -397,7 +397,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 9}{" "}
@@ -411,7 +411,7 @@ class ManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={Partner.movePage}
+            onClick={(e) => Partner.movePage(e,"Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 10}{" "}
@@ -422,7 +422,7 @@ class ManufacturerContentContainer extends React.Component {
               opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={Partner.pageNext}
+            onClick={(e) => Partner.pageNext(e,"Shop")}
           />
         </PageBar>
       </>

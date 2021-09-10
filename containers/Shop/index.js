@@ -7,6 +7,7 @@ import ContentContainer from "./Home/Content";
 // import MobileContentContainer from "./Mobile/MobileContent";
 import { inject, observer } from "mobx-react";
 
+import MobileWarningModalContainer from "components/MobileWarningModal";
 
 @inject("Auth", "Partner", "Category", "Cookie")
 @observer
@@ -28,6 +29,7 @@ class SearchConatiner extends React.Component {
             </div>
           ) : (
             <>
+              <MobileWarningModalContainer/>
               {/* 제조사 찾기 모바일 버전 기본 화면 */}
                   {/* <MobileSearchFilterBox width={this.props.width} /> */}
                   {/* <MobileContentContainer width={this.props.width} /> */}

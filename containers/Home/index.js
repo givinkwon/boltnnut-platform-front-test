@@ -21,7 +21,6 @@ import MobileBanner5Container from "./Mobile/MobileBanner5";
 import { inject, observer } from "mobx-react";
 import axios from "axios";
 
-import * as AccountAPI from "axios/Account/Account";
 
 @inject("Home")
 @observer
@@ -34,47 +33,9 @@ class HomeConatiner extends React.Component {
   };
 
   componentDidMount() {
+    const { history } = this.props;
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    const formData = new FormData();
-    const formData2 = new FormData();
-
-    document.referrer === ""
-      ? formData.append("prevUrl", "direct")
-      : formData.append("prevUrl", document.referrer);
-
-    document.referrer === ""
-      ? formData2.append("prevUrl", "direct")
-      : formData2.append("prevUrl", document.referrer);
-
-    console.log(window.location.href);
-    formData.append("url", window.location.href);
-    const req = {
-      data: formData,
-    };
-
-    const req2 = {
-      data: formData2,
-    };
-
-    AccountAPI.setUserIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    AccountAPI.setPrevUrlLog(req2)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   }
 
   componentWillUnmount() {
