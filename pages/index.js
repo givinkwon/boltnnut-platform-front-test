@@ -37,6 +37,14 @@ class Home extends React.Component {
         case 116:
             event.preventDefault();
             break;
+        case 78:
+            if(event.ctrlKey){
+              event.preventDefault();
+            }
+        case 82:
+            if(event.ctrlKey){
+              event.preventDefault();
+            }
         default: 
             break;
     }
