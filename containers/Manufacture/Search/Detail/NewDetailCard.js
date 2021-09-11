@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 import * as Title from "components/Title";
 
-import ContainerV1 from "components/ContainerV1";
+import ContainerV1 from "components/Containerv1";
 import ReminderCardContainer from "./ReminderCard";
 import TabBarCardContainer from "./TabBarContainer";
 import ReviewCardContainer from "./ReviewContainer";
@@ -34,20 +34,22 @@ class NewDetailCardContainer extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevState) {
     const { Partner } = this.props;
 
     // 탭바 스크롤 이벤트
-    if (Partner.tabBar === 1) {
-      this.state.info.current.scrollIntoView({ behavior: "smooth" });
-    }
+    if (prevState.tabBar !== Partner.tabBar) {
+      if (Partner.tabBar === 1) {
+        this.state.info.current.scrollIntoView({ behavior: "smooth" });
+      }
 
-    if (Partner.tabBar === 2) {
-      this.state.review.current.scrollIntoView({ behavior: "smooth" });
-    }
+      // if (Partner.tabBar === 2) {
+      //   this.state.review.current.scrollIntoView({ behavior: "smooth" });
+      // }
 
-    if (Partner.tabBar === 3) {
-      this.state.question.current.scrollIntoView({ behavior: "smooth" });
+      if (Partner.tabBar === 3) {
+        this.state.question.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
 
     // 더 보여줄 포트폴리오가 없는 경우 더보기 버튼 삭제
@@ -164,9 +166,9 @@ class NewDetailCardContainer extends React.Component {
             </MapSection>
 
             {/* 리뷰 */}
-            <div ref={this.state.review}>
+            {/* <div ref={this.state.review}>
               <ReviewCardContainer />
-            </div>
+            </div> */}
 
             {/* QnA */}
             <div ref={this.state.question}>
