@@ -40,17 +40,15 @@ class SearchDetailConatiner extends React.Component {
       <>
         {Partner.reviewActiveIndex == 0 &&
           (width && width > 767.98 ? (
-            // <DetailCardContainer width={this.props.width} />
-            <NewDetailCardContainer width={this.props.width} />
+            <DetailCardContainer width={this.props.width} />
           ) : (
+            // <NewDetailCardContainer width={this.props.width} />
             // <MobileDetailCardContainer width={this.props.width} />
             <div></div>
           ))}
         <Background>
           <Containerv1>
-            {Partner.reviewActiveIndex == 1 && (
-              <ReviewContainer width={this.props.width} />
-            )}
+            {Partner.reviewActiveIndex == 1 && <ReviewContainer width={this.props.width} />}
 
             {Partner.reviewActiveIndex == 2 && (
               <CompleteContainer
