@@ -46,38 +46,38 @@ class TabBarCardContainer extends React.Component {
 
         <CompanyInfoContainer>
           <CompanyInfoBox>
-            <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>사업 유형</Font16>
-            <Font16 style={{ color: "#414550" }}>제작/생산(api요청)</Font16>
+            <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>사업분야</Font16>
+            <Font16 style={{ color: "#414550" }}>제작/생산</Font16>
           </CompanyInfoBox>
 
           <CompanyInfoBox>
-            <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>직원 수</Font16>
+            <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>직원 수</Font16>
             <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.staff ? Partner.partner_detail_list[0].item.staff : "-"}</Font16>
           </CompanyInfoBox>
         </CompanyInfoContainer>
 
         <CompanyInfoContainer>
           <CompanyInfoBox>
-            <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>총 매출액</Font16>
-            <Font16 style={{ color: "#414550" }}>50~100억(api요청)</Font16>
+            <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>매출액</Font16>
+            <Font16 style={{ color: "#414550" }}>-</Font16>
           </CompanyInfoBox>
 
           <CompanyInfoBox>
-            <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>설립연도</Font16>
-            <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.year ? Partner.partner_detail_list[0].item.year : "-"}년</Font16>
+            <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>설립연도</Font16>
+            <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}</Font16>
           </CompanyInfoBox>
         </CompanyInfoContainer>
 
         <CompanyInfoContainer>
           <CompanyInfoBox>
-            <Font16 style={{ color: "#282c36", width: 60, fontWeight: "bold" }}>인증(2)</Font16>
+            <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>인증</Font16>
             <Font16 style={{ color: "#414550" }}>
               {Partner.partner_detail_list[0].item.Certification ? Partner.partner_detail_list[0].item.Certification : "-"}
             </Font16>
           </CompanyInfoBox>
         </CompanyInfoContainer>
 
-        <DocViewerContainer>pptx, pdf viewer</DocViewerContainer>
+        {/* <DocViewerContainer>pptx, pdf viewer</DocViewerContainer> */}
       </TabBarSection>
     );
   }

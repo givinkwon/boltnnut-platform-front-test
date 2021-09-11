@@ -156,7 +156,7 @@ class DetailCardContainer extends React.Component {
     Partner.detailLoadingFlag = false;
 
     // 지역 가지고 오기
-    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city));
+    Partner.getCityName(Partner.partner_detail_list[0].item.city.id);
 
     // 비즈니스 가지고 오기
     if (Partner.partner_detail_list[0].item.business != undefined) {
@@ -322,7 +322,7 @@ class DetailCardContainer extends React.Component {
       Partner.review_partner_count = 0;
 
       Partner.city_name = "";
-      await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+      await Partner.getCityName(Partner.partner_detail_list[0].item.city.id);
 
       console.log(Partner.city_name);
 

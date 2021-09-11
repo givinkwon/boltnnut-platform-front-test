@@ -3,16 +3,17 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
 import * as Title from "components/Title";
+import Router from "next/router";
 
 const detailviewcount = "/static/images/viewcount.svg";
 const detailbookmarkImg = "/static/icon/bookmark_empty.svg";
 // const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 
-@inject("Partner", "Auth", "Common")
+@inject("Partner", "Auth", "Common", "Request")
 @observer
 class ReviewCardContainer extends React.Component {
   render() {
-    const { Partner } = this.props;
+    const { Partner, Request } = this.props;
 
     return (
       <SubContainer>
@@ -40,14 +41,14 @@ class ReviewCardContainer extends React.Component {
               ) : null}
 
               <CountBoxImg src={detailbookmarkImg} style={{ marginLeft: 10 }} />
-              <Font14 style={{ color: "#999999" }}>7(api요청)</Font14>
+              <Font14 style={{ color: "#999999" }}>7</Font14>
             </CountBox>
           </SubContainerInnerBox>
 
           <Font26>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.name}</Font26>
 
           <Font15 style={{ marginTop: 36 }}>설립연도</Font15>
-          <Font16>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.year}년</Font16>
+          <Font16>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}</Font16>
 
           <Font15>총 매출액</Font15>
           <Font16>{Partner.partner_detail_list[0].item.salses ? Partner.partner_detail_list[0].item.salses : "-"}</Font16>
@@ -56,7 +57,7 @@ class ReviewCardContainer extends React.Component {
           <Font16>{Partner.partner_detail_list[0].item.Certification ? Partner.partner_detail_list[0].item.Certification : "-"}</Font16>
 
           <Font15>사업 유형</Font15>
-          <Font16>개발/설계(api요청)</Font16>
+          <Font16>-</Font16>
 
           <Font15>진행한 제품군</Font15>
           <Font16>
@@ -73,6 +74,13 @@ class ReviewCardContainer extends React.Component {
                 background: "#0933b3",
                 border: "none",
                 color: "#fff",
+              }}
+              onClick={() => {
+                let partnerId = Partner.partner_detail_list[0].item.id;
+                Request.partner_request(partnerId);
+                Router.push("/request");
+                // path 설정
+                Request.path = 3;
               }}
             >
               견적 요청하기

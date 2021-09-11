@@ -164,9 +164,9 @@ class NewDetailCardContainer extends React.Component {
             </MapSection>
 
             {/* 리뷰 */}
-            <div ref={this.state.review}>
+            {/* <div ref={this.state.review}>
               <ReviewCardContainer />
-            </div>
+            </div> */}
 
             {/* QnA */}
             <div ref={this.state.question}>
