@@ -22,7 +22,7 @@ class TabBarCardContainer extends React.Component {
 
           <InnerBox style={{ gap: 16 }}>
             <div>rhk***님</div>
-            <div>날짜</div>
+            <div>2021.05.30</div>
           </InnerBox>
         </InnerBox>
 

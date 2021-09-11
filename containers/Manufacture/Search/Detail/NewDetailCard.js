@@ -34,19 +34,17 @@ class NewDetailCardContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps) {
     const { Partner } = this.props;
 
     // 탭바 스크롤 이벤트
-    if (prevState.tabBar !== Partner.tabBar) {
+    if (prevProps.Partner.tabBar !== Partner.tabBar) {
       if (Partner.tabBar === 1) {
         this.state.info.current.scrollIntoView({ behavior: "smooth" });
       }
-
       // if (Partner.tabBar === 2) {
       //   this.state.review.current.scrollIntoView({ behavior: "smooth" });
       // }
-
       if (Partner.tabBar === 3) {
         this.state.question.current.scrollIntoView({ behavior: "smooth" });
       }
@@ -72,6 +70,7 @@ class NewDetailCardContainer extends React.Component {
 
     // 탭바 인덱스 초기화
     Partner.tabIdx = 1;
+    Partner.tabBar = 0;
   }
 
   // 포트폴리오 보여주기 갯수 핸들러
