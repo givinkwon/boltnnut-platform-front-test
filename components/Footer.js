@@ -200,7 +200,7 @@ class FooterComponent extends React.Component {
                       <br />
                     </Font12>
                     <Font12>
-                      <span>사업장 소재지</span> 서울특별시 성북구 고려대길 27길 3 2층
+                      <span>사업장 소재지</span> 서울특별시 성북구 고려대로27길 4, 3층
                     </Font12>
                   </InfoDetailContainer>
                   <FaqTable>

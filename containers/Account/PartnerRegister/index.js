@@ -16,6 +16,7 @@ class PartnerRegisterContainer extends React.Component {
     Category.init();
     Category.isChecked("main");
   }
+
   render() {
     const { Auth, Category } = this.props;
     return (

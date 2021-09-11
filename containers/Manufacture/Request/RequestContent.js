@@ -663,7 +663,6 @@ class RequestContent extends Component {
 
               <RequestBtn>
                 <RequestButton
-                  id="request_submit_button"
                   onClick={() => {
                     Request.requestSubmit();
                   }}

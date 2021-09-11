@@ -55,6 +55,7 @@ class Category {
       type: "product",
       checked: false,
       id: 0,
+      main_title_checked: false,
     },
     {
       img: "/static/icon/registerMain2.svg",
@@ -62,6 +63,7 @@ class Category {
       type: "development",
       checked: false,
       id: 1,
+      main_title_checked: false,
     },
     {
       img: "/static/icon/registerMain3.svg",
@@ -69,6 +71,7 @@ class Category {
       type: "manufacture",
       checked: false,
       id: 2,
+      main_title_checked: false,
     },
   ];
   @observable locationModalActive = false;

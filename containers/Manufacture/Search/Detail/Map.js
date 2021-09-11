@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { inject, observer } from "mobx-react";
+import React from "react";
+import styled from "styled-components";
 
 // 아래 주석 삭제하면 안됩니다!
 /*global kakao*/

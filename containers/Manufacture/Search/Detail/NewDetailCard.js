@@ -3,92 +3,195 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
 import * as Title from "components/Title";
-import ContainerV1 from "components/ContainerV1";
-import PortfolioConatiner from "./Portfolio";
 
-const detailviewcount = "/static/images/viewcount.svg";
-const detailbookmarkImg = "/static/icon/bookmark_empty.svg";
-// const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
+import ContainerV1 from "components/ContainerV1";
+import ReminderCardContainer from "./ReminderCard";
+import TabBarCardContainer from "./TabBarContainer";
+import ReviewCardContainer from "./ReviewContainer";
+import MapContainer from "./Map";
+import QnAContainer from "./QnAContainer";
+import SubContainer from "./SubContainer";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 @inject("Partner", "Auth", "Common")
 @observer
 class NewDetailCardContainer extends React.Component {
+  state = {
+    portfolioToShow: 20,
+    portfolioSetMoreState: false,
+
+    info: React.createRef(),
+    review: React.createRef(),
+    question: React.createRef(),
+  };
+
+  componentDidMount() {
+    const { Partner } = this.props;
+
+    // 포트폴리오 갯수가 20개 이상일때 더보기 버튼 활성화
+    if (Partner.partner_detail_list[0].item.portfolio_set.length >= 20) {
+      this.setState({ portfolioSetMoreState: true });
+    }
+  }
+
+  componentDidUpdate() {
+    const { Partner } = this.props;
+
+    // 탭바 스크롤 이벤트
+    if (Partner.tabBar === 1) {
+      this.state.info.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (Partner.tabBar === 2) {
+      this.state.review.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (Partner.tabBar === 3) {
+      this.state.question.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // 더 보여줄 포트폴리오가 없는 경우 더보기 버튼 삭제
+    if (this.state.portfolioSetMoreState === true) {
+      if (Partner.partner_detail_list[0].item.portfolio_set.length < this.state.portfolioToShow) {
+        this.setState({ ...this.state, portfolioSetMoreState: false });
+      }
+      // 최대 100개 까지만 보여준다.
+      if (this.state.portfolioToShow > 100) {
+        this.setState({ ...this.state, portfolioSetMoreState: false });
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    const { Partner } = this.props;
+
+    // 포트폴리오 더보기 갯수 초기화
+    this.setState({ portfolioToShow: 20 });
+
+    // 탭바 인덱스 초기화
+    Partner.tabIdx = 1;
+  }
+
+  // 포트폴리오 보여주기 갯수 핸들러
+  portfolioToShowHandler() {
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 20) {
+      this.setState({ portfolioToShow: 40 });
+    }
+
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 40) {
+      this.setState({ portfolioToShow: 60 });
+    }
+
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 60) {
+      this.setState({ portfolioToShow: 80 });
+    }
+
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 80) {
+      this.setState({ portfolioToShow: 100 });
+    }
+
+    if (this.state.portfolioSetMoreState && this.state.portfolioToShow === 100) {
+      this.setState({ portfolioToShow: 120 });
+    }
+  }
+
   render() {
     const { Partner } = this.props;
+    console.log(Partner.tabIdx);
+
+    // Map 리전 넣어주기
+    let region = "";
+
+    if (Partner.partner_detail_list[0].item) {
+      region =
+        Partner.partner_detail_list[0].item.region === null || Partner.partner_detail_list[0].item.region === "nan"
+          ? Partner.city_name
+          : Partner.partner_detail_list[0].item.region;
+    }
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
-          <MainContainer>
-            {Partner.partner_detail_list[0].item.portfolio_set.map((v, idx) => (
-              <>
-                {console.log(Partner.partner_detail_list[0])}
-                <PortfolioImgBox src={v.img_portfolio} />
-              </>
-            ))}
-          </MainContainer>
+          {/* MainContainer */}
+          <div style={{ width: 792, display: "flex", flexDirection: "column" }}>
+            {/* 포트폴리오 */}
+            <PortfolioSection>
+              <MainContainer>
+                {Partner.partner_detail_list[0].item.portfolio_set.slice(0, this.state.portfolioToShow).map((v, idx) => (
+                  <>
+                    {console.log(Partner.partner_detail_list[0])}
+                    <PortfolioImgBox key={idx} src={v.img_portfolio} />
+                  </>
+                ))}
+              </MainContainer>
 
-          <SubContainer>
-            <div style={{ width: 350, border: "1px red solid" }}>
-              <SubContainerInnerBox>
-                <ActivePossibleBox>
-                  <Font14
-                    style={{
-                      fontWeight: 500,
-                      color: "#0933b3",
-                    }}
-                  >
-                    활동 가능
-                  </Font14>
-                </ActivePossibleBox>
+              <MoreBtn active={this.state.portfolioSetMoreState} onClick={() => this.portfolioToShowHandler()}>
+                포트폴리오 더보기
+                <img src="/static/images/partner/moredata.svg" style={{ marginLeft: 12, paddingBottom: 2 }} />
+              </MoreBtn>
+            </PortfolioSection>
 
-                <CountBox>
-                  <CountBoxImg src={detailviewcount} />
-                  {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.view <= 1 ? (
-                    <Font14 style={{ color: "#999999" }}>낮음</Font14>
-                  ) : 1 <= Partner.partner_detail_list[0].item.view <= 4 ? (
-                    <Font14 style={{ color: "#999999" }}>보통</Font14>
-                  ) : Partner.partner_detail_list[0].item.view >= 5 ? (
-                    <Font14 style={{ color: "#999999" }}>높음</Font14>
-                  ) : null}
+            {/* 비슷한 업체 더 보기 */}
+            <MoreCompanySection>
+              <InnerBox style={{ width: 792, justifyContent: "space-between" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <img src="/static/images/partner/blueline.svg" style={{ width: 28, height: 4 }} />
 
-                  <CountBoxImg
-                    src={detailbookmarkImg}
-                    style={{ marginLeft: 20 }}
-                  />
-                  <Font14 style={{ color: "#999999" }}>7</Font14>
-                </CountBox>
-              </SubContainerInnerBox>
+                  <InnerBox>
+                    <Font18>비슷한 업체 더보기</Font18>
+                  </InnerBox>
+                </div>
 
-              <Font26>
-                {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.name}
-              </Font26>
+                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                  <Font16 style={{ marginRight: 24 }}>1/2</Font16>
+                  <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
+                  <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
+                </InnerBox>
+              </InnerBox>
 
-              <Font15 style={{ marginTop: 36 }}>설립연도</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0] &&
-                  Partner.partner_detail_list[0].item.year}
-              </Font16>
+              <ReminderCardContainer />
+            </MoreCompanySection>
 
-              <Font15>총 매출액</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0].salses
-                  ? Partner.partner_detail_list[0].salses
-                  : "-"}
-              </Font16>
-
-              <Font15>인증</Font15>
-              <Font16>
-                {Partner.partner_detail_list[0].Certification
-                  ? Partner.partner_detail_list[0].Certification
-                  : "-"}
-              </Font16>
-
-              <Font15>사업 유형</Font15>
-              <Font16></Font16>
+            {/* 탭바 */}
+            <div ref={this.state.info}>
+              <TabBarCardContainer />
             </div>
-          </SubContainer>
+
+            {/* 지도 */}
+            <MapSection>
+              <Font24 style={{ marginBottom: 24 }}>위치</Font24>
+              <MapContainer city={region} />
+            </MapSection>
+
+            {/* 리뷰 */}
+            <div ref={this.state.review}>
+              <ReviewCardContainer />
+            </div>
+
+            {/* QnA */}
+            <div ref={this.state.question}>
+              <QnAContainer />
+            </div>
+
+            {/* 다른 고객이 비교한 제조사 */}
+            <CompareManufacturersSection>
+              <img src="/static/images/partner/blueline.svg" style={{ width: 28, height: 4 }} />
+              <InnerBox style={{ justifyContent: "space-between" }}>
+                <Font18>다른 고객이 비교한 제조사</Font18>
+
+                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                  <Font16 style={{ marginRight: 24 }}>1/2</Font16>
+                  <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
+                  <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
+                </InnerBox>
+              </InnerBox>
+
+              <ReminderCardContainer />
+            </CompareManufacturersSection>
+          </div>
+
+          {/* SubContainer */}
+          <SubContainer />
         </Container>
       </div>
     );
@@ -97,24 +200,7 @@ class NewDetailCardContainer extends React.Component {
 
 export default NewDetailCardContainer;
 
-const Font14 = styled(Title.FontSize14)`
-  font-family: NotoSansCJKkr;
-  font-weight: normal;
-  text-align: center;
-  margin-top: 2px;
-  line-height: 2.14;
-  letter-spacing: -0.14px;
-`;
-
-const Font15 = styled(Title.FontSize15)`
-  font-family: NotoSansCJKkr;
-  color: #999999;
-  font-weight: normal;
-  line-height: 1.47;
-  letter-spacing: -0.38px;
-  margin-top: 24px;
-`;
-
+// Font && Common
 const Font16 = styled(Title.FontSize16)`
   font-family: NotoSansCJKkr;
   color: #000000;
@@ -124,13 +210,41 @@ const Font16 = styled(Title.FontSize16)`
   letter-spacing: -0.4px;
 `;
 
-const Font26 = styled(Title.FontSize26)`
+const Font18 = styled(Title.FontSize18)`
   font-family: NotoSansCJKkr;
   font-weight: bold;
-  color: #282c36;
-  margin-top: 24px;
   line-height: 2;
-  letter-spacing: -0.65px;
+  letter-spacing: -0.45px;
+`;
+
+const Font24 = styled(Title.FontSize24)`
+  font-family: NotoSansCJKkr;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+`;
+
+const InnerBox = styled.div`
+  display: flex;
+`;
+
+// MainContainer
+const PortfolioSection = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PortfolioImgBox = styled.img`
+  width: 392px;
+  height: 286px;
+`;
+
+const MoreCompanySection = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-top: 140px;
 `;
 
 const Container = styled(ContainerV1)`
@@ -141,53 +255,38 @@ const Container = styled(ContainerV1)`
 `;
 
 const MainContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
   width: 792px;
 `;
 
-const SubContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 384px;
-  height: 706px;
-  border-radius: 5px;
-  border: solid 0.5px #e1e2e4;
-`;
-
-const SubContainerInnerBox = styled.div`
-  width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const PortfolioImgBox = styled.img`
-  width: 392px;
-  height: 286px;
-`;
-
-const ActivePossibleBox = styled.div`
-  width: 90px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const MoreBtn = styled.button`
+  display: ${(props) => (props.active ? "inline-display" : "none")};
+  width: 792px;
+  height: 67px;
+  margin-top: 16px;
+  object-fit: contain;
   border-radius: 3px;
   border: solid 1px #0933b3;
+  background-color: #fff;
+  color: #0933b3;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: NotoSansCJKkr;
+  cursor: pointer;
 `;
 
-const CountBox = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 150px;
-  height: 20px;
+const MapSection = styled.section`
+  width: 100%;
+  height: 500px;
+  margin-bottom: 140px;
+  margin-top: 140px;
 `;
 
-const CountBoxImg = styled.img`
-  width: 20px;
-  height: 20px;
-  object-fit: scale-down;
+const CompareManufacturersSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-top: 140px;
+  margin-bottom: 300px;
 `;

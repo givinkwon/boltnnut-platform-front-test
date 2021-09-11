@@ -85,8 +85,7 @@ class ManufacturerContentContainer extends React.Component {
         .then((res) => {
           this.setState({ recent_partner: res.data });
 
-          recent_partner_dic[res.data.name] =
-            res.data.portfolio_set[0].img_portfolio;
+          recent_partner_dic[res.data.name] = res.data.portfolio_set[0].img_portfolio;
           recent_partner.push(res.data);
           recent_partner_namearr.push(res.data.name);
 
@@ -169,24 +168,14 @@ class ManufacturerContentContainer extends React.Component {
             <RequestMiddle>
               <ResultBannerContainer>
                 <ResultBannerInnerBox>
-                  <Font22 style={{ color: "#000000" }}>
-                    마음에 드는 공장을 찾기 힘드시나요?
-                  </Font22>
+                  <Font22 style={{ color: "#000000" }}>마음에 드는 공장을 찾기 힘드시나요?</Font22>
 
-                  <Font16>
-                    볼트앤너트 전문가를 배정하여 유선으로 상담을
-                    도와드립니다.
-                  </Font16>
+                  <Font16>볼트앤너트 전문가를 배정하여 유선으로 상담을 도와드립니다.</Font16>
                 </ResultBannerInnerBox>
 
-                <RequestBtn onClick={() => this.ToRequest()}>
-                  무료 전문가 상담
-                </RequestBtn>
+                <RequestBtn onClick={() => this.ToRequest()}>무료 전문가 상담</RequestBtn>
 
-                <ResultBannerCloseImg
-                  src="static/images/close_banner.svg"
-                  onClick={() => this.resultBannerHandler()}
-                />
+                <ResultBannerCloseImg src="static/images/close_banner.svg" onClick={() => this.resultBannerHandler()} />
               </ResultBannerContainer>
             </RequestMiddle>
           )}
@@ -202,10 +191,7 @@ class ManufacturerContentContainer extends React.Component {
 
               <Header>
                 <Font20>
-                  <span style={{ fontWeight: "bold" }}>
-                    {Partner.partner_count}개
-                  </span>
-                  의 제조사가 있습니다.
+                  <span style={{ fontWeight: "bold" }}>{Partner.partner_count}개</span>의 제조사가 있습니다.
                 </Font20>
               </Header>
 
@@ -219,15 +205,10 @@ class ManufacturerContentContainer extends React.Component {
                       <NoResultBox>
                         <img src={nosearch} />
                         <NoSearch>
-                          <span style={{ fontWeight: "bold" }}>
-                            '{Partner.search_text}'
-                          </span>
-                          에 대한 검색 결과가 없습니다.
+                          <span style={{ fontWeight: "bold" }}>'{Partner.search_text}'</span>에 대한 검색 결과가 없습니다.
                         </NoSearch>
                         <Explain>
-                          <Question>
-                            유사한 연관 검색어를 찾아보시겠어요?
-                          </Question>
+                          <Question>유사한 연관 검색어를 찾아보시겠어요?</Question>
                           <ExplainList></ExplainList>
                         </Explain>
                       </NoResultBox>
@@ -238,9 +219,7 @@ class ManufacturerContentContainer extends React.Component {
                     Partner.partner_list.map((item, idx) => {
                       return (
                         <Background>
-                          <div
-                            style={{ width: "996px" }}
-                          >
+                          <div style={{ width: "996px" }}>
                             <PartnerCard
                               data={item}
                               width={this.props.width}
@@ -281,10 +260,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1)}
             active={Partner.currentPage % 10 == 1}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 1
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 1 ? "none" : "block",
             }}
           >
             {" "}
@@ -294,10 +270,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 1}
             active={Partner.currentPage % 10 == 2}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 2
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 2 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e, "Shop")}
           >
@@ -308,10 +281,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 2}
             active={Partner.currentPage % 10 == 3}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 3
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 3 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e, "Shop")}
           >
@@ -322,10 +292,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 3}
             active={Partner.currentPage % 10 == 4}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 4
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 4 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e, "Shop")}
           >
@@ -336,10 +303,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 4}
             active={Partner.currentPage % 10 == 5}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 5
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 5 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -350,10 +314,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 5}
             active={Partner.currentPage % 10 == 6}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 6
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 6 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -364,10 +325,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 6}
             active={Partner.currentPage % 10 == 7}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 7
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 7 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -378,10 +336,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 7}
             active={Partner.currentPage % 10 == 8}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 8
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 8 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -392,10 +347,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 8}
             active={Partner.currentPage % 10 == 9}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 9
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 9 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -406,10 +358,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 9}
             active={Partner.currentPage % 10 == 0}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 10
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 10 ? "none" : "block",
             }}
             onClick={(e) => Partner.movePage(e,"Shop")}
           >
@@ -710,7 +659,7 @@ const RequestMiddle = styled.div`
   height: 113px;
   margin-top: 30px;
   margin-bottom: 40px;
-  background-image: url("static/images/search_result_background.svg");
+  background-image: url("/static/images/search_result_background.svg");
   background-position: center;
 
   div {

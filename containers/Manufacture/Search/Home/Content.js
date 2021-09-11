@@ -19,7 +19,7 @@ import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
 import { flexbox } from "@material-ui/system";
 import { CenturyView } from "react-calendar";
-import { Image, Shimmer } from 'react-shimmer'
+// import { Image, Shimmer } from 'react-shimmer'
 
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -86,8 +86,7 @@ class ManufacturerContentContainer extends React.Component {
         .then((res) => {
           this.setState({ recent_partner: res.data });
 
-          recent_partner_dic[res.data.name] =
-            res.data.portfolio_set[0].img_portfolio;
+          recent_partner_dic[res.data.name] = res.data.portfolio_set[0].img_portfolio;
           recent_partner.push(res.data);
           recent_partner_namearr.push(res.data.name);
 
@@ -155,7 +154,6 @@ class ManufacturerContentContainer extends React.Component {
     const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
 
-
     return (
       <>
         <BackgroundContainer>
@@ -171,24 +169,14 @@ class ManufacturerContentContainer extends React.Component {
             <RequestMiddle>
               <ResultBannerContainer>
                 <ResultBannerInnerBox>
-                  <Font22 style={{ color: "#000000" }}>
-                    마음에 드는 공장을 찾기 힘드시나요?
-                  </Font22>
+                  <Font22 style={{ color: "#000000" }}>마음에 드는 공장을 찾기 힘드시나요?</Font22>
 
-                  <Font16>
-                    볼트앤너트 전문가를 배정하여 유선으로 상담을
-                    도와드립니다.
-                  </Font16>
+                  <Font16>볼트앤너트 전문가를 배정하여 유선으로 상담을 도와드립니다.</Font16>
                 </ResultBannerInnerBox>
 
-                <RequestBtn onClick={() => this.ToRequest()}>
-                  무료 전문가 상담
-                </RequestBtn>
+                <RequestBtn onClick={() => this.ToRequest()}>무료 전문가 상담</RequestBtn>
 
-                <ResultBannerCloseImg
-                  src="static/images/close_banner.svg"
-                  onClick={() => this.resultBannerHandler()}
-                />
+                <ResultBannerCloseImg src="static/images/close_banner.svg" onClick={() => this.resultBannerHandler()} />
               </ResultBannerContainer>
             </RequestMiddle>
           )}
@@ -204,10 +192,7 @@ class ManufacturerContentContainer extends React.Component {
 
               <Header>
                 <Font20>
-                  <span style={{ fontWeight: "bold" }}>
-                    {Partner.partner_count}개
-                  </span>
-                  의 제조사가 있습니다.
+                  <span style={{ fontWeight: "bold" }}>{Partner.partner_count}개</span>의 제조사가 있습니다.
                 </Font20>
               </Header>
 
@@ -221,15 +206,10 @@ class ManufacturerContentContainer extends React.Component {
                       <NoResultBox>
                         <img src={nosearch} />
                         <NoSearch>
-                          <span style={{ fontWeight: "bold" }}>
-                            '{Partner.search_text}'
-                          </span>
-                          에 대한 검색 결과가 없습니다.
+                          <span style={{ fontWeight: "bold" }}>'{Partner.search_text}'</span>에 대한 검색 결과가 없습니다.
                         </NoSearch>
                         <Explain>
-                          <Question>
-                            유사한 연관 검색어를 찾아보시겠어요?
-                          </Question>
+                          <Question>유사한 연관 검색어를 찾아보시겠어요?</Question>
                           <ExplainList></ExplainList>
                         </Explain>
                       </NoResultBox>
@@ -244,10 +224,7 @@ class ManufacturerContentContainer extends React.Component {
                           <div
                             onClick={async () => {
                               if (Auth.logged_in_client) {
-                                await Project.getProject(
-                                  "allproject",
-                                  Auth.logged_in_client.id
-                                );
+                                await Project.getProject("allproject", Auth.logged_in_client.id);
                               }
                               Partner.pushToDetail(item, idx);
                             }}
@@ -271,106 +248,72 @@ class ManufacturerContentContainer extends React.Component {
                   <RecentPartner>
                     <header>
                       <div style={{ marginLeft: 10 }}>최근 본 제조사</div>
-                      <div style={{ marginRight: 10 }}>
-                        {this.state.recent_partner_dic ? (
-                          Object.keys(this.state.recent_partner_dic).length
-                        ) : (
-                          <></>
-                        )}
-                      </div>
+                      <div style={{ marginRight: 10 }}>{this.state.recent_partner_dic ? Object.keys(this.state.recent_partner_dic).length : <></>}</div>
                     </header>
                     <body>
                       <div style={{ height: "100%" }}>
                         {this.state.recent_partner.length > 0 ? (
-                          Object.keys(this.state.recent_partner_dic).map(
-                            (name) => (
-                              <RecentPartnerContent>
-                                <div
-                                  style={{
-                                    width: 150,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    marginTop: 10,
-                                  }}
-                                >
-                                  <div>{name}</div>
-                                  <img
-                                    src={close}
-                                    style={{
-                                      width: 12,
-                                      height: 12,
-                                      cursor: "pointer",
-                                    }}
-                                    onClick={() => {
-                                      if (this.state.recent_partner_dic) {
-                                        Cookie.delete_partner_view(
-                                          Cookie.partner_view_list[
-                                            this.state.recent_partner_namearr.indexOf(
-                                              name
-                                            )
-                                          ]
-                                        );
-                                      }
-                                      const expires = new Date();
-                                      expires.setMinutes(
-                                        expires.getMinutes() + 2440
-                                      );
-
-                                      const a = this.state.recent_partner_dic;
-                                      const b = this.state.recent_partner;
-                                      delete a[name];
-                                      b.splice(
-                                        this.state.recent_partner_namearr.indexOf(
-                                          name
-                                        ),
-                                        1
-                                      );
-
-                                      this.setState({
-                                        recent_partner_dic: a,
-                                        recent_partner: b,
-                                      });
-
-                                      Cookies.set(
-                                        "partner_view",
-                                        Cookie.partner_view_list,
-                                        {
-                                          path: "/",
-                                          expires,
-                                        }
-                                      );
-                                    }}
-                                  />
-                                </div>
+                          Object.keys(this.state.recent_partner_dic).map((name) => (
+                            <RecentPartnerContent>
+                              <div
+                                style={{
+                                  width: 150,
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  marginTop: 10,
+                                }}
+                              >
+                                <div>{name}</div>
                                 <img
-                                  src={this.state.recent_partner_dic[name]}
-                                  onClick={async () => {
-                                    if (Auth.logged_in_client) {
-                                      await Project.getProject(
-                                        "allproject",
-                                        Auth.logged_in_client.id
-                                      );
-                                    }
-                                    Partner.pushToDetail(
-                                      this.state.recent_partner[
-                                        this.state.recent_partner_namearr.indexOf(
-                                          name
-                                        )
-                                      ]
-                                    );
-                                  }}
-                                  style={{ cursor: "pointer" }}
-                                />
-                                <div
+                                  src={close}
                                   style={{
-                                    margin: "5px, 0px, 5px, 0px",
-                                    border: "1px solid #e1e2e4",
+                                    width: 12,
+                                    height: 12,
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    if (this.state.recent_partner_dic) {
+                                      Cookie.delete_partner_view(Cookie.partner_view_list[this.state.recent_partner_namearr.indexOf(name)]);
+                                    }
+                                    const expires = new Date();
+                                    expires.setMinutes(expires.getMinutes() + 2440);
+
+                                    const a = this.state.recent_partner_dic;
+                                    const b = this.state.recent_partner;
+                                    delete a[name];
+                                    b.splice(this.state.recent_partner_namearr.indexOf(name), 1);
+
+                                    this.setState({
+                                      recent_partner_dic: a,
+                                      recent_partner: b,
+                                    });
+
+                                    Cookies.set("partner_view", Cookie.partner_view_list, {
+                                      path: "/",
+                                      expires,
+                                    });
                                   }}
                                 />
-                              </RecentPartnerContent>
-                            )
-                          )
+                              </div>
+                              <img
+                                src={this.state.recent_partner_dic[name]}
+                                onClick={async () => {
+                                  if (Auth.logged_in_client) {
+                                    await Project.getProject("allproject", Auth.logged_in_client.id);
+                                  }
+                                  Partner.pushToDetail(this.state.recent_partner[this.state.recent_partner_namearr.indexOf(name)]);
+                                }}
+                                style={{ cursor: "pointer" }}
+                              />
+                              <div
+                                style={{
+                                  margin: "5px, 0px, 5px, 0px",
+                                  border: "1px solid #e1e2e4",
+                                }}
+                              />
+                            </RecentPartnerContent>
+                          ))
                         ) : (
                           <div
                             style={{
@@ -389,16 +332,8 @@ class ManufacturerContentContainer extends React.Component {
                   </RecentPartner>
                   <MyInfo>
                     <header>
-                      <img
-                        src="/static/icon/login_img.svg"
-                        onClick={() => Router.push("/bookmark")}
-                        style={{ cursor: "pointer" }}
-                      />
-                      {Auth.logged_in_user ? (
-                        <div>{Auth.logged_in_user.username.split("@")[0]}</div>
-                      ) : (
-                        <div>로그인 해주세요.</div>
-                      )}
+                      <img src="/static/icon/login_img.svg" onClick={() => Router.push("/bookmark")} style={{ cursor: "pointer" }} />
+                      {Auth.logged_in_user ? <div>{Auth.logged_in_user.username.split("@")[0]}</div> : <div>로그인 해주세요.</div>}
                     </header>
                     <body>
                       <RequestandRegister style={{ marginTop: 5 }}>
@@ -427,10 +362,7 @@ class ManufacturerContentContainer extends React.Component {
                   바로 발주하기
                 </Font14>
 
-                <img
-                  src="static/images/search/aiicon.svg"
-                  style={{ margin: "12px 0px 12px 0px" }}
-                />
+                <img src="static/images/search/aiicon.svg" style={{ margin: "12px 0px 12px 0px" }} />
 
                 <Font13 align="justify">
                   AI견적 시스템으로
@@ -451,166 +383,136 @@ class ManufacturerContentContainer extends React.Component {
 
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
         {/* <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div> */}
-        {Partner.partner_list && Partner.partner_list.length != 0 &&
-        <PageBar>
-          <img
-            src={pass1}
-            style={{
-              opacity: current_set == 1 && Partner.currentPage <= 1 ? 0.4 : 1,
-              cursor: "pointer",
-            }}
-            onClick={Partner.pagePrev}
-          />
-          <PageCount
-            onClick={Partner.movePage}
-            value={10 * (current_set - 1)}
-            active={Partner.currentPage % 10 == 1}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 1
-                  ? "none"
-                  : "block",
-            }}
-          >
-            {" "}
-            {10 * (current_set - 1) + 1}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 1}
-            active={Partner.currentPage % 10 == 2}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 2
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 2}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 2}
-            active={Partner.currentPage % 10 == 3}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 3
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 3}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 3}
-            active={Partner.currentPage % 10 == 4}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 4
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 4}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 4}
-            active={Partner.currentPage % 10 == 5}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 5
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 5}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 5}
-            active={Partner.currentPage % 10 == 6}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 6
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 6}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 6}
-            active={Partner.currentPage % 10 == 7}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 7
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 7}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 7}
-            active={Partner.currentPage % 10 == 8}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 8
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 8}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 8}
-            active={Partner.currentPage % 10 == 9}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 9
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 9}{" "}
-          </PageCount>
-          <PageCount
-            value={10 * (current_set - 1) + 9}
-            active={Partner.currentPage % 10 == 0}
-            style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 10
-                  ? "none"
-                  : "block",
-            }}
-            onClick={Partner.movePage}
-          >
-            {" "}
-            {10 * (current_set - 1) + 10}{" "}
-          </PageCount>
-          <img
-            src={pass2}
-            style={{
-              opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
-              cursor: "pointer",
-            }}
-            onClick={Partner.pageNext}
-          />
-        </PageBar>
-        }
+        {Partner.partner_list && Partner.partner_list.length != 0 && (
+          <PageBar>
+            <img
+              src={pass1}
+              style={{
+                opacity: current_set == 1 && Partner.currentPage <= 1 ? 0.4 : 1,
+                cursor: "pointer",
+              }}
+              onClick={Partner.pagePrev}
+            />
+            <PageCount
+              onClick={Partner.movePage}
+              value={10 * (current_set - 1)}
+              active={Partner.currentPage % 10 == 1}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 1 ? "none" : "block",
+              }}
+            >
+              {" "}
+              {10 * (current_set - 1) + 1}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 1}
+              active={Partner.currentPage % 10 == 2}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 2 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 2}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 2}
+              active={Partner.currentPage % 10 == 3}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 3 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 3}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 3}
+              active={Partner.currentPage % 10 == 4}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 4 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 4}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 4}
+              active={Partner.currentPage % 10 == 5}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 5 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 5}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 5}
+              active={Partner.currentPage % 10 == 6}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 6 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 6}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 6}
+              active={Partner.currentPage % 10 == 7}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 7 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 7}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 7}
+              active={Partner.currentPage % 10 == 8}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 8 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 8}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 8}
+              active={Partner.currentPage % 10 == 9}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 9 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 9}{" "}
+            </PageCount>
+            <PageCount
+              value={10 * (current_set - 1) + 9}
+              active={Partner.currentPage % 10 == 0}
+              style={{
+                display: Partner.partner_page < 10 * (current_set - 1) + 10 ? "none" : "block",
+              }}
+              onClick={Partner.movePage}
+            >
+              {" "}
+              {10 * (current_set - 1) + 10}{" "}
+            </PageCount>
+            <img
+              src={pass2}
+              style={{
+                opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
+                cursor: "pointer",
+              }}
+              onClick={Partner.pageNext}
+            />
+          </PageBar>
+        )}
       </>
     );
   }

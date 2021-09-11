@@ -40,18 +40,7 @@ const sort = "/static/icon/sort.svg";
 const rightAngleImg = "/static/images/search/rightAngle.svg";
 const upImg = "/static/images/search/up.svg";
 
-const availableFileType1 = [
-  "png",
-  "jpeg",
-  "gif",
-  "bmp",
-  "pdf",
-  "csv",
-  "xslx",
-  "mp4",
-  "webm",
-  "mp3",
-];
+const availableFileType1 = ["png", "jpeg", "gif", "bmp", "pdf", "csv", "xslx", "mp4", "webm", "mp3"];
 
 const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 
@@ -171,9 +160,7 @@ class DetailCardContainer extends React.Component {
 
     // 비즈니스 가지고 오기
     if (Partner.partner_detail_list[0].item.business != undefined) {
-      toJS(Partner.partner_detail_list[0].item.business).map(
-        async (item) => await Partner.getBusinessName(item)
-      );
+      toJS(Partner.partner_detail_list[0].item.business).map(async (item) => await Partner.getBusinessName(item));
     }
 
     await this.countTotalPoint();
@@ -218,16 +205,10 @@ class DetailCardContainer extends React.Component {
 
     Partner.partnerAllReviewList[0]
       ? this.setState({
-          avg_consult_score:
-            total_consult_score / Partner.partnerAllReviewList[0].data.length,
-          avg_kindness_score:
-            total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-          avg_communication_score:
-            total_communication_score /
-            Partner.partnerAllReviewList[0].data.length,
-          avg_profession_score:
-            total_profession_score /
-            Partner.partnerAllReviewList[0].data.length,
+          avg_consult_score: total_consult_score / Partner.partnerAllReviewList[0].data.length,
+          avg_kindness_score: total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+          avg_communication_score: total_communication_score / Partner.partnerAllReviewList[0].data.length,
+          avg_profession_score: total_profession_score / Partner.partnerAllReviewList[0].data.length,
         })
       : this.setState({
           avg_consult_score: 0,
@@ -261,11 +242,7 @@ class DetailCardContainer extends React.Component {
       if (newPage != Partner.reviewCurrentPage) {
         Partner.reviewCurrentPage = newPage;
 
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id,
-          1,
-          newPage
-        );
+        await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id, 1, newPage);
       }
     }
 
@@ -282,21 +259,14 @@ class DetailCardContainer extends React.Component {
         const nextPage = Partner.questionCurrentPage + 1;
         Partner.questionCurrentPage = nextPage;
 
-        await Partner.getQuestion(
-          Partner.partner_detail_list[0].item.id,
-          nextPage
-        );
+        await Partner.getQuestion(Partner.partner_detail_list[0].item.id, nextPage);
       }
     } else {
       if (Partner.reviewCurrentPage < Partner.review_partner_page) {
         const nextPage = Partner.reviewCurrentPage + 1;
         Partner.reviewCurrentPage = nextPage;
 
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id,
-          1,
-          nextPage
-        );
+        await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id, 1, nextPage);
       }
     }
     this.setState((state) => {
@@ -311,20 +281,13 @@ class DetailCardContainer extends React.Component {
       if (Partner.questionCurrentPage > 1) {
         const previousPage = Partner.questionCurrentPage - 1;
         Partner.questionCurrentPage = previousPage;
-        await Partner.getQuestion(
-          Partner.partner_detail_list[0].item.id,
-          previousPage
-        );
+        await Partner.getQuestion(Partner.partner_detail_list[0].item.id, previousPage);
       }
     } else {
       if (Partner.reviewCurrentPage > 1) {
         const previousPage = Partner.reviewCurrentPage - 1;
         Partner.reviewCurrentPage = previousPage;
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id,
-          1,
-          previousPage
-        );
+        await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id, 1, previousPage);
       }
     }
     this.setState((state) => {
@@ -348,9 +311,7 @@ class DetailCardContainer extends React.Component {
 
       this.props.Partner.selectedIntroductionFile = item.file;
 
-      const fileType = item.file
-        .split(".")
-        [item.file.split(".").length - 1].toLowerCase();
+      const fileType = item.file.split(".")[item.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
 
       console.log(this.props.Partner.partner_detail_list[0].item.id);
@@ -365,20 +326,12 @@ class DetailCardContainer extends React.Component {
 
       console.log(Partner.city_name);
 
-      await this.props.Partner.getReviewByPartner(
-        this.props.Partner.partner_detail_list[0].item.id,
-        1,
-        1
-      );
+      await this.props.Partner.getReviewByPartner(this.props.Partner.partner_detail_list[0].item.id, 1, 1);
 
-      await this.props.Partner.getReviewByPartner(
-        this.props.Partner.partner_detail_list[0].item.id
-      );
+      await this.props.Partner.getReviewByPartner(this.props.Partner.partner_detail_list[0].item.id);
 
       Partner.business_name = [];
-      toJS(Partner.partner_detail_list[0].item.business).map(
-        async (item) => await Partner.getBusinessName(item)
-      );
+      toJS(Partner.partner_detail_list[0].item.business).map(async (item) => await Partner.getBusinessName(item));
 
       Partner.questionList = [];
       await Partner.getQuestion(Partner.partner_detail_list[0].item.id);
@@ -409,16 +362,13 @@ class DetailCardContainer extends React.Component {
     region = "";
     if (Partner.partner_detail_list[0].item) {
       region =
-        Partner.partner_detail_list[0].item.region === null ||
-        Partner.partner_detail_list[0].item.region === "nan"
+        Partner.partner_detail_list[0].item.region === null || Partner.partner_detail_list[0].item.region === "nan"
           ? Partner.city_name
           : Partner.partner_detail_list[0].item.region;
     }
 
     console.log(region);
-    console.log(
-      Partner.reviewWritingModalActive || Auth.logged_in_partner !== null
-    );
+    console.log(Partner.reviewWritingModalActive || Auth.logged_in_partner !== null);
     console.log(Auth.logged_in_partner !== null);
 
     let clientId;
@@ -434,13 +384,9 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.partner_detail_list));
     console.log(Auth);
     console.log(Partner.partner_detail_list);
-    const partnerId =
-      Partner.partner_detail_list &&
-      Partner.partner_detail_list[0].item &&
-      Partner.partner_detail_list[0].item.id;
+    const partnerId = Partner.partner_detail_list && Partner.partner_detail_list[0].item && Partner.partner_detail_list[0].item.id;
 
-    const loggedInPartnerId =
-      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
 
     console.log(toJS(Partner.questionList));
     console.log(Partner.review_partner_page);
@@ -462,8 +408,7 @@ class DetailCardContainer extends React.Component {
       arr.push(i);
     }
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
-    const QuestionCurrentSet =
-      parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+    const QuestionCurrentSet = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
@@ -490,6 +435,7 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.questionList));
     console.log(Partner.partner_detail_list[0].item.region);
     console.log(Partner.partner_detail_list[0].item.region == "null");
+    3;
     console.log(Partner.city_name);
 
     return (
@@ -505,32 +451,16 @@ class DetailCardContainer extends React.Component {
 
                   <HeaderItem />
                   <InfoBox>
-                    <InfoCard
-                      src={medalImg}
-                      name="전문분야"
-                      content={Partner.business_name}
-                    />
+                    <InfoCard src={medalImg} name="전문분야" content={Partner.business_name} />
                     {Partner.partner_detail_list && (
-                      <InfoCard
-                        src={drawerImg}
-                        name="진행한 제품군"
-                        content={Partner.partner_detail_list[0].item.history}
-                        marginLeft="21"
-                      />
+                      <InfoCard src={drawerImg} name="진행한 제품군" content={Partner.partner_detail_list[0].item.history} marginLeft="21" />
                     )}
 
-                    <InfoCard
-                      src={markImg}
-                      name="지역"
-                      content={region}
-                      marginLeft="21"
-                    />
+                    <InfoCard src={markImg} name="지역" content={region} marginLeft="21" />
                   </InfoBox>
                   {Partner.partner_detail_list && (
                     <content>
-                      <span>
-                        {Partner.partner_detail_list[0].item.info_company}
-                      </span>
+                      <span>{Partner.partner_detail_list[0].item.info_company}</span>
                     </content>
                   )}
                 </HeaderBox>
@@ -554,16 +484,10 @@ class DetailCardContainer extends React.Component {
                     reviewLocation={this.state.reviewLocation}
                     mapLocation={this.state.mapLocation}
                   />
-                  <IntroductionBox
-                    width={width}
-                    style={{ marginBottom: "162px" }}
-                  >
+                  <IntroductionBox width={width} style={{ marginBottom: "162px" }}>
                     <Font24 id="portfolio">포트폴리오</Font24>
 
-                    <PortfolioConatiner
-                      data={Partner.partner_detail_list[0].item}
-                      width={width}
-                    />
+                    <PortfolioConatiner data={Partner.partner_detail_list[0].item} width={width} />
                   </IntroductionBox>
                   {Partner.partner_detail_list[0].item.file !== null ? (
                     <IntroductionBox width={width}>
@@ -604,10 +528,7 @@ class DetailCardContainer extends React.Component {
                   </div>
                   {notLoginUser && <Block />}
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
-                  <SummaryBox
-                    login={notLoginUser}
-                    active={!Auth.logged_in_partner}
-                  >
+                  <SummaryBox login={notLoginUser} active={!Auth.logged_in_partner}>
                     {/* <label>클라이언트 평균 만족도</label> */}
                     <header>
                       <mainscore>
@@ -615,13 +536,7 @@ class DetailCardContainer extends React.Component {
                           <TotalRating>
                             <div>
                               <ReviewStarRating
-                                width={
-                                  width > 1300
-                                    ? "31"
-                                    : width > 992
-                                    ? "26"
-                                    : "22"
-                                }
+                                width={width > 1300 ? "31" : width > 992 ? "26" : "22"}
                                 margin={4}
                                 score={Math.floor(this.state.avg_consult_score)}
                               />
@@ -646,26 +561,12 @@ class DetailCardContainer extends React.Component {
                           </span>
                           {width > 768 ? (
                             <div>
-                              <ReviewStarRating
-                                width={
-                                  width > 1300
-                                    ? "15"
-                                    : width > 992
-                                    ? "13"
-                                    : "11"
-                                }
-                                margin={1}
-                                score={this.state.avg_kindness_score}
-                              />
+                              <ReviewStarRating width={width > 1300 ? "15" : width > 992 ? "13" : "11"} margin={1} score={this.state.avg_kindness_score} />
                             </div>
                           ) : (
                             <>
-                              <CustomSlider
-                                value={this.state.avg_kindness_score * 20}
-                              />
-                              <div>
-                                {this.state.avg_kindness_score.toFixed(1)}
-                              </div>
+                              <CustomSlider value={this.state.avg_kindness_score * 20} />
+                              <div>{this.state.avg_kindness_score.toFixed(1)}</div>
                             </>
                           )}
                         </div>
@@ -680,26 +581,12 @@ class DetailCardContainer extends React.Component {
                           </span>
                           {width > 768 ? (
                             <div>
-                              <ReviewStarRating
-                                width={
-                                  width > 1300
-                                    ? "15"
-                                    : width > 992
-                                    ? "13"
-                                    : "11"
-                                }
-                                margin={1}
-                                score={this.state.avg_communication_score}
-                              />
+                              <ReviewStarRating width={width > 1300 ? "15" : width > 992 ? "13" : "11"} margin={1} score={this.state.avg_communication_score} />
                             </div>
                           ) : (
                             <>
-                              <CustomSlider
-                                value={this.state.avg_communication_score * 20}
-                              />
-                              <div>
-                                {this.state.avg_communication_score.toFixed(1)}
-                              </div>
+                              <CustomSlider value={this.state.avg_communication_score * 20} />
+                              <div>{this.state.avg_communication_score.toFixed(1)}</div>
                             </>
                           )}
                         </div>
@@ -714,26 +601,12 @@ class DetailCardContainer extends React.Component {
                           </span>
                           {width > 768 ? (
                             <div>
-                              <ReviewStarRating
-                                width={
-                                  width > 1300
-                                    ? "15"
-                                    : width > 992
-                                    ? "13"
-                                    : "11"
-                                }
-                                margin={1}
-                                score={this.state.avg_profession_score}
-                              />
+                              <ReviewStarRating width={width > 1300 ? "15" : width > 992 ? "13" : "11"} margin={1} score={this.state.avg_profession_score} />
                             </div>
                           ) : (
                             <>
-                              <CustomSlider
-                                value={this.state.avg_profession_score * 20}
-                              />
-                              <div>
-                                {this.state.avg_profession_score.toFixed(1)}
-                              </div>
+                              <CustomSlider value={this.state.avg_profession_score * 20} />
+                              <div>{this.state.avg_profession_score.toFixed(1)}</div>
                             </>
                           )}
                         </div>
@@ -742,11 +615,7 @@ class DetailCardContainer extends React.Component {
                   </SummaryBox>
                   <content>
                     <ReviewTop>
-                      {Partner.partnerReviewList[0] && (
-                        <TotalCount>
-                          전체 ({Partner.partnerReviewList[0].count})
-                        </TotalCount>
-                      )}
+                      {Partner.partnerReviewList[0] && <TotalCount>전체 ({Partner.partnerReviewList[0].count})</TotalCount>}
 
                       <DateSorting>
                         <div style={{ marginRight: "5px" }}>최신순</div>
@@ -754,28 +623,14 @@ class DetailCardContainer extends React.Component {
                       </DateSorting>
                     </ReviewTop>
 
-                    {Partner.partnerReviewList[0] &&
-                      console.log(toJS(Partner.partnerReviewList[0].current))}
+                    {Partner.partnerReviewList[0] && console.log(toJS(Partner.partnerReviewList[0].current))}
                     {Partner.partnerReviewList[0] &&
                       Partner.partnerReviewList[0].current.map((item, idx) => {
-                        return (
-                          <ReviewCard
-                            data={item}
-                            idx={idx}
-                            totalCount={
-                              Partner.partnerReviewList[0].current.length
-                            }
-                          />
-                        );
+                        return <ReviewCard data={item} idx={idx} totalCount={Partner.partnerReviewList[0].current.length} />;
                       })}
                   </content>
 
-                  {!Auth.logged_in_client && !Auth.logged_in_partner && (
-                    <BlackBox
-                      content="이 제조사의 리뷰를 보고싶다면?"
-                      width={width}
-                    />
-                  )}
+                  {!Auth.logged_in_client && !Auth.logged_in_partner && <BlackBox content="이 제조사의 리뷰를 보고싶다면?" width={width} />}
 
                   {/* {!Auth.logged_in_client ? (
                     <Layer>
@@ -813,26 +668,15 @@ class DetailCardContainer extends React.Component {
                   )} */}
 
                   <PageBar
-                    login={
-                      notLoginUser ||
-                      (Auth.logged_in_partner
-                        ? Partner.reviewWritingModalActive
-                        : !Partner.reviewWritingModalActive)
-                    }
+                    login={notLoginUser || (Auth.logged_in_partner ? Partner.reviewWritingModalActive : !Partner.reviewWritingModalActive)}
                     active={Partner.reviewWritingModalActive}
                   >
                     <img
                       src={pass1}
                       style={{
-                        opacity:
-                          current_set == 1 && Partner.reviewCurrentPage <= 1
-                            ? 0.4
-                            : 1,
+                        opacity: current_set == 1 && Partner.reviewCurrentPage <= 1 ? 0.4 : 1,
                         cursor: "pointer",
-                        display:
-                          !Partner.partnerReviewList[0] &&
-                          Partner.review_partner_page === 1 &&
-                          "none",
+                        display: !Partner.partnerReviewList[0] && Partner.review_partner_page === 1 && "none",
                       }}
                       onClick={() => {
                         this.pagePrev();
@@ -843,10 +687,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (current_set - 1)}
                       active={Partner.reviewCurrentPage % 5 == 1}
                       style={{
-                        display:
-                          Partner.review_partner_page < 5 * (current_set - 1)
-                            ? "none"
-                            : "block",
+                        display: Partner.review_partner_page < 5 * (current_set - 1) ? "none" : "block",
                       }}
                     >
                       {" "}
@@ -856,11 +697,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (current_set - 1) + 1}
                       active={Partner.reviewCurrentPage % 5 == 2}
                       style={{
-                        display:
-                          Partner.review_partner_page <
-                          5 * (current_set - 1) + 2
-                            ? "none"
-                            : "block",
+                        display: Partner.review_partner_page < 5 * (current_set - 1) + 2 ? "none" : "block",
                       }}
                       onClick={this.movePage}
                     >
@@ -871,11 +708,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (current_set - 1) + 2}
                       active={Partner.reviewCurrentPage % 5 == 3}
                       style={{
-                        display:
-                          Partner.review_partner_page <
-                          5 * (current_set - 1) + 3
-                            ? "none"
-                            : "block",
+                        display: Partner.review_partner_page < 5 * (current_set - 1) + 3 ? "none" : "block",
                       }}
                       onClick={this.movePage}
                     >
@@ -886,11 +719,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (current_set - 1) + 3}
                       active={Partner.reviewCurrentPage % 5 == 4}
                       style={{
-                        display:
-                          Partner.review_partner_page <
-                          5 * (current_set - 1) + 4
-                            ? "none"
-                            : "block",
+                        display: Partner.review_partner_page < 5 * (current_set - 1) + 4 ? "none" : "block",
                       }}
                       onClick={this.movePage}
                     >
@@ -901,11 +730,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (current_set - 1) + 4}
                       active={Partner.reviewCurrentPage % 5 == 0}
                       style={{
-                        display:
-                          Partner.review_partner_page <
-                          5 * (current_set - 1) + 5
-                            ? "none"
-                            : "block",
+                        display: Partner.review_partner_page < 5 * (current_set - 1) + 5 ? "none" : "block",
                       }}
                       onClick={this.movePage}
                     >
@@ -915,16 +740,9 @@ class DetailCardContainer extends React.Component {
                     <img
                       src={pass2}
                       style={{
-                        opacity:
-                          Partner.review_partner_page ==
-                          Partner.reviewCurrentPage
-                            ? 0.4
-                            : 1,
+                        opacity: Partner.review_partner_page == Partner.reviewCurrentPage ? 0.4 : 1,
                         cursor: "pointer",
-                        display:
-                          !Partner.partnerReviewList[0] &&
-                          Partner.review_partner_page === 1 &&
-                          "none",
+                        display: !Partner.partnerReviewList[0] && Partner.review_partner_page === 1 && "none",
                       }}
                       onClick={this.pageNext}
                     />
@@ -961,11 +779,7 @@ class DetailCardContainer extends React.Component {
                     <img
                       src={pass1}
                       style={{
-                        opacity:
-                          QuestionCurrentSet == 1 &&
-                          Partner.questionCurrentPage <= 1
-                            ? 0.4
-                            : 1,
+                        opacity: QuestionCurrentSet == 1 && Partner.questionCurrentPage <= 1 ? 0.4 : 1,
                         cursor: "pointer",
                         display: !Partner.questionList[0] && "none",
                       }}
@@ -984,11 +798,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (QuestionCurrentSet - 1)}
                       active={Partner.questionCurrentPage % 5 == 1}
                       style={{
-                        display:
-                          Partner.questionPage < 5 * QuestionCurrentSet &&
-                          Partner.questionList.length === 0
-                            ? "none"
-                            : "block",
+                        display: Partner.questionPage < 5 * QuestionCurrentSet && Partner.questionList.length === 0 ? "none" : "block",
                       }}
                     >
                       {" "}
@@ -998,11 +808,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (QuestionCurrentSet - 1) + 1}
                       active={Partner.questionCurrentPage % 5 == 2}
                       style={{
-                        display:
-                          Partner.questionPage <
-                          5 * (QuestionCurrentSet - 1) + 2
-                            ? "none"
-                            : "block",
+                        display: Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 2 ? "none" : "block",
                       }}
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -1016,11 +822,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (QuestionCurrentSet - 1) + 2}
                       active={Partner.questionCurrentPage % 5 == 3}
                       style={{
-                        display:
-                          Partner.questionPage <
-                          5 * (QuestionCurrentSet - 1) + 3
-                            ? "none"
-                            : "block",
+                        display: Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 3 ? "none" : "block",
                       }}
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -1034,11 +836,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (QuestionCurrentSet - 1) + 3}
                       active={Partner.questionCurrentPage % 5 == 4}
                       style={{
-                        display:
-                          Partner.questionPage <
-                          5 * (QuestionCurrentSet - 1) + 4
-                            ? "none"
-                            : "block",
+                        display: Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 4 ? "none" : "block",
                       }}
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -1052,11 +850,7 @@ class DetailCardContainer extends React.Component {
                       value={5 * (QuestionCurrentSet - 1) + 4}
                       active={Partner.questionCurrentPage % 5 == 0}
                       style={{
-                        display:
-                          Partner.questionPage <
-                          5 * (QuestionCurrentSet - 1) + 5
-                            ? "none"
-                            : "block",
+                        display: Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 5 ? "none" : "block",
                       }}
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -1069,15 +863,9 @@ class DetailCardContainer extends React.Component {
                     <img
                       src={pass2}
                       style={{
-                        opacity:
-                          Partner.questionPage == Partner.questionCurrentPage
-                            ? 0.4
-                            : 1,
+                        opacity: Partner.questionPage == Partner.questionCurrentPage ? 0.4 : 1,
                         cursor: "pointer",
-                        display:
-                          !Partner.questionList[0] &&
-                          Partner.questionPage === 1 &&
-                          "none",
+                        display: !Partner.questionList[0] && Partner.questionPage === 1 && "none",
                       }}
                       onClick={(e) => {
                         console.log("next");
@@ -1086,14 +874,7 @@ class DetailCardContainer extends React.Component {
                       }}
                     />
                   </PageBar>
-                  {!Auth.logged_in_partner && (
-                    <WritingContainer
-                      type="comment"
-                      clientId={clientId}
-                      partnerId={partnerId}
-                      setQA={this.setQA}
-                    />
-                  )}
+                  {!Auth.logged_in_partner && <WritingContainer type="comment" clientId={clientId} partnerId={partnerId} setQA={this.setQA} />}
                 </QuestionBox>
               </Card>
 
@@ -1134,10 +915,7 @@ class DetailCardContainer extends React.Component {
               <SimilarBox>
                 <Font24>비슷한 업체 더보기</Font24>
 
-                <Background
-                  backgroundColor="#f6f6f6"
-                  style={{ marginBottom: "5px" }}
-                >
+                <Background backgroundColor="#f6f6f6" style={{ marginBottom: "5px" }}>
                   <div style={{ display: "flex", width: "100%" }}>
                     {Partner.partner_list &&
                       (length < 4
@@ -1146,22 +924,16 @@ class DetailCardContainer extends React.Component {
                               <div
                                 onClick={(e) => {
                                   this.props.Partner.viewerLoading = 0;
-                                  this.props.Partner.recentPartnerId =
-                                    this.props.Partner.partner_detail_list[0].item.id;
+                                  this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id;
 
-                                  this.pushToDetail(
-                                    Partner.partner_list[item],
-                                    item
-                                  );
+                                  this.pushToDetail(Partner.partner_list[item], item);
                                 }}
                                 style={{ width: "100%", marginRight: "24px" }}
                               >
                                 <ProposalCard
                                   data={Partner.partner_list[item]}
                                   width={this.props.width}
-                                  categoryData={toJS(
-                                    Partner.category_dic[item]
-                                  )}
+                                  categoryData={toJS(Partner.category_dic[item])}
                                   idx={item}
                                   handleIntersection={this.handleIntersection}
                                   customer="partner"
@@ -1175,21 +947,15 @@ class DetailCardContainer extends React.Component {
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   this.props.Partner.viewerLoading = 0;
-                                  this.props.Partner.recentPartnerId =
-                                    this.props.Partner.partner_detail_list[0].item.id;
-                                  this.pushToDetail(
-                                    Partner.partner_list[item],
-                                    item
-                                  );
+                                  this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id;
+                                  this.pushToDetail(Partner.partner_list[item], item);
                                 }}
                                 style={{ width: "100%", marginRight: "24px" }}
                               >
                                 <ProposalCard
                                   data={Partner.partner_list[item]}
                                   width={this.props.width}
-                                  categoryData={toJS(
-                                    Partner.category_dic[item]
-                                  )}
+                                  categoryData={toJS(Partner.category_dic[item])}
                                   idx={item}
                                   handleIntersection={this.handleIntersection}
                                   customer="partner"
