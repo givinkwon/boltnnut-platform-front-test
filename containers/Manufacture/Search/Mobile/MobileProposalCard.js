@@ -4,7 +4,6 @@ import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
-import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
 const star = "static/icon/star_lightblue.svg";
@@ -75,40 +74,6 @@ class MobileProposalCard extends React.Component {
     } else {
       return false;
     }
-  };
-
-  clickLog = (partner) => {
-    const { Auth, Partner } = this.props;
-
-    let formData = new FormData();
-    formData.append("client", Auth.logged_in_client.id);
-    formData.append("search", Partner.search_text);
-    formData.append("partner", partner.id);
-
-    Partner.setclickLog(formData);
-
-    formData = new FormData();
-
-    formData.append(
-      "url",
-      window.location.protocol +
-        "//" +
-        window.location.host +
-        "/" +
-        "phoneClick"
-    );
-    const req = {
-      data: formData,
-    };
-
-    AccountAPI.setUserPageIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
 
   async componentDidMount() {

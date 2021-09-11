@@ -143,10 +143,7 @@ class Nav extends React.Component {
 
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon
-                    src={bnlogo}
-                    onClick={() => this.setState({ is_open: false })}
-                  />
+                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -209,21 +206,14 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink
-                        onClick={() =>
-                          alert(
-                            "오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요."
-                          )
-                        }
-                        active={url.indexOf("shop") > -1}
-                      >
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
                         {/* 공장 직거래 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -247,11 +237,7 @@ class Nav extends React.Component {
                       <NavLink active={url.indexOf("project") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink
-                              step_index={1}
-                              url={"project"}
-                              content={"프로젝트 보기"}
-                            />
+                            <KSLink step_index={1} url={"project"} content={"프로젝트 보기"} />
                           </Font16>
                         </RouterWrapper>
 
@@ -288,21 +274,14 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink
-                        onClick={() =>
-                          alert(
-                            "오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요."
-                          )
-                        }
-                        active={url.indexOf("shop") > -1}
-                      >
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={""} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
                         {/* 공장 직거래 */}
-                      </NavLink>
+                      {/* </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -379,21 +358,14 @@ class Nav extends React.Component {
                       </RouterWrapper>
                     </NavLink>
 
-                    <NavLink
-                      onClick={() =>
-                        alert(
-                          "오픈 예정입니다. 문의 사항은 하단 고객센터로 문의해주세요."
-                        )
-                      }
-                      active={url.indexOf("shop") > -1}
-                    >
-                      <RouterWrapper>
-                        <Font16>
-                          <KSLink url={""} content={"공장 직거래"} />
-                        </Font16>
-                      </RouterWrapper>
-                      {/* 공장 직거래 */}
-                    </NavLink>
+                    {/* <NavLink active={url.indexOf("shop") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={""} content={"공장 직거래"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 공장 직거래 */}
+                    {/* </NavLink> */}
 
                     {/* <NavLink active={url.indexOf("magazine") > -1}>
                       <RouterWrapper>
@@ -425,12 +397,7 @@ class Nav extends React.Component {
                               alignItems: "center",
                             }}
                           >
-                            <Avatar
-                              src={profile}
-                              onClick={() =>
-                                this.setState({ is_profile: !is_profile })
-                              }
-                            />
+                            <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
                           </div>
                           <SubMenu
                             style={{
@@ -518,10 +485,7 @@ class Nav extends React.Component {
                           onClick={() => {
                             this.props.Auth.setType("detailexpert");
                           }}
-                          active={
-                            url.indexOf("signup") > -1 &&
-                            Auth.type == "detailexpert"
-                          }
+                          active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                         >
                           <RouterWrapper>
                             <KSLink
@@ -548,11 +512,7 @@ class Nav extends React.Component {
                                 />
 
                                 <img
-                                  src={
-                                    this.state.closeImgState
-                                      ? close_clicked
-                                      : close_ic
-                                  }
+                                  src={this.state.closeImgState ? close_clicked : close_ic}
                                   onMouseOver={() => {
                                     this.setState({ closeImgState: true });
                                   }}
@@ -588,16 +548,13 @@ class Nav extends React.Component {
                                     }}
                                   >
                                     {/*파트너 등록한 경우 : 만든 제품 attribute를 트리거로 이용*/}
-                                    {Auth.logged_in_partner &&
-                                    Auth.logged_in_partner.history ? (
+                                    {Auth.logged_in_partner && Auth.logged_in_partner.history ? (
                                       <>
-                                        <span> 포트폴리오를 업데이트</span>하여{" "}
-                                        <br /> 업체를 홍보해보세요!
+                                        <span> 포트폴리오를 업데이트</span>하여 <br /> 업체를 홍보해보세요!
                                       </>
                                     ) : (
                                       <>
-                                        <span>포트폴리오를 업로드</span>하여{" "}
-                                        <br />
+                                        <span>포트폴리오를 업로드</span>하여 <br />
                                         업체를 홍보해보세요!
                                       </>
                                     )}
@@ -615,12 +572,7 @@ class Nav extends React.Component {
                               alignItems: "center",
                             }}
                           >
-                            <Avatar
-                              src={profile}
-                              onClick={() =>
-                                this.setState({ is_profile: !is_profile })
-                              }
-                            />
+                            <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
                           </div>
                           <SubMenu
                             style={{
@@ -710,9 +662,7 @@ class Nav extends React.Component {
                       </>
                     )}
                     <NavLink>
-                      <RouterWrapper
-                        style={{ paddingRight: 0, paddingLeft: 13 }}
-                      >
+                      <RouterWrapper style={{ paddingRight: 0, paddingLeft: 13 }}>
                         <StyledButton onClick={this.logout}>
                           <KSLink
                             url={""}
@@ -732,10 +682,7 @@ class Nav extends React.Component {
                       onClick={() => {
                         this.props.Auth.setType("detailexpert");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 &&
-                        Auth.type == "detailexpert"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                     >
                       <RouterWrapper>
                         <KSLink
@@ -755,9 +702,7 @@ class Nav extends React.Component {
                       onClick={() => {
                         Auth.setType("client");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 && Auth.type == "client"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "client"}
                     >
                       <RouterWrapper>
                         <KSLink
@@ -784,11 +729,7 @@ class Nav extends React.Component {
                               }}
                             />
                             <img
-                              src={
-                                this.state.closeImgState
-                                  ? close_clicked
-                                  : close_ic
-                              }
+                              src={this.state.closeImgState ? close_clicked : close_ic}
                               onMouseOver={() => {
                                 this.setState({ closeImgState: true });
                               }}
@@ -850,13 +791,8 @@ class Nav extends React.Component {
                   </ul>
                 )}
               </Menu>
-              <Icon
-                src={hamburger_ic}
-                onClick={() => this.setState({ is_open: true })}
-              />
-              {is_open && (
-                <BG onClick={() => this.setState({ is_open: false })} />
-              )}
+              <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
+              {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
           </Containerv1>
         </NavBox>
@@ -1013,7 +949,7 @@ const Avatar = styled.img`
 `;
 const NavBox = styled.div`
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   /* height: 60px; */
   width: 100%;
   background-color: ${WHITE};

@@ -19,19 +19,47 @@ const AD = "/static/images/Home/AD.svg";
 const ADback = "/static/images/Home/ADback.png";
 const ADbackground = "/static/images/Home/ADbackground.svg";
 
+import * as AccountAPI from "axios/Account/Account";
+
+
 @inject("Home", "Loading", "Auth", "Category")
 @observer
 class Home extends React.Component {
+
   state = {
     width: null,
     home_index: 1,
   };
+
+  // 새로고침 방지
+  _handleKeyDown = (event) => {
+    switch( event.keyCode ) {
+        case 116:
+            event.preventDefault();
+            break;
+        case 78:
+            if(event.ctrlKey){
+              event.preventDefault();
+            }
+        case 82:
+            if(event.ctrlKey){
+              event.preventDefault();
+            }
+        default: 
+            break;
+    }
+  };
+
   async componentDidMount() {
+
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
     console.log("home didmount");
     this.props.Auth.previous_url = "";
+
+    // 새로고침 방지
+    document.addEventListener("keydown", this._handleKeyDown);
 
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -41,6 +69,49 @@ class Home extends React.Component {
 
     await this.props.Auth.checkLogin();
     console.log("배포 테스트");
+
+    
+    // 페이지 저장
+    const formData = new FormData();
+    
+    const { history } = this.props;
+
+    // document.referrer은 next.js 페이지 내부에서의 이동이 안잡힘
+    // 페이지 내에 이동이 있는 경우 => 신규가 아님
+    if(history.length > 1){
+      formData.append("prevUrl", window.location.href + history[history.length-2])
+    }
+    else {
+      document.referrer === ""
+        ? formData.append("prevUrl", "direct")
+        : formData.append("prevUrl", document.referrer);
+    }
+
+    formData.append("url", window.location.href);
+    const req = {
+      data: formData,
+    };
+
+    // 방문자 트래픽 기록
+    AccountAPI.setUserIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    
+    // 전체 이동 기록
+    AccountAPI.setUserPageIP(req)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      console.log(e);
+      console.log(e.response);
+    });
+
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -48,9 +119,12 @@ class Home extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+
+  
   render() {
     const { Loading, Home } = this.props;
     const { width, home_index } = this.state;
+
     return (
       <>
         <Head>

@@ -27,8 +27,10 @@ class Index extends React.Component {
     const req = {
       data: formData,
     };
-  
-    AccountAPI.setUserPageIP(req)
+
+      
+      // 전체 이동 기록
+      AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })

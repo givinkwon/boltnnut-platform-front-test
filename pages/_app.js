@@ -2,7 +2,7 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
 import React from "react";
-import App from "next/app";
+import App, { Container }  from "next/app";
 
 import { Provider } from "mobx-react";
 import { createGlobalStyle } from "styled-components";
@@ -13,6 +13,7 @@ import CheckBrowserModal from "containers/Home/Common/CheckBrowserModal";
 import PrepareModal from "containers/Home/Common/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
@@ -78,11 +79,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
+
+  // 이전 페이지 관련 SSR : https://stackoverflow.com/questions/55565631/how-to-get-previous-url-in-nextjs
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+
   state = {
     ie_user: false,
     modal_shown: false,
     prepare: true,
     location: "",
+    history: [], // keep history items in state
   };
 
   closeModal = () => {
@@ -96,6 +110,13 @@ class MyApp extends App {
   componentDidMount() {
     const { Home } = this.props;
     const userAgent = window.navigator.userAgent;
+
+    // 이전 페이지 기록하기
+    const { asPath } = this.props.router;
+
+    // lets add initial route to `history`
+    this.setState(prevState => ({ history: [...prevState.history, asPath] }));
+    // 이전 페이지 기록하기 끝
 
     // 네이버 애널리틱스
     this.setState({
@@ -137,6 +158,17 @@ class MyApp extends App {
     if (window.wcs) {
       window.wcs_do();
     }
+    // 이전 페이지 기록하기
+    const { history } = this.state;
+    const { asPath } = this.props.router;
+
+    // if current route (`asPath`) does not equal
+    // the latest item in the history,
+    // it is changed so lets save it
+    if (history[history.length - 1] !== asPath) {
+      this.setState(prevState => ({ history: [...prevState.history, asPath] }));
+    }
+
   }
   render() {
     const { Component, pageProps, Home } = this.props;
@@ -148,9 +180,8 @@ class MyApp extends App {
           open={!this.state.modal_shown && this.state.ie_user}
           handleClose={this.closeModal}
         />
-
         <Provider {...stores}>
-          <Component {...pageProps} />
+          <Component history={this.state.history} {...pageProps} />
         </Provider>
       </ScrollToTop>
     );

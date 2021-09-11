@@ -411,7 +411,7 @@ class Partner {
     console.log(this.certification);
   };
 
-  @action movePage = (e) => {
+  @action movePage = (e, container = "Search") => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
     this.currentPage = newPage;
@@ -422,11 +422,17 @@ class Partner {
     this.dropDownActive = false;
     this.dropDownIdx = -1;
     this.click_count += 1;
-    this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
+    if (container == "Search") {
+      this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
+    }
+
+    if (container == "Shop") {
+      this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, "Shop");
+    }
     window.scrollTo(0, 0);
   };
 
-  @action pageNext = (e) => {
+  @action pageNext = (e, container = "Search") => {
     e.preventDefault();
     if (this.currentPage < this.partner_page) {
       const nextPage = this.currentPage + 1;
@@ -438,11 +444,17 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, this.click_count);
+      if (container == "Search") {
+        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
+      }
+
+      if (container == "Shop") {
+        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, "Shop");
+      }
     }
   };
 
-  @action pagePrev = (e) => {
+  @action pagePrev = (e, container = "Search") => {
     e.preventDefault();
     if (this.currentPage > 1) {
       const newPage = this.currentPage - 1;
@@ -454,7 +466,13 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, this.click_count);
+      if (container == "Search") {
+        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
+      }
+
+      if (container == "Shop") {
+        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, "Shop");
+      }
       window.scrollTo(0, 0);
     }
   };
@@ -1068,11 +1086,22 @@ class Partner {
           console.log(e.response);
         });
     }
-    // 검색 시 텍스트 저장
-    if (this.search_text) {
+
+    // 검색 시 텍스트 저장 && 3초 내에 재검색 시 검색 안되도록
+    if (this.search_text && !this.SearchLoading) {
       this.saveSearchText(this.search_text);
     }
+
+    if (this.SearchLoading == false) {
+      this.SearchLoading = true;
+      setTimeout(() => {
+        this.SearchLoading = false;
+      }, 3000);
+    }
   };
+
+  // 검색 시 중복 검색 제거
+  @observable SearchLoading = false;
 
   @action saveSearchText = (text) => {
     const formData = new FormData();
