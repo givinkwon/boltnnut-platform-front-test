@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 import * as Title from "components/Title";
 
-import ContainerV1 from "components/ContainerV1";
+import ContainerV1 from "components/Containerv1";
 import ReminderCardContainer from "./ReminderCard";
 import TabBarCardContainer from "./TabBarContainer";
 import ReviewCardContainer from "./ReviewContainer";
