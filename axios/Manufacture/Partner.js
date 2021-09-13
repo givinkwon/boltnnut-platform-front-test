@@ -373,7 +373,6 @@ export function getPartnerName(req) {
   });
 }
 
-
 export function getPPTInfo(req) {
   return axios({
     method: "GET",
@@ -440,19 +439,20 @@ export function existBookmarkPartner(req) {
 export function setQuestion(req) {
   return axios({
     method: "POST",
-    url: `${ROOT_URL}/QnA/post/`,
+    url: `${ROOT_URL}/QnA/`,
     data: req.data ? req.data : null,
     headers: req.headers ? req.headers : null,
   });
 }
-export function setAnswerByQuestion(req) {
-  return axios({
-    method: "POST",
-    url: `${ROOT_URL}/QnA/answer_post/`,
-    data: req.data ? req.data : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
+
+// export function setAnswerByQuestion(req) {
+//   return axios({
+//     method: "POST",
+//     url: `${ROOT_URL}/QnA/answer_post/`,
+//     data: req.data ? req.data : null,
+//     headers: req.headers ? req.headers : null,
+//   });
+// }
 
 export function deleteQuestion(req) {
   return axios({
