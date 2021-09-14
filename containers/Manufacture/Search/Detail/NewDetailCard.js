@@ -148,11 +148,11 @@ class NewDetailCardContainer extends React.Component {
                   </InnerBox>
                 </div>
 
-                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                {/* <InnerBox style={{ width: 100, alignItems: "center" }}>
                   <Font16 style={{ marginRight: 24 }}>1/2</Font16>
                   <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
                   <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
-                </InnerBox>
+                </InnerBox> */}
               </InnerBox>
 
               <ReminderCardContainer />
@@ -185,11 +185,11 @@ class NewDetailCardContainer extends React.Component {
               <InnerBox style={{ justifyContent: "space-between" }}>
                 <Font18>다른 고객이 비교한 제조사</Font18>
 
-                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                {/* <InnerBox style={{ width: 100, alignItems: "center" }}>
                   <Font16 style={{ marginRight: 24 }}>1/2</Font16>
                   <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
                   <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
-                </InnerBox>
+                </InnerBox> */}
               </InnerBox>
 
               <ReminderCardContainer />
