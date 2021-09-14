@@ -51,6 +51,14 @@ class ReviewCardContainer extends React.Component {
 
         <BoundaryLine style={{ margin: "15px 0px 36px 0px" }} />
 
+        {/* 후기 없을 경우 */}
+        {/* <ReviewWriteBox>
+          <Font16 style={{ color: "#282c36" }}>아직 작성된 리뷰가 없습니다.</Font16>
+          <Font16 style={{ color: "#282c36", marginTop: 8 }}>첫 번째 리뷰를 작성해볼까요?</Font16>
+
+          <ReviewWriteBtn>후기 작성하기</ReviewWriteBtn>
+        </ReviewWriteBox> */}
+
         <InnerBox style={{ alignItems: "center", height: 24 }}>
           <Font16 style={{ color: "#191919", fontWeight: "bold", marginRight: 8 }}>rhk***님</Font16>
           <img src="/static/images/partnercard/detailcard/bluestar18.svg" style={{ marginBottom: 7 }} />

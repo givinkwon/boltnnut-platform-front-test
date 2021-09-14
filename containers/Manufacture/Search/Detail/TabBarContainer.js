@@ -64,7 +64,9 @@ class TabBarCardContainer extends React.Component {
 
           <CompanyInfoBox>
             <Font16 style={{ color: "#282c36", width: 65, fontWeight: "bold" }}>설립연도</Font16>
-            <Font16 style={{ color: "#414550" }}>{Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}</Font16>
+            <Font16 style={{ color: "#414550" }}>
+              {Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}
+            </Font16>
           </CompanyInfoBox>
         </CompanyInfoContainer>
 

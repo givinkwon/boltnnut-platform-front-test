@@ -2428,32 +2428,82 @@ class Partner {
       });
   };
 
-  @action setQuestion = async (clientID, partnerID, secret, content) => {
-    console.log(clientID);
-    console.log(partnerID);
-    console.log(secret);
-    console.log(content);
+  @action setQuestion = async (clientID, partnerID, questionID, state, secret, content) => {
     const formData = new FormData();
-    formData.append("clientID", clientID);
-    formData.append("partnerID", partnerID);
-    formData.append("secret", secret ? 1 : 0);
-    formData.append("content", content);
 
-    const req = {
-      data: formData,
-    };
+    if (questionID === null) {
+      formData.append("client", clientID);
+      formData.append("partner", partnerID);
+      formData.append("secret", secret ? 1 : 0);
+      formData.append("content", content);
 
-    await PartnerAPI.setQuestion(req)
-      .then((res) => {
-        console.log(res);
-        alert("글 작성이 완료되었습니다");
-      })
-      .catch((e) => {
-        alert("글 작성을 실패했습니다");
-        console.log(e);
-        console.log(e.response);
-      });
+      const req = {
+        data: formData,
+      };
+
+      await PartnerAPI.setQuestion(req)
+        .then((res) => {
+          console.log(res);
+          alert("글 작성이 완료되었습니다");
+        })
+        .catch((e) => {
+          alert("글 작성을 실패했습니다");
+          console.log(e);
+          console.log(e.response);
+        });
+    } else {
+      formData.append("client", clientID);
+      formData.append("partner", partnerID);
+      formData.append("parent", questionID);
+      formData.append("state", state); // 0 이면 클라이언트, 1 이면 파트너
+      formData.append("secret", secret ? 1 : 0);
+      formData.append("content", content);
+
+      const req = {
+        data: formData,
+      };
+
+      await PartnerAPI.setQuestion(req)
+        .then((res) => {
+          console.log(res);
+          alert("글 작성이 완료되었습니다");
+        })
+        .catch((e) => {
+          alert("글 작성을 실패했습니다");
+          console.log(e);
+          console.log(e.response);
+        });
+    }
   };
+
+  // @action setAnswerByQuestion = async (questionID, state, secret, content, clientID = "") => {
+  //   console.log(questionID);
+  //   console.log(state);
+  //   console.log(secret);
+  //   console.log(content);
+  //   console.log(clientID);
+  //   const formData = new FormData();
+  //   formData.append("questionID", questionID);
+  //   formData.append("state", state);
+  //   formData.append("secret", secret ? 1 : 0);
+  //   formData.append("content", content);
+  //   formData.append("clientID", clientID);
+
+  //   const req = {
+  //     data: formData,
+  //   };
+
+  //   await PartnerAPI.setAnswerByQuestion(req)
+  //     .then((res) => {
+  //       console.log(res);
+  //       alert("답변 작성이 완료되었습니다");
+  //     })
+  //     .catch((e) => {
+  //       alert("답변 작성을 실패했습니다");
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
 
   @action getBusinessCategory = async (id) => {
     const req = {
@@ -2474,35 +2524,6 @@ class Partner {
         });
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  @action setAnswerByQuestion = async (questionID, state, secret, content, clientID = "") => {
-    console.log(questionID);
-    console.log(state);
-    console.log(secret);
-    console.log(content);
-    console.log(clientID);
-    const formData = new FormData();
-    formData.append("questionID", questionID);
-    formData.append("state", state);
-    formData.append("secret", secret ? 1 : 0);
-    formData.append("content", content);
-    formData.append("clientID", clientID);
-
-    const req = {
-      data: formData,
-    };
-
-    await PartnerAPI.setAnswerByQuestion(req)
-      .then((res) => {
-        console.log(res);
-        alert("답변 작성이 완료되었습니다");
-      })
-      .catch((e) => {
-        alert("답변 작성을 실패했습니다");
         console.log(e);
         console.log(e.response);
       });

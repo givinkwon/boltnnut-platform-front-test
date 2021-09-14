@@ -48,7 +48,9 @@ class ReviewCardContainer extends React.Component {
           <Font26>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.name}</Font26>
 
           <Font15 style={{ marginTop: 36 }}>설립연도</Font15>
-          <Font16>{Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}</Font16>
+          <Font16>
+            {Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.year == "0000" ? "-" : Partner.partner_detail_list[0].item.year + "년"}
+          </Font16>
 
           <Font15>총 매출액</Font15>
           <Font16>{Partner.partner_detail_list[0].item.salses ? Partner.partner_detail_list[0].item.salses : "-"}</Font16>
@@ -71,7 +73,6 @@ class ReviewCardContainer extends React.Component {
           <SubContainerBtnBox>
             <SubContainerBtn
               style={{
-                background: "#0933b3",
                 border: "none",
                 color: "#fff",
               }}
@@ -182,6 +183,11 @@ const SubContainerBtn = styled.button`
   font-size: 16px;
   font-family: NotoSansCJKkr;
   cursor: pointer;
+  background: #0933b3;
+
+  :hover {
+    background-color: #174aee;
+  }
 `;
 
 const ActivePossibleBox = styled.div`

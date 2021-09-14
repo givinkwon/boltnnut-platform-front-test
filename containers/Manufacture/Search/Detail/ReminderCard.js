@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
 import ProposalCard from "./ProposalCard";
+import NewProposalCard from "./NewProposalCard";
 
 @inject("Partner", "Auth", "Common")
 @observer
@@ -28,84 +29,61 @@ class ReminderCardContainer extends React.Component {
     let remainderAry = arr.filter((el) => el !== index);
 
     return (
-      <InnerBox
-        style={{
-          width: 792,
-          marginTop: 24,
-          justifyContent: "space-between",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
+      <ReminderCardSection>
+        <InnerBox>
           {Partner.partner_list &&
-            (length < 4
-              ? remainderAry.map((item, idx) => {
-                  return (
-                    <div
-                      onClick={(e) => {
-                        Partner.viewerLoading = 0;
-                        Partner.recentPartnerId = Partner.partner_detail_list[0].item.id;
-
-                        Partner.remindCardPushToDetail(Partner.partner_list[item], item);
-                      }}
-                      style={{
-                        width: 225,
-                        height: 309,
-                        cursor: "pointer",
-                      }}
-                    >
-                      <ProposalCard
-                        data={Partner.partner_list[item]}
-                        width={this.props.width}
-                        height={309}
-                        categoryData={toJS(Partner.category_dic[item])}
-                        idx={item}
-                        handleIntersection={this.handleIntersection}
-                        customer="partner"
-                      />
-                    </div>
-                  );
-                })
-              : remainderAry.splice(0, 3).map((item, idx) => {
-                  return (
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Partner.viewerLoading = 0;
-                        Partner.recentPartnerId = Partner.partner_detail_list[0].item.id;
-                        Partner.remindCardPushToDetail(Partner.partner_list[item], item);
-                      }}
-                      style={{
-                        width: 225,
-                        height: 309,
-                        cursor: "pointer",
-                      }}
-                    >
-                      <ProposalCard
-                        data={Partner.partner_list[item]}
-                        width={this.props.width}
-                        height={309}
-                        categoryData={toJS(Partner.category_dic[item])}
-                        idx={item}
-                        handleIntersection={this.handleIntersection}
-                        customer="partner"
-                      />
-                    </div>
-                  );
-                }))}
-        </div>
-      </InnerBox>
+            remainderAry.map((item, idx) => {
+              return (
+                <ProposalCardBox
+                  onClick={(e) => {
+                    Partner.viewerLoading = 0;
+                    Partner.recentPartnerId = Partner.partner_detail_list[0].item.id;
+                    Partner.remindCardPushToDetail(Partner.partner_list[item], item);
+                  }}
+                >
+                  <NewProposalCard
+                    data={Partner.partner_list[item]}
+                    width={this.props.width}
+                    categoryData={toJS(Partner.category_dic[item])}
+                    idx={item}
+                    handleIntersection={this.handleIntersection}
+                    customer="partner"
+                  />
+                </ProposalCardBox>
+              );
+            })}
+        </InnerBox>
+      </ReminderCardSection>
     );
   }
 }
 
 export default ReminderCardContainer;
 
+const ReminderCardSection = styled.section`
+  display: flex;
+  width: 792px;
+  height: 320px;
+  margin-top: 24px;
+  justify-content: space-between;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ::-webkit-scrollbar-thumb {
+    background-color: #fff;
+  } */
+`;
+
 const InnerBox = styled.div`
   display: flex;
+  gap: 15px;
+`;
+
+const ProposalCardBox = styled.div`
+  width: 230px;
+  height: 309px;
+  cursor: pointer;
 `;

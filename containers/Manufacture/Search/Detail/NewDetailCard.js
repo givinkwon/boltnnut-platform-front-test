@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { reaction } from "mobx";
 import { inject, observer } from "mobx-react";
 
 import * as Title from "components/Title";
@@ -19,6 +20,7 @@ class NewDetailCardContainer extends React.Component {
   state = {
     portfolioToShow: 20,
     portfolioSetMoreState: false,
+    tabBarPrevState: 0, // 탭바의 이전상태를 가져오기 위함
 
     info: React.createRef(),
     review: React.createRef(),
@@ -34,20 +36,23 @@ class NewDetailCardContainer extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const { Partner } = this.props;
 
     // 탭바 스크롤 이벤트
-    if (Partner.tabBar === 1) {
-      this.state.info.current.scrollIntoView({ behavior: "smooth" });
-    }
-
-    if (Partner.tabBar === 2) {
-      this.state.review.current.scrollIntoView({ behavior: "smooth" });
-    }
-
-    if (Partner.tabBar === 3) {
-      this.state.question.current.scrollIntoView({ behavior: "smooth" });
+    if (prevState.tabBarPrevState !== Partner.tabBar) {
+      if (Partner.tabBar === 1) {
+        this.setState({ ...this.state, tabBarPrevState: 1 });
+        this.state.info.current.scrollIntoView({ behavior: "smooth" });
+      }
+      // if (Partner.tabBar === 2) {
+      //   this.setState({ ...this.state, tabBarPrevState: 2 });
+      //   this.state.review.current.scrollIntoView({ behavior: "smooth" });
+      // }
+      // if (Partner.tabBar === 3) {
+      //   this.setState({ ...this.state, tabBarPrevState: 3 });
+      //   this.state.question.current.scrollIntoView({ behavior: "smooth" });
+      // }
     }
 
     // 더 보여줄 포트폴리오가 없는 경우 더보기 버튼 삭제
@@ -70,6 +75,7 @@ class NewDetailCardContainer extends React.Component {
 
     // 탭바 인덱스 초기화
     Partner.tabIdx = 1;
+    Partner.tabBar = 0;
   }
 
   // 포트폴리오 보여주기 갯수 핸들러
@@ -96,7 +102,7 @@ class NewDetailCardContainer extends React.Component {
   }
 
   render() {
-    const { Partner } = this.props;
+    const { Partner, Auth } = this.props;
     console.log(Partner.tabIdx);
 
     // Map 리전 넣어주기
@@ -142,11 +148,11 @@ class NewDetailCardContainer extends React.Component {
                   </InnerBox>
                 </div>
 
-                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                {/* <InnerBox style={{ width: 100, alignItems: "center" }}>
                   <Font16 style={{ marginRight: 24 }}>1/2</Font16>
                   <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
                   <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
-                </InnerBox>
+                </InnerBox> */}
               </InnerBox>
 
               <ReminderCardContainer />
@@ -169,9 +175,9 @@ class NewDetailCardContainer extends React.Component {
             </div> */}
 
             {/* QnA */}
-            <div ref={this.state.question}>
+            {/* <div ref={this.state.question}>
               <QnAContainer />
-            </div>
+            </div> */}
 
             {/* 다른 고객이 비교한 제조사 */}
             <CompareManufacturersSection>
@@ -179,11 +185,11 @@ class NewDetailCardContainer extends React.Component {
               <InnerBox style={{ justifyContent: "space-between" }}>
                 <Font18>다른 고객이 비교한 제조사</Font18>
 
-                <InnerBox style={{ width: 100, alignItems: "center" }}>
+                {/* <InnerBox style={{ width: 100, alignItems: "center" }}>
                   <Font16 style={{ marginRight: 24 }}>1/2</Font16>
                   <img src="/static/images/partner/prev.svg" style={{ cursor: "pointer" }} />
                   <img src="/static/images/partner/next.svg" style={{ cursor: "pointer" }} />
-                </InnerBox>
+                </InnerBox> */}
               </InnerBox>
 
               <ReminderCardContainer />
