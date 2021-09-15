@@ -351,7 +351,7 @@ class Category {
     }
     // search 페이지에서 왔을 때만
     if (container == "shop") {
-      Partner.getPartner(1, "shop");
+      Partner.getPartner(1, "Shop");
     }
   };
 
@@ -434,7 +434,7 @@ class Category {
 
     // shop 페이지에서 왔을 때만
     if (container === "shop") {
-      Partner.getPartner(1, "shop");
+      Partner.getPartner(1, "Shop");
     }
   };
 
