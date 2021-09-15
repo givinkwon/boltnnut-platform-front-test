@@ -136,6 +136,7 @@ export function deleteStructure(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
 //20200925
 export function postResume(req, formData) {
   return axios.post(`${ROOT_URL}/resume/`, formData, {
@@ -436,37 +437,28 @@ export function existBookmarkPartner(req) {
   });
 }
 
-export function setQuestion(req) {
+export function getBusinessName(req) {
   return axios({
-    method: "POST",
-    url: `${ROOT_URL}/QnA/`,
-    data: req.data ? req.data : null,
-    headers: req.headers ? req.headers : null,
+    method: "GET",
+    url: `${ROOT_URL}/business/${req}`,
   });
 }
 
-// export function setAnswerByQuestion(req) {
-//   return axios({
-//     method: "POST",
-//     url: `${ROOT_URL}/QnA/answer_post/`,
-//     data: req.data ? req.data : null,
-//     headers: req.headers ? req.headers : null,
-//   });
-// }
-
-export function deleteQuestion(req) {
-  return axios({
-    method: "DELETE",
-    url: `${ROOT_URL}/QnA/delete/`,
-    data: req.data ? req.data : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
 export function getBusinessCategory(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partner/${req.id}`,
     params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+// QnA
+export function setQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/QnA/`,
+    data: req.data ? req.data : null,
     headers: req.headers ? req.headers : null,
   });
 }
@@ -477,12 +469,6 @@ export function getQuestion(req) {
     url: `${ROOT_URL}/QnA/get/`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
-  });
-}
-export function getBusinessName(req) {
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/business/${req}`,
   });
 }
 

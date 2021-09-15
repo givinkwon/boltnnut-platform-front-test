@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-
-import ProposalCard from "./ProposalCard";
 import NewProposalCard from "./NewProposalCard";
 
 @inject("Partner", "Auth", "Common")
@@ -66,12 +64,11 @@ const ReminderCardSection = styled.section`
   height: 320px;
   margin-top: 24px;
   justify-content: space-between;
-  overflow-x: scroll;
 
+  overflow-x: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
-
   /* ::-webkit-scrollbar-thumb {
     background-color: #fff;
   } */
@@ -83,7 +80,7 @@ const InnerBox = styled.div`
 `;
 
 const ProposalCardBox = styled.div`
-  width: 230px;
+  width: 200px;
   height: 309px;
   cursor: pointer;
 `;

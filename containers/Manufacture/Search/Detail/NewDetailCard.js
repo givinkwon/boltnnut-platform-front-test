@@ -12,6 +12,7 @@ import ReviewCardContainer from "./ReviewContainer";
 import MapContainer from "./Map";
 import QnAContainer from "./QnAContainer";
 import SubContainer from "./SubContainer";
+import ReviewWritingModal from "./ReviewWritingModal";
 // import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 @inject("Partner", "Auth", "Common")
@@ -120,6 +121,7 @@ class NewDetailCardContainer extends React.Component {
         <Container>
           {/* MainContainer */}
           <div style={{ width: 792, display: "flex", flexDirection: "column" }}>
+            {/* <ReviewWritingModal /> */}
             {/* 포트폴리오 */}
             <PortfolioSection>
               <MainContainer>

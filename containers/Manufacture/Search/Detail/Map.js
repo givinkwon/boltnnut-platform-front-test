@@ -8,20 +8,13 @@ class MapContainer extends React.Component {
   state = {
     g: 0,
   };
-  // shouldComponentUpdate = (prevProps, nextState) => {
-  //   const { Partner } = this.props;
-  //   console.log(this.state.g);
-  //   console.log(nextState.g);
 
-  //   return this.state.g !== nextState.g;
-  // };
   getMap() {
     const { city } = this.props;
     const script = document.createElement("script");
     script.async = true;
     script.type = "text/javascript";
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&libraries=services&autoload=false";
+    script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&libraries=services&autoload=false";
     document.head.appendChild(script);
 
     console.log(city);
@@ -102,7 +95,7 @@ class MapContainer extends React.Component {
     this.getMap();
     return (
       <>
-        <Maps id="map"></Maps>
+        <Maps id="map" />
       </>
     );
   }
