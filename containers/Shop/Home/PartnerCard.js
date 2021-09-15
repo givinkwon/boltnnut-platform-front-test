@@ -34,69 +34,8 @@ class PartnerCard extends React.Component {
 
   componentDidMount() {
     const { width, Search, data, Partner, idx, Auth } = this.props;
-    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data && data.id;
-
-    Partner.existCheckedBookmark(clientId, partnerId, idx);
-    Partner.getTotalBookmarkByPartner(partnerId);
-
-    const existLogo = data && data.logo && data.logo.split("/")[4];
-
     window.addEventListener("resize", Search.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    const req = {
-      id: data && data.city,
-    };
-
-    const partnerReq = {
-      id: data && data.id,
-    };
-
-    const reviewReq = {
-      params: {
-        partner_id: data && data.id,
-      },
-    };
-
-    const BookmarkReq = {
-      params: {
-        partnerID: data && data.id,
-      },
-    };
-
-    PartnerAPI.getCityName(req)
-      .then((res) => {
-        this.setState({ city: res.data.maincategory });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then((res) => {
-        this.setState({ totalPartnerBookmark: res.data.count });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    const temp = [];
-    PartnerAPI.getBusinessCategory(partnerReq)
-      .then((res) => {
-        res.data.business.forEach((element) => {
-          PartnerAPI.getBusinessName(element).then((res) => {
-            temp.push(res.data.category);
-            this.setState({ business: temp });
-          });
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   }
 
   componentWillUnmount() {
@@ -228,15 +167,33 @@ class PartnerCard extends React.Component {
                     {data && data.name}
                 </Introduce>
 
-                <Introduce style={{textAlign : "right"}}>
-                    단품 가격 : {Math.round(data.shop.price1 * 0.95 / 10 ) * 10}원
-                </Introduce>
-                <Introduce style={{textAlign : "right"}}>
-                    {data.shop.moq2} : {Math.round(data.shop.price1 * 0.85 / 10) * 10}원
-                </Introduce>
-                <Introduce style={{textAlign : "right"}}>
-                    {data.shop.moq3} : {Math.round(data.shop.price1 * 0.7 / 10 )  * 10}원
-                </Introduce>
+                {/*가격이 너무 높을 때는 표시하지 않음*/}
+                {data.shop && data.shop.price1 && data.shop.price1 < 2000000 ? 
+                (
+                  <>
+                  <Introduce style={{textAlign : "right"}}>
+                      단품 가격 : {data.shop.price1 && (Math.round(data.shop.price1 * 0.95 / 100 ) * 100).toLocaleString("ko-KR")}원
+                  </Introduce>
+                  <Introduce style={{textAlign : "right"}}>
+                      {data.shop.moq2} : {(Math.round(data.shop.price1 * 0.85 / 100) * 100).toLocaleString("ko-KR")}원
+                  </Introduce>
+                  <Introduce style={{textAlign : "right"}}>
+                      {data.shop.moq3} : {(Math.round(data.shop.price1 * 0.7 / 100 )  * 100).toLocaleString("ko-KR")}원
+                  </Introduce>
+                  </>
+                )
+                :
+                (
+                  <>
+                  <Introduce style={{textAlign : "right"}}>
+                    단품 가격 : {data.shop && data.shop.price1 && (Math.round(data.shop.price1 * 0.95 / 10000 ) * 10000).toLocaleString("ko-KR")}원
+                  </Introduce>
+                  <Introduce style={{textAlign : "right"}}>
+                  구매수량에 따라 가격 협의
+                  </Introduce> 
+                  </>
+                )
+                }
                 <ButtonBox onClick = {() => Sample.openModal()} >
                   <ButtonComponent
                       style={{ width: "200px", height: "42px" }}
