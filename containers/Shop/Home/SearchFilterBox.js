@@ -71,7 +71,7 @@ class SearchFilterBox extends React.Component {
 
   componentDidMount = () => {
     const { Partner, Category } = this.props;
-
+    Category.reset()
     window.addEventListener("scroll", this.scrollEventHandler);
     Partner.filter_dropdown = true;
     Partner.subButtonActive = false;
@@ -163,7 +163,7 @@ class SearchFilterBox extends React.Component {
     Partner.matching_image = "";
     Partner.imgSearchModalActive = false;
 
-    PartnerAPI.getPartners(req)
+    PartnerAPI.getPartners_shop(req)
       .then((res) => {
         console.log(res);
         Partner.partner_count = res.data.count;
