@@ -163,36 +163,6 @@ class Nav extends React.Component {
                             <KSLink url={"request"} content={"제조 문의하기"} />
                           </Font16>
                         </RouterWrapper>
-
-                        <SubMenu>
-                          <li>
-                            <KSLink
-                              step_index={1}
-                              url={"project"}
-                              FontContent={() => {
-                                return <Font14>모든 제조문의</Font14>;
-                              }}
-                            />
-                          </li>
-                          {/* <li>
-                            <KSLink
-                              step_index={0}
-                              url={"project"}
-                              FontContent={() => {
-                                return <Font14>내 프로젝트</Font14>;
-                              }}
-                            />
-                          </li> */}
-                          <li>
-                            <KSLink
-                              url={"request"}
-                              onClick={Request.set_request_type}
-                              FontContent={() => {
-                                return <Font14>제조 문의하기</Font14>;
-                              }}
-                            />
-                          </li>
-                        </SubMenu>
                       </NavLink>
 
                       <NavLink active={url.indexOf("autoestimate") > -1}>
@@ -240,27 +210,6 @@ class Nav extends React.Component {
                             <KSLink step_index={1} url={"project"} content={"프로젝트 보기"} />
                           </Font16>
                         </RouterWrapper>
-
-                        <SubMenu>
-                          <li>
-                            <KSLink
-                              step_index={1}
-                              url={"project"}
-                              FontContent={() => {
-                                return <Font14>모든 제조문의</Font14>;
-                              }}
-                            />
-                          </li>
-                          <li>
-                            <KSLink
-                              step_index={0}
-                              url={"project"}
-                              FontContent={() => {
-                                return <Font14>나의 제조문의</Font14>;
-                              }}
-                            />
-                          </li>
-                        </SubMenu>
                       </NavLink>
 
                       <NavLink active={url.indexOf("autoestimate") > -1}>
@@ -315,36 +264,6 @@ class Nav extends React.Component {
                           }}
                         />
                       </RouterWrapper>
-
-                      <SubMenu>
-                        <li>
-                          <KSLink
-                            step_index={1}
-                            url={"project"}
-                            FontContent={() => {
-                              return <Font14>모든 제조문의</Font14>;
-                            }}
-                          />
-                        </li>
-                        {/* <li>
-                          <KSLink
-                            step_index={0}
-                            url={"project"}
-                            FontContent={() => {
-                              return <Font14>내 프로젝트</Font14>;
-                            }}
-                          />
-                        </li> */}
-                        <li>
-                          <KSLink
-                            url={"request"}
-                            onClick={Request.set_request_type}
-                            FontContent={() => {
-                              return <Font14>제조 문의하기</Font14>;
-                            }}
-                          />
-                        </li>
-                      </SubMenu>
                     </NavLink>
 
                     <NavLink active={url.indexOf("autoestimate") > -1}>
