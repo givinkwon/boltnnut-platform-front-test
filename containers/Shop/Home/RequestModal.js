@@ -283,7 +283,7 @@ const ModalBox = styled.div`
   left: 25%;
   z-index: 101;
   background-color: white;
-  height: 60%;
+  height: 70%;
   width: 50% !important;
   box-shadow: 0 0 1px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;

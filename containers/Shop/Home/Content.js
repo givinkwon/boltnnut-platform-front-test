@@ -67,40 +67,7 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
     }
-    if (Partner.filter_city_ary.length === 1) {
-      Partner.getCity();
-    }
-
-    Partner.partner_list.map((item, idx) => {
-      Partner.getTotalBookmarkByPartner(item.id);
-      Partner.getReviewByPartner;
-    });
-
-    var recent_partner_dic = [];
-    var recent_partner = [];
-    var recent_partner_namearr = [];
-
-    await Cookie.partner_view_list.map((item, idx) => {
-      PartnerAPI.detail(item)
-        .then((res) => {
-          this.setState({ recent_partner: res.data });
-
-          recent_partner_dic[res.data.name] = res.data.portfolio_set[0].img_portfolio;
-          recent_partner.push(res.data);
-          recent_partner_namearr.push(res.data.name);
-
-          this.setState({
-            recent_partner_dic: recent_partner_dic,
-            recent_partner_name: res.data.name,
-            recent_partner: recent_partner,
-            recent_partner_namearr: recent_partner_namearr,
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    });
+   
   }
 
   componentWillUnmount() {
@@ -246,6 +213,7 @@ class ManufacturerContentContainer extends React.Component {
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
         {/* <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div> */}
 
+        {console.log(Partner.partner_page, current_set)}
         <PageBar>
           <img
             src={pass1}

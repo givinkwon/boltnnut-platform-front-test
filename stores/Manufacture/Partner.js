@@ -434,6 +434,7 @@ class Partner {
 
   @action pageNext = (e, container = "Search") => {
     e.preventDefault();
+    
     if (this.currentPage < this.partner_page) {
       const nextPage = this.currentPage + 1;
       this.currentPage = nextPage;
@@ -444,12 +445,13 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
+      
       if (container == "Search") {
-        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
+        this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, this.click_count);
       }
 
       if (container == "Shop") {
-        this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, "Shop");
+        this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, "Shop");
       }
     }
   };
@@ -1068,7 +1070,7 @@ class Partner {
           this.partner_list = res.data.results;
           this.partner_count = res.data.count;
           this.partner_next = res.data.next;
-          console.log(res);
+          this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
         })
         .catch((e) => {
           console.log(e);
@@ -1874,11 +1876,11 @@ class Partner {
     }
 
     // shop에서 온 경우
-    if (pre_page === "shop") {
+    if (pre_page === "Shop") {
       // console.log(req.params);
       PartnerAPI.getPartners_shop(req)
         .then(async (res) => {
-          // console.log(res);
+          console.log(res);
           this.partner_list = [];
           this.category_ary = [];
           this.category_name_ary = [];
