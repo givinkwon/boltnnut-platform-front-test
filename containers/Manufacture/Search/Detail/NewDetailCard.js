@@ -39,7 +39,6 @@ class NewDetailCardContainer extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { Partner } = this.props;
-
     // 탭바 스크롤 이벤트
     if (prevState.tabBarPrevState !== Partner.tabBar) {
       if (Partner.tabBar === 1) {

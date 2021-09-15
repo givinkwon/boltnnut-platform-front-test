@@ -463,11 +463,29 @@ export function setQuestion(req) {
   });
 }
 
+export function replyQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/reply/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function getQuestion(req) {
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/QnA/get/`,
+    url: `${ROOT_URL}/QnA/`,
     params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getReplyQuestion(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/reply/`,
+    data: req.data ? req.data : null,
     headers: req.headers ? req.headers : null,
   });
 }
