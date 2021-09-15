@@ -96,10 +96,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
-  // height: 273px;
-  backdrop-filter: blur(14px);
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 `;

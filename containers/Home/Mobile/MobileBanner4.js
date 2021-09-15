@@ -38,13 +38,13 @@ class MobileBanner4Container extends React.Component {
     return (
       <Container>
         <InnerContainer>
-          <Title20 style={{ marginTop: "70px" }}>클라이언트 분들께</Title20>
+          <Title20 style={{ marginTop: 100 }}>클라이언트 분들께</Title20>
           <Title20>검증된 볼트앤너트를 만나보세요.</Title20>
 
           <Title16 style={{ marginTop: "32px" }}>평균 만족도</Title16>
 
           <RattingBox>
-            <MyStarRatingComponent name="rate" starCount={5} starColor={"#0a2165"} value={5} />
+            <MyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
             <img src={banner4score} />
           </RattingBox>
 
@@ -55,7 +55,7 @@ class MobileBanner4Container extends React.Component {
                   <InnerReviewBox>
                     <div style={{ display: "inline-flex", marginTop: "20px" }}>
                       <Title13>{v.name}</Title13>
-                      <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0a2165"} value={5} />
+                      <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
                     </div>
 
                     <Title12>{v.desc}</Title12>
@@ -77,9 +77,9 @@ class MobileBanner4Container extends React.Component {
 export default MobileBanner4Container;
 
 const Container = styled.div`
-  background-color: #f6f6f6;
-  // margin-bottom: 70px;
   height: 100%;
+  margin-top: 100px;
+  background-color: #f6f6f6;
 `;
 
 const InnerContainer = styled.div`
