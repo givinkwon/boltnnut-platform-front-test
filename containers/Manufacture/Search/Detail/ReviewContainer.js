@@ -8,8 +8,6 @@ import * as Title from "components/Title";
 @observer
 class ReviewCardContainer extends React.Component {
   render() {
-    const { Partner } = this.props;
-
     return (
       <ReviewSection>
         <div style={{ display: "inline-flex", justifyContent: "space-between" }}>

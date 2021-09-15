@@ -21,11 +21,9 @@ const ADbackground = "/static/images/Home/ADbackground.svg";
 
 import * as AccountAPI from "axios/Account/Account";
 
-
 @inject("Home", "Loading", "Auth", "Category")
 @observer
 class Home extends React.Component {
-
   state = {
     width: null,
     home_index: 1,
@@ -33,25 +31,24 @@ class Home extends React.Component {
 
   // 새로고침 방지
   _handleKeyDown = (event) => {
-    switch( event.keyCode ) {
-        case 116:
-            event.preventDefault();
-            break;
-        case 78:
-            if(event.ctrlKey){
-              event.preventDefault();
-            }
-        case 82:
-            if(event.ctrlKey){
-              event.preventDefault();
-            }
-        default: 
-            break;
+    switch (event.keyCode) {
+      case 116:
+        event.preventDefault();
+        break;
+      case 78:
+        if (event.ctrlKey) {
+          event.preventDefault();
+        }
+      case 82:
+        if (event.ctrlKey) {
+          event.preventDefault();
+        }
+      default:
+        break;
     }
   };
 
   async componentDidMount() {
-
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
@@ -70,21 +67,17 @@ class Home extends React.Component {
     await this.props.Auth.checkLogin();
     console.log("배포 테스트");
 
-    
     // 페이지 저장
     const formData = new FormData();
-    
+
     const { history } = this.props;
 
     // document.referrer은 next.js 페이지 내부에서의 이동이 안잡힘
     // 페이지 내에 이동이 있는 경우 => 신규가 아님
-    if(history.length > 1){
-      formData.append("prevUrl", window.location.href + history[history.length-2])
-    }
-    else {
-      document.referrer === ""
-        ? formData.append("prevUrl", "direct")
-        : formData.append("prevUrl", document.referrer);
+    if (history.length > 1) {
+      formData.append("prevUrl", window.location.href + history[history.length - 2]);
+    } else {
+      document.referrer === "" ? formData.append("prevUrl", "direct") : formData.append("prevUrl", document.referrer);
     }
 
     formData.append("url", window.location.href);
@@ -101,17 +94,16 @@ class Home extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-    
+
     // 전체 이동 기록
     AccountAPI.setUserPageIP(req)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((e) => {
-      console.log(e);
-      console.log(e.response);
-    });
-
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -120,7 +112,6 @@ class Home extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
 
-  
   render() {
     const { Loading, Home } = this.props;
     const { width, home_index } = this.state;
@@ -140,10 +131,7 @@ class Home extends React.Component {
           {/* SEO - open graph*/}
           <meta property="og:type" content="website" />
           <meta property="og:image" content="/static/images/thumbnail.png" />
-          <meta
-            property="og:title"
-            content="볼트앤너트|믿을 수 있는 제조 전문가"
-          />
+          <meta property="og:title" content="볼트앤너트|믿을 수 있는 제조 전문가" />
           <meta
             property="og:description"
             content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!"
@@ -160,13 +148,13 @@ class Home extends React.Component {
             {width && width < 768 && <MobileNav src={logo_ic} width={width} />}
             {width && width > 767.98 && <Nav width={width} />}
           </>
-          {width && width > 768 && (
+          {/* {width && width > 768 && (
             <Ad href="https://techfair.kaist.ac.kr/sub0906/view/id/75">
               <div>
                 <img src={AD} />
               </div>
             </Ad>
-          )}
+          )} */}
           <>
             {width && (
               <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지

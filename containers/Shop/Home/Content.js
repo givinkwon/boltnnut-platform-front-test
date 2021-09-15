@@ -305,7 +305,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 5 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 5}{" "}
@@ -316,7 +316,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 6 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 6}{" "}
@@ -327,7 +327,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 7 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 7}{" "}
@@ -338,7 +338,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 8 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 8}{" "}
@@ -349,7 +349,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 9 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 9}{" "}
@@ -360,7 +360,7 @@ class ManufacturerContentContainer extends React.Component {
             style={{
               display: Partner.partner_page < 10 * (current_set - 1) + 10 ? "none" : "block",
             }}
-            onClick={(e) => Partner.movePage(e,"Shop")}
+            onClick={(e) => Partner.movePage(e, "Shop")}
           >
             {" "}
             {10 * (current_set - 1) + 10}{" "}
@@ -371,7 +371,7 @@ class ManufacturerContentContainer extends React.Component {
               opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={(e) => Partner.pageNext(e,"Shop")}
+            onClick={(e) => Partner.pageNext(e, "Shop")}
           />
         </PageBar>
       </>

@@ -16,10 +16,12 @@ class TabBarCardContainer extends React.Component {
     RequestSecretChecked: false,
   };
 
+  // 문의내용 핸들러 함수
   onChangeRequestBoxText = (e) => {
     this.setState({ ...this.state, RequestBoxText: e.target.value });
   };
 
+  // 비밀글 버튼 핸들러 함수
   onClickSecretBoxHandler() {
     if (!this.state.RequestSecretChecked) {
       this.setState({ ...this.state, RequestSecretChecked: true, RequestSecret: 1 });
@@ -30,13 +32,14 @@ class TabBarCardContainer extends React.Component {
     }
   }
 
+  // 작성하기 버튼 submit 함수
   onSubmitRequest() {
     const { Partner, Auth } = this.props;
 
     if (Auth.logged_in_client) {
-      const client = Auth.logged_in_client.id; // client
-      const secret = this.state.RequestSecret; // secret
-      const content = this.state.RequestBoxText; // content
+      const client = Auth.logged_in_client.id;
+      const secret = this.state.RequestSecret;
+      const content = this.state.RequestBoxText;
 
       Partner.setQuestion(client, null, null, null, secret, content);
 
@@ -46,9 +49,9 @@ class TabBarCardContainer extends React.Component {
     }
 
     if (Auth.logged_in_partner) {
-      const partner = Auth.logged_in_partner.id; // partner
-      const secret = this.state.RequestSecret; // secret
-      const content = this.state.RequestBoxText; // content
+      const partner = Auth.logged_in_partner.id;
+      const secret = this.state.RequestSecret;
+      const content = this.state.RequestBoxText;
 
       Partner.setQuestion(null, partner, null, null, secret, content);
 
@@ -58,6 +61,7 @@ class TabBarCardContainer extends React.Component {
     }
   }
 
+  // 답글내용 버튼 핸들러 함수
   onClickAnswerBtn() {
     if (this.state.AnswerBoxState) {
       this.setState({ ...this.state, AnswerBoxState: false });
@@ -66,6 +70,7 @@ class TabBarCardContainer extends React.Component {
     }
   }
 
+  // 견적 요청하기 버튼 핸들러 함수
   onClickRequestBtn() {
     const { Request } = this.props;
 
@@ -73,12 +78,14 @@ class TabBarCardContainer extends React.Component {
     Router.push("/request");
   }
 
+  // 견적요청 박스 핸들러 함수
   RequestBoxCloseHandler() {
     if (this.state.RequestBoxState) {
       this.setState({ RequestBoxState: false });
     }
   }
 
+  // 페이지 이동 시 상태 초기화
   componentWillUnmount() {
     this.setState({ RequestBoxState: true });
     this.setState({ AnswerBoxState: false });
@@ -88,8 +95,6 @@ class TabBarCardContainer extends React.Component {
   }
 
   render() {
-    console.log("하이", this.state.RequestSecretChecked);
-    console.log("하이", this.state.RequestSecret);
     return (
       <QnASection>
         <Font24 style={{ marginBottom: 34 }}>Q&A</Font24>

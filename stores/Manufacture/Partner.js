@@ -1768,8 +1768,8 @@ class Partner {
         await this.partner_detail_list.push({ item: res.data, idx: 0 });
         this.recentPartnerId = res.data.id;
 
-        Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(this.partner_detail_list));
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        // console.log(toJS(this.partner_detail_list));
         // await this.getReviewByPartner(
         //   this.partner_detail_list[0].item.id,
         //   1,
@@ -2529,29 +2529,6 @@ class Partner {
       });
   };
 
-  @action deleteQuestion = async (clientID, partnerID, questionID) => {
-    console.log(clientID);
-    console.log(partnerID);
-    console.log(secret);
-    console.log(content);
-    const formData = new FormData();
-    formData.append("clientID", clientID);
-    formData.append("partnerID", partnerID);
-    formData.append("questionID", questionID);
-
-    const req = {
-      data: formData,
-    };
-
-    await PartnerAPI.deleteQuestion(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
   @action getRecentPartner = (id) => {
     PartnerAPI.detail(id)
       .then((res) => {

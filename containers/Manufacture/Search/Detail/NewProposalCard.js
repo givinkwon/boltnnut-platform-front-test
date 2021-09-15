@@ -1,7 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-import { toJS } from "mobx";
 
 let dataList = [];
 
@@ -30,7 +29,7 @@ class ProposalCard extends React.Component {
             <Content>
               <InnerBox>
                 <Name>{data.name}</Name>
-                <Info>{data.history && data.history.length >= 40 ? data.history.slice(0, 40) + "..." : data.history}</Info>
+                <Info>{data.history && data.history.length >= 30 ? data.history.slice(0, 30) + "..." : data.history}</Info>
               </InnerBox>
             </Content>
           </Card>
@@ -45,7 +44,7 @@ class ProposalCard extends React.Component {
               <Content>
                 <InnerBox>
                   <Name>{data.name}</Name>
-                  <Info>{data.history && data.history.length >= 40 ? data.history.slice(0, 40) + "..." : data.history}</Info>
+                  <Info>{data.history && data.history.length >= 30 ? data.history.slice(0, 30) + "..." : data.history}</Info>
                 </InnerBox>
               </Content>
             </Description>
@@ -69,6 +68,7 @@ const Card = styled.div`
   flex-direction: column;
   border: 1px solid #e1e2e4;
   height: 309px;
+  width: 200px;
 `;
 
 const ImgBox = styled.div`
@@ -105,10 +105,7 @@ const Info = styled.p`
 `;
 
 const Description = styled.div`
-  // border: 3px solid red;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 70%;
   }
 `;
-
-const Category = styled.div``;
