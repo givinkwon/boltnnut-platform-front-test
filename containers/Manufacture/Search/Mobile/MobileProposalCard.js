@@ -13,22 +13,7 @@ const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 
-var availableFileType = [
-  "png",
-  "jpeg",
-  "gif",
-  "bmp",
-  "pdf",
-  "csv",
-  "xslx",
-  "docx",
-  "mp4",
-  "webm",
-  "mp3",
-  "pptx",
-  "doc",
-  "html",
-];
+var availableFileType = ["png", "jpeg", "gif", "bmp", "pdf", "csv", "xslx", "docx", "mp4", "webm", "mp3", "pptx", "doc", "html"];
 @inject("Partner", "Auth", "Common", "Search")
 @observer
 class MobileProposalCard extends React.Component {
@@ -78,7 +63,6 @@ class MobileProposalCard extends React.Component {
 
   async componentDidMount() {
     const { width, Search, data, Partner, idx, Auth } = this.props;
-    console.log("sdfsdfsdf!!!!!!!!!!!!!!!!!!!!!!", data);
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
@@ -224,9 +208,7 @@ class MobileProposalCard extends React.Component {
       }
       this.props.Partner.selectedIntroductionFile = this.props.data.file;
 
-      const fileType = this.props.data.file
-        .split(".")
-        [this.props.data.file.split(".").length - 1].toLowerCase();
+      const fileType = this.props.data.file.split(".")[this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
 
       if (availableFileType.indexOf(fileType) > -1) {
@@ -236,14 +218,8 @@ class MobileProposalCard extends React.Component {
 
         Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(Partner.partner_detail_list));
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id,
-          1,
-          1
-        );
-        await Partner.getReviewByPartner(
-          Partner.partner_detail_list[0].item.id
-        );
+        await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id, 1, 1);
+        await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/search/detail");
@@ -263,8 +239,7 @@ class MobileProposalCard extends React.Component {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
-    const loggedInPartnerId =
-      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
     const existLogo = data.logo.split("/")[4];
 
@@ -288,48 +263,28 @@ class MobileProposalCard extends React.Component {
                 <img src={data.portfolio_set[0].img_portfolio}></img>
               </Item>
             ) : existLogo === "null" ? (
-              <Item>
-                {this.state.active ? (
-                  <img src="static/images/noportfolio_img_over.svg" />
-                ) : (
-                  <img src="static/images/noportfolio_img.svg" />
-                )}
-              </Item>
+              <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
             ) : (
               <Item>
                 <img src={data.logo} />
               </Item>
             )}
           </Header>
+
           <Main>
             <Name>{data.name}</Name>
-            <InfoOne>
-              {data.history.length > 40
-                ? data.history.slice(0, 40) + "..."
-                : data.history}
-            </InfoOne>
+            <InfoOne>{data.history.length > 40 ? data.history.slice(0, 40) + "..." : data.history}</InfoOne>
             <Location>
               <img src={location} />
-              <div>
-                {data.region === null || data.region === "nan"
-                  ? this.state.city
-                  : data.region.substring(0, 8)}
-              </div>
+              <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
             </Location>
           </Main>
         </Card>
-        {this.props.Partner.ReviewActive &&
-          this.props.Partner.ReviewActiveIndex === idx && (
-            <>
-              <ReviewContainer
-                data={data}
-                width={width}
-                Partner={Partner}
-                categoryData={categoryData}
-                idx={idx}
-              />
-            </>
-          )}
+        {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
+          <>
+            <ReviewContainer data={data} width={width} Partner={Partner} categoryData={categoryData} idx={idx} />
+          </>
+        )}
       </>
     );
   }
@@ -339,13 +294,12 @@ export default MobileProposalCard;
 
 const Card = styled.div`
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-bottom: solid 2px #e1e2e4;
+  height: 116px;
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
   cursor: pointer;
   border-radius: 3px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
 
   // @media (min-width: 0px) and (max-width: 767.98px) {
   //   padding-left: 14px;
@@ -373,8 +327,7 @@ const Card = styled.div`
 `;
 
 const Header = styled.div`
-  border-radius: 3px;
-  // margin-right: 34px;
+  margin-right: 18px;
 `;
 
 const Main = styled.div`
@@ -559,12 +512,10 @@ const InfoOne = styled.div`
 `;
 
 const Item = styled.div`
-  margin-right: 18px;
   > img {
     width: 100px;
-    height: 120px;
-    border-radius: 10px;
-    overflow: hidden;
+    height: 116px;
+    border-radius: 3px;
     cursor: pointer;
   }
 `;
