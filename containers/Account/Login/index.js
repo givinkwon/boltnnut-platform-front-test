@@ -1,15 +1,13 @@
 import React from "react";
-import Head from "next/head";
 
 import LoginContainer from "./Login";
-import FormConatiner from "./Form";
+import MobileLoginContainer from "./Mobile/MobileLogin";
 
 class LoginConatiner extends React.Component {
   render() {
     return (
       <>
-        <LoginContainer />
-        {/* <FormConatiner /> */}
+        <div style={{ display: "flex", justifyContent: "center" }}>{this.props.width > 767.98 ? <LoginContainer /> : <MobileLoginContainer />}</div>
       </>
     );
   }
