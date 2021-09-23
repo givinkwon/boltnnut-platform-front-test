@@ -18,6 +18,7 @@ jobs:
       with:
         repository: givinkwon/boltnnut-platform-front-test
         lfs: true
+        ref: master
         token: ${{ secrets.sync || github.token }} 
     - run: git log
       shell: bash
