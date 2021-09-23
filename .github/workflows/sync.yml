@@ -23,7 +23,7 @@ jobs:
     - name: GitHub Repo Sync
       uses: repo-sync/github-sync@v2.3.0
       with:
-        source-repo: https://github.com/givinkwon/boltnnut-platform-front
+        source-repo: givinkwon/boltnnut-platform-front
         target-repo: givinkwon/boltnnut-platform-front-test
     - run: echo sync completed!
       shell: bash
