@@ -20,9 +20,10 @@ jobs:
         token: ${{ secrets.sync || github.token }} 
     - run: git log
       shell: bash
-    - uses: yomapi/sync-repo-to-repo@v1.4
+    - name: GitHub Repo Sync
+      uses: repo-sync/github-sync@v2.3.0
       with:
         source-repo: https://github.com/givinkwon/boltnnut-platform-front
-        target-repo: https://github.com/givinkwon/boltnnut-platform-front-test
+        target-repo: givinkwon/boltnnut-platform-front-test
     - run: echo sync completed!
       shell: bash
