@@ -45,6 +45,7 @@ class Sample {
     formData.append("content", this.content);
     formData.append("phone", this.phone);
     formData.append("company", this.company);
+    formData.append("PartnerName", this.partnerName)
 
     // axois 쏘기
     const req = {
@@ -73,9 +74,9 @@ class Sample {
   @observable modal_open = false;
   
   // 모달 open
-  @action openModal = (partnerId) => {
+  @action openModal = (partnerName) => {
     this.modal_open = true
-    this.partnerId = partnerId
+    this.partnerName = partnerName
   }
 
   // 모달 open

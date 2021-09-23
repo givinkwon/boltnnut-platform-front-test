@@ -175,7 +175,7 @@ class MobileNav extends React.Component {
                   ) : (
                     <KSLink url={"search"} content={"제조사 찾기"} />
                   )}
-                  <KSLink url={"magazine"} content={"제조 인사이트"} />
+                  <KSLink url={"shop"} content={"공장 직거래"} />
                   <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
                   {Auth.logged_in_user && (
