@@ -73,8 +73,9 @@ class Sample {
   @observable modal_open = false;
   
   // 모달 open
-  @action openModal = () => {
+  @action openModal = (partnerId) => {
     this.modal_open = true
+    this.partnerId = partnerId
   }
 
   // 모달 open

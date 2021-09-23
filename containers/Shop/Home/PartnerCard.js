@@ -194,7 +194,7 @@ class PartnerCard extends React.Component {
                   </>
                 )
                 }
-                <ButtonBox onClick = {() => Sample.openModal()} >
+                <ButtonBox onClick = {() => Sample.openModal(data.id)} >
                   <ButtonComponent
                       style={{ width: "200px", height: "42px" }}
                       backgroundColor={"#0933b3"}
