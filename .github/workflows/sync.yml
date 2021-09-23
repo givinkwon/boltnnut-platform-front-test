@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: givinkwon/boltnnut-platform-front-test
-        token: ${{ secrets.sync || github.token }} 
+        token: ${{ secrets.SYNC || github.token }} 
         ref: master
     - run: git log
       shell: bash
