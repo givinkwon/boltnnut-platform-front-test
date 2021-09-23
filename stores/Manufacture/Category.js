@@ -115,9 +115,7 @@ class Category {
   @action setPartnerInfoFile = (e) => {
     for (var i = 0; i < e.length; i++) {
       // 확장자 >> 인덱싱 + 소문자
-      const fileType = e[i].name
-        .split(".")
-        [e[i].name.split(".").length - 1].toLowerCase();
+      const fileType = e[i].name.split(".")[e[i].name.split(".").length - 1].toLowerCase();
 
       // 포트폴리오 이미지가 맞는 경우만 넣기
       if (this.possiblePartnerInfoType.indexOf(fileType) > -1) {
@@ -133,9 +131,7 @@ class Category {
   @action setPartnerPortfolioFile = (e) => {
     for (var i = 0; i < e.length; i++) {
       // 확장자 >> 인덱싱 + 소문자
-      const fileType = e[i].name
-        .split(".")
-        [e[i].name.split(".").length - 1].toLowerCase();
+      const fileType = e[i].name.split(".")[e[i].name.split(".").length - 1].toLowerCase();
       // 포트폴리오 이미지가 맞는 경우만 넣기
       if (this.possiblePartnerPortfolioType.indexOf(fileType) > -1) {
         this.partnerPortfolioArray.push(e[i]);
@@ -164,7 +160,6 @@ class Category {
       .then((res) => {
         this.mainbusiness_list = res.data.results;
         this.setCheckAllState("business");
-        console.log(toJS(this.mainbusiness_list));
       })
       .catch((e) => {
         console.log(e);
@@ -181,9 +176,7 @@ class Category {
 
           // this.checkAllState["category"] = temp;
           this.setCheckAllState("category");
-          this.category_list = this.category_list.concat(
-            mainCategory.category_set
-          );
+          this.category_list = this.category_list.concat(mainCategory.category_set);
         });
       })
       .catch((e) => {
@@ -195,7 +188,6 @@ class Category {
     await CategoryAPI.getCity()
       .then((res) => {
         this.city_list = res.data.results;
-        // console.log(toJS(this.city_list));
       })
       .catch((e) => {
         console.log(e);
@@ -206,7 +198,6 @@ class Category {
       .then((res) => {
         this.mainmaterial_list = res.data.results;
         this.setCheckAllState("material");
-        // console.log(toJS(this.mainmaterial_list));
       })
       .catch((e) => {
         console.log(e);
@@ -220,7 +211,6 @@ class Category {
         this.developbig_list.forEach((mainCategory) => {
           this.setCheckAllState("develop");
         });
-        // console.log(toJS(this.developbig_list));
       })
       .catch((e) => {
         console.log(e);
@@ -230,7 +220,6 @@ class Category {
 
   /* reset */
   @action reset = () => {
-    console.log("Category Reset");
     // 카테고리 배열 초기화
     this.mainbusiness_list = [];
     this.business_list = [];
@@ -281,8 +270,6 @@ class Category {
 
   /* 선택된 리스트 초기화 */
   @action reset_selected = () => {
-    console.log("Category Reset");
-
     // 선택된 리스트
     this.business_selected = [];
     this.category_selected = [];
@@ -307,7 +294,6 @@ class Category {
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
   @action add_selected = async (state, id, data, container = "search") => {
-    console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
       if (this.business_selected.indexOf(id) < 0) {
@@ -328,7 +314,6 @@ class Category {
     // 지역 선택
     if (state == "city") {
       this.city_selected.push(id);
-      console.log(toJS(this.city_selected));
       this.category_selected_tagbox.push({ id: id, type: state, data: data });
       this.selected_city_subbox.push(data);
     }
@@ -486,40 +471,30 @@ class Category {
 
   // Category가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
   @action getNameByCategory = async (state) => {
-    console.log(state);
     if (state === "business") {
-      console.log(state);
       if (this.business_selected) {
-        console.log(state);
         this.business_selected_name = [];
         await this.business_selected.map(async (item, idx) => {
-          console.log(state);
           await this.getBusinessName(state, item);
         });
       }
-      console.log(this.business_selected_name);
     }
   };
 
   // Business가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
   @action getBusinessName = async (state, id) => {
-    console.log(state);
     const req = {
       id: id,
     };
 
     await CategoryAPI.getBusinessName(req)
       .then(async (res) => {
-        console.log(res.data.category);
-        this.business_selected_name = await this.business_selected_name.concat(
-          res.data.category
-        );
+        this.business_selected_name = await this.business_selected_name.concat(res.data.category);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    console.log(this.business_selected_name);
   };
 
   @action save_selected = async (pageName, id) => {

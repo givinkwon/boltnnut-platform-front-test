@@ -7,31 +7,24 @@ const request_modal_img = "static/images/search/request_modal_img.png";
 @inject("Sample")
 @observer
 class RequestModal extends React.Component {
-
   render() {
     const { Sample, width } = this.props;
 
     return (
       <>
         {width && width > 767.99 ? (
-          <ModalBox
-            style={{ display: Sample.modal_open ? "block" : "none" }}
-          >
+          <ModalBox style={{ display: Sample.modal_open ? "block" : "none" }}>
             {Sample.modal_open ? (
               <>
                 <button className="close" onClick={() => Sample.closeModal()}>
                   {" "}
                   &times;{" "}
                 </button>
-                <aside>
-                  {width > 1800 && <img src={request_modal_img} />}
-                </aside>
+                <aside>{width > 1800 && <img src={request_modal_img} />}</aside>
                 <section>
                   <header>
                     <span>샘플 및 제품정보를 받으실 연락처를 입력해주세요.</span>
-                    <span>
-                      
-                    </span>
+                    <span></span>
                   </header>
                   <main>
                     <ContainerV2>
@@ -52,7 +45,7 @@ class RequestModal extends React.Component {
                           <input
                             placeholder="전화번호를 입력해주세요."
                             onChange={(e) => {
-                                Sample.phone = e.target.value;
+                              Sample.phone = e.target.value;
                             }}
                           />
                         </div>
@@ -63,7 +56,7 @@ class RequestModal extends React.Component {
                           <input
                             placeholder="회사명을 입력해주세요."
                             onChange={(e) => {
-                                Sample.company = e.target.value;
+                              Sample.company = e.target.value;
                             }}
                           />
                         </div>
@@ -74,7 +67,7 @@ class RequestModal extends React.Component {
                           <input
                             placeholder="요청 내용을 입력해 주세요. :  구매 요청 및 문의 사항 등"
                             onChange={(e) => {
-                                Sample.content = e.target.value;
+                              Sample.content = e.target.value;
                             }}
                           />
                         </div>
@@ -84,7 +77,7 @@ class RequestModal extends React.Component {
                   <footer>
                     <div
                       onClick={(e) => {
-                        Sample.submit()
+                        Sample.submit();
                       }}
                     >
                       <span>샘플 및 제품정보 요청</span>
@@ -106,7 +99,7 @@ class RequestModal extends React.Component {
                         <input
                           placeholder="요청 내용을 입력해 주세요. :  구매 요청 및 문의 사항 등"
                           onChange={(e) => {
-                              Sample.content = e.target.value;
+                            Sample.content = e.target.value;
                           }}
                         />
                       </div>
@@ -117,7 +110,7 @@ class RequestModal extends React.Component {
                         <input
                           placeholder="회사명을 입력해주세요."
                           onChange={(e) => {
-                              Sample.company = e.target.value;
+                            Sample.company = e.target.value;
                           }}
                         />
                       </div>
@@ -139,7 +132,7 @@ class RequestModal extends React.Component {
                         <input
                           placeholder="전화번호를 입력해주세요."
                           onChange={(e) => {
-                              Sample.phone = e.target.value;
+                            Sample.phone = e.target.value;
                           }}
                         />
                       </div>
@@ -149,7 +142,7 @@ class RequestModal extends React.Component {
                 <footer>
                   <div
                     onClick={() => {
-                      Sample.modal_open = false
+                      Sample.modal_open = false;
                     }}
                   >
                     <span>취소</span>
@@ -157,7 +150,7 @@ class RequestModal extends React.Component {
 
                   <div
                     onClick={(e) => {
-                        Sample.submit()
+                      Sample.submit();
                     }}
                   >
                     <span>샘플|제품정보 요청</span>

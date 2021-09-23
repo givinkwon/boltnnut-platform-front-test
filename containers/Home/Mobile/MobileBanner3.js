@@ -60,19 +60,19 @@ class MobileBanner3Container extends React.Component {
           {this.state.stepBoxIndex === 0 ? (
             <>
               <Title18 style={{ marginTop: "32px" }}>제조사 찾기</Title18>
-              <Title15 style={{ marginTop: "18px" }}>한번의 검색으로 제품제 맞는</Title15>
+              <Title15 style={{ marginTop: "8px" }}>한번의 검색으로 제품제 맞는</Title15>
               <Title15>카테고리의 제조사를 찾아보세요.</Title15>
             </>
           ) : this.state.stepBoxIndex === 1 ? (
             <>
               <Title18 style={{ marginTop: "32px" }}>제조사에 의뢰하기</Title18>
-              <Title15 style={{ marginTop: "18px" }}>제조사를 비교하고 간단한 양식에</Title15>
+              <Title15 style={{ marginTop: "8px" }}>제조사를 비교하고 간단한 양식에</Title15>
               <Title15>맞춰 견적 요청서를 작성해 보세요.</Title15>
             </>
           ) : (
             <>
               <Title18 style={{ marginTop: "32px" }}>제조사와 직접 채팅하기</Title18>
-              <Title15 style={{ marginTop: "18px" }}>제조사에게 견적 요청서를 자세히</Title15>
+              <Title15 style={{ marginTop: "8px" }}>제조사에게 견적 요청서를 자세히</Title15>
               <Title15>상담받고 견적을 조율해 보세요.</Title15>
             </>
           )}

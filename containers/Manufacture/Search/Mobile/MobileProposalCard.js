@@ -25,7 +25,7 @@ class MobileProposalCard extends React.Component {
     active: false,
     modalOpen: false,
     activeReview: false,
-    city: "",
+    city: "준비중 입니다.",
     business: "",
     totalPartnerBookmark: "",
     total_review: -1,
@@ -76,7 +76,7 @@ class MobileProposalCard extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
 
     const req = {
-      id: data.city,
+      id: data.city.id,
     };
 
     const partnerReq = {
@@ -96,10 +96,8 @@ class MobileProposalCard extends React.Component {
     };
 
     PartnerAPI.getCityName(req)
-      .then(async (res) => {
-        console.log(res);
+      .then((res) => {
         this.setState({ city: res.data.maincategory });
-        console.log(this.state.maincategory);
       })
       .catch((e) => {
         console.log(e);
@@ -107,36 +105,32 @@ class MobileProposalCard extends React.Component {
       });
 
     await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then(async (res) => {
-        console.log(res);
-        console.log(res.data.count);
+      .then((res) => {
         this.setState({ totalPartnerBookmark: res.data.count });
-        console.log(this.state.totalPartnerBookmark);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
 
-    const temp = [];
-    PartnerAPI.getBusinessCategory(partnerReq)
-      .then(async (res) => {
-        console.log(res);
-        // this.setState({ business: res.data.business });
-        res.data.business.forEach((element) => {
-          console.log(element);
-          PartnerAPI.getBusinessName(element).then((res) => {
-            console.log(res);
-            temp.push(res.data.category);
-          });
-        });
-        this.setState({ business: temp });
-        console.log(toJS(this.state.business));
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+    // const temp = [];
+    // PartnerAPI.getBusinessCategory(partnerReq)
+    //   .then((res) => {
+    //     console.log("qweqwe", res);
+    //     if (res.data.business.length > 0) {
+    //       res.data.business.forEach((element) => {
+    //         PartnerAPI.getBusinessName(element).then((res) => {
+    //           console.log("asdasd", res);
+    //           temp.push(res.data.category);
+    //         });
+    //       });
+    //       this.setState({ business: temp });
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     console.log(e.response);
+    //   });
   }
 
   componentWillUnmount() {
@@ -197,7 +191,6 @@ class MobileProposalCard extends React.Component {
   cardClick = async (e) => {
     e.stopPropagation();
     const { data, Partner, idx } = this.props;
-    console.log(idx);
     Partner.detailLoadingFlag = true;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
@@ -217,7 +210,6 @@ class MobileProposalCard extends React.Component {
         await Partner.partner_detail_list.push({ item: data });
 
         Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(Partner.partner_detail_list));
         await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id, 1, 1);
         await Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
 
@@ -240,7 +232,6 @@ class MobileProposalCard extends React.Component {
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
     const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
-    console.log(Partner.interestedIdx);
     const existLogo = data.logo.split("/")[4];
 
     return (
@@ -273,10 +264,10 @@ class MobileProposalCard extends React.Component {
 
           <Main>
             <Name>{data.name}</Name>
-            <InfoOne>{data.history.length > 40 ? data.history.slice(0, 40) + "..." : data.history}</InfoOne>
+            <InfoOne>{data.history.length > 30 ? data.history.slice(0, 30) + "..." : data.history}</InfoOne>
             <Location>
               <img src={location} />
-              <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
+              <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 12)}</div>
             </Location>
           </Main>
         </Card>

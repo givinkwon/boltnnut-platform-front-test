@@ -117,15 +117,11 @@ class MobileNav extends React.Component {
   render() {
     const { Auth, Partner, width, Hom, Common } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-    console.log(this.props);
     return (
       <NavBox>
         {is_open && (
           <Modal>
-            <ProfileMenu
-              width={this.props.width}
-              onClick={() => this.setState({ is_open: false })}
-            >
+            <ProfileMenu width={this.props.width} onClick={() => this.setState({ is_open: false })}>
               <ModalHeader>
                 <div style={{ marginBottom: 50, width: "100%" }}>
                   <BoltLogo>
@@ -178,14 +174,12 @@ class MobileNav extends React.Component {
                   <KSLink url={"shop"} content={"공장 직거래"} />
                   <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
-                  {Auth.logged_in_user && (
-                    <KSLink url={"chatting"} content={"채팅하기"} />
-                  )}
+                  {Auth.logged_in_user && <KSLink url={"chatting"} content={"채팅하기"} />}
                 </ModalContent>
               </>
               <ModalContent2>
                 <KSLink url={"term/policy"} content={"이용약관"} />
-                <br/>
+                <br />
                 <KSLink url={"term/personal"} content={"개인정보 처리 방침"} />
               </ModalContent2>
               {Auth.logged_in_user ? (
@@ -224,13 +218,9 @@ class MobileNav extends React.Component {
         )}
         <Container>
           <NavWrap2>
-            {this.props.src ===
-            "/static/images/components/MobileNav/MobileLogo.svg" ? (
+            {this.props.src === "/static/images/components/MobileNav/MobileLogo.svg" ? (
               <BoltLogo>
-                <Logo
-                  src={this.props.src}
-                  onClick={() => (location.href = Common.makeUrl(""))}
-                />
+                <Logo src={this.props.src} onClick={() => (location.href = Common.makeUrl(""))} />
               </BoltLogo>
             ) : (
               <BoltLogo>
@@ -265,8 +255,7 @@ const ProfileMenu = styled.div`
   z-index: 10000;
   top: 0;
   right: 0;
-  // transform: translate3d(${(props) =>
-    props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  // transform: translate3d(${(props) => (props.width ? props.width - 156 : 10)}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
   }
