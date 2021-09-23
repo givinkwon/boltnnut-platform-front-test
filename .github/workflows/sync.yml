@@ -16,7 +16,7 @@ jobs:
     - name: Checkout private tools
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/givinkwon/boltnnut-platform-front-test
+        repository: givinkwon/boltnnut-platform-front-test
         token: ${{ secrets.sync || github.token }} 
     - run: git log
       shell: bash
