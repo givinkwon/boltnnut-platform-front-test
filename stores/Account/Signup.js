@@ -23,6 +23,11 @@ class Signup {
     this.phoneInvalid = false;
     this.company_nameInvalid = false;
     this.titleInvalid = false;
+    this.passwordInvalid = false;
+    this.password2inputstate = false;
+    this.company_name = "";
+    this.individual = "";
+    Auth.step = 0;
   };
 
   // email
@@ -269,7 +274,7 @@ class Signup {
   @observable password2inputstate = true; // 비밀번호 확인 유효성 여부 상태
 
   @action passwordInvalidhandler = () => {
-    if (this.password === this.password2) {
+    if (this.password !== "" && this.password2 !== "" && this.password === this.password2) {
       this.passwordInvalid = true; // 비밀번호 확인 유효성 상태 변경
       this.password2inputstate = true; // 비밀번호 확인 인풋 테두리 상태 변경
     } else {

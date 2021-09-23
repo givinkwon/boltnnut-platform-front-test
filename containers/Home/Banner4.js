@@ -7,9 +7,9 @@ import { inject, observer } from "mobx-react";
 import Background from "../../components/Background";
 
 // Images
-const stepimg1 = "/static/images/Home/stepimg1.png";
-const stepimg2 = "/static/images/stepimg2.svg";
-const stepimg3 = "/static/images/Home/stepimg3.png";
+const stepimg1 = "/static/images/Home/step1web.png";
+const stepimg2 = "/static/images/Home/step2.svg";
+const stepimg3 = "/static/images/Home/step3.svg";
 const backgroundlogo = "/static/images/backgroundlogo.svg";
 
 @inject("Home")
@@ -72,20 +72,14 @@ class Banner4Container extends React.Component {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <CustomContainer>
-          <Containerv1
-            style={{ justifyContent: "center", flexDirection: "column" }}
-          >
+          <Containerv1 style={{ justifyContent: "center", flexDirection: "column" }}>
             <InnerContainer>
-              <Title32>
-                "저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"
-              </Title32>
-              <Title32>
-                볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.
-              </Title32>
+              <Title32>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"</Title32>
+              <Title32>볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.</Title32>
             </InnerContainer>
 
             <StepContainer>
-              <img style={{width : '750px', height : '460px'}} src={this.onChangeStepImage()} />
+              <img style={{ width: "750px", height: "460px" }} src={this.onChangeStepImage()} />
 
               <div
                 style={{
@@ -95,13 +89,8 @@ class Banner4Container extends React.Component {
                 }}
               >
                 {stepBoxArray.map((v, idx) => (
-                  <StepBox
-                    onClick={() => this.onClickStepBox(idx)}
-                    active={this.onCompareStepBox(idx)}
-                  >
-                    <Text13 active={this.onCompareStepBox(idx)}>
-                      {v.step}
-                    </Text13>
+                  <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
+                    <Text13 active={this.onCompareStepBox(idx)}>{v.step}</Text13>
 
                     <div
                       style={{
@@ -169,8 +158,7 @@ const StepBox = styled.div`
   margin-top: 17px;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: ${(props) =>
-    props.active ? "4px 5px 20px 0 rgba(0, 0, 0, 0.16)" : "none"};
+  box-shadow: ${(props) => (props.active ? "4px 5px 20px 0 rgba(0, 0, 0, 0.16)" : "none")};
   background-color: ${(props) => (props.active ? "#ffffff" : "#eeeeee")};
 
   :hover {
