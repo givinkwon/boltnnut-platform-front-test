@@ -15,5 +15,6 @@ jobs:
       with:
         source_repo: "https://github.com/givinkwon/boltnnut-platform-front.git"
         source_branch: "master"
-        destination_branch: "https://github.com/givinkwon/boltnnut-platform-front-test.git"
+        destination_repo: "https://github.com/givinkwon/boltnnut-platform-front-test.git"
+        destination_branch: "master"
         github_token: ${{ secrets.sync || github.token }}
