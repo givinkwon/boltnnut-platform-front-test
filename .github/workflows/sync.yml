@@ -2,28 +2,18 @@ on:
   schedule:
   - cron: '0 18 * * *'
   workflow_dispatch: 
-    inputs: 
-        source-repo:
-          description: source-repo
-        target-repo:
-          description: target-repo
 
 jobs:
-  sync:
+  repo-sync:
     runs-on: ubuntu-latest
-    name: sync-test
     steps:
-    - name: Checkout private tools
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
-        repository: givinkwon/boltnnut-platform-front-test
-        token: ${{ secrets.sync || github.token }} 
-    - run: git log
-      shell: bash
-    - name: GitHub Repo Sync
-      uses: repo-sync/github-sync@v2.3.0
+        persist-credentials: false
+    - name: repo-sync
+      uses: repo-sync/github-sync@v2
       with:
-        source-repo: givinkwon/boltnnut-platform-front
-        target-repo: givinkwon/boltnnut-platform-front-test
-    - run: echo sync completed!
-      shell: bash
+        source_repo: "www.github.com/givinkwon/boltnnut-platform-front"
+        source_branch: "master"
+        destination_branch: "www.github.com/givinkwon/boltnnut-platform-front-test"
+        github_token: ${{ secrets.sync || github.token }}
