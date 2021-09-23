@@ -225,7 +225,7 @@ class FooterComponent extends React.Component {
                 </CompanyInfoWrapper>
                 <ImageWrapper>
                   <img src={campustown} style={{ height: 13, alignSelf: "center" }} />
-                  <div class="imagebox">
+                  <div className="imagebox">
                     <Button>
                       <a href="http://www.instargram.com/boltnnut_korea">
                         <img src={instargram} style={{ height: 24, width: 24 }} />

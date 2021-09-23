@@ -12,11 +12,11 @@ class MobileBanner5Container extends React.Component {
     return (
       <BackgroundContainer>
         <Container>
-          <Title16> 마음에 드는 공장을 찾기 힘드시나요? </Title16>
-          <Title16>지금 '의뢰하기'를 눌러서</Title16>
-          <Title16>여러 업체의 회사소개서와 제안서를 받아보세요.</Title16>
+          <Title16 style={{ fontWeight: "bold" }}>마음에 드는 공장을 찾기 힘드시나요?</Title16>
+          <Title16>볼트앤너트에서 여러 업체의 회사소개서와</Title16>
+          <Title16>제안서를 받아보세요.</Title16>
 
-          <RequestButton>
+          <RequestButton onClick={() => alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
             <Title15>무료로 의뢰하기</Title15>
           </RequestButton>
         </Container>
@@ -38,11 +38,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 250px;
+  width: 100%;
 `;
 
 const Title16 = styled(Title.FontSize16)`
-  font-weight: 500;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.75;
@@ -51,11 +51,8 @@ const Title16 = styled(Title.FontSize16)`
 `;
 
 const Title15 = styled(Title.FontSize15)`
+  font-family: NotoSansCJKkr;
   font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2;
-  letter-spacing: -0.38px;
   color: #0933b3;
 `;
 
@@ -67,7 +64,7 @@ const RequestButton = styled.button`
   height: 42px;
   object-fit: contain;
   border-radius: 21px;
-  border: solid 2px #0933b3;
+  border: solid 1px #0933b3;
   margin-top: 28px;
   background: none;
   cursor: pointer;

@@ -79,6 +79,7 @@ class ReviewCardContainer extends React.Component {
               onClick={() => {
                 let partnerId = Partner.partner_detail_list[0].item.id;
                 Request.partner_request(partnerId);
+                Request.requestTabIdx = 1;
                 Router.push("/request");
                 // path 설정
                 Request.path = 3;

@@ -201,9 +201,7 @@ class Auth {
     this.city = obj;
     this.region = null;
     const city_data = this.city_data;
-    this.region_data = city_data.filter(
-      (item) => item.id === obj.id
-    )[0].region_set;
+    this.region_data = city_data.filter((item) => item.id === obj.id)[0].region_set;
   };
   @action setRegion = (obj) => {
     this.region = obj;
@@ -277,17 +275,12 @@ class Auth {
       }
     }
 
-    // console.log(toJS(this.logged_in_user));
     if (!token) {
       return false;
     }
     if (token && !this.logged_in_user) {
-      console.log("userInfo 다시 불러오기");
-
       await this.reloadUserInfo(token);
-      // console.log(this.logged_in_user.id);
     }
-    //console.log(this.logged_in_user)
     return true;
   };
   @action reloadUserInfo = async (token) => {
@@ -303,16 +296,11 @@ class Auth {
 
     await AccountAPI.reloadUserInfo(req)
       .then((res) => {
-        //console.log(res);
         this.logged_in_user = res.data.data.User;
-        // console.log(toJS(this.logged_in_user));
         if (this.logged_in_user.type == 0) {
-          console.log("클라이언트 정보 리로딩");
-          // console.log(this.logged_in_user.type);
           this.logged_in_client = res.data.data.Client[0];
           console.log(this.logged_in_client);
         } else if (this.logged_in_user.type == 1) {
-          console.log("파트너 정보 리로딩");
           this.logged_in_partner = res.data.data.Partner[0];
         }
       })
@@ -584,10 +572,7 @@ class Auth {
                 setTimeout(() => {
                   myStore.loading = false;
 
-                  if (
-                    myStore.previous_url == "" ||
-                    myStore.previous_url == null
-                  ) {
+                  if (myStore.previous_url == "" || myStore.previous_url == null) {
                     Router.push("/");
                   } else {
                     console.log(myStore.previous_url);

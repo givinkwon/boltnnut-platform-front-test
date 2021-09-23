@@ -52,7 +52,6 @@ class Home extends React.Component {
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
-    console.log("home didmount");
     this.props.Auth.previous_url = "";
 
     // 새로고침 방지
@@ -65,7 +64,6 @@ class Home extends React.Component {
     }, 1000);
 
     await this.props.Auth.checkLogin();
-    console.log("배포 테스트");
 
     // 페이지 저장
     const formData = new FormData();
