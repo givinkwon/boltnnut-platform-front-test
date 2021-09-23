@@ -145,7 +145,7 @@ class FooterComponent extends React.Component {
                       <span class="title"> 사업자등록번호 </span> 390-87-01669
                     </span>
                     <span>
-                      <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대길 27길 4 3층
+                      <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대로27길 4, 3층
                     </span>
                     <span>
                       <span class="title"> 이메일 </span> boltnnut@boltnnut.com

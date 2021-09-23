@@ -55,6 +55,8 @@ class MobileBanner2Container extends React.Component {
 
     const { Partner, Auth, Search, Category } = this.props;
 
+    console.log("asdasd", Partner.partner_list);
+
     return (
       <>
         <Container>

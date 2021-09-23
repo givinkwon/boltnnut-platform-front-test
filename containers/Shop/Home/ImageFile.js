@@ -26,18 +26,7 @@ class InputComponent extends React.Component {
   }
 
   render() {
-    const {
-      onChange,
-      children,
-      label,
-      file,
-      Request,
-      Partner,
-      isOpen,
-      mobile,
-      Search,
-      ...props
-    } = this.props;
+    const { onChange, children, label, file, Request, Partner, isOpen, mobile, Search, ...props } = this.props;
     const { fileName, checkFileUpload } = this.state;
 
     return (
@@ -48,7 +37,7 @@ class InputComponent extends React.Component {
             multiple={"multiple"}
             fileName={"fileName[]"}
             style={{ display: "none" }}
-            onChange={Partner.onChangeFile}
+            onChange={(e) => Partner.onChangeFile(e, "shop")}
             id="inputFile"
             ref={this.file}
             value=""
@@ -61,10 +50,7 @@ class InputComponent extends React.Component {
               this.file.current.click();
             }}
           >
-            <CameraImgBox
-              src="/static/images/camera.svg"
-              scrollActive={Partner.scrollActive}
-            />
+            <CameraImgBox src="/static/images/camera.svg" scrollActive={Partner.scrollActive} />
           </div>
         </div>
       </InputBox>

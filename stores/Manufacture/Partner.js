@@ -584,7 +584,7 @@ class Partner {
 
   @observable searchFileUrl = "";
   @observable imgSearchModalActive = false; // 이미지 검색 시 사진 렌더링하는 박스 상태
-  @action onChangeFile = (e) => {
+  @action onChangeFile = (e, type) => {
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
       console.log(e.currentTarget.files[0]);
@@ -615,7 +615,7 @@ class Partner {
     this.fileName = fileName;
     this.checkFileUpload = true;
 
-    this.ImageSearch();
+    this.ImageSearch(type);
   };
 
   @action resetReviewAry = () => {
@@ -1130,34 +1130,64 @@ class Partner {
   @observable matching_image = ""; // 이미지 검색 시 적합하게 나온 이미지 url
 
   // image search를 위한 함수
-  @action ImageSearch = () => {
-    // 데이터 만들기
-    var formData = new FormData();
+  @action ImageSearch = (type) => {
+    if (type === "shop") {
+      // 데이터 만들기
+      var formData = new FormData();
 
-    if (Auth.logged_in_user !== null) {
-      formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
+      if (Auth.logged_in_user !== null) {
+        formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
+      }
+
+      formData.append("file", this.file);
+
+      const req = {
+        data: formData,
+      };
+
+      PartnerAPI.shopImagesearch(req)
+        .then((res) => {
+          this.partner_list = [];
+          this.partner_list = res.data.shop;
+          // this.partner_count = res.data.partner.length;
+          // this.matching_image = res.data.img_url;
+
+          // image modal state 초기화
+          this.image_modal_state = false;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    } else {
+      // 데이터 만들기
+      var formData = new FormData();
+
+      if (Auth.logged_in_user !== null) {
+        formData.append("email", Auth.logged_in_user.username); // 로그인한 이메일
+      }
+
+      formData.append("file", this.file);
+
+      const req = {
+        data: formData,
+      };
+
+      PartnerAPI.imagesearch(req)
+        .then((res) => {
+          this.partner_list = [];
+          this.partner_list = res.data.partner;
+          this.partner_count = res.data.partner.length;
+          this.matching_image = res.data.img_url;
+
+          // image modal state 초기화
+          this.image_modal_state = false;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
     }
-
-    formData.append("file", this.file);
-
-    const req = {
-      data: formData,
-    };
-
-    PartnerAPI.imagesearch(req)
-      .then((res) => {
-        this.partner_list = [];
-        this.partner_list = res.data.partner;
-        this.partner_count = res.data.partner.length;
-        this.matching_image = res.data.img_url;
-
-        // image modal state 초기화
-        this.image_modal_state = false;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
 
   // 이미지 찾기 파일 설정
