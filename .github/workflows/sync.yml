@@ -13,7 +13,7 @@ jobs:
     - name: repo-sync
       uses: repo-sync/github-sync@v2
       with:
-        source_repo: "www.github.com/givinkwon/boltnnut-platform-front"
+        source_repo: "givinkwon/boltnnut-platform-front.git"
         source_branch: "master"
-        destination_branch: "www.github.com/givinkwon/boltnnut-platform-front-test"
+        destination_branch: "givinkwon/boltnnut-platform-front-test.git"
         github_token: ${{ secrets.sync || github.token }}
