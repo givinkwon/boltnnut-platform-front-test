@@ -500,6 +500,15 @@ export function imagesearch(req) {
   });
 }
 
+export function shopImagesearch(req) {
+  console.log(req);
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/portfolio/search_file_shop/`,
+    data: req.data,
+  });
+}
+
 // 검색어 로그 저장
 export function saveSearchText(req) {
   return axios({

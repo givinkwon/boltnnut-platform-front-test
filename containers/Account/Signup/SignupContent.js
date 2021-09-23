@@ -15,9 +15,7 @@ const AgreeContent = [
   { content: "이용약관 동의", essential: "(필수)", terms: 1 },
   { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
 ];
-const MarketingContent = [
-  { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
-];
+const MarketingContent = [{ content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 }];
 
 @inject("Auth", "Signup")
 @observer
@@ -36,9 +34,18 @@ class SignupContent extends React.Component {
     // this.props.Signup.passwordInvalidhandler();
   }
 
+  componentDidUpdate() {
+    const { Signup } = this.props;
+
+    if (Signup.password2 === "") {
+      Signup.password2inputstate = true;
+      Signup.phoneInputState = true;
+    }
+  }
+
   componentWillUnmount() {
     const { Signup } = this.props;
-    // Signup.reset();
+    Signup.reset();
   }
 
   render() {
@@ -55,9 +62,7 @@ class SignupContent extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
-              SNS 간편 회원가입
-            </Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
             <LineDiv />
           </LineDivContainer>
 
@@ -118,11 +123,7 @@ class SignupContent extends React.Component {
               active={Signup.password2inputstate}
             />
             <InvalidImgBox src={success} active={Signup.passwordInvalid} />
-            {Signup.password2 && (
-              <InvalidTitle14 active={Signup.passwordInvalid}>
-                비밀번호가 일치하지 않습니다.
-              </InvalidTitle14>
-            )}
+            {Signup.password2 && <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* name */}
@@ -137,11 +138,7 @@ class SignupContent extends React.Component {
               active={Signup.realNameInputState}
             />
             <InvalidImgBox src={success} active={Signup.realNameInvalid} />
-            {Signup.realName && (
-              <InvalidTitle14 active={Signup.realNameInvalid}>
-                특수문자는 입력할 수 없습니다.
-              </InvalidTitle14>
-            )}
+            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* phone number */}
@@ -157,11 +154,7 @@ class SignupContent extends React.Component {
               active={Signup.phoneInputState}
             />
             <InvalidImgBox src={success} active={Signup.phoneInvalid} />
-            {Signup.phone && (
-              <InvalidTitle14 active={Signup.phoneInvalid}>
-                - 없이 숫자만 입력해주세요. (최대 11자리)
-              </InvalidTitle14>
-            )}
+            {Signup.phone && <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요. (최대 11자리)</InvalidTitle14>}
           </InputInnerBox>
 
           {/* company name */}
@@ -177,11 +170,7 @@ class SignupContent extends React.Component {
               active={Signup.company_nameInputState}
               defaultValue={Signup.individual}
             />
-            <InvalidImgBox
-              src={success}
-              style={{ bottom: "40%" }}
-              active={Signup.company_nameInvalid}
-            />
+            <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
 
             {Auth.type === "client" ? (
               <div style={{ display: "inline-flex", marginTop: "12px" }}>
@@ -212,11 +201,7 @@ class SignupContent extends React.Component {
                 active={Signup.titleInputState}
               />
               <InvalidImgBox src={success} active={Signup.titleInvalid} />
-              {Signup.title && (
-                <InvalidTitle14 active={Signup.titleInvalid}>
-                  특수문자는 입력할 수 없습니다.
-                </InvalidTitle14>
-              )}
+              {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
             </InputInnerBox>
           )}
 
@@ -249,9 +234,7 @@ class SignupContent extends React.Component {
                     }}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.essential}
-                  </Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -267,14 +250,10 @@ class SignupContent extends React.Component {
                       Signup.marketingcheckboxState = e.currentTarget.checked;
                     }}
                     // 초기값이 안맞아서 역순으로 해야함
-                    onClick={() =>
-                      Signup.setMarketing(!Signup.marketingcheckboxState)
-                    }
+                    onClick={() => Signup.setMarketing(!Signup.marketingcheckboxState)}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.essential}
-                  </Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -391,8 +370,7 @@ const KakaoImgBox = styled.div`
 
 const CustomInput = styled.input`
   border-radius: 3px;
-  border: ${(props) =>
-    props.active ? "1px solid #c7c7c7" : "1px solid #e53c38"};
+  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
   padding-left: 10px;
   width: 578px;
   height: 42px;
