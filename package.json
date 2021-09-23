@@ -60,6 +60,7 @@
     "react-step-progress": "^1.0.3",
     "react-step-range-slider": "^1.4.1",
     "react-stepper-enhanced": "^1.0.0",
+    "react-switch": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "stl-viewer": "^0.12.0",
     "style-loader": "^1.2.1",

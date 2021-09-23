@@ -21,7 +21,6 @@ import MobileBanner5Container from "./Mobile/MobileBanner5";
 import { inject, observer } from "mobx-react";
 import axios from "axios";
 
-
 @inject("Home")
 @observer
 class HomeConatiner extends React.Component {
@@ -48,7 +47,6 @@ class HomeConatiner extends React.Component {
     const { width, reqList, Home } = this.props;
 
     function test() {
-      console.log("R");
       return axios({
         method: "POST",
         url: `https://analyticsreporting.googleapis.com/v4/userActivity:search`,

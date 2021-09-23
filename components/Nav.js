@@ -104,7 +104,6 @@ class Nav extends React.Component {
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
-            console.log("ddddddddd");
             alert("로그인이 필요합니다");
             Router.push("/login");
           }
@@ -121,12 +120,11 @@ class Nav extends React.Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
-    // console.log(toJS(Auth.logged_in_user));
   }
   render() {
     const { Auth, Request, Home } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-    console.log(Auth.logged_in_partner);
+
     return (
       <>
         <NavBox>
@@ -229,7 +227,7 @@ class Nav extends React.Component {
                           <Font16>
                             <KSLink url={"shop"} content={"공장 직거래"} />
                           </Font16>
-                        </RouterWrapper>  
+                        </RouterWrapper>
                       </NavLink>
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
@@ -279,11 +277,11 @@ class Nav extends React.Component {
 
                     {/* 공장 직거래 */}
                     <NavLink active={url.indexOf("shop") > -1}>
-                        <RouterWrapper>
-                          <Font16>
-                            <KSLink url={"shop"} content={"공장 직거래"} />
-                          </Font16>
-                        </RouterWrapper>    
+                      <RouterWrapper>
+                        <Font16>
+                          <KSLink url={"shop"} content={"공장 직거래"} />
+                        </Font16>
+                      </RouterWrapper>
                     </NavLink>
 
                     {/* <NavLink active={url.indexOf("magazine") > -1}>

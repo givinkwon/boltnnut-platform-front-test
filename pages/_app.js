@@ -2,15 +2,13 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
 import React from "react";
-import App, { Container }  from "next/app";
+import App from "next/app";
 
 import { Provider } from "mobx-react";
 import { createGlobalStyle } from "styled-components";
-import IE from "components/IE";
 import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
 import CheckBrowserModal from "containers/Home/Common/CheckBrowserModal";
-import PrepareModal from "containers/Home/Common/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -79,7 +77,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-
   // 이전 페이지 관련 SSR : https://stackoverflow.com/questions/55565631/how-to-get-previous-url-in-nextjs
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
@@ -115,7 +112,7 @@ class MyApp extends App {
     const { asPath } = this.props.router;
 
     // lets add initial route to `history`
-    this.setState(prevState => ({ history: [...prevState.history, asPath] }));
+    this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
     // 이전 페이지 기록하기 끝
 
     // 네이버 애널리틱스
@@ -129,11 +126,7 @@ class MyApp extends App {
     }
     console.log(userAgent.toLowerCase());
 
-    if (
-      userAgent.indexOf("MSIE ") !== -1 ||
-      userAgent.indexOf(".NET") !== -1 ||
-      userAgent.indexOf("Edge") !== -1
-    ) {
+    if (userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1 || userAgent.indexOf("Edge") !== -1) {
       this.setState({
         ...this.state,
         ie_user: true,
@@ -148,8 +141,7 @@ class MyApp extends App {
     }
 
     const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles && jssStyles.parentNode)
-      jssStyles.parentNode.removeChild(jssStyles);
+    if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles);
   }
   // 네이버애널리틱스
   componentDidUpdate() {
@@ -166,20 +158,15 @@ class MyApp extends App {
     // the latest item in the history,
     // it is changed so lets save it
     if (history[history.length - 1] !== asPath) {
-      this.setState(prevState => ({ history: [...prevState.history, asPath] }));
+      this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
     }
-
   }
   render() {
     const { Component, pageProps, Home } = this.props;
     return (
       <ScrollToTop>
-        {console.log(this.state.modal_shown)}
         <GlobalStyle />
-        <CheckBrowserModal
-          open={!this.state.modal_shown && this.state.ie_user}
-          handleClose={this.closeModal}
-        />
+        <CheckBrowserModal open={!this.state.modal_shown && this.state.ie_user} handleClose={this.closeModal} />
         <Provider {...stores}>
           <Component history={this.state.history} {...pageProps} />
         </Provider>

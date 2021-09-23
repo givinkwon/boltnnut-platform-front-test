@@ -625,21 +625,17 @@ class Partner {
   };
 
   @action openModal = () => {
-    console.log("open click");
     this.requestModalActive = true;
   };
 
   @action closeModal = () => {
-    console.log("close click");
     this.requestModalActive = false;
   };
 
   @action activeHandler = (idx) => {
     if (idx === this.filter_checked_idx) {
-      console.log("ture");
       return true;
     } else {
-      console.log("false");
       return false;
     }
   };
@@ -1382,7 +1378,7 @@ class Partner {
     });
   };
 
-  getRequestByProjectId = (projectId) => {
+  @action getRequestByProjectId = (projectId) => {
     if (projectId == -1) {
       return;
     }
@@ -1391,7 +1387,8 @@ class Partner {
 
     return this.requests[idx];
   };
-  getCategoryById = (id) => {
+
+  @action getCategoryById = (id) => {
     if (id == -1) {
       return;
     }
@@ -1400,14 +1397,13 @@ class Partner {
 
     return this.category_middle_list[idx];
   };
-  getCityNameById = (id) => {
-    console.log(id);
+
+  @action getCityNameById = (id) => {
     if (id == -1) {
       return;
     }
 
     const idx = this.city_list.findIndex((city) => city.id == id);
-    console.log(idx);
     // 못 찾았을 경우
     if (idx === -1) {
       return "";
@@ -1416,25 +1412,17 @@ class Partner {
     return this.city_list[idx].city;
   };
 
-  getCityName = (id) => {
-    console.log(id);
-    // if (id == -1) {
-    //   return;
-    // }
-
-    console.log(toJS(this.city_ary));
+  @action getCityName = (id) => {
     const idx = this.city_ary.findIndex((city) => city.id == id);
-    console.log(idx);
     // 못 찾았을 경우
     if (idx === -1) {
       return "";
     }
 
-    // return "제주";
     return this.city_ary[idx].city;
   };
 
-  getRegionNameById = (id) => {
+  @action getRegionNameById = (id) => {
     if (id == -1) {
       return;
     }
@@ -1456,7 +1444,8 @@ class Partner {
 
     return cityName;
   };
-  getClientById = (id) => {
+
+  @action getClientById = (id) => {
     if (id == -1) {
       return;
     }
@@ -1467,88 +1456,33 @@ class Partner {
   };
 
   @action getPartnerCategory = async (request, i, idx, id = 0) => {
-    // console.log(request);
     await PartnerAPI.getPartnerCategory(request)
       .then((res) => {
-        // console.log(toJS(res.data.category));
         this.category_ary[idx].push(res.data.category);
 
         if (idx === this.partner_list.length - 1) {
-          // console.log("finish");
           this.check_loading_category = true;
         }
-
-        // console.log(toJS(this.category_ary[idx].length));
-        // console.log(id);
-        // console.log(toJS(this.category_ary[idx]));
-
-        // if (this.category_ary[idx].length > id) {
-        //   console.log("조건조건조건조건조건조건조건조건조건조건조건조건");
-        //   this.temp_category_name_ary.push(res.data.category);
-        //   console.log(toJS(this.category_ary[idx].length));
-        //   console.log(id);
-        //   console.log(toJS(this.temp_category_name_ary));
-        //   if (this.category_ary[idx].length - 1 === id) {
-        //     this.category_name_ary.push(this.temp_category_name_ary);
-        //     this.temp_category_name_ary = [];
-        //     console.log(toJS(this.category_name_ary));
-        //   }
-
-        //this.category_ary[idx].push(res.data.category);
-
-        // if (idx === this.partner_list.length - 1) {
-        //   console.log("finish");
-        //   this.check_loading_category = true;
-        // }
-        // }
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    // console.log((i + 1) * 2);
-    // console.log(toJS(this.category_ary[idx].length));
-    // if ((i + 1) * 2 === this.category_ary[idx].length) {
-    //   console.log(toJS(this.category_ary[idx]));
-    //   console.log(toJS(Object.keys(this.category_ary[idx]).length));
-
-    //   console.log(
-    //     toJS(
-    //       this.category_ary[idx].splice(
-    //         Object.keys(this.category_ary[idx]).length,
-    //         Object.keys(this.category_ary[idx]).length
-
-    //         //Partner.category_ary[idx].length
-    //       )
-    //     )
-    //   );
-    //}
-    // console.log(toJS(this.category_ary[idx]));
   };
 
   @action setCategoryDic = async (req, sub_data, id) => {
-    console.log("ffffffffffffffffffffffffff");
     // await Promise.all(
     await PartnerAPI.getPartnerCategory(req)
       .then(async (res) => {
-        console.log("gggggggggggggggggggggggg");
-
         if (!this.category_dic.hasOwnProperty(id)) {
           this.category_dic[id] = [];
         }
         this.category_dic[id] = await [...this.category_dic[id], res.data.category];
-        console.log(toJS(this.category_dic));
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    // console.log(`${id} : ${toJS(this.category_dic[id])}`);
-    // console.log(toJS(this.category_dic))
-    // console.log(`3 : ${this.filterLoading}`);
-    // this.filterLoading = true;
-    // console.log(toJS(this.category_dic));
-    // );
   };
 
   @action getCategory = () => {
@@ -1641,10 +1575,7 @@ class Partner {
 
     PartnerAPI.getCityName(req)
       .then(async (res) => {
-        console.log(res);
         this.city_name = res.data.maincategory;
-        console.log(this.city_name);
-        // return res.data.city
       })
       .catch((e) => {
         console.log(e);
@@ -1654,14 +1585,12 @@ class Partner {
 
   // business를 id로 주고 있어서 이름 가져오기
   @action getBusinessName = (id) => {
-    console.log(id);
     const req = {
       id: id,
     };
 
     PartnerAPI.getBusinessName(req.id)
       .then((res) => {
-        console.log(res.data.category);
         this.business_name.push(res.data.category + "   ");
       })
       .catch((e) => {
@@ -1677,7 +1606,6 @@ class Partner {
     this.resetDevCategory();
 
     const token = localStorage.getItem("token");
-    // alert(this.exceptionCategory);
     let req = {
       params: { page: page },
     };
@@ -1693,12 +1621,6 @@ class Partner {
     } else {
       req.params.category_middle__id = 2;
     }
-
-    // if (this.filter_category) {
-    //   //temp["category_middle__id"] = this.filter_category;
-    //   temp.params.category_middle__id = this.filter_category;
-    //   req.params.category_middle__id = this.filter_category;
-    // }
 
     delete req.params.search;
     delete req.params.history;
@@ -1719,56 +1641,29 @@ class Partner {
       }
     }
 
-    console.log(req.params);
-
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
-        console.log(res);
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];
         this.temp_category_name_ary;
-
         this.partner_list = await res.data.results;
-
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
-        console.log(toJS(this.partner_list));
-        //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+
         this.partner_list.map((item, idx) => {
-          console.log(item);
           this.category_ary.push(item.category_middle);
-          //console.log(toJS(item));
-          console.log(toJS(this.category_ary));
           this.category_ary[idx].map((data, id) => {
-            //console.log(toJS(data));
-
-            // const request = {
-            //   id: data,
-            // };
-
-            // if(this.partner_list.length-1 === idx){
-
-            // }
-            // this.category_ary.map((data, id) => {
-            //   console.log(toJS(data));
-            // });
-            //   console.log(toJS(this.category_name_ary));
-
-            //   console.log(toJS(this.category_ary[idx]));
             for (let i = 0; i < this.category_ary[idx].length; i++) {
               const request = {
                 id: this.category_ary[idx][i],
               };
-              // this.getPartnerCategory(request, i, idx);
             }
           });
         });
 
         await this.category_ary.map(async (data, id) => {
-          console.log(toJS(data));
-          console.log(id);
           await data.map(async (sub_data, index) => {
             const req = {
               id: sub_data,
@@ -1783,31 +1678,17 @@ class Partner {
         console.log(e.response);
       });
     this.check_loading_develop = true;
-    console.log(this.check_loading_develop);
-
     this.filterLoading = true;
   };
 
   /* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */
   @action getPartnerTemp = async () => {
     let req = { extraUrl: 7866 };
-    console.log(req.extraUrl);
 
     await PartnerAPI.getPartner(req)
       .then(async (res) => {
-        console.log(res);
-
         await this.partner_detail_list.push({ item: res.data, idx: 0 });
         this.recentPartnerId = res.data.id;
-
-        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        // console.log(toJS(this.partner_detail_list));
-        // await this.getReviewByPartner(
-        //   this.partner_detail_list[0].item.id,
-        //   1,
-        //   1
-        // );
-        // await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
@@ -1842,7 +1723,6 @@ class Partner {
     if (Category.business_selected.length) {
       toJS(Category.business_selected).map((data) => {
         this.business_string += data + ",";
-        // console.log(this.business_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.business_string = this.business_string.substr(0, this.business_string.length - 1);
@@ -1853,15 +1733,11 @@ class Partner {
 
     // 업체 분류 선택되어 있을 때
     if (Category.category_selected.length) {
-      // console.log(toJS(Category.category_selected));
       toJS(Category.category_selected).map((data) => {
         this.category_string += data + ",";
-        // console.log(this.category_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.category_string = this.category_string.substr(0, this.category_string.length - 1);
-      // console.log(this.category_string);
-
       req.params.category = this.category_string;
     }
 
@@ -1869,7 +1745,6 @@ class Partner {
     if (Category.city_selected.length) {
       toJS(Category.city_selected).map((data) => {
         this.city_string += data + ",";
-        // console.log(this.city_string);
       });
       // 마지막 쉼표 제거하기 위함
 
@@ -1883,7 +1758,6 @@ class Partner {
     if (Category.develop_selected.length) {
       toJS(Category.develop_selected).map((data) => {
         this.develop_string += data + ",";
-        // console.log(this.develop_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.develop_string = this.develop_string.substr(0, this.develop_string.length - 1);
@@ -1896,7 +1770,6 @@ class Partner {
     if (Category.material_selected.length) {
       toJS(Category.material_selected).map((data) => {
         this.material_string += data + ",";
-        // console.log(this.material_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.material_string = this.material_string.substr(0, this.material_string.length - 1);
@@ -1907,10 +1780,8 @@ class Partner {
 
     // shop에서 온 경우
     if (pre_page === "Shop") {
-      // console.log(req.params);
       PartnerAPI.getPartners_shop(req)
         .then(async (res) => {
-          console.log(res);
           this.partner_list = [];
           this.category_ary = [];
           this.category_name_ary = [];
@@ -1923,7 +1794,6 @@ class Partner {
           this.partner_count = res.data.count;
           await this.resetDevCategory();
 
-          //this.category_ary = res.data.results.category_middle;
           this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
           await this.partner_list.map(async (item, idx) => {
             await this.category_ary.push(item.category_middle);
@@ -1935,10 +1805,8 @@ class Partner {
           console.log(e.response);
         });
     } else {
-      // console.log(req.params);
       PartnerAPI.getPartners(req)
         .then(async (res) => {
-          // console.log(res);
           this.partner_list = [];
           this.category_ary = [];
           this.category_name_ary = [];
@@ -1951,7 +1819,6 @@ class Partner {
           this.partner_count = res.data.count;
           await this.resetDevCategory();
 
-          //this.category_ary = res.data.results.category_middle;
           this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
           await this.partner_list.map(async (item, idx) => {
             await this.category_ary.push(item.category_middle);
@@ -1970,27 +1837,20 @@ class Partner {
   };
 
   @action getReview = async (page = 1, clientId = "") => {
-    // console.log(clientId);
     const req = {
       params: {
         partnername: this.partnerName,
-        //client: clientId,
       },
-      // nextUrl: this.develop_next,
     };
 
     await ReviewAPI.getReview(req)
       .then(async (res) => {
-        // console.log(res.data.results);
         this.review_ary = this.review_ary.concat(res.data.results);
-
         this.review_next = res.data.next;
         this.review_count = res.data.count;
-        // console.log(this.review_count);
 
         if (this.review_ary.length !== 0) {
           this.loadReviewData = 1;
-          //await this.getClientEmail();
         } else {
           this.loadReviewData = -1;
         }
@@ -2000,20 +1860,13 @@ class Partner {
             nextUrl: this.review_next,
             params: {
               partnername: this.partnerName,
-              // client: clientId,
             },
           };
           await ReviewAPI.getNextReviewPage(req)
             .then((res) => {
-              // console.log(res.data.results);
               this.review_ary = this.review_ary.concat(res.data.results);
 
               this.review_next = res.data.next;
-              //console.log(this.city_next);
-              //this.project_page = parseInt(this.project_count/5) + 1
-              // if (callback) {
-              //   callback();
-              // }
             })
             .catch((e) => {
               console.log(e);
@@ -2034,10 +1887,7 @@ class Partner {
     };
     await PartnerAPI.getPortfolioList(req)
       .then((res) => {
-        console.log(res.data);
-        // res.data.results.img_portfolio
         this.portFolioList = this.portFolioList.concat(res.data.results);
-        console.log(toJS(this.portFolioList));
       })
       .catch((e) => {
         console.log(e);
@@ -2098,24 +1948,13 @@ class Partner {
     type이 question일 경우 Q/A에 해당되고 나머지는 default  
   */
   @action getClientNameById = async (id, idx, type = "default") => {
-    console.log(id);
-    console.log(idx);
     const req = {
       params: null,
     };
 
     await PartnerAPI.getClient(id, req).then(async (res) => {
-      console.log(type);
       if (type === "default") {
-        console.log(res.data);
-        console.log(`${idx} : ${id} ============= ${res.data}`);
         this.clientInfoList = await this.clientInfoList.concat(res.data);
-
-        console.log(this.clientInfoList);
-
-        // this.clientInfoList[id] = res.data;
-
-        // console.log(this.clientInfoList);
 
         if (!this.review_client_obj.hasOwnProperty(id)) {
           this.review_client_obj[idx] = [];
@@ -2123,21 +1962,15 @@ class Partner {
         this.review_client_obj[idx] = await [...this.review_client_obj[idx], res.data.user.username];
       }
       if (type === "question") {
-        console.log(res.data);
-        console.log(res.data.user.username);
         this.questionClientInfo[idx] = await res.data.user.username;
-        console.log(toJS(this.questionClientInfo));
-        // return res.data.user.username;
       }
     });
-    console.log(toJS(this.review_client_obj));
   };
 
   // 배열을 무작위로 섞는 함수
   @action shuffleArray = (array) => {
     for (let i = 0; i < array.length; i++) {
       let j = Math.floor(Math.random() * (i + 1));
-      // [array[i], array[j]] = [array[j], array[i]];
       const x = array[i];
       array[i] = array[j];
       array[j] = x;
@@ -2181,10 +2014,8 @@ class Partner {
       - idx는 몇 번째 item인지 index를 의미 
   */
   @action activeHandler = (type, item = 0, idx = 0) => {
-    console.log(type);
     switch (type) {
       case "interested":
-        console.log(this.interestedIdx);
         if (this.interestedIdx) {
           return true;
         } else {
@@ -2201,7 +2032,6 @@ class Partner {
         break;
 
       case "tabbar":
-        console.log(idx === this.selectedTabIdx - 1);
         if (idx === this.selectedTabIdx - 1) {
           return true;
         } else {
@@ -2209,7 +2039,6 @@ class Partner {
         }
         break;
       case "secret":
-        console.log(this.secretIdx);
         if (this.secretIdx) {
           return true;
         } else {
@@ -2371,8 +2200,6 @@ class Partner {
 
     PartnerAPI.getTotalBookmarkByPartner(req)
       .then((res) => {
-        // console.log(res);
-        // console.log(res.data.count);
         this.totalPartnerBookmark = res.data.count;
       })
       .catch((e) => {
@@ -2545,15 +2372,12 @@ class Partner {
     const req = {
       id: id,
     };
-    console.log(id);
+
     PartnerAPI.getBusinessCategory(req)
       .then((res) => {
-        console.log(res);
         this.business_name = res.data.business;
-        console.log(this.business_name);
 
         res.data.business.forEach((element) => {
-          console.log(element);
           PartnerAPI.getBusinessName(element).then((res) => {
             this.hashBusinessCategory.push(res.data.category);
           });

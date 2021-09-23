@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ROOT_URL } from "../index";
-import * as StringUtils from "utils/string";
 
 // 백엔드 view에서 보여주는 요청서 목록을 필터링할 필요 있음
 export function getRequests(req) {
