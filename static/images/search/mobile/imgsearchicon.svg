@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="38" viewBox="0 0 40 38">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        stroke: #c6c7cc;
+        stroke-width: 1.4px;
+      }
+
+      .cls-1 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        fill: #c6c7cc;
+        font-size: 8px;
+        font-family: NotoSansCJKkr-Regular, Noto Sans CJK KR;
+        letter-spacing: -0.025em;
+      }
+
+      .cls-4 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="그룹_6941" data-name="그룹 6941" transform="translate(-321 -60)">
+    <g id="그룹_6724" data-name="그룹 6724" transform="translate(-6.782 -3.5)">
+      <path id="패스_2620" data-name="패스 2620" class="cls-1" d="M741.032,377.034h-4.013l-.552-1.553a.722.722,0,0,0-.68-.48h-4.574a.722.722,0,0,0-.723.722v1.311h-4.014a.723.723,0,0,0-.722.722v10.008a.723.723,0,0,0,.722.723h14.556a.723.723,0,0,0,.723-.723V377.756A.723.723,0,0,0,741.032,377.034Z" transform="translate(-385.972 -303.5)"/>
+      <circle id="타원_872" data-name="타원 872" class="cls-2" cx="3.251" cy="3.251" r="3.251" transform="translate(344.572 76.048)"/>
+    </g>
+    <text id="이미지_검색" data-name="이미지 검색" class="cls-3" transform="translate(322 94.338)"><tspan x="0" y="0">이미지 검색</tspan></text>
+    <rect id="사각형_8819" data-name="사각형 8819" class="cls-4" width="40" height="38" transform="translate(321 60)"/>
+  </g>
+</svg>

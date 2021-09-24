@@ -42,18 +42,15 @@ class Index extends React.Component {
     const formData = new FormData();
 
     const { history } = this.props;
-    console.log(history, history.length)
-    console.log(document.referrer)
+    console.log(history, history.length);
+    console.log(document.referrer);
 
     // document.referrer은 next.js 페이지 내부에서의 이동이 안잡힘
     // 페이지 내에 이동이 있는 경우 => 신규가 아님
-    if(history.length > 1){
-      formData.append("prevUrl", window.location.href + history[history.length-2])
-    }
-    else {
-      document.referrer === ""
-        ? formData.append("prevUrl", "direct")
-        : formData.append("prevUrl", document.referrer);
+    if (history.length > 1) {
+      formData.append("prevUrl", window.location.href + history[history.length - 2]);
+    } else {
+      document.referrer === "" ? formData.append("prevUrl", "direct") : formData.append("prevUrl", document.referrer);
     }
 
     formData.append("url", window.location.href);
@@ -61,10 +58,8 @@ class Index extends React.Component {
       data: formData,
     };
 
-
-      
-      // 전체 이동 기록
-      AccountAPI.setUserPageIP(req)
+    // 전체 이동 기록
+    AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })
@@ -99,7 +94,7 @@ class Index extends React.Component {
               <div>
                 <MobileNav
                   src={back_ic}
-                  headText={"제조사 관리"}
+                  // headText={"제조사 관리"}
                   width={width}
                 />
                 <div style={{ height: "65px" }}></div>

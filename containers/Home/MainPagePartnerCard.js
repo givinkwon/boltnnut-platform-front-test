@@ -20,7 +20,7 @@ class MainPagePartnerCard extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
 
     const req = {
-      id: data && data.city,
+      id: data && data.city.id,
     };
 
     const partnerReq = {
@@ -36,20 +36,20 @@ class MainPagePartnerCard extends React.Component {
         console.log(e.response);
       });
 
-    const temp = [];
-    PartnerAPI.getBusinessCategory(partnerReq)
-      .then((res) => {
-        res.data.business.forEach((element) => {
-          PartnerAPI.getBusinessName(element).then((res) => {
-            temp.push(res.data.category);
-            this.setState({ business: temp });
-          });
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+    // const temp = [];
+    // PartnerAPI.getBusinessCategory(partnerReq)
+    //   .then((res) => {
+    //     res.data.business.forEach((element) => {
+    //       PartnerAPI.getBusinessName(element).then((res) => {
+    //         temp.push(res.data.category);
+    //         this.setState({ business: temp });
+    //       });
+    //     });
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     console.log(e.response);
+    //   });
   }
 
   componentWillUnmount() {
@@ -91,8 +91,7 @@ class MainPagePartnerCard extends React.Component {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
-    const loggedInPartnerId =
-      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
     const existLogo = data && data.logo && data.logo.split("/")[4];
 
     return (
@@ -111,13 +110,7 @@ class MainPagePartnerCard extends React.Component {
                     )}
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {Partner.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{Partner.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -155,11 +148,7 @@ class MainPagePartnerCard extends React.Component {
                   <BottomBox>
                     <Location>
                       <img src="static/icon/location.svg" />
-                      <div style={{ marginLeft: 10 }}>
-                        {(data && data.region === null) || data.region === "nan"
-                          ? this.state.city
-                          : data.region}
-                      </div>
+                      <div style={{ marginLeft: 10 }}>{(data && data.region === null) || data.region === "nan" ? this.state.city : data.region}</div>
                     </Location>
                   </BottomBox>
                 </Bottom>
@@ -185,13 +174,7 @@ class MainPagePartnerCard extends React.Component {
                     <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {Partner.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{Partner.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -200,12 +183,7 @@ class MainPagePartnerCard extends React.Component {
               </Header>
               <Main>
                 <Name>{data && data.name}</Name>
-                <InfoOne>
-                  {data &&
-                    (data.info_company.length > 70
-                      ? data.info_company.slice(0, 70) + "..."
-                      : data.info_company)}
-                </InfoOne>
+                <InfoOne>{data && (data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company)}</InfoOne>
               </Main>
             </Card>
           </>

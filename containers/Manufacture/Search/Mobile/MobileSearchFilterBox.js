@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import MobileSelectComponent from "MobileSelect";
-import FilterBoxSearchBar from "../Home/SearchBar";
+import FilterBoxSearchBar from "./FilterBoxSearchBar";
 import ButtonComponent from "components/Buttonv2";
 
 import FilterModalContainer from "../Home/FilterModal";
@@ -198,7 +198,7 @@ class MobileSearchFilterConatiner extends React.Component {
         <FilterBoxSearchBar />
 
         <FilterCategory>
-        <Category>
+          <Category>
             <CategoryName>카테고리</CategoryName>
             <Field>
               <div>전체</div>
@@ -243,22 +243,13 @@ class MobileSearchFilterConatiner extends React.Component {
                   this.dropdownHandler("develop&material");
                 }}
               >
-                <img
-                  src="/static/icon/detail_filter.svg"
-                  style={{ widht: 24, height: 24 }}
-                ></img>
-                <img
-                  src="/static/icon/arrow_down.svg"
-                  style={{ widht: 12, height: 12 }}
-                ></img>
+                <img src="/static/icon/detail_filter.svg" style={{ widht: 24, height: 24 }}></img>
+                <img src="/static/icon/arrow_down.svg" style={{ widht: 12, height: 12 }}></img>
               </div>
             </Material>
           </Category>
         </FilterCategory>
-        {Partner.filter_dropdown && (
-          <FilterModalContainer type={this.state.type}></FilterModalContainer>
-        )}
-
+        {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
       </ContainerV2>
     );
   }
@@ -342,11 +333,11 @@ const Field = styled.div`
 `;
 
 const ContainerV2 = styled.div`
-  margin-top: 32px;
   display: flex;
   flex-direction: column;
   width: 1200px;
   margin-bottom: 30px;
+  margin-top: 32px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
