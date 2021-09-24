@@ -2,7 +2,12 @@ on:
   # develop에 push 되었을 때
   push:
     branches: [ develop ]
-
+  workflow_dispatch: 
+    inputs: 
+        source-repo:
+          description: source-repo
+        target-repo:
+          description: target-repo
 jobs:
   sync:
     runs-on: ubuntu-latest
