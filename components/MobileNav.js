@@ -166,8 +166,12 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {Auth.logged_in_partner ? <KSLink url={"project"} content={"프로젝트 관리"} /> : <KSLink url={"search"} content={"제조사 찾기"} />}
-                  <KSLink url={"magazine"} content={"제조 인사이트"} />
+                  {Auth.logged_in_partner ? (
+                    <KSLink url={"project"} content={"프로젝트 관리"} />
+                  ) : (
+                    <KSLink url={"search"} content={"제조사 찾기"} />
+                  )}
+                  <KSLink url={"shop"} content={"공장 직거래"} />
                   <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
                   {Auth.logged_in_user && <KSLink url={"chatting"} content={"채팅하기"} />}

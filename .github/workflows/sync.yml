@@ -1,6 +1,8 @@
 on:
-  schedule:
-  - cron: '0 18 * * *'
+  # develop에 push 되었을 때
+  push:
+    branches:
+      - develop
   workflow_dispatch: 
     inputs: 
         source-repo:
@@ -14,15 +16,21 @@ jobs:
     name: sync-test
     steps:
     - name: Checkout private tools
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.3.3
       with:
-        repository: givinkwon/boltnnut-platform-front-test
-        token: ${{ secrets.sync }} 
+        # 레포지토리에 접속
+        repository: givinkwon/boltnnut-platform-front
+        lfs: true
+        ref: master
+        token: ${{ secrets.SYNC || github.token }} 
+    # git에 log 남기기
     - run: git log
       shell: bash
-    - uses: yomapi/sync-repo-to-repo@v1.4
+    # 동기화하기
+    - uses: givinkwon/sync-repo-to-repo@v1.1
       with:
         source-repo: https://github.com/givinkwon/boltnnut-platform-front
         target-repo: givinkwon/boltnnut-platform-front-test
+    # 완료되었음 로그
     - run: echo sync completed!
       shell: bash

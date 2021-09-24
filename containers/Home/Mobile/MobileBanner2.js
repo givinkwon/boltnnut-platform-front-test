@@ -108,7 +108,7 @@ class MobileBanner2Container extends React.Component {
 
             <Banner2ImgBox onClick={() => alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
               <div style={{ width: 310 }}>
-                <Font16>다양한 카테고리의</Font16>
+                <Font16>다양한 카테고리의</Font16>
                 <Font16 style={{ marginTop: 8 }}>
                   <span style={{ color: "#0933b3" }}>업체 전문가들을 찾고</span> 있으신가요?
                 </Font16>
