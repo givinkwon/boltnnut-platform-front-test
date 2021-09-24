@@ -20,7 +20,7 @@ jobs:
         # 레포지토리에 접속
         repository: givinkwon/boltnnut-platform-front
         lfs: true
-        ref: develop
+        ref: master
         token: ${{ secrets.SYNC || github.token }} 
     # git에 log 남기기
     - run: git log
