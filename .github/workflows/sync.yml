@@ -19,9 +19,9 @@ jobs:
       uses: actions/checkout@v2.3.3
       with:
         # 레포지토리에 접속
-        repository: givinkwon/boltnnut-platform-front-test
+        repository: givinkwon/boltnnut-platform-front
         lfs: true
-        ref: master
+        ref: develop
         token: ${{ secrets.SYNC || github.token }} 
     # git에 log 남기기
     - run: git log
