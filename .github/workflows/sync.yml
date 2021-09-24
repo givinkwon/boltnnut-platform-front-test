@@ -26,7 +26,7 @@ jobs:
     - run: git log
       shell: bash
     # 동기화하기
-    - uses: givinkwon/sync-repo-to-repo@v1.1
+    - uses: givinkwon/sync-repo-to-repo@v1.3
       with:
         source-repo: https://github.com/givinkwon/boltnnut-platform-front
         target-repo: givinkwon/boltnnut-platform-front-test
