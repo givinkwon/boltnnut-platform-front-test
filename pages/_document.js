@@ -11,10 +11,7 @@ export default class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) =>
-            styledComponentSheet.collectStyles(
-              materialUiSheets.collect(<App {...props} />)
-            ),
+          enhanceApp: (App) => (props) => styledComponentSheet.collectStyles(materialUiSheets.collect(<App {...props} />)),
         });
       const initialProps = await Document.getInitialProps(ctx);
       return {
@@ -381,21 +378,14 @@ export default class MyDocument extends Document {
         <Head>
           <>
             {/* 페이스북 설치 태그*/}
-            <meta name="facebook-domain-verification" content="l31dir7jjxp2c050hcf9cjdnjpgi50" /> 
+            <meta name="facebook-domain-verification" content="l31dir7jjxp2c050hcf9cjdnjpgi50" />
             {/* 구글 옵티마이저 설치태그 */}
             <script src="https://www.googleoptimize.com/optimize.js?id=OPT-56ZDC8G"></script>
-            <script
-              data-ad-client="ca-pub-6441704928060549"
-              async
-              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-            ></script>
+            <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
             {/* Beusable */}
             <script type="text/javascript"></script>
-            <meta
-              http-equiv="Content-Type"
-              content="text/html; charset=utf-8"
-            />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             {/*--PG크로스브라우징필수내용--*/}
             <meta http-equiv="Cache-Control" content="no-cache" />
@@ -408,23 +398,14 @@ export default class MyDocument extends Document {
             <meta name="Yeti" content="All" />
             <meta name="Yeti" content="index, follow" />
 
-            <meta
-              name="google-signin-client_id"
-              content="392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com"
-            ></meta>
-            <meta
-              name="google-signin-scope"
-              content="https://www.googleapis.com/auth/analytics.readonly"
-            ></meta>
+            <meta name="google-signin-client_id" content="392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com"></meta>
+            <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly"></meta>
             {/* 대표 URL */}
             <link rel="canonical" href="https://www.boltnnut.com/" />
             {/* Naver webmaster */}
-            <meta
-              name="naver-site-verification"
-              content="4354dc20bc3fb28a16e1db9800acf406fd782d76"
-            />
+            <meta name="naver-site-verification" content="4354dc20bc3fb28a16e1db9800acf406fd782d76" />
             {/* favicon */}
-            <link
+            {/* <link
               rel="shortcut icon"
               href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
             />
@@ -437,22 +418,10 @@ export default class MyDocument extends Document {
               rel="icon"
               href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
             />
-            <link rel="icon" href="/public/favicon.ico" />
-            <link
-              href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap"
-              rel="stylesheet"
-            />
-            <link
-              rel="stylesheet"
-              type="text/css"
-              charset="UTF-8"
-              href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-            />
-            <link
-              rel="stylesheet"
-              type="text/css"
-              href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-            />
+            <link rel="icon" href="/public/favicon.ico" /> */}
+            <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
+            <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
           </>
           {/* Google Tag Manager */}
           <script
@@ -470,11 +439,7 @@ export default class MyDocument extends Document {
             async
           ></script>
         </Head>
-        <body
-          oncontextmenu="return false"
-          ondragstart="return false"
-          onselectstart="return false"
-        >
+        <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5"
@@ -489,51 +454,24 @@ export default class MyDocument extends Document {
           <script dangerouslySetInnerHTML={this.setBeusableAddition()} />
           <NextScript />
           {/* GA Settings*/}
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"
-          ></script>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} />
 
           {/* Iamport */}
-          <script
-            type="text/javascript"
-            src="https://code.jquery.com/jquery-1.12.4.min.js"
-            async
-          ></script>
-          <script
-            type="text/javascript"
-            src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
-            async
-          ></script>
+          <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" async></script>
+          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async></script>
           {/* Naver analic */}
-          <script
-            type="text/javascript"
-            src="//wcs.naver.net/wcslog.js"
-          ></script>
+          <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
           {/* Google Adsense */}
-          <script
-            data-ad-client="ca-pub-6441704928060549"
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          ></script>
+          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
           {/* 카카오로그인 */}
-          <script
-            type="text/javascript"
-            src="https://developers.kakao.com/sdk/js/kakao.js"
-          ></script>
+          <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
           <script dangerouslySetInnerHTML={this.setKakaoLogin()} />
           {/* 테스트 */}
 
-          <script
-            type="text/javascript"
-            src="https://apis.google.com/js/client.js?onload=authorize"
-          ></script>
-          <script
-            type="text/javascript"
-            src="https://apis.google.com/js/client:platform.js"
-          ></script>
+          <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=authorize"></script>
+          <script type="text/javascript" src="https://apis.google.com/js/client:platform.js"></script>
           <script dangerouslySetInnerHTML={this.setReportV4()} />
 
           {/* <button id="auth-button" onclick="authorize()">

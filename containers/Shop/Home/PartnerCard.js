@@ -110,13 +110,12 @@ class PartnerCard extends React.Component {
     const { data, width, Partner, categoryData, idx, Auth, Sample } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
-    const loggedInPartnerId =
-      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
     const existLogo = data && data.logo && data.logo.split("/")[4];
 
     return (
       <>
-        <RequestModal width = {width}/>
+        <RequestModal width={width} />
         {width > 767.98 && data ? (
           <>
             <Card
@@ -132,20 +131,10 @@ class PartnerCard extends React.Component {
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
                     {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
-                    {Partner.matching_image.length > 0 ? (
-                      <img src={Partner.matching_image[idx]} />
-                    ) : (
-                      <img src={data && data.portfolio_set[0].img_portfolio} />
-                    )}
+                    {Partner.matching_image.length > 0 ? <img src={Partner.matching_image[idx]} /> : <img src={data && data.portfolio_set[0].img_portfolio} />}
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {this.state.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -156,45 +145,35 @@ class PartnerCard extends React.Component {
               <Main>
                 <Title>
                   <div>
-                    <Name>{data.history && data.history.length > 35
-                    ? data.history.slice(0, 35) + "..."
-                    : data.history}
-                    </Name>
+                    <Name>{data.history}</Name>
                   </div>
                 </Title>
 
-                <Introduce style={{ color: "#555963", marginBottom : 20}}>
-                    {data && data.name}
-                </Introduce>
+                <Introduce style={{ color: "#555963", marginBottom: 20 }}>{data && data.name}</Introduce>
 
                 {/*가격이 너무 높을 때는 표시하지 않음*/}
-                {data.shop && data.shop.price1 && data.shop.price1 < 2000000 ? 
-                (
+                {data.shop && data.shop.price1 && data.shop.price1 < 2000000 ? (
                   <>
-                  <Introduce style={{textAlign : "right"}}>
-                      단품 가격 : {data.shop.price1 && (Math.round(data.shop.price1 * 0.95 / 100 ) * 100).toLocaleString("ko-KR")}원
-                  </Introduce>
-                  <Introduce style={{textAlign : "right"}}>
-                      {data.shop.moq2} : {(Math.round(data.shop.price1 * 0.85 / 100) * 100).toLocaleString("ko-KR")}원
-                  </Introduce>
-                  <Introduce style={{textAlign : "right"}}>
-                      {data.shop.moq3} : {(Math.round(data.shop.price1 * 0.7 / 100 )  * 100).toLocaleString("ko-KR")}원
-                  </Introduce>
+                    <Introduce style={{ textAlign: "right" }}>
+                      단품 가격 : {data.shop.price1 && (Math.round((data.shop.price1 * 0.95) / 100) * 100).toLocaleString("ko-KR")}원
+                    </Introduce>
+                    <Introduce style={{ textAlign: "right" }}>
+                      {data.shop.moq2} : {(Math.round((data.shop.price1 * 0.85) / 100) * 100).toLocaleString("ko-KR")}원
+                    </Introduce>
+                    <Introduce style={{ textAlign: "right" }}>
+                      {data.shop.moq3} : {(Math.round((data.shop.price1 * 0.7) / 100) * 100).toLocaleString("ko-KR")}원
+                    </Introduce>
                   </>
-                )
-                :
-                (
+                ) : (
                   <>
-                  <Introduce style={{textAlign : "right"}}>
-                    단품 가격 : {data.shop && data.shop.price1 && (Math.round(data.shop.price1 * 0.95 / 10000 ) * 10000).toLocaleString("ko-KR")}원
-                  </Introduce>
-                  <Introduce style={{textAlign : "right"}}>
-                  구매수량에 따라 가격 협의
-                  </Introduce> 
+                    <Introduce style={{ textAlign: "right" }}>
+                      단품 가격 : {data.shop && data.shop.price1 && (Math.round((data.shop.price1 * 0.95) / 10000) * 10000).toLocaleString("ko-KR")}원
+                    </Introduce>
+                    <Introduce style={{ textAlign: "right" }}>구매수량에 따라 가격 협의</Introduce>
                   </>
                 )
                 }
-                <ButtonBox onClick = {() => Sample.openModal()} >
+                <ButtonBox onClick = {() => Sample.openModal(data.name)} >
                   <ButtonComponent
                       style={{ width: "200px", height: "42px" }}
                       backgroundColor={"#0933b3"}
@@ -208,7 +187,6 @@ class PartnerCard extends React.Component {
                       </MainCategoryFont>
                   </ButtonComponent>
                 </ButtonBox>
-                
               </Main>
             </Card>
           </>
@@ -232,13 +210,7 @@ class PartnerCard extends React.Component {
                     <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {this.state.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -248,27 +220,15 @@ class PartnerCard extends React.Component {
 
               <Main>
                 <Name>{data && data.name}</Name>
-                <InfoOne>
-                  {data &&
-                    (data.info_company.length > 70
-                      ? data.info_company.slice(0, 70) + "..."
-                      : data.info_company)}
-                </InfoOne>
+                <InfoOne>{data && (data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company)}</InfoOne>
               </Main>
             </Card>
 
-            {this.props.Partner.ReviewActive &&
-              this.props.Partner.ReviewActiveIndex === idx && (
-                <>
-                  <ReviewContainer
-                    data={data}
-                    width={width}
-                    Partner={Partner}
-                    categoryData={categoryData}
-                    idx={idx}
-                  />
-                </>
-              )}
+            {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
+              <>
+                <ReviewContainer data={data} width={width} Partner={Partner} categoryData={categoryData} idx={idx} />
+              </>
+            )}
           </>
         )}
       </>
@@ -498,7 +458,6 @@ const Item = styled.div`
   }
 `;
 
-
 const ButtonComponent = styled(Button)`
   width: 80px;
   height: 42px;
@@ -534,4 +493,4 @@ const MainCategoryFont = styled(Content.FontSize15)`
   text-align: left;
   color: ${(props) => (props.color ? props.color : "#282c36")};
   word-break: break-word;
-}`
+}`;

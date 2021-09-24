@@ -15,9 +15,7 @@ class MobileBanner0Container extends React.Component {
           <img src={mobilebanner0img} style={{ marginBottom: "34px" }} />
 
           <Title24>대한민국 제조사 정보 여기 다 있다.</Title24>
-          <Title16 style={{ marginTop: "20px" }}>
-            당신에게 맞는 제조사 정보를
-          </Title16>
+          <Title16 style={{ marginTop: "20px" }}>당신에게 맞는 제조사 정보를</Title16>
           <Title16>바로 조회해보세요.</Title16>
 
           <NewMobileSearchBar />
@@ -54,7 +52,7 @@ const Title24 = styled(Title.FontSize24)`
 `;
 
 const Title16 = styled(Title.FontSize16)`
-  font-weight: 500;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.63;

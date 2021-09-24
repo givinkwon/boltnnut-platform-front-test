@@ -113,37 +113,24 @@ class SearchBarConatiner extends React.Component {
       <>
         <Form active={Partner.subButtonActive}>
           <FormInnerBox>
-            <SearchBar
-              active={Partner.subButtonActive}
-              scrollActive={Partner.scrollActive}
-            >
+            <SearchBar active={Partner.subButtonActive} scrollActive={Partner.scrollActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder =
-                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-                }
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
 
-              <ImgContainer
-                onMouseEnter={() => this.imageSearchHandler()}
-                onMouseLeave={() => this.imageSearchHandler()}
-                scrollActive={Partner.scrollActive}
-              >
-                <HoverBox
-                  active={this.state.imgsearchhover}
-                  className="hoverBox"
-                >
+              <ImgContainer onMouseEnter={() => this.imageSearchHandler()} onMouseLeave={() => this.imageSearchHandler()} scrollActive={Partner.scrollActive}>
+                <HoverBox active={this.state.imgsearchhover} className="hoverBox">
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
 
                 <ImgContainer scrollActive={Partner.scrollActive}>
-                  <ImageFile file={true} isOpen={true} />
+                  <ImageFile file={true} isOpen={true} type="shop" />
                 </ImgContainer>
               </ImgContainer>
 

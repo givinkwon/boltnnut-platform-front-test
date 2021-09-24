@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import * as Text from "components/Text";
-import Button from "components/Button";
-import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import MobileProposalCard from "containers/Manufacture/Search/Mobile/MobileProposalCard";
 import { toJS } from "mobx";
+import Router from "next/router";
 
 @inject("Home", "Partner", "Auth", "Search", "Category")
 @observer
@@ -44,12 +41,12 @@ class MobileBanner2Container extends React.Component {
   render() {
     // id는 실제 DB의 id로 해야함
     const nameTable = [
+      { id: 41, name: "전자/반도체 부품" },
       { id: 1, name: "생활/위생" },
       { id: 2, name: "디지털/가전" },
       { id: 5, name: "반려" },
       { id: 6, name: "인테리어" },
       { id: 7, name: "주방" },
-      { id: 41, name: "전자/반도체 부품" },
       { id: 46, name: "볼트/너트류" },
       { id: 39, name: "동력전달부품" },
       { id: 19, name: "냉난방/공조" },
@@ -58,99 +55,80 @@ class MobileBanner2Container extends React.Component {
 
     const { Partner, Auth, Search, Category } = this.props;
 
+    console.log("asdasd", Partner.partner_list);
+
     return (
-      <Container>
-        <InnerContainer>
-          <Title20>
-            <b style={{ fontWeight: "bold" }}>5600개</b>의 볼트앤너트의
-          </Title20>
-          <Title20>업체 전문가들을 만나보세요.</Title20>
+      <>
+        <Container>
+          <InnerContainer>
+            <Title20>
+              <b style={{ fontWeight: "bold" }}>5600개</b>의 볼트앤너트의
+            </Title20>
+            <Title20>업체 전문가들을 만나보세요.</Title20>
 
-          <div style={{ marginTop: "23px", width: "95%" }}>
-            <CategoryBox>
-              {nameTable.map((v, idx) => (
-                <div
-                  style={{
-                    width: "110px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <CategoryTitle
-                    key={v.id}
-                    active={this.onCompareCategory(v.id)}
-                    onClick={() => this.onClickCategory(v.id)}
+            <div style={{ marginTop: "23px", width: "95%" }}>
+              <CategoryBox>
+                {nameTable.map((v, idx) => (
+                  <div
+                    style={{
+                      width: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                   >
-                    {v.name}
-                  </CategoryTitle>
-                </div>
-              ))}
-            </CategoryBox>
+                    <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
+                      {v.name}
+                    </CategoryTitle>
+                  </div>
+                ))}
+              </CategoryBox>
 
-            {Partner.partner_list &&
-              Partner.partner_list.map((item, idx) => {
-                return (
-                  <>
-                    {idx < 3 && (
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <ProposalCardBox
-                          onClick={() => Partner.pushToDetail(item, idx)}
-                        >
-                          <MobileProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={Search.handleIntersection}
-                            customer="partner"
-                          />
-                        </ProposalCardBox>
-                      </div>
-                    )}
-                  </>
-                );
-              })}
-          </div>
+              {Partner.partner_list &&
+                Partner.partner_list.map((item, idx) => {
+                  return (
+                    <>
+                      {idx < 3 && (
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                          <ProposalCardBox onClick={() => Partner.pushToDetail(item, idx)}>
+                            <MobileProposalCard
+                              data={item}
+                              width={this.props.width}
+                              categoryData={toJS(Partner.category_dic[idx])}
+                              idx={idx}
+                              handleIntersection={Search.handleIntersection}
+                              customer="partner"
+                            />
+                          </ProposalCardBox>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+            </div>
 
-          <Text16 style={{ marginTop: "56px" }}>
-            다양한 카테고리의 업체 전문가들을 찾고 있으신가요?
-          </Text16>
+            <Banner2ImgBox onClick={() => alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
+              <div style={{ width: 310 }}>
+                <Font16>다양한 카테고리의</Font16>
+                <Font16 style={{ marginTop: 8 }}>
+                  <span style={{ color: "#0933b3" }}>업체 전문가들을 찾고</span> 있으신가요?
+                </Font16>
+              </div>
 
-          <SignupButtom>
-            <ButtonText16>회원가입하기</ButtonText16>
-          </SignupButtom>
-        </InnerContainer>
-      </Container>
+              <SignupBtn>회원가입하기</SignupBtn>
+            </Banner2ImgBox>
+          </InnerContainer>
+        </Container>
+      </>
     );
   }
 }
 
 export default MobileBanner2Container;
 
-const ProposalCardBox = styled.div`
-  width: 95%;
-  margin-top: 12px;
-  border: none;
-`;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 841px;
-  background-color: #f6f6f6;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-`;
-
-const InnerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 70px;
-  width: 100%;
+const Font16 = styled(Title.FontSize16)`
+  font-family: NotoSansCJKkr;
+  font-weight: bold;
+  color: #1e2222;
 `;
 
 const Title20 = styled(Title.FontSize20)`
@@ -161,26 +139,22 @@ const Title20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Text16 = styled.p`
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 3.13;
-  letter-spacing: -0.4px;
-  color: #282c36;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 841px;
+  background-color: #fff;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
 `;
 
-const ButtonText16 = styled.p`
-  font-size: 16px;
-  font-family: NotoSansCJKkr;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 3.25;
-  letter-spacing: -0.4px;
-  color: #0933b3;
-  margin-top: 2px;
+const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  width: 100%;
 `;
 
 const CategoryBox = styled.div`
@@ -212,14 +186,42 @@ const CategoryTitle = styled.div`
   border-bottom: ${(props) => (props.active ? "2px solid #282c36" : "")};
 `;
 
-const SignupButtom = styled.button`
+const Banner2ImgBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 180px;
+  margin-top: 30px;
+  background-image: url("/static/images/Home/Mobile/MobileBanner2/mobilebanner2.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  cursor: pointer;
+`;
+
+const ProposalCardBox = styled.div`
+  width: 95%;
+  margin-top: 12px;
+  border: none;
+`;
+
+const SignupBtn = styled.button`
+  width: 148px;
+  height: 42px;
+  margin-top: 20px;
+  margin-left: 170px;
+  padding-top: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 148px;
-  height: 42px;
   border-radius: 29px;
-  border: solid 2px #0933b3;
-  margin: 25px 0px 70px 0px;
-  background: none;
+  border: solid 1.5px #0933b3;
+  background-color: #f6f6f6;
+
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0933b3;
 `;

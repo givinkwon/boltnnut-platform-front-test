@@ -265,8 +265,6 @@ export function getRandomPartner(req) {
 }
 
 export function getPartners_shop(req) {
-  // console.log(req.params);
-
   return axios({
     method: "GET",
     url: `${ROOT_URL}/shop/`,
@@ -276,8 +274,6 @@ export function getPartners_shop(req) {
 }
 
 export function getPartners(req) {
-  // console.log(req.params);
-
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partner/`,
@@ -492,10 +488,18 @@ export function getReplyQuestion(req) {
 
 // 이미지 검색
 export function imagesearch(req) {
-  console.log(req);
   return axios({
     method: "POST",
     url: `${ROOT_URL}/portfolio/search_file/`,
+    data: req.data,
+  });
+}
+
+export function shopImagesearch(req) {
+  console.log(req);
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/portfolio/search_file_shop/`,
     data: req.data,
   });
 }
