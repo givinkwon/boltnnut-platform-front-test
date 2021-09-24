@@ -1,8 +1,7 @@
 on:
   # develop에 push 되었을 때
   push:
-    branches:
-      - develop
+    branches: [ develop ]
   workflow_dispatch: 
     inputs: 
         source-repo:
