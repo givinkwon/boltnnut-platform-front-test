@@ -405,20 +405,11 @@ export default class MyDocument extends Document {
             {/* Naver webmaster */}
             <meta name="naver-site-verification" content="4354dc20bc3fb28a16e1db9800acf406fd782d76" />
             {/* favicon */}
-            {/* <link
-              rel="shortcut icon"
-              href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
-            />
-            <link
-              rel="shortcut icon"
-              href="https://www.boltnnut.com/favicon.ico"
-            />
+            <link rel="shortcut icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico" />
+            <link rel="shortcut icon" href="https://www.boltnnut.com/favicon.ico" />
             <link rel="shortcut icon" href="/public/favicon.ico" />
-            <link
-              rel="icon"
-              href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
-            />
-            <link rel="icon" href="/public/favicon.ico" /> */}
+            <link rel="icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico" />
+            <link rel="icon" href="/public/favicon.ico" />
             <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
             <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
             <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
