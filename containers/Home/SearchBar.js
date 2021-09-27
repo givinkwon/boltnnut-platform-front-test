@@ -74,17 +74,12 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <div
-            style={{ width: "100%", display: "flex", flexDirection: "column" }}
-          >
+          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder =
-                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-                }
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
@@ -109,13 +104,6 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
-const CustomUl = styled.ul`
-  width: 588px;
-  height: 150px;
-  margin-left: 30px;
-  font-size: 18px;
-  }
-`;
 
 const CustomLiBox = styled.div`
   display: flex;
@@ -162,7 +150,7 @@ const SearchBar = styled.div`
       outline: none;
     }
     ::placeholder {
-      #c6c7cc
+      color: #acadad;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -201,7 +189,6 @@ const SearchBar = styled.div`
       font-size: 18px;
     }
   }
-  
 
   .searcher-suggs-word {
     height: 40px;
@@ -223,10 +210,9 @@ const SearchBar = styled.div`
   }
 
   .searcher-suggs-word.selected {
-    background-color: #0288D1;
+    background-color: #0288d1;
     color: white;
   }
-  
 `;
 
 const Form = styled.div`

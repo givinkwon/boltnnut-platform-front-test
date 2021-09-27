@@ -1,8 +1,9 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { inject, observer } from "mobx-react";
-import * as Title from "components/Title";
+import styled from "styled-components";
 import Router from "next/router";
+import { inject, observer } from "mobx-react";
+
+import * as Title from "components/Title";
 
 import ImageFile from "./ImageFile";
 
@@ -24,10 +25,9 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner } = this.props;
 
-    await Router.push("/search");
-    // console.log("click");
+    Router.push("/search");
 
-    if(Partner.loadingFlag == false){
+    if (Partner.loadingFlag == false) {
       Partner.loadingFlag = true;
       setTimeout(() => {
         Partner.loadingFlag = false;
@@ -117,32 +117,19 @@ class SearchBarConatiner extends React.Component {
       <>
         <Form active={Partner.subButtonActive}>
           <FormInnerBox>
-            <SearchBar
-              active={Partner.subButtonActive}
-              scrollActive={Partner.scrollActive}
-            >
+            <SearchBar active={Partner.subButtonActive} scrollActive={Partner.scrollActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder =
-                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-                }
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
 
-              <ImgContainer
-                onMouseEnter={() => this.imageSearchHandler()}
-                onMouseLeave={() => this.imageSearchHandler()}
-                scrollActive={Partner.scrollActive}
-              >
-                <HoverBox
-                  active={this.state.imgsearchhover}
-                  className="hoverBox"
-                >
+              <ImgContainer onMouseEnter={() => this.imageSearchHandler()} onMouseLeave={() => this.imageSearchHandler()} scrollActive={Partner.scrollActive}>
+                <HoverBox active={this.state.imgsearchhover} className="hoverBox">
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
 

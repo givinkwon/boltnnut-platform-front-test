@@ -90,10 +90,7 @@ class NewMobileSearchBarConatiner extends React.Component {
               <input
                 placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder =
-                    "원하는 분야나 비슷한 제품을 검색해보세요.")
-                }
+                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
@@ -168,10 +165,10 @@ const SearchBar = styled.div`
       outline: none;
     }
     ::placeholder {
-      #c6c7cc;
+      color: #c6c7cc;
     }
   }
-  
+
   // 구글 검색 관련
   .searcher-suggs {
     // position: absolute;
@@ -199,7 +196,7 @@ const SearchBar = styled.div`
   }
 
   .searcher-suggs-word.selected {
-    background-color: #0288D1;
+    background-color: #0288d1;
     color: white;
   }
 `;

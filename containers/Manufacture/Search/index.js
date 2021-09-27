@@ -29,10 +29,7 @@ class SearchConatiner extends React.Component {
     partner_view_data = await Cookies.get("partner_view");
     // list 전처리
     if (partner_view_data) {
-      partner_view_data = partner_view_data
-        .replace("[", "")
-        .replace("]", "")
-        .split(",");
+      partner_view_data = partner_view_data.replace("[", "").replace("]", "").split(",");
     }
 
     if (partner_view_data !== undefined && partner_view_data !== "undefined") {
@@ -56,12 +53,10 @@ class SearchConatiner extends React.Component {
                 </>
               )}
               {/* 제조사 찾기 상세 페이지 */}
-              {Partner.newIndex == 1 && (
-                <DetailContainer width={this.props.width} />
-              )}
+              {Partner.newIndex == 1 && <DetailContainer width={this.props.width} />}
             </div>
           ) : (
-            <>
+            <div>
               {/* 제조사 찾기 모바일 버전 기본 화면 */}
               {Partner.mobileRequestIndex == 0 && (
                 <>
@@ -69,7 +64,7 @@ class SearchConatiner extends React.Component {
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
-            </>
+            </div>
           ))}
       </>
     );
