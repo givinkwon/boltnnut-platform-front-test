@@ -22,7 +22,7 @@ class PartnerCard extends React.Component {
     active: false,
     modalOpen: false,
     activeReview: false,
-    city: "",
+    city: "준비중 입니다.",
     business: [],
     totalPartnerBookmark: "",
     total_review: -1,
@@ -167,8 +167,7 @@ class PartnerCard extends React.Component {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data && data.id;
-    const loggedInPartnerId =
-      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
     const existLogo = data && data.logo && data.logo.split("/")[4];
 
     return (
@@ -188,20 +187,10 @@ class PartnerCard extends React.Component {
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
                     {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
-                    {Partner.matching_image.length > 0 ? (
-                      <img src={Partner.matching_image[idx]} />
-                    ) : (
-                      <img src={data && data.portfolio_set[0].img_portfolio} />
-                    )}
+                    {Partner.matching_image.length > 0 ? <img src={Partner.matching_image[idx]} /> : <img src={data && data.portfolio_set[0].img_portfolio} />}
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {this.state.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -225,11 +214,7 @@ class PartnerCard extends React.Component {
                   {Auth.logged_in_user && (
                     <BookMark>
                       <img
-                        src={
-                          Partner.check_bookmark[idx] === idx
-                            ? bookmarkBlueImg
-                            : bookmarkImg
-                        }
+                        src={Partner.check_bookmark[idx] === idx ? bookmarkBlueImg : bookmarkImg}
                         onClick={async (e) => {
                           if (!loggedInPartnerId && clientId) {
                             e.stopPropagation();
@@ -242,11 +227,7 @@ class PartnerCard extends React.Component {
                   )}
                 </Title>
 
-                <Introduce>
-                  {data.history && data.history.length > 35
-                    ? data.history.slice(0, 35) + "..."
-                    : data.history}
-                </Introduce>
+                <Introduce>{data.history && data.history.length > 35 ? data.history.slice(0, 35) + "..." : data.history}</Introduce>
 
                 {this.state.business.length > 0 ? (
                   <div style={{ display: "flex", marginTop: 11 }}>
@@ -271,32 +252,20 @@ class PartnerCard extends React.Component {
                             justifyContent: "space-between",
                           }}
                         >
-                          <div style={{ fontWeight: "bold" }}>
-                            {this.state.total_review}
-                          </div>
+                          <div style={{ fontWeight: "bold" }}>{this.state.total_review}</div>
                           /5.0
                         </Score>
                       </Review>
                     )}
                     <Location>
                       <img src={location} />
-                      <div style={{ marginLeft: 10 }}>
-                        {(data && data.region === null) || data.region === "nan"
-                          ? this.state.city
-                          : data.region}
-                      </div>
+                      <div style={{ marginLeft: 10 }}>{(data && data.region === null) || data.region === "nan" ? this.state.city : data.region}</div>
                     </Location>
                   </BottomBox>
                   <BottomBox>
                     <ViewCount>
                       <img src={viewcount} style={{ marginRight: 5 }} />
-                      {data && data.view <= 1 ? (
-                        <div>낮음</div>
-                      ) : 1 <= data.view && data.view <= 4 ? (
-                        <div>보통</div>
-                      ) : data.view >= 5 ? (
-                        <div>높음</div>
-                      ) : null}
+                      {data && data.view <= 1 ? <div>낮음</div> : 1 <= data.view && data.view <= 4 ? <div>보통</div> : data.view >= 5 ? <div>높음</div> : null}
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
@@ -327,13 +296,7 @@ class PartnerCard extends React.Component {
                     <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
                 ) : existLogo === "null" ? (
-                  <Item>
-                    {this.state.active ? (
-                      <img src="static/images/noportfolio_img_over.svg" />
-                    ) : (
-                      <img src="static/images/noportfolio_img.svg" />
-                    )}
-                  </Item>
+                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
                 ) : (
                   <Item>
                     <img src={data && data.logo} />
@@ -343,27 +306,15 @@ class PartnerCard extends React.Component {
 
               <Main>
                 <Name>{data && data.name}</Name>
-                <InfoOne>
-                  {data &&
-                    (data.info_company.length > 70
-                      ? data.info_company.slice(0, 70) + "..."
-                      : data.info_company)}
-                </InfoOne>
+                <InfoOne>{data && (data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company)}</InfoOne>
               </Main>
             </Card>
 
-            {this.props.Partner.ReviewActive &&
-              this.props.Partner.ReviewActiveIndex === idx && (
-                <>
-                  <ReviewContainer
-                    data={data}
-                    width={width}
-                    Partner={Partner}
-                    categoryData={categoryData}
-                    idx={idx}
-                  />
-                </>
-              )}
+            {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
+              <>
+                <ReviewContainer data={data} width={width} Partner={Partner} categoryData={categoryData} idx={idx} />
+              </>
+            )}
           </>
         )}
       </>
