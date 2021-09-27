@@ -5,16 +5,14 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
 import * as Title from "components/Title";
-import * as Content from "components/Content";
 
-import Container from "components/Containerv1";
-import Background from "components/Background";
 import ProposalCard from "./MobilePartnerCard";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
+const cardLine = "static/images/search/mobile/cardline.svg";
 
 @inject("Project", "Auth", "Partner", "Search", "Home")
 @observer
@@ -57,8 +55,8 @@ class MobileManufacturerContentContainer extends React.Component {
     return (
       <>
         {Home.mobile_warning_modal_state && <MobileWarningModalContainer />}
-        <div style={{ display: "flex", justifyContent: "center", margin: "20px 0px 0px 10px" }}>
-          <Container style={{ width: 375, justifyContent: "center" }}>
+        <Container>
+          <InnerBox>
             <Body active={this.props.Partner.check_click_filter}>
               {Partner.detailLoadingFlag && (
                 <>
@@ -67,38 +65,38 @@ class MobileManufacturerContentContainer extends React.Component {
                 </>
               )}
 
-              <Main>
-                <div style={{ display: "inline-flex", marginLeft: 10 }}>
+              <InnerBox style={{ flexDirection: "column", alignItems: "center" }}>
+                <InnerBox style={{ justifyContent: "space-between", width: "90%" }}>
                   <Font15>
                     <span style={{ fontWeight: "bold" }}>{Partner.partner_count}개</span>의 제조사가 있습니다.
                   </Font15>
 
                   <img src="static/images/search/mobile/viewoneicon.svg" />
-                </div>
+                </InnerBox>
 
                 {Partner.partner_list &&
                   Partner.partner_list.map((item, idx) => {
                     return (
-                      <Background style={{ marginBottom: 5, marginTop: 10 }}>
-                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            idx={idx}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            dropDown={this.state.dropDownActive}
-                            dropDownIdx={this.state.dropDownIdx}
-                            handleIntersection={Search.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
+                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                        <img src={cardLine} />
+
+                        <ProposalCard
+                          data={item}
+                          width={this.props.width}
+                          idx={idx}
+                          categoryData={toJS(Partner.category_dic[idx])}
+                          dropDown={this.state.dropDownActive}
+                          dropDownIdx={this.state.dropDownIdx}
+                          handleIntersection={Search.handleIntersection}
+                          customer="partner"
+                        />
+                      </div>
                     );
                   })}
-              </Main>
+              </InnerBox>
             </Body>
-          </Container>
-        </div>
+          </InnerBox>
+        </Container>
 
         {Partner.requestModalActive && (
           <Layer>
@@ -188,6 +186,12 @@ class MobileManufacturerContentContainer extends React.Component {
 
 export default MobileManufacturerContentContainer;
 
+const Font15 = styled(Title.FontSize15)`
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
+  color: #1e2222;
+`;
+
 const PageBar = styled.div`
   width: 80%;
   margin-top: 109px;
@@ -257,102 +261,6 @@ const Body = styled.div`
   margin-top: ${(props) => (props.active ? "285px" : "20px")};
 `;
 
-const Main = styled.div`
-  /* width: 100%; */
-`;
-
-const Header = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: space-between;
-
-  > span {
-    position: absolute;
-    left: 88%;
-    display: flex;
-    align-items: center;
-
-    > img {
-      width: 14px;
-      height: 7px;
-      margin-left: 10px;
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > div {
-      width: 48%;
-
-      > button:nth-of-type(1) {
-        border: none;
-        background: none;
-        box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
-        padding: 8px 16px 9px 16px;
-        box-sizing: border-box;
-        font-size: 12px;
-        width: 100%;
-        height: 30px;
-        // margin-bottom: 5px;
-        display: ${(props) => (props.active ? "flex" : "none")};
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-
-        > span {
-          color: #0a2165;
-          font-weight: 500;
-        }
-      }
-
-      > div:nth-of-type(2) {
-        display: ${(props) => (props.active ? "static" : "none")};
-        position: absolute;
-        bottom: -25px;
-        right: 21px;
-        > span {
-          font-size: 11px;
-          line-height: 30px;
-          letter-spacing: -0.14px;
-          color: #86888c;
-          font-weight: normal;
-        }
-      }
-
-      > content {
-        position: absolute;
-        bottom: -25px;
-        left: 33px;
-        > span {
-          font-size: 11px;
-          line-height: 30px;
-          letter-spacing: -0.14px;
-          color: #86888c;
-          font-weight: normal;
-        }
-      }
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding-top: 32px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding-top: 32px;
-  }
-  @media (min-width: 1300px) {
-    padding-top: 32px;
-  }
-`;
-
-const Font15 = styled(Title.FontSize15)`
-  font-family: NotoSansCJKkr;
-  font-weight: normal;
-  color: #1e2222;
-  margin-right: 140px;
-`;
-
 const Layer = styled.div`
   position: fixed;
   top: 0;
@@ -367,31 +275,6 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-`;
-
-const Description = styled.div`
-  display: ${(props) => (props.active ? "flex" : "none")};
-  justify-content: space-around;
-  margin-bottom: 20px;
-  > div {
-    // position: absolute;
-    // bottom: -25px;
-    // left: 33px;
-    > span {
-      font-size: 11px;
-      line-height: 30px;
-      letter-spacing: -0.14px;
-      color: #86888c;
-      font-weight: normal;
-    }
-  }
-
-  div:nth-of-type(1) {
-    // margin-right: 10px;
-  }
-  div:nth-of-type(2) {
-    // margin-left: 10px;
   }
 `;
 
@@ -411,4 +294,15 @@ const LoadingLayer = styled.div`
   bottom: 0;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px 0px 10px;
+`;
+
+const InnerBox = styled.div`
+  display: flex;
+  justify-content: center;
 `;

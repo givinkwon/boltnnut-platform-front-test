@@ -46,7 +46,7 @@ class InputComponent extends React.Component {
             this.file.current.click();
           }}
         >
-          <img src="/static/images/search/mobile/imgsearchicon.svg" />
+          <img src="/static/images/search/mobile/imgsearchicon.svg" style={{ marginLeft: 7 }} />
         </div>
       </div>
     );

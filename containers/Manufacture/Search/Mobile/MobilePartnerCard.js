@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
+import * as Title from "components/Title";
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/icon/viewcount.svg";
@@ -188,6 +189,7 @@ class MobileProposalCard extends React.Component {
       Router.push("/login");
     }
   };
+
   cardClick = async (e) => {
     e.stopPropagation();
     const { data, Partner, idx } = this.props;
@@ -248,7 +250,8 @@ class MobileProposalCard extends React.Component {
             this.activeHandler("active");
           }}
         >
-          <Header>
+          <Main>
+            {/* image */}
             {data && data.portfolio_set.length > 0 ? (
               <Item>
                 <img src={data.portfolio_set[0].img_portfolio}></img>
@@ -260,15 +263,34 @@ class MobileProposalCard extends React.Component {
                 <img src={data.logo} />
               </Item>
             )}
-          </Header>
 
-          <Main>
-            <Name>{data.name}</Name>
-            <InfoOne>{data.history.length > 30 ? data.history.slice(0, 30) + "..." : data.history}</InfoOne>
-            <Location>
-              <img src={location} />
-              <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 12)}</div>
-            </Location>
+            {/* name */}
+            <NameSection>
+              <div style={{ display: "flex", gap: 10 }}>
+                <Font18>{data.name}</Font18>
+                <img src="static/images/search/mobile/check.svg" style={{ width: 14, height: 14 }} />
+              </div>
+
+              <img src="static/images/search/mobile/bookmarkon.svg" />
+            </NameSection>
+
+            {/* location */}
+            <LocationSection>
+              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <img src="static/images/search/mobile/star.svg" style={{ width: 16, height: 16 }} />
+                <Font13 style={{ color: "#1e2222" }}>
+                  <span style={{ fontWeight: "bold" }}>4.98</span> / 5.0
+                </Font13>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <img src={location} />
+                <Font13>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</Font13>
+              </div>
+            </LocationSection>
+
+            {/* info */}
+            <InfoOne>{data.history.length > 20 ? data.history.slice(0, 20) + "..." : data.history}</InfoOne>
           </Main>
         </Card>
         {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
@@ -283,75 +305,34 @@ class MobileProposalCard extends React.Component {
 
 export default MobileProposalCard;
 
-const Card = styled.div`
-  width: 100%;
-  height: 116px;
-  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
-  display: flex;
-  cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
-
-  // @media (min-width: 0px) and (max-width: 767.98px) {
-  //   padding-left: 14px;
-  //   padding-right: 14px;
-  //   padding-top: 14px;
-
-  //   margin-top: 14px;
-  //   box-sizing: border-box;
-  // }
-  // @media (min-width: 768px) and (max-width: 991.98px) {
-  //   height: 100%;
-  //   padding: 33px 0px 30px 34px;
-  //   box-sizing: border-box;
-  // }
-  // @media (min-width: 992px) and (max-width: 1299.98px) {
-  //   height: 100%;
-  //   padding: 33px 0px 30px 34px;
-  //   box-sizing: border-box;
-  // }
-  // @media (min-width: 1300px) {
-  //   height: 100%;
-  //   padding: 33px 0px 30px 34px;
-  //   box-sizing: border-box;
-  // }
+const Font18 = styled(Title.FontSize18)`
+  font-family: NotoSansCJKkr;
+  font-weight: bold;
+  color: #1e2222;
 `;
 
-const Header = styled.div`
-  margin-right: 18px;
+const Font13 = styled(Title.FontSize13)`
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
+  color: #767676;
+`;
+
+const Card = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
+  width: 100%;
+  height: 405px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 10px;
 `;
 
 const Main = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 14px;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 100%;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 60%;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 60%;
-  }
-  @media (min-width: 1300px) {
-    width: 80%;
-  }
-`;
-
-const Name = styled.div`
-  font-size: 20px;
-  line-height: 40px;
-  letter-spacing: -0.5px;
-  color: #282c36;
-  font-weight: bold;
-  margin-bottom: 8px;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    color: #282c36;
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: -0.4px;
-  }
 `;
 
 const Location = styled.div`
@@ -374,35 +355,34 @@ const Location = styled.div`
   }
 `;
 
-const InfoOne = styled.div`
-  word-break: break-all;
-  white-space: break-spaces;
-  line-height: 1.2;
-  letter-spacing: 0.56px;
+const InfoOne = styled.p`
+  color: #767676;
   margin-top: 13px;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    color: #767676;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: -0.33px;
-    height: 19px;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-bottom: 35px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 90%;
-  }
+  font-size: 13px;
 `;
 
 const Item = styled.div`
+  display: flex;
+
   > img {
-    width: 100px;
-    height: 116px;
+    width: 335px;
+    height: 198px;
     border-radius: 3px;
     cursor: pointer;
   }
+`;
+
+const NameSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+`;
+
+const LocationSection = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  margin-top: 13px;
 `;

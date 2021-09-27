@@ -126,5 +126,5 @@ const FormInnerBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 350px;
+  /* width: 350px; */
 `;
