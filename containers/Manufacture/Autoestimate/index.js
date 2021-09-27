@@ -17,7 +17,6 @@ import Buttonv1 from "components/Buttonv1";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import SelectComponent from "components/Select";
-import LoadingComponent from "components/loading";
 
 import Router from "next/router";
 
@@ -144,12 +143,12 @@ class AutoestimateContainer extends React.Component {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
     });
-
+    console.log(AutoEstimate.loading)
     return (
       <>
        <div {...getRootProps()}>
           <input {...getInputProps()} />
-            {AutoEstimate.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다"/>}
+            {AutoEstimate.loading ? <LoadingComponent/> : null}
             <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
                 <DropZoneContainer>
                       {/*파일이 없을 때 */}
