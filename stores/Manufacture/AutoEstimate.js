@@ -98,8 +98,14 @@ class AutoEstimate {
 
   @observable selectedMaterial = { id: 0, name: "알루미늄 6061" };
 
+  // 로딩 state
+  @observable loading = false;
+
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
+
+    // 로딩 state true
+    this.loading = true;
 
     // 데이터 생성
     var formData = new FormData();
@@ -118,7 +124,7 @@ class AutoEstimate {
 
     AutoEstimateAPI.create(req)
       .then((res) => {
-
+        this.loading = false;
         console.log(res);        
         // 기본 호출은 CNC로 가정
         this.CNCPrice = res.data.price;
