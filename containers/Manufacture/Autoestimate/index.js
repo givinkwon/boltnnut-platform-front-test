@@ -70,6 +70,12 @@ const customStyles = {
   },
 };
 
+// time.sleep
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms;
+  while (Date.now() < wakeUpTime) {}
+}
+
 // 자동 견적 설명 관련 state
 let checkBox = false;
 let checkBox_one = false;
@@ -111,11 +117,8 @@ class AutoestimateContainer extends React.Component {
           // 견적 호출하기
           AutoEstimate.create_estimate()
         })
-        
-        setTimeout(() => {
-          this.state.loading = false;
-        }, 3000)    
 
+      setTimeout(() => {this.setState({ loading : false })}, 3000);
     };
 
     // 파일 업로드 && 드랍 함수 시작
