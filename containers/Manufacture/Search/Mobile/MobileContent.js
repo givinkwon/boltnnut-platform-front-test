@@ -106,6 +106,8 @@ class MobileManufacturerContentContainer extends React.Component {
           </Layer>
         )}
 
+        <img src={cardLine} />
+
         <PageBar>
           <img
             src={pass1}
