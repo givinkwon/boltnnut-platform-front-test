@@ -104,8 +104,6 @@ class AutoEstimate {
   // 견적서를 생성할 때 호출하는 함수
   @action create_estimate = () => {
 
-    // 로딩 state true
-    this.loading = true;
 
     // 데이터 생성
     var formData = new FormData();
