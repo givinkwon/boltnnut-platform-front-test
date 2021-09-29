@@ -71,17 +71,12 @@ class NewBanner2Container extends React.Component {
           }}
         >
           <Header>
-            <b style={{ fontWeight: "bold" }}>7451개</b>의 볼트앤너트의 업체
-            전문가들을 만나보세요.
+            <b style={{ fontWeight: "bold" }}>8479개</b>의 볼트앤너트의 업체 전문가들을 만나보세요.
           </Header>
 
           <CategoryBox>
             {nameTable.map((v, idx) => (
-              <CategoryTitle
-                key={v.id}
-                active={this.onCompareCategory(v.id)}
-                onClick={() => this.onClickCategory(v.id)}
-              >
+              <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
                 {v.name}
               </CategoryTitle>
             ))}
@@ -93,10 +88,7 @@ class NewBanner2Container extends React.Component {
                 <>
                   {idx < 3 && (
                     <Background style={{ marginTop: 24 }}>
-                      <div
-                        onClick={() => Partner.pushToDetail(item, idx)}
-                        style={{ width: "100%" }}
-                      >
+                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
                         <MainPagePartnerCard
                           data={item}
                           width={this.props.width}

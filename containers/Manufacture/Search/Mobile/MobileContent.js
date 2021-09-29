@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
@@ -8,7 +7,6 @@ import * as Title from "components/Title";
 
 import ProposalCard from "./MobilePartnerCard";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
-import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -46,15 +44,15 @@ class MobileManufacturerContentContainer extends React.Component {
     Partner.requestDoneModalActive = false;
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
+    Partner.detailLoadingFlag = false;
   }
 
   render() {
-    const { Partner, width, Search, Home } = this.props;
+    const { Partner, width, Search } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
 
     return (
       <>
-        {Home.mobile_warning_modal_state && <MobileWarningModalContainer />}
         <Container>
           <InnerBox>
             <Body active={this.props.Partner.check_click_filter}>

@@ -56,8 +56,8 @@ class ManufacturerContentContainer extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    const { Partner, Cookie } = this.props;
+  componentDidMount() {
+    const { Partner } = this.props;
 
     window.addEventListener("scroll", this.scrollEventHandler);
 
@@ -67,7 +67,6 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
     }
-   
   }
 
   componentWillUnmount() {

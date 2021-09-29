@@ -145,4 +145,5 @@ const CategoryName = styled.div`
 const ContainerV2 = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 `;

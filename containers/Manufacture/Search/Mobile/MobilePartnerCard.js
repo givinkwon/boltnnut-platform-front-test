@@ -65,14 +65,6 @@ class MobileProposalCard extends React.Component {
 
     window.addEventListener("resize", Search.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    const req = {
-      params: data && data.id,
-    };
-
-    ReviewAPI.getReview(req).then((res) => {
-      console.log("qweqwe", res);
-    });
   }
 
   componentWillUnmount() {

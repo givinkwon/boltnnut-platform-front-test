@@ -125,10 +125,7 @@ class NewDetailCardContainer extends React.Component {
             <PortfolioSection>
               <MainContainer>
                 {Partner.partner_detail_list[0].item.portfolio_set.slice(0, this.state.portfolioToShow).map((v, idx) => (
-                  <>
-                    {console.log(Partner.partner_detail_list[0])}
-                    <PortfolioImgBox key={idx} src={v.img_portfolio} />
-                  </>
+                  <PortfolioImgBox key={idx} src={v.img_portfolio} />
                 ))}
               </MainContainer>
 

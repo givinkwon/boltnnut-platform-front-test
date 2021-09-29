@@ -158,7 +158,7 @@ export const FontSize18 = styled.p`
   color: ${(props) => (props.color ? props.color : "#000000")};
   text-align: ${(props) => (props.center ? "center" : "left")};
   font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
-  letter-spacing: 0.15px;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 18px;
   }
