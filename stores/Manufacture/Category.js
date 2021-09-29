@@ -575,6 +575,11 @@ class Category {
           Auth.registerPageIdx -= 1;
           return;
         }
+        if (!this.partnerInfoFile) {
+          await alert("회사소개서 파일을 입력해주세요.");
+          Auth.registerPageIdx -= 1;
+          return;
+        }
 
         // 데이터 저장
         var formData = new FormData();

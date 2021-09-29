@@ -57,7 +57,7 @@ class SignupContent extends React.Component {
           <img src={signupdot} />
 
           <Title32 style={{ marginTop: "20px" }}>
-            <b style={{ color: "#0933b3" }}>회원가입</b>을 진행해 주세요.
+            {Auth.type == "partner" ? <b style={{ color: "#0933b3" }}>파트너 회원가입</b> : <b style={{ color: "#0933b3" }}>회원가입</b>}을 진행해 주세요.
           </Title32>
 
           <LineDivContainer>

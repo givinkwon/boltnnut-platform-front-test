@@ -17,6 +17,7 @@ import Buttonv1 from "components/Buttonv1";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import SelectComponent from "components/Select";
+import LoadingComponent from "components/Loading";
 
 import Router from "next/router";
 
@@ -69,6 +70,12 @@ const customStyles = {
   },
 };
 
+// time.sleep
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms;
+  while (Date.now() < wakeUpTime) {}
+}
+
 // 자동 견적 설명 관련 state
 let checkBox = false;
 let checkBox_one = false;
@@ -78,6 +85,7 @@ let checkBox_one = false;
 class AutoestimateContainer extends React.Component {
 
   state = {
+    loading : false,
   }
   
   componentDidMount = () => {
@@ -101,13 +109,16 @@ class AutoestimateContainer extends React.Component {
     const { AutoEstimate } = this.props;
     const dropHandler = (files) => {
       let loadingCounter = 0;
+      this.state.loading = true;
       // 파일 값 저장
       files.forEach((file, fileIdx) => {
           AutoEstimate.set_file(file)
         
           // 견적 호출하기
           AutoEstimate.create_estimate()
-        })    
+        })
+
+      setTimeout(() => {this.setState({ loading : false })}, 3000);
     };
 
     // 파일 업로드 && 드랍 함수 시작
@@ -148,6 +159,7 @@ class AutoestimateContainer extends React.Component {
       <>
        <div {...getRootProps()}>
           <input {...getInputProps()} />
+            {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다"/>}
             <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
                 <DropZoneContainer>
                       {/*파일이 없을 때 */}
@@ -238,6 +250,7 @@ class AutoestimateContainer extends React.Component {
 
       return (
         <>
+        
         <div {...getRootProps()}>
             <input {...getInputProps()} />
               <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>

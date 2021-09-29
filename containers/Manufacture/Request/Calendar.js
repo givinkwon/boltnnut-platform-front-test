@@ -7,14 +7,18 @@ const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = "/static/images/request/Step4/dropdown.png";
 const calendar = "/static/images/request/calendar.svg";
 
+// 주(WEEK) UI를 map-return을 통해 반복 렌더하여 달력을 만들고 있음
+
 @inject("Request", "Schedule")
 @observer
+
 class Week extends Component {
   state = {
+    // 현재 시간을 가져오는 함수 => moment
     now: moment(),
-    selectedDay: null,
   };
 
+  // day를 렌더링하는 함수
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
     const days = [];
@@ -36,9 +40,12 @@ class Week extends Component {
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
+    // 현재 날짜 가져오기
     const dayValue = Schedule.nowMoment;
 
+    // 현재 날짜가 클릭된 것으로 선택
     Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
+    // 
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   };
 
@@ -110,11 +117,9 @@ class Week extends Component {
             className={className}
             active={this.activeHandler(dayInfo.getDay)}
             onClick={(e) => {
-              this.calendarOnOff(e);
+
+              //this.calendarOnOff(e);
               Schedule.selectedDay = dayInfo.getDay;
-              this.setState({});
-              // console.log(this.props.Schedule.selectedDay);
-              console.log(dayInfo.getDay);
             }}
           >
             {dayInfo.getDay}
@@ -295,7 +300,6 @@ class Calendar extends Component {
           </div>
           {Schedule.calendarHandler == true && (
             <MainContainer>
-              {console.log(Schedule.calendarOnOffV2)}
               <div
                 style={{
                   width: "100%",
