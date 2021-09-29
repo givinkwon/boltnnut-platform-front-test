@@ -129,8 +129,7 @@ class Signup {
     console.log("phone : ", this.phone);
     console.log("marketing : ", this.marketing);
 
-    // alert(this.type);
-    if (this.type !== "partner") {
+    if (Auth.type !== "partner") {
       if (!this.company_name) {
         await alert("회사명을 입력해주세요.");
         return;

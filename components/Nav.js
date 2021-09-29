@@ -597,7 +597,8 @@ class Nav extends React.Component {
                   <ul>
                     <NavLink
                       onClick={() => {
-                        this.props.Auth.setType("detailexpert");
+                        this.props.Auth.setType("partner");
+                        this.props.Auth.step = 1;
                       }}
                       active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                     >
