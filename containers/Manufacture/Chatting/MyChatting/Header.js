@@ -37,6 +37,10 @@ class ChattingHeader extends React.Component {
   clickchatcard  = (answer_data, request_data="") => {
     const {Auth, Project, Chat, Partner} = this.props;
 
+    // 카드를 여러번 선택한 경우 채팅 소켓이 중복으로 켜져서 중복 메세지 발생 => 기존 소켓 종료하기
+    if(Chat.chatSocket){
+      Chat.chatSocket.close()
+    }
     // 로딩
     Partner.loadingFlag = true;
       setTimeout(() => {
@@ -106,31 +110,31 @@ class ChattingHeader extends React.Component {
     };
     // 소켓 OPEN 끝
 
+
     // 소켓 onmessage
     Chat.chatSocket.onmessage = (e) => {
     // redis에서 온 data
     const data = JSON.parse(e.data);
 
     console.log(data);
-    // 읽음 표시가 안되있다면
+
+    // 온 메세지가 읽음 표시가 안되있다면 => 새로 온 메세지라면
     if (!data.bReceive) {
+
         // 해당 메세지가 본인의 type이 아니라면
         if (data.type != Auth.logged_in_user.type) {
-        // 수신 완료 메세지를 보내서 체크하기
-        this.chatSocket.send(
-            JSON.stringify({
-            message: "수신완료",
-            type: Auth.logged_in_user.type,
-            time: Chat.current_time,
-            bReceive: true,
-            file: Chat.currentFile,
-            chatType: 0,
-            })
-        );
-        }
-
-        if(Chat.chatMessages.length > 0 ){
-          console.log(data.time , Chat.chatMessages[Chat.chatMessages.length - 1].time, data.message, Chat.chatMessages[Chat.chatMessages.length - 1].message)
+        
+          // 수신 완료 메세지를 보내서 체크하기
+          this.chatSocket.send(
+              JSON.stringify({
+              message: "수신완료",
+              type: Auth.logged_in_user.type,
+              time: Chat.current_time,
+              bReceive: true,
+              file: Chat.currentFile,
+              chatType: 0,
+              })
+          );
         }
 
         // 메세지가 없는 경우 그냥 메세지 배열에 저장하기
@@ -142,8 +146,12 @@ class ChattingHeader extends React.Component {
                 text: data["message"],
                 time: data["time"],
                 bRead: false,
+                file: data["file"],
+                chatType: data["type"],
               });
+            console.log(1)
           } 
+
         // 최근 메세지인지 확인하고 메세지 배열에 저장하기
         else if (!(data.time === Chat.chatMessages[Chat.chatMessages.length - 1].time && data.message === Chat.chatMessages[Chat.chatMessages.length - 1].message)) 
           // 메세지 배열에 저장하기
@@ -154,7 +162,10 @@ class ChattingHeader extends React.Component {
                 text: data["message"],
                 time: data["time"],
                 bRead: false,
+                file: data["file"][0],
+                chat_type: data["chatType"],
               });
+            console.log(2)
           } 
 
         // 읽음 표시 처리하기
@@ -167,10 +178,11 @@ class ChattingHeader extends React.Component {
             // 내가 보낸 메세지면
             if (data.type === Auth.logged_in_user.type) {
             // 현재 메세지 저장하기
-            const req = {
+              const req = {
                 text_content: data.message,
                 user_type: data.type,
-                chat_type: 0,
+                chat_type: data.chatType ? data.chatType : 0,
+                file: data.file ? data.file[0] : "null",
                 answer: Chat.answerId,
             };
             ChatAPI.saveChat(req).then((res) => {
@@ -178,10 +190,13 @@ class ChattingHeader extends React.Component {
             });
             }
         }
-        // 소켓 onclose(에러가 발생하는 경우)
-        Chat.chatSocket.onclose = (e) => {
-          alert("메세지 수신에 에러가 발생했습니다. 새로고침해주세요")
-        };
+
+
+        // // 소켓 onclose(에러가 발생하는 경우)
+        // Chat.chatSocket.onclose = (e) => {
+        //   alert("메세지 수신에 에러가 발생했습니다. 새로고침해주세요")
+        // };
+        // 소켓 onmessage 끝
 
         }
       }
