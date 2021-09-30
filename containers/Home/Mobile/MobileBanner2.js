@@ -39,6 +39,8 @@ class MobileBanner2Container extends React.Component {
   };
 
   render() {
+    const { Partner, Auth, Search, Category } = this.props;
+
     // id는 실제 DB의 id로 해야함
     const nameTable = [
       { id: 41, name: "전자/반도체 부품" },
@@ -52,10 +54,6 @@ class MobileBanner2Container extends React.Component {
       { id: 19, name: "냉난방/공조" },
       { id: 22, name: "밴딩/포장" },
     ];
-
-    const { Partner, Auth, Search, Category } = this.props;
-
-    console.log("asdasd", Partner.partner_list);
 
     return (
       <>

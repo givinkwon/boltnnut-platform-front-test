@@ -8,7 +8,7 @@ import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Search", "Category")
 @observer
-class NewBanner2Container extends React.Component {
+class Banner2Container extends React.Component {
   async componentDidMount() {
     const { Partner, Category } = this.props;
     Partner.detailLoadingFlag = false;
@@ -41,16 +41,16 @@ class NewBanner2Container extends React.Component {
   render() {
     // id는 실제 DB의 id로 해야함
     const nameTable = [
-      { id: 41, name: "전자/반도체 부품" },
-      { id: 1, name: "생활/위생" },
-      { id: 2, name: "디지털/가전" },
-      { id: 5, name: "반려" },
-      { id: 6, name: "인테리어" },
-      { id: 7, name: "주방" },
-      { id: 46, name: "볼트/너트류" },
-      { id: 39, name: "동력전달부품" },
-      { id: 19, name: "냉난방/공조" },
-      { id: 22, name: "밴딩/포장" },
+      { prikey: 41, name: "전자/반도체 부품" },
+      { prikey: 1, name: "생활/위생" },
+      { prikey: 2, name: "디지털/가전" },
+      { prikey: 5, name: "반려" },
+      { prikey: 6, name: "인테리어" },
+      { prikey: 7, name: "주방" },
+      { prikey: 46, name: "볼트/너트류" },
+      { prikey: 39, name: "동력전달부품" },
+      { prikey: 19, name: "냉난방/공조" },
+      { prikey: 22, name: "밴딩/포장" },
     ];
 
     const { Partner, Auth, Search, Category } = this.props;
@@ -71,18 +71,13 @@ class NewBanner2Container extends React.Component {
           }}
         >
           <Header>
-            <b style={{ fontWeight: "bold" }}>7451개</b>의 볼트앤너트의 업체
-            전문가들을 만나보세요.
+            <b style={{ fontWeight: "bold" }}>8479개</b>의 볼트앤너트의 업체 전문가들을 만나보세요.
           </Header>
 
           <CategoryBox>
-            {nameTable.map((v, idx) => (
-              <CategoryTitle
-                key={v.id}
-                active={this.onCompareCategory(v.id)}
-                onClick={() => this.onClickCategory(v.id)}
-              >
-                {v.name}
+            {nameTable.map((item, idx) => (
+              <CategoryTitle key={idx} active={this.onCompareCategory(item.prikey)} onClick={() => this.onClickCategory(item.prikey)}>
+                {item.name}
               </CategoryTitle>
             ))}
           </CategoryBox>
@@ -92,11 +87,8 @@ class NewBanner2Container extends React.Component {
               return (
                 <>
                   {idx < 3 && (
-                    <Background style={{ marginTop: 24 }}>
-                      <div
-                        onClick={() => Partner.pushToDetail(item, idx)}
-                        style={{ width: "100%" }}
-                      >
+                    <Background key={idx} style={{ marginTop: 24 }}>
+                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
                         <MainPagePartnerCard
                           data={item}
                           width={this.props.width}
@@ -117,7 +109,7 @@ class NewBanner2Container extends React.Component {
   }
 }
 
-export default NewBanner2Container;
+export default Banner2Container;
 
 const Header = styled(Title.FontSize32)`
   object-fit: contain;

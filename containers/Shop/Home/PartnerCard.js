@@ -171,20 +171,12 @@ class PartnerCard extends React.Component {
                     </Introduce>
                     <Introduce style={{ textAlign: "right" }}>구매수량에 따라 가격 협의</Introduce>
                   </>
-                )
-                }
-                <ButtonBox onClick = {() => Sample.openModal(data.name)} >
-                  <ButtonComponent
-                      style={{ width: "200px", height: "42px" }}
-                      backgroundColor={"#0933b3"}
-                      borderRadius={5}
-                    >
-                      <MainCategoryFont
-                        color={"#ffffff"}
-                        fontWeight={500}
-                      >
-                        샘플|제품정보 요청
-                      </MainCategoryFont>
+                )}
+                <ButtonBox onClick={() => Sample.openModal(data.name)}>
+                  <ButtonComponent style={{ width: "200px", height: "42px" }} backgroundColor={"#0933b3"} borderRadius={5}>
+                    <MainCategoryFont color={"#ffffff"} fontWeight={500}>
+                      샘플|제품정보 요청
+                    </MainCategoryFont>
                   </ButtonComponent>
                 </ButtonBox>
               </Main>

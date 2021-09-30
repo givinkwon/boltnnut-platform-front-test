@@ -10,7 +10,6 @@ class TabBarCardContainer extends React.Component {
   render() {
     const { Partner } = this.props;
     console.log(Partner.tabIdx);
-
     return (
       <TabBarSection>
         <InnerBox>

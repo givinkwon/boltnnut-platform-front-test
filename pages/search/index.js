@@ -97,7 +97,7 @@ class Index extends React.Component {
                   // headText={"제조사 관리"}
                   width={width}
                 />
-                <div style={{ height: "65px" }}></div>
+                <div style={{ height: "50px" }}></div>
               </div>
             ))}
         </>
