@@ -10,31 +10,50 @@ import * as ChatAPI from "axios/Manufacture/Chat";
 import ChatInputBox from "./ChatInpuBox"
 
 const LogoNo = "/static/images/chat/logono.png"
+const ChatNo = "/static/images/chat/chatno.png"
 
 @inject("Auth", "Project", "Chat")
 @observer
 class ChattingContent extends React.Component {
+  async componentDidMount() {
+    const { Auth, Project, Partner } = this.props;
+    // 로그인되어 있는 지 체크하기
+    await Auth.checkLogin();
+    console.log(Auth.logged_in_partner)
+  }
   render() {
     const { Auth, Project, Chat } = this.props;
-    console.log(Chat.chatcontent_arr.count)
+    console.log(Chat.chatMessages)
     return (
       <Background
       
         backgroundColor={"#ffffff"}
         style={{height: 1016, width: 840, marginRight: "auto"}}
       >
-        <ContentTitle>
+
+         <ContentTitle style={{height: Chat.chatMessages.length == 0 ? ("118px") : ("63px") }}>
         </ContentTitle>
+
+        {/* 채팅방을 선택하지 않았을 때 */}
+        {Chat.chatMessages.length == 0 && 
+        (
+            <ContentBodyNO>
+                <img src={ChatNo}/>
+                <span>채팅방을 선택해주세요</span>
+            </ContentBodyNO>
+
+        )
+        }
 
         <ContentBody>
           {Chat.chatMessages.length > 0 && Chat.chatMessages.map((data) => {
-            console.log(data)
+            console.log(Auth.logged_in_partner, data)
             return (
                 <>
-                
+
                   {/* 파트너일 때 ? 클라이언트일 때 */}
                   {Auth.logged_in_partner ? 
-                    ( data.user_type == 0 ? 
+                    ( data.member == 0 ? 
                       <Left>
                       <div>{data.bRead && "읽음"}</div>
                       <ContentLogo>
@@ -53,7 +72,7 @@ class ChattingContent extends React.Component {
                       </Right> 
                     )
                   :
-                    ( data.user_type == 1 ? 
+                    ( data.member == 1 ? 
                       <Right>
                       <ContentLogo>
                         <img src = {LogoNo}></img>
@@ -78,7 +97,7 @@ class ChattingContent extends React.Component {
             })
           }
         </ContentBody>
-        <ChatInputBox/>
+        {Chat.chatMessages.length > 0 && <ChatInputBox/> }
 
       
       </Background>
@@ -140,3 +159,32 @@ const Text = styled.div`
   color: #1e2222;
   border-radius : ${(props) => (props.state == "Left" ? "0px 10px 10px 10px;" : " 10px 0px 10px 10px;")}
 `
+
+
+const ContentBodyNO = styled.div`
+  width : 100%;
+  height : 809px;
+  text-align : center;
+  display : contents;
+  
+  > img {
+    margin-top : 300px;
+    margin-bottom : 26px;
+    margin-left : auto;
+    margin-right : auto;
+    width : 140px;
+    height : 140px;
+  }
+
+  > span {
+    font-family: NotoSansCJKkr;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.89;
+    letter-spacing: -0.45px;
+    text-align: left;
+    color: #282c36;
+  }
+`;

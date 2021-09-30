@@ -36,14 +36,21 @@ class NoChatting extends React.Component {
     
             <ContentBody>
                 <img src={ChatNo}/>
-                <span>{Auth.logged_in_partner ? "프로젝트를 살펴보고 적합한 일감을 찾아보세요" : "프로젝트를 의뢰하고 전문 제조사를 만나보세요!"}</span>
+                <span>{Auth.logged_in_partner ? "제조 문의를 살펴보고 적합한 일감을 찾아보세요" : "제조문의 사항을 등록하고 전문 제조사를 만나보세요!"}</span>
             </ContentBody>
             
             <Button onClick={() => {
-            Router.push('/request')
+            // 클라이언트인 경우
+            if(Auth.logged_in_client){
+              Router.push('/request')
+            }
+            else {
+              Project.step_index = 1
+              Router.push('/project')
+            }
             }
             }>
-              프로젝트 등록
+              {Auth.logged_in_partner ? "제조문의 보기" : "제조문의 등록"}
           </Button>
           
           </Background>

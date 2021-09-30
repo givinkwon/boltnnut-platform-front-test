@@ -69,3 +69,12 @@ export function sendJandi(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function sendChatStart(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/answer/chat/`,
+    data: req.data,
+    headers: req.headers ? req.headers : null,
+  });
+}
