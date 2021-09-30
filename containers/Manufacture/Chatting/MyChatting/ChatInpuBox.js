@@ -42,7 +42,6 @@ class ChatInputBox extends React.Component {
       ) {
         file.push({
           chat_type: 1,
-
           answer: Chat.answerId,
           origin_file: this.state.currentFile,
           type: this.userType,

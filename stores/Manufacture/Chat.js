@@ -47,7 +47,7 @@ class Chat {
             // 채팅 내용 넣기
             this.chatcontent_arr = res.data
 
-            for( let i = res.data.results.length-1; i >= 0; i--) {
+            for( let i = 0; i < res.data.results.length; i++) {
               console.log(res.data.results[i])
               this.chatMessages.unshift({
                 member: res.data.results[i].user_type,
@@ -146,7 +146,7 @@ class Chat {
 
   // 채팅 보내기 
   @action SendMessage = (myMessage) => {
-    // 서버에 저장하기
+    // Redis 서버에 보내기
     console.log(myMessage)
     this.chatSocket.send(
       JSON.stringify({
@@ -176,6 +176,7 @@ class Chat {
       data: formData,
     };
 
+    // file url 먼저 서버로 보내서 받기
     ChatAPI.saveFile(req)
       .then((res) => {
         console.log(res);
