@@ -90,7 +90,7 @@ class Chat {
 
     console.log(fullMessage)
     // 처음 생성하여 메세지 답을 보낸 경우
-    // if(fullMessage.length == 2){
+    if(fullMessage.length == 2){
     console.log(this.answerId, currentMessage.message)
       const req = {
         data : {
@@ -108,7 +108,7 @@ class Chat {
               console.log(e);
               console.log(e.response);
             });
-
+    }
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기 => 메세지가 2개 이상인 경우에만
     if (
       // 메세지가 있는 경우 && "접속완료" 메세지가 온 경우 && 마지막 메세지만 읽지 않은 경우 => 읽지 않은 메세지가 여러 개일 때, 1개만 보내기 위함
@@ -146,8 +146,8 @@ class Chat {
 
   // 채팅 보내기 
   @action SendMessage = (myMessage) => {
-
     // 서버에 저장하기
+    console.log(myMessage)
     this.chatSocket.send(
       JSON.stringify({
         message: myMessage,
@@ -159,8 +159,6 @@ class Chat {
       })
     );
 
-    // 채팅 내용 리로드
-    this.getChat()
   };
 
   // 파일 or 이미지 보내기
@@ -201,8 +199,7 @@ class Chat {
         console.log(e);
         console.log(e.response);
       });
-    // 채팅 내용 리로드
-    this.getChat()
+
   }
   
 }
