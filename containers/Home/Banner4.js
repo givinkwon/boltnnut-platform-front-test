@@ -89,7 +89,7 @@ class Banner4Container extends React.Component {
                 }}
               >
                 {stepBoxArray.map((v, idx) => (
-                  <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
+                  <StepBox key={idx} onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
                     <Text13 active={this.onCompareStepBox(idx)}>{v.step}</Text13>
 
                     <div

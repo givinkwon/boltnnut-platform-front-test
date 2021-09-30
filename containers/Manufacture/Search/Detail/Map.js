@@ -93,6 +93,7 @@ class MapContainer extends React.Component {
     const { city } = this.props;
     console.log(city);
     this.getMap();
+
     return (
       <>
         <Maps id="map" />

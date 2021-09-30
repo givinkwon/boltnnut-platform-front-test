@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import Slider from "react-slick";
 
 import * as Title from "components/Title";
+import MapContainer from "../Map";
 
 @inject("Partner", "Auth")
 @observer
@@ -49,6 +50,17 @@ class NewMobileDetailCardContainer extends React.Component {
       swipeToSlide: true,
       focusOnSelect: true,
     };
+
+    // Map 리전 넣어주기
+    let region = "";
+
+    if (Partner.partner_detail_list[0].item) {
+      region =
+        Partner.partner_detail_list[0].item.region === null || Partner.partner_detail_list[0].item.region === "nan"
+          ? Partner.city_name
+          : Partner.partner_detail_list[0].item.region;
+    }
+
     console.log("asd", partnerList);
     console.log(Partner.tabIdx);
 
@@ -126,12 +138,53 @@ class NewMobileDetailCardContainer extends React.Component {
             <Font14 style={{ color: "#1e2222", fontWeight: "normal" }}>{partnerList.info_company ? partnerList.info_company : "-"}</Font14>
 
             <CompanyInfoContainer>
-              <InnerBox style={{ gap: 50 }}>
-                <Font12 style={{ color: "#1e2222", fontWeight: "bold" }}>대표자</Font12>
-                <Font12 style={{ color: "#767676" }}>{partnerList.CEO ? partnerList.CEO : "-"}</Font12>
-              </InnerBox>
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>대표자</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.CEO ? partnerList.CEO : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>지역</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.city ? partnerList.city.maincategory : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>사업유형</CompanyInfoTitle>
+                <CompanyInfoContent>제작/생산</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>직원 수</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.staff ? partnerList.staff : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>총 매출액</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.sales ? partnerList.sales : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>설립연도</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.year ? partnerList.year : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>인증</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.Certification ? partnerList.Certification : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
+
+              <CompanyInfoInnerBox>
+                <CompanyInfoTitle>제품군</CompanyInfoTitle>
+                <CompanyInfoContent>{partnerList.history ? partnerList.history : "-"}</CompanyInfoContent>
+              </CompanyInfoInnerBox>
             </CompanyInfoContainer>
           </CompanyInfoSection>
+
+          {/* map */}
+          <MapSection>
+            <Font16 style={{ marginBottom: 12 }}>회사 위치</Font16>
+            <MapContainer city={region} />
+          </MapSection>
         </Container>
       </div>
     );
@@ -151,6 +204,12 @@ const Font14 = styled(Title.FontSize14)`
   font-family: NotoSansCJKkr;
   font-weight: 500;
   color: ${(props) => (props.active ? "#0933b3" : "#86888c")};
+`;
+
+const Font16 = styled(Title.FontSize16)`
+  font-family: NotoSansCJKkr;
+  font-weight: bold;
+  color: #1e2222;
 `;
 
 const Font18 = styled(Title.FontSize18)`
@@ -286,5 +345,28 @@ const CompanyInfoSection = styled.section`
 
 const CompanyInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 24px;
+`;
+
+const CompanyInfoInnerBox = styled.div`
+  display: flex;
+  gap: 50px;
+  margin-top: 12px;
+`;
+
+const CompanyInfoTitle = styled(Title.FontSize12)`
+  color: #1e2222;
+  font-weight: bold;
+  width: 45px;
+`;
+
+const CompanyInfoContent = styled(Title.FontSize12)`
+  color: #767676;
+`;
+
+// ============ Map ============
+const MapSection = styled.section`
+  width: 350px;
+  margin-top: 100px;
 `;

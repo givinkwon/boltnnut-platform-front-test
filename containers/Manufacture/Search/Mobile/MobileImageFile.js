@@ -41,12 +41,12 @@ class InputComponent extends React.Component {
         />
 
         <div
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", width: "30%" }}
           onClick={() => {
             this.file.current.click();
           }}
         >
-          <img src="/static/images/search/mobile/imgsearchicon.svg" style={{ marginLeft: 7 }} />
+          <img src="/static/images/search/mobile/imgsearchicon.svg" />
         </div>
       </div>
     );

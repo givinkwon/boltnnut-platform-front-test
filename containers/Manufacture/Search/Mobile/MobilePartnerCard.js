@@ -297,16 +297,19 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 14px;
+  width: 100%;
 `;
 
 const Item = styled.div`
   display: flex;
+  width: 100%;
 
   > img {
-    width: 335px;
-    height: 198px;
+    width: 100%;
+    max-height: 270px;
     border-radius: 3px;
     cursor: pointer;
+    /* object-fit: scale-down; */
   }
 `;
 

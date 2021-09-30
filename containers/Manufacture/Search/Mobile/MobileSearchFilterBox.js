@@ -58,7 +58,7 @@ class MobileSearchFilterConatiner extends React.Component {
     const { Partner } = this.props;
 
     return (
-      <ContainerV2>
+      <Container>
         <FilterBoxSearchBar />
 
         <FilterCategory>
@@ -103,7 +103,7 @@ class MobileSearchFilterConatiner extends React.Component {
           </Category>
         </FilterCategory>
         {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
-      </ContainerV2>
+      </Container>
     );
   }
 }
@@ -113,7 +113,6 @@ export default MobileSearchFilterConatiner;
 const FilterCategory = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
   margin-top: 10px;
   margin-left: 10px;
   background: none;
@@ -121,7 +120,7 @@ const FilterCategory = styled.div`
 `;
 
 const Category = styled.div`
-  width: 75px;
+  width: 22%;
   background-color: #f6f6f6;
   border-radius: 18px;
   border: none;
@@ -142,7 +141,7 @@ const CategoryName = styled.div`
   align-self: center;
 `;
 
-const ContainerV2 = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
