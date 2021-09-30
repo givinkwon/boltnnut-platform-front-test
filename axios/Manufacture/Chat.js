@@ -70,7 +70,7 @@ export function sendJandi(req) {
   });
 }
 
-export function sendChatStart(req) {
+export function sendChat(req) {
   return axios({
     method: "POST",
     url: `${ROOT_URL}/answer/chat/`,

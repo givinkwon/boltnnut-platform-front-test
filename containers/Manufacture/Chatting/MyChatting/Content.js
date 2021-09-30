@@ -11,6 +11,7 @@ import ChatInputBox from "./ChatInpuBox"
 
 const LogoNo = "/static/images/chat/logono.png"
 const ChatNo = "/static/images/chat/chatno.png"
+const file_img = "/static/images/project/fileimg.svg";
 
 @inject("Auth", "Project", "Chat")
 @observer
@@ -31,7 +32,7 @@ class ChattingContent extends React.Component {
         style={{height: 1016, width: 840, marginRight: "auto"}}
       >
 
-         <ContentTitle style={{height: Chat.chatMessages.length == 0 ? ("118px") : ("63px") }}>
+         <ContentTitle style={{height: Chat.chatMessages.length == 0 ? ("118px") : ("68px") }}>
         </ContentTitle>
 
         {/* 채팅방을 선택하지 않았을 때 */}
@@ -60,11 +61,23 @@ class ChattingContent extends React.Component {
                         <img src = {LogoNo}></img>
                       </ContentLogo>
  
-                      <Text state={"Left"} >{data.text}</Text>
+                      {/* 텍스트일 때 */}
+                      {data.chat_type == 0 && <Text state={"Left"} >{data.text}</Text>}
+                      {/* 파일일 때 */}
+                      {data.chat_type == 1 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                      {/* 이미지일 때 */}
+                      {data.chat_type == 2 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                     
                       </Left>
                     : 
                       <Right>
-                      <Text state={"Right"}>{data.text}</Text>
+                      {/* 텍스트일 때 */}
+                      {data.chat_type == 0 && <Text state={"Right"} >{data.text}</Text>}
+                      {/* 파일일 때 */}
+                      {data.chat_type == 1 && <Text state={"Right"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                      {/* 이미지일 때 */}
+                      {data.chat_type == 2 && <Text state={"Right"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                     
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
@@ -77,14 +90,26 @@ class ChattingContent extends React.Component {
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
- 
-                      <Text state={"Right"}>{data.text}</Text>
+                      
+                      {/* 텍스트일 때 */}
+                      {data.chat_type == 0 && <Text state={"Left"} >{data.text}</Text>}
+                      {/* 파일일 때 */}
+                      {data.chat_type == 1 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                      {/* 이미지일 때 */}
+                      {data.chat_type == 2 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                     
                       <div>{data.bRead && "읽음"}</div>
                       </Right>
                     : 
                       <Left>
                       <div>{data.bRead && "읽음"}</div>
-                      <Text state={"Left"}>{data.text}</Text>
+                      {/* 텍스트일 때 */}
+                      {data.chat_type == 0 && <Text state={"Right"} >{data.text}</Text>}
+                      {/* 파일일 때 */}
+                      {data.chat_type == 1 && <Text state={"Right"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                      {/* 이미지일 때 */}
+                      {data.chat_type == 2 && <Text state={"Right"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
+                     
                       <ContentLogo>
                         <img src = {LogoNo}></img>
                       </ContentLogo>
@@ -126,6 +151,9 @@ const ContentTitle = styled.div`
 const ContentBody = styled.div`
   width : 100%;
   height : 809px;
+  padding-bottom : 10%;
+  overflow-y : auto;
+  overflow-x : hidden;
   > div {
     display : flex;
   }
@@ -157,6 +185,7 @@ const Text = styled.div`
   letter-spacing: -0.16px;
   text-align: left;
   color: #1e2222;
+  word-break:break-all;
   border-radius : ${(props) => (props.state == "Left" ? "0px 10px 10px 10px;" : " 10px 0px 10px 10px;")}
 `
 

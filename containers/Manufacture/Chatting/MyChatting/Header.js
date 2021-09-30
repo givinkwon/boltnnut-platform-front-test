@@ -143,6 +143,7 @@ class ChattingHeader extends React.Component {
                 time: data["time"],
                 bRead: false,
               });
+            console.log(1)
           } 
         // 최근 메세지인지 확인하고 메세지 배열에 저장하기
         else if (!(data.time === Chat.chatMessages[Chat.chatMessages.length - 1].time && data.message === Chat.chatMessages[Chat.chatMessages.length - 1].message)) 
@@ -155,6 +156,7 @@ class ChattingHeader extends React.Component {
                 time: data["time"],
                 bRead: false,
               });
+            console.log(2)
           } 
 
         // 읽음 표시 처리하기
@@ -167,6 +169,7 @@ class ChattingHeader extends React.Component {
             // 내가 보낸 메세지면
             if (data.type === Auth.logged_in_user.type) {
             // 현재 메세지 저장하기
+            console.log(3)
             const req = {
                 text_content: data.message,
                 user_type: data.type,

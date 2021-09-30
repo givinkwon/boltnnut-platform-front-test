@@ -16,6 +16,52 @@ class ChatInputBox extends React.Component {
     text: "",
   };
 
+  // 파일 업로드할 때
+  onChangeFile = async (e) => {
+    const { Chat } = this.props;
+
+    let fileName;
+
+    let file = [];
+
+    // 파일인 경우에는 파일 처리하기
+    if (e.currentTarget.files[0]) {
+      fileName = e.currentTarget.files[0].name;
+      await this.setState({ currentFile: e.currentTarget.files[0] });
+
+      console.log(this.state.currentFile);
+      console.log(this.state.currentFile.name.split(".").pop());
+      const extension = this.state.currentFile.name.split(".").pop();
+
+      // 이미지인 경우
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "png" ||
+        extension === "gif"
+      ) {
+        file.push({
+          chat_type: 1,
+
+          answer: Chat.answerId,
+          origin_file: this.state.currentFile,
+          type: this.userType,
+        });
+        
+      // 일반 파일인 경우
+      } else {
+        file.push({
+          chat_type: 2,
+          answer: Chat.answerId,
+          origin_file: this.state.currentFile,
+          type: this.userType,
+        });
+      }
+
+      Chat.SendFile(file)
+    };
+  };
+
   // 메세지를 입력할 때
   onChange(e) {
     this.setState({ text: e.target.value });
@@ -62,6 +108,15 @@ class ChatInputBox extends React.Component {
                   />
 
                 <ChatTool>
+                  {/*파일 업로드용 */}
+                  <input
+                    id="FileInput"
+                    type="file"
+                    onChange={(e) => {
+                      this.onChangeFile(e);
+                    }}
+                    style={{ display: "none" }}
+                  />
                   <img
                     src={file_img}
                     onClick={() => {
@@ -74,6 +129,7 @@ class ChatInputBox extends React.Component {
                         this.onChangeFile(e);
                     }}
                   ></img>
+                  
                   <SendButton
                     style={{marginLeft : "auto", marginRight : 16, marginBottom : 12}}
                     onClick={(e) => {

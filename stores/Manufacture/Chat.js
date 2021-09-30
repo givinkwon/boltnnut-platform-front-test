@@ -49,11 +49,13 @@ class Chat {
 
             for( let i = res.data.results.length-1; i >= 0; i--) {
               console.log(res.data.results[i])
-              this.chatMessages.push({
+              this.chatMessages.unshift({
                 member: res.data.results[i].user_type,
                 text: res.data.results[i].text_content,
                 time: res.data.results[i].createdAt,
+                chat_type: res.data.results[i].chat_type,
                 bRead: false,
+                file: res.data.results[i].file,
               });
             }
 
@@ -96,10 +98,11 @@ class Chat {
         answer : this.answerId,
         // 채팅 텍스트
         text : currentMessage.message,
+        usertype : this.usertype // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
         }
       }
       // 카카오톡 보내는 API 호출
-      ChatAPI.sendChatStart(req)
+      ChatAPI.sendChat(req)
       .then((res) => console.log(res))
             .catch((e) => {
               console.log(e);
@@ -130,27 +133,7 @@ class Chat {
             }
           }
 
-          RequestAPI.sendKakaoTalk(req)
-            .then((res) => console.log(res))
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-
-          // 잔디 hook으로 메세지 보내기
-          const jandiReq = {
-            // headers
-            headers: {
-              Accept: "application/vnd.tosslab.jandi-v2+json",
-              "Content-Type": "application/json",
-            },
-            // params
-            params: {
-              body: `[볼트앤너트] ${req.name}(으)로부터 <${this.props.Project.projectDetailData.request_set[0].name}>에 대한 채팅이 도착하였습니다.\n채팅 내용: '${req.text}'`,
-            },
-          };
-
-          ChatAPI.sendJandi(jandiReq)
+          ChatAPI.sendChat(req)
             .then((res) => console.log(res))
             .catch((e) => {
               console.log(e);
@@ -175,7 +158,54 @@ class Chat {
         chatType: 0,
       })
     );
+
+    // 채팅 내용 리로드
+    this.getChat()
   };
+
+  // 파일 or 이미지 보내기
+  @action SendFile = (file) => {
+    // 채팅 로그 저장하기
+    var formData = new FormData();
+
+    formData.append("chat_type", file[0].chat_type);
+    formData.append("answer", file[0].answer);
+    formData.append("file", file[0].origin_file);
+    formData.append("user_type", 0);
+
+    const Token = localStorage.getItem("token");
+    const req = {
+      data: formData,
+    };
+
+    ChatAPI.saveFile(req)
+      .then((res) => {
+        console.log(res);
+
+        const file_url = res.data.file;
+
+        // 소켓으로 채팅 보내기
+        this.chatSocket.send(
+          JSON.stringify({
+            type: Auth.logged_in_user.type,
+            message: file_url,
+            chatType: res.data.chat_type,
+            time: this.current_time,
+            bReceive: false,
+            file: file_url,
+          })
+        );
+        console.log("send");
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // 채팅 내용 리로드
+    this.getChat()
+  }
+  
 }
+
 
 export default new Chat();
