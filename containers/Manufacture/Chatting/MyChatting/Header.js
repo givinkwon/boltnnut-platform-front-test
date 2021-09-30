@@ -37,6 +37,10 @@ class ChattingHeader extends React.Component {
   clickchatcard  = (answer_data, request_data="") => {
     const {Auth, Project, Chat, Partner} = this.props;
 
+    // 카드를 여러번 선택한 경우 채팅 소켓이 중복으로 켜져서 중복 메세지 발생 => 기존 소켓 종료하기
+    if(Chat.chatSocket){
+      Chat.chatSocket.close()
+    }
     // 로딩
     Partner.loadingFlag = true;
       setTimeout(() => {
@@ -158,7 +162,7 @@ class ChattingHeader extends React.Component {
                 text: data["message"],
                 time: data["time"],
                 bRead: false,
-                file: data["file"],
+                file: data["file"][0],
                 chat_type: data["chatType"],
               });
             console.log(2)
@@ -174,11 +178,11 @@ class ChattingHeader extends React.Component {
             // 내가 보낸 메세지면
             if (data.type === Auth.logged_in_user.type) {
             // 현재 메세지 저장하기
-            console.log(3)
-            const req = {
+              const req = {
                 text_content: data.message,
                 user_type: data.type,
-                chat_type: 0,
+                chat_type: data.chatType ? data.chatType : 0,
+                file: data.file ? data.file[0] : "null",
                 answer: Chat.answerId,
             };
             ChatAPI.saveChat(req).then((res) => {
@@ -188,12 +192,12 @@ class ChattingHeader extends React.Component {
         }
 
 
-        // 소켓 onclose(에러가 발생하는 경우)
-        Chat.chatSocket.onclose = (e) => {
-          alert("메세지 수신에 에러가 발생했습니다. 새로고침해주세요")
-        };
+        // // 소켓 onclose(에러가 발생하는 경우)
+        // Chat.chatSocket.onclose = (e) => {
+        //   alert("메세지 수신에 에러가 발생했습니다. 새로고침해주세요")
+        // };
         // 소켓 onmessage 끝
-        
+
         }
       }
     
