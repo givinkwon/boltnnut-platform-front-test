@@ -128,7 +128,7 @@ class Signup {
     console.log("job title : ", this.title);
     console.log("phone : ", this.phone);
     console.log("marketing : ", this.marketing);
-
+    console.log(Auth.type)
     if (Auth.type !== "partner") {
       if (!this.company_name) {
         await alert("회사명을 입력해주세요.");

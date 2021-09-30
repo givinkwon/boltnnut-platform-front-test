@@ -13,9 +13,18 @@ const ChatNo = "/static/images/chat/chatno.png"
 @inject("Project", "Auth", "Chat")
 @observer
 class NoChatting extends React.Component {
+  async componentDidMount() {
+    const { Auth, Project, Partner } = this.props;
+    // 로그인되어 있는 지 체크하기
+    await Auth.checkLogin();
+    console.log(Auth.logged_in_partner)
+  }
+
     render() {
+      
         const { Auth, Project, Chat } = this.props;
         console.log(Chat.chatcontent_arr.count)
+
         return (
           <Background
           
@@ -27,14 +36,21 @@ class NoChatting extends React.Component {
     
             <ContentBody>
                 <img src={ChatNo}/>
-                <span>프로젝트를 의뢰하고 전문 제조사를 만나보세요!</span>
+                <span>{Auth.logged_in_partner ? "제조 문의를 살펴보고 적합한 일감을 찾아보세요" : "제조문의 사항을 등록하고 전문 제조사를 만나보세요!"}</span>
             </ContentBody>
             
             <Button onClick={() => {
-            Router.push('/request')
+            // 클라이언트인 경우
+            if(Auth.logged_in_client){
+              Router.push('/request')
+            }
+            else {
+              Project.step_index = 1
+              Router.push('/project')
+            }
             }
             }>
-              프로젝트 등록
+              {Auth.logged_in_partner ? "제조문의 보기" : "제조문의 등록"}
           </Button>
           
           </Background>

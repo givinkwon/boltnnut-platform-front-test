@@ -130,6 +130,7 @@ class Project {
           this.project_next = res.data.next;
           this.project_count = res.data.count;
           this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+          console.log(partnerId)
           console.log(res.data.results);
         })
         .catch((e) => {

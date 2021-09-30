@@ -8,7 +8,7 @@ import SignupContentContainer from "./SignupContent";
 class SignupConatiner extends React.Component {
   componentDidMount = () => {
     const { Auth } = this.props;
-    if (Auth.type !== "expert") {
+    if (Auth.type !== "partner") {
       Auth.setType("client");
     }
   };

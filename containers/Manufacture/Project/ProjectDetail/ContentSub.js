@@ -6,6 +6,7 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 import { toJS } from "mobx";
+import Answer from "../../../../stores/Manufacture/Answer";
 
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
@@ -118,7 +119,8 @@ class ContentSub extends React.Component {
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
-                    alert("준비중입니다. 지원이 필요하시면 고객센터로 문의주세요.")
+                    await Answer.CreateAnswer(Project.projectDetailData.id, Auth.logged_in_partner.id, Project.projectDetailData.request_set[0].id)
+                    Router.push('/chatting')
                   }}
                 >
                   <Font18

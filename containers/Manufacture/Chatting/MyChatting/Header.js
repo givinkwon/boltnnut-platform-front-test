@@ -79,7 +79,7 @@ class ChattingHeader extends React.Component {
 
     // 채팅 소켓 링크 설정
     Chat.chatSocket = new WebSocket(
-      `ws://52.79.230.30:8081/ws/chat/` + `${Chat.answerId}` + "/"
+      `wss://api.boltnnut.com/ws/chat/` + `${Chat.answerId}` + "/"
     );
     
     // 시간 설정하기

@@ -2,6 +2,8 @@ import { observable, action } from "mobx";
 import * as ChatAPI from "axios/Manufacture/Chat"
 import Auth from "../Account/Auth";
 import { toJS } from "mobx";
+import Partner from "./Partner";
+import Project from "./Project";
 
 class Chat {
   constructor() {
@@ -45,7 +47,7 @@ class Chat {
             // 채팅 내용 넣기
             this.chatcontent_arr = res.data
 
-            for( let i = 0; i < res.data.results.length; i++) {
+            for( let i = res.data.results.length-1; i >= 0; i--) {
               console.log(res.data.results[i])
               this.chatMessages.push({
                 member: res.data.results[i].user_type,
@@ -85,42 +87,47 @@ class Chat {
     }
 
     console.log(fullMessage)
+    // 처음 생성하여 메세지 답을 보낸 경우
+    // if(fullMessage.length == 2){
+    console.log(this.answerId, currentMessage.message)
+      const req = {
+        data : {
+          // project id
+        answer : this.answerId,
+        // 채팅 텍스트
+        text : currentMessage.message,
+        }
+      }
+      // 카카오톡 보내는 API 호출
+      ChatAPI.sendChatStart(req)
+      .then((res) => console.log(res))
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기 => 메세지가 2개 이상인 경우에만
     if (
       // 메세지가 있는 경우 && "접속완료" 메세지가 온 경우 && 마지막 메세지만 읽지 않은 경우 => 읽지 않은 메세지가 여러 개일 때, 1개만 보내기 위함
-      fullMessage.length > 1 &&
+      fullMessage.length > 2 &&
       currentMessage.message != "접속완료" &&
       fullMessage[fullMessage.length - 1].bRead == false &&
       fullMessage[fullMessage.length - 2].bRead == true
     ) {
       //접속되어있는지 판단하기 위해 조건이 참이 됐을 때의 마지막 메시지 인덱스를 저장 => 메세지를 또 보내면 fullMessage가 갱신되므로
       const checkIdx = fullMessage.length - 1;
-
       setTimeout(() => {
         // 5초 뒤에도 그 인덱스가 false면 => 읽지 않음 상태면 카카오톡 보내기
         if (!fullMessage[checkIdx].bRead) {
           
-          //파트너에게 카카오톡 보내기
-          let req;
-          if (this.userType === 0) {
-            req = {
-              phoneNum: this.props.Partner.partnerdata.user.phone,
-              requestTitle:
-                this.props.Project.projectDetailData.request_set[0].name,
-              name: "클라이언트 님", //클라이언트 이름
-              text: fullMessage[checkIdx].text,
-            };
-          } 
-          
-          //클라이언트에게 카카오톡 보내기
-          else {
-            req = {
-              phoneNum: this.props.Partner.clientInfo.user.phone,
-              requestTitle:
-                this.props.Project.projectDetailData.request_set[0].name,
-              name: this.props.Partner.partnerdata.name, //파트너 이름
-              text: fullMessage[checkIdx].text,
-            };
+          const req = {
+            data : {
+              // project id
+            answer : this.answerId,
+            // 채팅 텍스트
+            text : currentMessage.message,
+            usertype : this.usertype // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
+            }
           }
 
           RequestAPI.sendKakaoTalk(req)
