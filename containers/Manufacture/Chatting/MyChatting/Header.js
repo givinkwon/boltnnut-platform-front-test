@@ -33,6 +33,15 @@ class ChattingHeader extends React.Component {
     
   }
 
+  // 렌더링될 때마다 현재 시간 갱신
+  async componentDidUpdate() {
+    let temp = new Date();
+
+    temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
+
+    this.props.Chat.current_time = temp;
+  }
+
   // 채팅 카드를 클릭했을 때 => 카드 활성화 및 채팅 로그 가져오기
   clickchatcard  = (answer_data, request_data="") => {
     const {Auth, Project, Chat, Partner} = this.props;
@@ -62,6 +71,7 @@ class ChattingHeader extends React.Component {
       // 채팅 로그 가져오기
       Chat.getChat()
 
+      Chat.loadPrevMessages(1)
     }
     
     // 클라이언트인 경우

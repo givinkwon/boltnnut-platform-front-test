@@ -16,6 +16,25 @@ const file_img = "/static/images/project/fileimg.svg";
 @inject("Auth", "Project", "Chat")
 @observer
 class ChattingContent extends React.Component {
+  // 생성자 + 스크롤 시에 이전 채팅 로딩되도록 하는 함수
+  ChatAreaRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+    this.handleScrollChange = this.handleScrollChange.bind(this);
+  }
+
+  // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
+  handleScrollChange() {
+    if (this.ChatAreaRef.current) {
+      if (
+        this.ChatAreaRef.current.scrollTop <= 0 &&
+        this.props.chatPageLimit - 1 > this.state.chatPageCount
+      ) {
+      }
+    }
+  }
+
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
     // 로그인되어 있는 지 체크하기

@@ -204,7 +204,68 @@ class Chat {
     // 채팅 내용 리로드
     this.getChat()
   }
-  
+
+  // 이전 채팅 메세지 가져오기
+  @action loadPrevMessages = async (page) => {
+    const loadChatReq = {
+      extraUrl: `${this.answerId}`,
+      params: {
+        page: page,
+      },
+    };
+
+    // 채팅방(answerId에 따라 채팅 로그 불러오기)
+    ChatAPI.loadChat(loadChatReq)
+      .then((res) => {
+        
+        const reverseChat = res.data.results;
+        
+        // 제안서 가져오기
+        ChatAPI.loadChatCount(this.answerId).then((m_res) => {
+
+          reverseChat.forEach(async (message) => {
+          
+          let readState = true;
+          // 클라이언트인 경우
+          if (message.user_type === 0) {
+
+            if (
+              m_res.data.check_time_partner.slice(0, 19) <
+              message.createdAt.slice(0, 19)
+            ) {
+              readState = false;
+            }
+          } 
+
+          // 파트너인 경우
+          else {
+            if (
+              m_res.data.check_time_client.slice(0, 19) <
+              message.createdAt.slice(0, 19)
+            ) {
+              readState = false;
+            }
+          }
+        
+          console.log(message)
+        // 배열 값 앞에 추가하기
+        this.chatMessages.unshift({
+          member: message.user_type,
+          text: message.text_content,
+          time: message.createdAt,
+          bRead: readState,
+          file: message.file,
+          chat_type: message.chat_type,
+          });
+        });
+
+        })
+      })
+        .catch((e) => {
+          console.log(e);
+        });
+      };
+
 }
 
 
