@@ -133,15 +133,36 @@ class ManufacturerContentContainer extends React.Component {
           {Partner.result_banner && (
             <RequestMiddle>
               <ResultBannerContainer>
-                <ResultBannerInnerBox>
-                  <Font22 style={{ color: "#000000" }}>마음에 드는 공장을 찾기 힘드시나요?</Font22>
+                {/* 파트너 일 때 */}
+                {Auth.logged_in_partner ? 
+                (
+                  <>
+                  <ResultBannerInnerBox>
+                  <Font22 style={{ color: "#000000" }}>자사의 제품을 등록하여 판매하고 싶으신가요?</Font22>
 
-                  <Font16>볼트앤너트 전문가를 배정하여 유선으로 상담을 도와드립니다.</Font16>
-                </ResultBannerInnerBox>
+                  <Font16>우측 하단에 채널톡으로 "자사 제품 등록 희망" 메세지를 남겨주세요</Font16>
+                  </ResultBannerInnerBox>
 
-                <RequestBtn onClick={() => this.ToRequest()}>무료 전문가 상담</RequestBtn>
+                  <ResultBannerCloseImg src="static/images/close_banner.svg" onClick={() => this.resultBannerHandler()} />
+                  </>
+                ) 
+                
+                : 
+                
+                (
+                  <>
+                  <ResultBannerInnerBox>
+                    <Font22 style={{ color: "#000000" }}>마음에 드는 공장을 찾기 힘드시나요?</Font22>
 
-                <ResultBannerCloseImg src="static/images/close_banner.svg" onClick={() => this.resultBannerHandler()} />
+                    <Font16>볼트앤너트 전문가를 배정하여 유선으로 상담을 도와드립니다.</Font16>
+                  </ResultBannerInnerBox>
+
+                  <RequestBtn onClick={() => this.ToRequest()}>무료 전문가 상담</RequestBtn>
+
+                  <ResultBannerCloseImg src="static/images/close_banner.svg" onClick={() => this.resultBannerHandler()} />
+                  </>
+                )
+                } 
               </ResultBannerContainer>
             </RequestMiddle>
           )}
