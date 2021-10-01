@@ -1149,6 +1149,7 @@ class Partner {
         .then((res) => {
           this.partner_list = [];
           this.partner_list = res.data.shop;
+          this.partner_count = res.data.shop.length;
           // this.partner_count = res.data.partner.length;
           // this.matching_image = res.data.img_url;
 
