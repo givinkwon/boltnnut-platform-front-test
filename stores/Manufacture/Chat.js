@@ -31,7 +31,7 @@ class Chat {
   @observable currentFile = [];
 
   // 이전 채팅을 가져오기 위한 현재 채팅 페이지
-  @observable chatPageCount = 10;
+  @observable chatPageCount = 1;
 
   // 채팅 로그를 가져오는 함수
   @action getChat = () => {
@@ -208,6 +208,9 @@ class Chat {
 
   // 이전 채팅 메세지 가져오기
   @action loadPrevMessages = async (page) => {
+    // 초기화
+    let reverseChat = null
+
     const loadChatReq = {
       extraUrl: `${this.answerId}`,
       params: {
@@ -219,8 +222,8 @@ class Chat {
     ChatAPI.loadChat(loadChatReq)
       .then((res) => {
         
-        const reverseChat = res.data.results;
-        
+        reverseChat = res.data.results;
+        console.log(res)
         // 제안서 가져오기
         ChatAPI.loadChatCount(this.answerId).then((m_res) => {
 
@@ -263,7 +266,7 @@ class Chat {
         })
       })
         .catch((e) => {
-          console.log(e);
+          console.log("이전 메세지가 없습니다.");
         });
       };
 

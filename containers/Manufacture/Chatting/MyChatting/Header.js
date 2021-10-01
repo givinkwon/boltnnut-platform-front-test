@@ -47,7 +47,7 @@ class ChattingHeader extends React.Component {
     const {Auth, Project, Chat, Partner} = this.props;
 
     // 이전 메세지 로딩을 위한 채팅 카운트 초기화
-    Chat.chatPageCount = 10
+    Chat.chatPageCount = 1
     // 카드를 여러번 선택한 경우 채팅 소켓이 중복으로 켜져서 중복 메세지 발생 => 기존 소켓 종료하기
     if(Chat.chatSocket){
       Chat.chatSocket.close()
@@ -76,15 +76,6 @@ class ChattingHeader extends React.Component {
       Chat.chat_title = request_data.name;
       // 채팅 로그 가져오기
       Chat.getChat()
-      Chat.loadPrevMessages(2)
-      Chat.loadPrevMessages(3)
-      Chat.loadPrevMessages(4)
-      Chat.loadPrevMessages(5)
-      Chat.loadPrevMessages(6)
-      Chat.loadPrevMessages(7)
-      Chat.loadPrevMessages(8)
-      Chat.loadPrevMessages(9)
-      Chat.loadPrevMessages(10)
     }
     
     // 클라이언트인 경우
@@ -98,15 +89,6 @@ class ChattingHeader extends React.Component {
       Chat.chat_title = answer_data.name;
       // 채팅 로그 가져오기
       Chat.getChat()
-      Chat.loadPrevMessages(2)
-      Chat.loadPrevMessages(3)
-      Chat.loadPrevMessages(4)
-      Chat.loadPrevMessages(5)
-      Chat.loadPrevMessages(6)
-      Chat.loadPrevMessages(7)
-      Chat.loadPrevMessages(8)
-      Chat.loadPrevMessages(9)
-      Chat.loadPrevMessages(10)
     }
 
     // 채팅 소켓 링크 설정

@@ -9,6 +9,7 @@ import * as ChatAPI from "axios/Manufacture/Chat";
 
 import ChatInputBox from "./ChatInpuBox"
 import Chat from "../../../../stores/Manufacture/Chat";
+import { NonceProvider } from "react-select";
 
 const LogoNo = "/static/images/chat/logono.png"
 const ChatNo = "/static/images/chat/chatno.png"
@@ -17,25 +18,6 @@ const file_img = "/static/images/project/fileimg.svg";
 @inject("Auth", "Project", "Chat")
 @observer
 class ChattingContent extends React.Component {
-  // 생성자 + 스크롤 시에 이전 채팅 로딩되도록 하는 함수
-  ChatAreaRef = React.createRef();
-  constructor(props) {
-    super(props);
-    this.myRef = React.createRef();
-    this.handleScrollChange = this.handleScrollChange.bind(this);
-  }
-
-  // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
-  handleScrollChange() {
-    if (this.ChatAreaRef.current) {
-      // 스크롤이 최대로 올라가면
-      if (this.ChatAreaRef.current.scrollTop <= 0) 
-      {
-        Chat.chatPageCount += 1
-        Chat.loadPrevMessages(Chat.chatPageCount)
-      }
-    }
-  }
 
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
@@ -56,6 +38,21 @@ class ChattingContent extends React.Component {
     window.removeEventListener("resize", this.updateDimensions);
     document.removeEventListener("scroll", this.handleScrollChange);
   }
+
+  // 변화 때마다 scrolltop를 변화시켜줌 => 이전 메세지 로딩
+  onChangeHandler = (event) => {
+    const { Chat } = this.props;
+    console.log(event.target.scrollHeight, event.target.scrollTop, event.target.clientHeight)
+    // 전체 hight - 스크롤에 숨겨진 사이즈 = 현재 보이는 사이즈 => 스크롤을 가장 위로 한 경우
+    // if(event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight){
+    // }
+
+    // 전체 컨테이너가 선택되었을 때 + 가장 상단 스크롤
+    if(event.target.scrollTop == 0 && event.target.scrollHeight){
+      Chat.chatPageCount += 1
+      Chat.loadPrevMessages(Chat.chatPageCount)
+    }
+  };
   
   render() {
     const { Auth, Project, Chat } = this.props;
@@ -81,7 +78,7 @@ class ChattingContent extends React.Component {
         )
         }
 
-        <ContentBody>
+        <ContentBody onWheel={(e) => this.onChangeHandler(e)}>
           {Chat.chatMessages.length > 0 && Chat.chatMessages.map((data) => {
             console.log(Auth.logged_in_partner, data)
             return (
