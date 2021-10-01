@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Router from "next/router";
-import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 
 import * as Title from "components/Title";
 import * as Content from "components/Content";
@@ -10,12 +10,7 @@ import * as Content from "components/Content";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ProposalCard from "containers/Manufacture/Search/Home/PartnerCard";
-
 import ButtonSpinnerComponent from "components/ButtonSpinner";
-
-import { toJS } from "mobx";
-
-import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -81,9 +76,6 @@ class MobileManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {Home.mobile_warning_modal_state && <MobileWarningModalContainer />}
-        
-
         <Background id="MyBackground">
           <Container style={{ display: "block" }}>
             <Body active={this.props.Partner.check_click_filter}>
@@ -122,7 +114,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     <div>
                       <button
                         onClick={() => {
-                          Router.push("/request")
+                          Router.push("/request");
                         }}
                       >
                         <span>업체수배&견적 무료의뢰 </span>
@@ -145,10 +137,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={() => Partner.pushToDetail(item, idx)}
-                          style={{ width: "100%" }}
-                        >
+                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
                           <ProposalCard
                             data={item}
                             width={this.props.width}
@@ -170,11 +159,7 @@ class MobileManufacturerContentContainer extends React.Component {
         {Partner.requestModalActive && (
           <Layer>
             <span>
-              <Modal
-                width={width}
-                open={Partner.requestModalActive}
-                close={Partner.closeModal}
-              ></Modal>
+              <Modal width={width} open={Partner.requestModalActive} close={Partner.closeModal}></Modal>
             </span>
           </Layer>
         )}
@@ -192,10 +177,7 @@ class MobileManufacturerContentContainer extends React.Component {
             value={5 * (current_set - 1)}
             active={Partner.currentPage % 5 == 1}
             style={{
-              display:
-                Partner.partner_page < 5 * (current_set - 1) + 1
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 5 * (current_set - 1) + 1 ? "none" : "block",
             }}
           >
             {" "}
@@ -205,10 +187,7 @@ class MobileManufacturerContentContainer extends React.Component {
             value={5 * (current_set - 1) + 1}
             active={Partner.currentPage % 5 == 2}
             style={{
-              display:
-                Partner.partner_page < 5 * (current_set - 1) + 2
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 5 * (current_set - 1) + 2 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -219,10 +198,7 @@ class MobileManufacturerContentContainer extends React.Component {
             value={5 * (current_set - 1) + 2}
             active={Partner.currentPage % 5 == 3}
             style={{
-              display:
-                Partner.partner_page < 5 * (current_set - 1) + 3
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 5 * (current_set - 1) + 3 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -233,10 +209,7 @@ class MobileManufacturerContentContainer extends React.Component {
             value={5 * (current_set - 1) + 3}
             active={Partner.currentPage % 5 == 4}
             style={{
-              display:
-                Partner.partner_page < 5 * (current_set - 1) + 4
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 5 * (current_set - 1) + 4 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -247,10 +220,7 @@ class MobileManufacturerContentContainer extends React.Component {
             value={5 * (current_set - 1) + 4}
             active={Partner.currentPage % 5 == 0}
             style={{
-              display:
-                Partner.partner_page < 5 * (current_set - 1) + 5
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 5 * (current_set - 1) + 5 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -579,8 +549,7 @@ const FilterContent = styled.div`
   > div {
     width: 13px;
     height: 13px;
-    border: ${(props) =>
-      props.active ? "1px solid #0933b3" : "1px solid #999999"};
+    border: ${(props) => (props.active ? "1px solid #0933b3" : "1px solid #999999")};
     border-radius: 12px;
     position: relative;
     display: inline-flex;

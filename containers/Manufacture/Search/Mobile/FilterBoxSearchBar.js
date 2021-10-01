@@ -60,24 +60,20 @@ class FilterBoxSearchBarContainer extends React.Component {
     const { Partner } = this.props;
 
     return (
-      <>
-        <Form active={Partner.subButtonActive}>
-          <FormInnerBox>
-            <SearchBar active={Partner.subButtonActive}>
-              <input
-                placeholder="어떤 제품을 검색하고 싶으신가요?"
-                onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.search_text}
-                onKeyPress={this.handleKeyDown}
-              />
+      <Form active={Partner.subButtonActive}>
+        <SearchBar active={Partner.subButtonActive}>
+          <input
+            placeholder="어떤 제품을 검색하고 싶으신가요?"
+            onChange={this.handleSearcherInputChange.bind(this)}
+            value={Partner.search_text}
+            onKeyPress={this.handleKeyDown}
+          />
 
-              <img src="/static/images/search/mobile/searchicon.svg" onClick={() => this.search()} />
-            </SearchBar>
-          </FormInnerBox>
+          <img src="/static/images/search/mobile/searchicon.svg" onClick={() => this.search()} />
+        </SearchBar>
 
-          <MobileImageFile file={true} isOpen={true} />
-        </Form>
-      </>
+        <MobileImageFile file={true} isOpen={true} />
+      </Form>
     );
   }
 }
@@ -85,14 +81,11 @@ class FilterBoxSearchBarContainer extends React.Component {
 export default FilterBoxSearchBarContainer;
 
 const SearchBar = styled.div`
-  width: 300px;
-  height: 38px;
-  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  width: 80%;
+  height: 38px;
   border-radius: 60px;
-  box-sizing: border-box;
   background-color: #f6f6f6;
   padding-right: 13px;
 
@@ -117,14 +110,8 @@ const SearchBar = styled.div`
 
 const Form = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   height: 38px;
   margin: 0px 14px 0px 14px;
-`;
-
-const FormInnerBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* width: 350px; */
+  /* width: 100%; */
 `;

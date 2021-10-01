@@ -22,10 +22,10 @@ export function getReview(req) {
 
 // 리뷰 다음 페이지 불러오기
 export function getNextReviewPage(req) {
-    return axios({
-      method: "GET",
-      url: req.nextUrl,
-      params: req.params ? req.params : null,
-      headers: req.headers ? req.headers : null,
-    });
-  }
+  return axios({
+    method: "GET",
+    url: req.nextUrl,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

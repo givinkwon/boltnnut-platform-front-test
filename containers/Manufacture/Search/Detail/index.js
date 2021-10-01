@@ -4,6 +4,7 @@ import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
 import NewDetailCardContainer from "./NewDetailCard";
 import MobileDetailCardContainer from "./Mobile/MobileDetailCard";
+import NewMobileDetailCardContainer from "../Detail/Mobile/NewMobileDetailCard";
 import ReviewContainer from "./Review/ReviewPage";
 import CompleteContainer from "components/Complete";
 import { inject, observer } from "mobx-react";
@@ -15,7 +16,7 @@ import Cookies from "js-cookie";
 @observer
 class SearchDetailConatiner extends React.Component {
   componentDidMount() {
-    const { Auth, Partner, Cookie } = this.props;
+    const { Partner, Cookie } = this.props;
     // 쿠기 값 리스트에 저장
     if (Partner.partner_detail_list[0].item) {
       Cookie.add_partner_view(Partner.partner_detail_list[0].item.id);
@@ -28,12 +29,11 @@ class SearchDetailConatiner extends React.Component {
       path: "/",
       expires,
     });
-
-    console.log(Partner.reviewActiveIndex);
-    //alert(Cookies.get('partner_view'))
   }
+
   render() {
-    const { Auth, Partner, width } = this.props;
+    const { Partner, width } = this.props;
+
     return (
       <>
         {Partner.reviewActiveIndex == 0 &&
@@ -42,7 +42,7 @@ class SearchDetailConatiner extends React.Component {
             <NewDetailCardContainer width={this.props.width} />
           ) : (
             // <MobileDetailCardContainer width={this.props.width} />
-            <div></div>
+            <NewMobileDetailCardContainer width={this.props.width} />
           ))}
         <Background>
           <Containerv1>

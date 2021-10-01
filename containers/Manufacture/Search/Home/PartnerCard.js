@@ -83,7 +83,7 @@ class PartnerCard extends React.Component {
     PartnerAPI.getBusinessCategory(partnerReq)
       .then((res) => {
         res.data.business.forEach((element) => {
-          PartnerAPI.getBusinessName(element).then((res) => {
+          PartnerAPI.getBusinessName(element.id).then((res) => {
             temp.push(res.data.category);
             this.setState({ business: temp });
           });

@@ -4,17 +4,12 @@ import Router from "next/router";
 import { inject, observer } from "mobx-react";
 
 import * as PartnerAPI from "axios/Manufacture/Partner";
-import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
+import * as ReviewAPI from "axios/Manufacture/Review";
 import * as Title from "components/Title";
-
-const star = "static/icon/star_lightblue.svg";
-const viewcount = "static/icon/viewcount.svg";
-const bookmarkcount = "static/icon/bookmarkcount.svg";
-const bookmarkImg = "/static/icon/bookmark_empty.svg";
-const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
-const location = "static/icon/location.svg";
+import ReviewContainer from "containers/Manufacture/Search/Detail/Review/ReviewContainer";
 
 var availableFileType = ["png", "jpeg", "gif", "bmp", "pdf", "csv", "xslx", "docx", "mp4", "webm", "mp3", "pptx", "doc", "html"];
+
 @inject("Partner", "Auth", "Common", "Search")
 @observer
 class MobileProposalCard extends React.Component {
@@ -27,8 +22,6 @@ class MobileProposalCard extends React.Component {
     modalOpen: false,
     activeReview: false,
     city: "준비중 입니다.",
-    business: "",
-    totalPartnerBookmark: "",
     total_review: -1,
   };
 
@@ -64,75 +57,14 @@ class MobileProposalCard extends React.Component {
 
   async componentDidMount() {
     const { Search, data, Partner, idx, Auth } = this.props;
-    // console.log("asdasd", data.city.id);
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
     await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
 
-    const existLogo = data.logo.split("/")[4];
-    console.log(existLogo);
-
     window.addEventListener("resize", Search.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    const req = {
-      id: data.city,
-    };
-
-    const partnerReq = {
-      id: data.id,
-    };
-
-    const reviewReq = {
-      params: {
-        partner_id: data.id,
-      },
-    };
-
-    const BookmarkReq = {
-      params: {
-        partnerID: data.id,
-      },
-    };
-
-    PartnerAPI.getCityName(req)
-      .then((res) => {
-        this.setState({ city: res.data.maincategory });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
-      .then((res) => {
-        this.setState({ totalPartnerBookmark: res.data.count });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    // const temp = [];
-    // PartnerAPI.getBusinessCategory(partnerReq)
-    //   .then((res) => {
-    //     console.log("qweqwe", res);
-    //     if (res.data.business.length > 0) {
-    //       res.data.business.forEach((element) => {
-    //         PartnerAPI.getBusinessName(element).then((res) => {
-    //           console.log("asdasd", res);
-    //           temp.push(res.data.category);
-    //         });
-    //       });
-    //       this.setState({ business: temp });
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     console.log(e.response);
-    //   });
   }
 
   componentWillUnmount() {
@@ -268,29 +200,55 @@ class MobileProposalCard extends React.Component {
             <NameSection>
               <div style={{ display: "flex", gap: 10 }}>
                 <Font18>{data.name}</Font18>
-                <img src="static/images/search/mobile/check.svg" style={{ width: 14, height: 14 }} />
+                {data.idenfication_state ? <img src="static/images/search/mobile/check.svg" style={{ width: 14, height: 14 }} /> : null}
               </div>
 
-              <img src="static/images/search/mobile/bookmarkon.svg" />
+              <img src="static/images/search/mobile/bookmarkoff.svg" />
             </NameSection>
 
             {/* location */}
             <LocationSection>
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                <img src="static/images/search/mobile/star.svg" style={{ width: 16, height: 16 }} />
-                <Font13 style={{ color: "#1e2222" }}>
-                  <span style={{ fontWeight: "bold" }}>4.98</span> / 5.0
-                </Font13>
-              </div>
+              {this.state.total_review === -1 ? (
+                <></>
+              ) : (
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <img src="static/images/search/mobile/star.svg" style={{ width: 16, height: 16 }} />
+                  <Font13 style={{ color: "#1e2222" }}>
+                    <span style={{ fontWeight: "bold" }}>4.98</span> / 5.0
+                  </Font13>
+                </div>
+              )}
 
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <img src={location} />
-                <Font13>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</Font13>
+                <img src="static/icon/location.svg" />
+                <Font13>{data.city ? data.city?.maincategory : this.state.city}</Font13>
               </div>
             </LocationSection>
 
             {/* info */}
-            <InfoOne>{data.history.length > 20 ? data.history.slice(0, 20) + "..." : data.history}</InfoOne>
+            <InfoSection>
+              <Font14>{data.history.length > 20 ? data.history.slice(0, 20) + "..." : data.history}</Font14>
+            </InfoSection>
+
+            {/* Business */}
+            <BusinessSection>
+              {data.business.length > 0 &&
+                data.business.map((item, idx) => {
+                  return (
+                    <>
+                      {idx < 3 && (
+                        <BusinessContainer key={item.id}>
+                          <BusinessBox>
+                            <Font13 style={{ color: "#555963" }}>{item.category}</Font13>
+                          </BusinessBox>
+                        </BusinessContainer>
+                      )}
+                    </>
+                  );
+                })}
+
+              {data.business.length > 4 && <Font14>+ {data.business.length - 3}</Font14>}
+            </BusinessSection>
           </Main>
         </Card>
         {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
@@ -317,6 +275,12 @@ const Font13 = styled(Title.FontSize13)`
   color: #767676;
 `;
 
+const Font14 = styled(Title.FontSize14)`
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
+  color: #767676;
+`;
+
 const Card = styled.div`
   display: flex;
   justify-content: center;
@@ -333,42 +297,19 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 14px;
-`;
-
-const Location = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 13px;
-  gap: 10px;
-
-  div {
-    font-size: 14px;
-    color: #767676;
-    line-height: 2.86;
-    letter-spacing: -0.35px;
-  }
-
-  img {
-    width: 9px;
-    height: 13px;
-  }
-`;
-
-const InfoOne = styled.p`
-  color: #767676;
-  margin-top: 13px;
-  font-size: 13px;
+  width: 100%;
 `;
 
 const Item = styled.div`
   display: flex;
+  width: 100%;
 
   > img {
-    width: 335px;
-    height: 198px;
+    width: 100%;
+    max-height: 270px;
     border-radius: 3px;
     cursor: pointer;
+    /* object-fit: scale-down; */
   }
 `;
 
@@ -385,4 +326,30 @@ const LocationSection = styled.section`
   align-items: center;
   gap: 14px;
   margin-top: 13px;
+`;
+
+const InfoSection = styled.section`
+  margin-top: 12px;
+`;
+
+const BusinessSection = styled.section`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+`;
+
+const BusinessContainer = styled.div`
+  display: inline-flex;
+  justify-content: center;
+`;
+
+const BusinessBox = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 79px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: #f6f6f6;
 `;

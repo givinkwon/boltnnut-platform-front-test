@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
@@ -8,7 +7,6 @@ import * as Title from "components/Title";
 
 import ProposalCard from "./MobilePartnerCard";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
-import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -46,15 +44,15 @@ class MobileManufacturerContentContainer extends React.Component {
     Partner.requestDoneModalActive = false;
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
+    Partner.detailLoadingFlag = false;
   }
 
   render() {
-    const { Partner, width, Search, Home } = this.props;
+    const { Partner, width, Search } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
 
     return (
       <>
-        {Home.mobile_warning_modal_state && <MobileWarningModalContainer />}
         <Container>
           <InnerBox>
             <Body active={this.props.Partner.check_click_filter}>
@@ -66,7 +64,7 @@ class MobileManufacturerContentContainer extends React.Component {
               )}
 
               <InnerBox style={{ flexDirection: "column", alignItems: "center" }}>
-                <InnerBox style={{ justifyContent: "space-between", width: "90%" }}>
+                <InnerBox style={{ justifyContent: "space-between" }}>
                   <Font15>
                     <span style={{ fontWeight: "bold" }}>{Partner.partner_count}개</span>의 제조사가 있습니다.
                   </Font15>
@@ -77,12 +75,12 @@ class MobileManufacturerContentContainer extends React.Component {
                 {Partner.partner_list &&
                   Partner.partner_list.map((item, idx) => {
                     return (
-                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
-                        <img src={cardLine} />
+                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%", textAlign: "center" }}>
+                        <CardLine src={cardLine} />
 
                         <ProposalCard
                           data={item}
-                          width={this.props.width}
+                          // width={this.props.width}
                           idx={idx}
                           categoryData={toJS(Partner.category_dic[idx])}
                           dropDown={this.state.dropDownActive}
@@ -93,6 +91,7 @@ class MobileManufacturerContentContainer extends React.Component {
                       </div>
                     );
                   })}
+                <CardLine src={cardLine} />
               </InnerBox>
             </Body>
           </InnerBox>
@@ -259,6 +258,7 @@ const Body = styled.div`
   display: flex;
   justify-content: center;
   margin-top: ${(props) => (props.active ? "285px" : "20px")};
+  width: 95%;
 `;
 
 const Layer = styled.div`
@@ -305,4 +305,10 @@ const Container = styled.div`
 const InnerBox = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+`;
+
+const CardLine = styled.img`
+  width: 100%;
+  height: 5px;
 `;

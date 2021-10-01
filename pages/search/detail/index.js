@@ -78,10 +78,10 @@ class Index extends React.Component {
               <div>
                 <MobileNav
                   src={back_ic}
-                  headText={"제조사 상세보기"}
+                  // headText={"제조사 상세보기"}
                   width={width}
                 />
-                <div style={{ height: "65px" }}></div>
+                <div style={{ height: "50px" }}></div>
               </div>
             ))}
         </>

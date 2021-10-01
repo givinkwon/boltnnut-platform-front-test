@@ -9,7 +9,7 @@ class MainPagePartnerCard extends React.Component {
   state = {
     width: null,
     modalOpen: false,
-    city: "",
+    city: "준비중 입니다.",
     business: [],
   };
 
@@ -18,38 +18,6 @@ class MainPagePartnerCard extends React.Component {
 
     window.addEventListener("resize", Search.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    const req = {
-      id: data && data.city.id,
-    };
-
-    const partnerReq = {
-      id: data && data.id,
-    };
-
-    PartnerAPI.getCityName(req)
-      .then((res) => {
-        this.setState({ city: res.data.maincategory });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    // const temp = [];
-    // PartnerAPI.getBusinessCategory(partnerReq)
-    //   .then((res) => {
-    //     res.data.business.forEach((element) => {
-    //       PartnerAPI.getBusinessName(element).then((res) => {
-    //         temp.push(res.data.category);
-    //         this.setState({ business: temp });
-    //       });
-    //     });
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     console.log(e.response);
-    //   });
   }
 
   componentWillUnmount() {
@@ -93,7 +61,7 @@ class MainPagePartnerCard extends React.Component {
     const partnerId = data && data.id;
     const loggedInPartnerId = Auth.logged_in_partner && Auth.logged_in_partner.id;
     const existLogo = data && data.logo && data.logo.split("/")[4];
-
+    console.log("asdasd", data);
     return (
       <>
         {width > 767.98 && data ? (
@@ -148,7 +116,7 @@ class MainPagePartnerCard extends React.Component {
                   <BottomBox>
                     <Location>
                       <img src="static/icon/location.svg" />
-                      <div style={{ marginLeft: 10 }}>{(data && data.region === null) || data.region === "nan" ? this.state.city : data.region}</div>
+                      <div style={{ marginLeft: 10 }}>{data.city ? data.city.maincategory : this.state.city}</div>
                     </Location>
                   </BottomBox>
                 </Bottom>
@@ -156,7 +124,7 @@ class MainPagePartnerCard extends React.Component {
                 {this.state.business.length > 0 ? (
                   <div style={{ display: "flex", marginTop: 11 }}>
                     {this.state.business.map((item, idx) => (
-                      <Hashtag>#{item}</Hashtag>
+                      <Hashtag key={idx}>#{item}</Hashtag>
                     ))}
                   </div>
                 ) : (

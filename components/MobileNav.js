@@ -166,11 +166,7 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {Auth.logged_in_partner ? (
-                    <KSLink url={"project"} content={"프로젝트 관리"} />
-                  ) : (
-                    <KSLink url={"search"} content={"제조사 찾기"} />
-                  )}
+                  {Auth.logged_in_partner ? <KSLink url={"project"} content={"프로젝트 관리"} /> : <KSLink url={"search"} content={"제조사 찾기"} />}
                   <KSLink url={"shop"} content={"공장 직거래"} />
                   <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
@@ -236,6 +232,9 @@ class MobileNav extends React.Component {
     );
   }
 }
+
+export default MobileNav;
+
 const Modal = styled.div`
   position: fixed;
   z-index: 10000;
@@ -246,6 +245,7 @@ const Modal = styled.div`
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 `;
+
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 22px;
@@ -255,11 +255,10 @@ const ProfileMenu = styled.div`
   z-index: 10000;
   top: 0;
   right: 0;
-  // transform: translate3d(${(props) => (props.width ? props.width - 156 : 10)}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
-  }
 `;
+
 const ModalHeader = styled.div`
   width: 100%;
   // height: 160px;
@@ -281,6 +280,7 @@ const ModalHeader = styled.div`
     white-space: nowrap;
   }
 `;
+
 const ModalContent = styled.button`
   border: none;
   background: none;
@@ -305,6 +305,7 @@ const ModalContent = styled.button`
     cursor: pointer;
   }
 `;
+
 const HeadText = styled.div`
   z-index: 9998;
   width: 100%;
@@ -324,6 +325,7 @@ const HeadText = styled.div`
   left: 0;
   margin-top: 2px;
 `;
+
 const Footer = styled.div`
   position: fixed;
   bottom: 0;
@@ -348,6 +350,7 @@ const Footer = styled.div`
     cursor: pointer;
   }
 `;
+
 const FreeButton = styled(Buttonv1)`
   margin-top: 8px;
   cursor: pointer;
@@ -367,6 +370,7 @@ const FreeButton = styled(Buttonv1)`
     color: #ffffff;
   }
 `;
+
 const ModalContent2 = styled.button`
   border: none;
   background: none;
@@ -388,48 +392,56 @@ const ModalContent2 = styled.button`
     cursor: pointer;
   }
 `;
+
 const Container = styled.div`
+  height: 50px;
   margin-right: auto;
   margin-left: auto;
 `;
+
 const NavBox = styled.div`
   position: fixed;
-  height: 54px;
+  height: 50px;
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   z-index: 300;
 `;
+
 const NavWrap2 = styled.div`
   display: flex;
-  text-align: center;
   align-items: center;
   justify-content: space-between;
-  height: 54px;
-  background-color: #ffffff; // #f3f3f3
+  height: 50px;
+  background-color: #ffffff;
   padding-left: 18px;
   padding-right: 18px;
 `;
+
 const BoltLogo = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: none;
   border: none;
+  margin-top: 2px;
 `;
+
 const Logo = styled.img`
   cursor: pointer;
   z-index: 9999;
 `;
+
 const Icon = styled.img`
+  display: none;
   cursor: pointer;
   width: 40px;
   height: 40px;
-  display: none;
-  background-color: "#f3f3f3";
   z-index: 9999;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     width: 21px;
     height: 13px;
   }
 `;
-
-export default MobileNav;

@@ -116,11 +116,9 @@ class MobileProposalCard extends React.Component {
     // const temp = [];
     // PartnerAPI.getBusinessCategory(partnerReq)
     //   .then((res) => {
-    //     console.log("qweqwe", res);
     //     if (res.data.business.length > 0) {
     //       res.data.business.forEach((element) => {
     //         PartnerAPI.getBusinessName(element).then((res) => {
-    //           console.log("asdasd", res);
     //           temp.push(res.data.category);
     //         });
     //       });

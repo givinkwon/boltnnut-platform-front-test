@@ -44,7 +44,7 @@ class SearchConatiner extends React.Component {
       <>
         {this.props.width &&
           (this.props.width > 767.99 ? (
-            <div>
+            <>
               {/* 제조사 찾기 기본 화면 */}
               {Partner.newIndex == 0 && (
                 <>
@@ -54,9 +54,9 @@ class SearchConatiner extends React.Component {
               )}
               {/* 제조사 찾기 상세 페이지 */}
               {Partner.newIndex == 1 && <DetailContainer width={this.props.width} />}
-            </div>
+            </>
           ) : (
-            <div>
+            <>
               {/* 제조사 찾기 모바일 버전 기본 화면 */}
               {Partner.mobileRequestIndex == 0 && (
                 <>
@@ -64,7 +64,7 @@ class SearchConatiner extends React.Component {
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
-            </div>
+            </>
           ))}
       </>
     );
