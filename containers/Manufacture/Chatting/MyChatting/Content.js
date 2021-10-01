@@ -8,6 +8,7 @@ import { inject, observer } from "mobx-react";
 import * as ChatAPI from "axios/Manufacture/Chat"; 
 
 import ChatInputBox from "./ChatInpuBox"
+import Chat from "../../../../stores/Manufacture/Chat";
 
 const LogoNo = "/static/images/chat/logono.png"
 const ChatNo = "/static/images/chat/chatno.png"
@@ -27,10 +28,11 @@ class ChattingContent extends React.Component {
   // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
   handleScrollChange() {
     if (this.ChatAreaRef.current) {
-      if (
-        this.ChatAreaRef.current.scrollTop <= 0 &&
-        this.props.chatPageLimit - 1 > this.state.chatPageCount
-      ) {
+      // 스크롤이 최대로 올라가면
+      if (this.ChatAreaRef.current.scrollTop <= 0) 
+      {
+        Chat.chatPageCount += 1
+        Chat.loadPrevMessages(Chat.chatPageCount)
       }
     }
   }
@@ -40,7 +42,21 @@ class ChattingContent extends React.Component {
     // 로그인되어 있는 지 체크하기
     await Auth.checkLogin();
     console.log(Auth.logged_in_partner)
+
+    //창 크기
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+    
+    // 스크롤을 위로 올리면 이전 채팅이 로딩되도록
+    document.addEventListener("scroll", this.handleScrollChange, true);
   }
+
+  
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+    document.removeEventListener("scroll", this.handleScrollChange);
+  }
+  
   render() {
     const { Auth, Project, Chat } = this.props;
     console.log(Chat.chatMessages)

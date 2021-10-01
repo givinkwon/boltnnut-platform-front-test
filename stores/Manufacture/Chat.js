@@ -30,6 +30,9 @@ class Chat {
   // 채팅에서 현재 파일
   @observable currentFile = [];
 
+  // 이전 채팅을 가져오기 위한 현재 채팅 페이지
+  @observable chatPageCount = 10;
+
   // 채팅 로그를 가져오는 함수
   @action getChat = () => {
      
