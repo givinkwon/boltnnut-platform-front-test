@@ -242,7 +242,7 @@ class ChattingHeader extends React.Component {
                     </HeaderLogo>
                     <HeaderContent>
                       <span>{data.request_set[0] && data.request_set[0].name}</span>
-                      <span>{data.answer_set[0] && data.answer_set[0].partner_name && data.answer_set[0].partner_name }</span>
+                      <span>제조사 : {data.answer_set[0] && data.answer_set[0].partner_name && data.answer_set[0].partner_name }</span>
                    
                     </HeaderContent>
                   </HeaderContentAll>
@@ -346,14 +346,33 @@ const HeaderTitle = styled.div`
 const HeaderContent = styled.div`
 width : 100%;
 height: 89px;
-> span {
+> span:nth-child(1) {
   display : flex;
-  font-size: 15px !important;
+  font-size: 19px !important;
   height: 28px;
   margin: 18px 0px 0px 16px;
   object-fit: contain;
   font-family: NotoSansCJKkr-Bold;
   font-size: 19px;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.48px;
+  text-align: left;
+  color: #282c36;
+
+  > div {
+    margin-left : auto;
+    margin-right : 12px;
+  }
+}
+> span:nth-child(2) {
+  display : flex;
+  height: 28px;
+  margin: 0px 0px 0px 16px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr-Bold;
+  font-size: 9px !important;
   font-weight: 700;
   font-stretch: normal;
   font-style: normal;
