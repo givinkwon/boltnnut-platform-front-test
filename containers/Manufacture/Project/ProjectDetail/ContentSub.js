@@ -112,7 +112,7 @@ class ContentSub extends React.Component {
         ) : (
           user === "partner" && (
             <>
-              {!this.state.isAnswered && (
+              
                 <Box3
                   style={{ marginBottom: 20 }}
                   active={this.state.activeOne}
@@ -127,10 +127,10 @@ class ContentSub extends React.Component {
                     style={{ fontWeight: "bold" }}
                     active={this.state.activeOne}
                   >
-                    프로젝트 답변하기
+                    {!this.state.isAnswered ? "제조문의 답변하기" : "채팅 이어하기"}
                   </Font18>
                 </Box3>
-              )}
+              
             </>
           )
         )}

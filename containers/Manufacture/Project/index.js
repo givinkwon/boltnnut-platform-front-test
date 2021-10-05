@@ -25,7 +25,8 @@ class ProjectContainer extends React.Component {
     await Project.getAllProject(data);
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+  }
 
   render() {
     const { Auth, Project, width } = this.props;

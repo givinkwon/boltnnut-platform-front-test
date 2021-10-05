@@ -36,7 +36,8 @@ class MyProject extends React.Component {
   async componentDidMount() {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
-    this.props.Project.currentPage = 1;
+    Project.currentPage = 1;
+    Project.step_index = 1;
 
     await Auth.checkLogin();
     if (Auth.logged_in_client) {

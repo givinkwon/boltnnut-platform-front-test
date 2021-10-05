@@ -119,22 +119,26 @@ class ChattingContent extends React.Component {
                   :
                     ( data.member == 1 ? 
                       <Right>
-                      <ContentLogo>
-                        <img src = {LogoNo}></img>
-                      </ContentLogo>
-                      
+
                       {/* 텍스트일 때 */}
                       {data.chat_type == 0 && <Text state={"Left"} >{data.text}</Text>}
                       {/* 파일일 때 */}
                       {data.chat_type == 1 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
                       {/* 이미지일 때 */}
                       {data.chat_type == 2 && <Text state={"Left"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
-                     
+                      
+                      <ContentLogo>
+                        <img src = {LogoNo}></img>
+                      </ContentLogo>
+                                           
                       <div>{data.bRead && "읽음"}</div>
                       </Right>
                     : 
                       <Left>
                       <div>{data.bRead && "읽음"}</div>
+                      <ContentLogo>
+                        <img src = {LogoNo}></img>
+                      </ContentLogo>
                       {/* 텍스트일 때 */}
                       {data.chat_type == 0 && <Text state={"Right"} >{data.text}</Text>}
                       {/* 파일일 때 */}
@@ -142,9 +146,6 @@ class ChattingContent extends React.Component {
                       {/* 이미지일 때 */}
                       {data.chat_type == 2 && <Text state={"Right"} ><a href={data.file} download><img src={file_img}/>{data.file.split('/')[data.file.split('/').length -1]}</a></Text>}
                      
-                      <ContentLogo>
-                        <img src = {LogoNo}></img>
-                      </ContentLogo>
                       </Left> 
                     )
                   }

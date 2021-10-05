@@ -229,18 +229,21 @@ class ChattingHeader extends React.Component {
         {/* 클라이언트인 경우 => 제안서 정보 가져오기 */}
         {Auth.logged_in_client &&
           Project.projectDataList.map((data, idx) => {
-             
             {/* 카드 클릭 시 채팅 로그 불러오면서 active => 채팅 로그에는 answer만 저장되어 있어서 answer 데이터를 이용해야함*/}
+           
             return (
                 // answer_set에 있는 정보 가져오기      
-                data.map((answer_data, idx) => {
+                data.answer_set.map((answer_data, idx) => {
+                  console.log(answer_data)
                   return (
                   <HeaderContentAll onClick = {() => this.clickchatcard(answer_data)} active={Chat.chatcard_index == answer_data.id}>
                     <HeaderLogo>
-                      {answer_data[0].logo ? <img src = {answer_data[0].logo}></img> : <img src = {LogoNo}></img> }
+                      {answer_data.logo ? <img src = {answer_data.logo}></img> : <img src = {LogoNo}></img> }
                     </HeaderLogo>
                     <HeaderContent>
-                      <span>{answer_data && answer_data.content1.length > 15 ? (answer_data.content1.substring(0,15)+ "...") :  (answer_data[0].content1)}</span>
+                      <span>{data.request_set[0] && data.request_set[0].name}</span>
+                      <span>{data.answer_set[0] && data.answer_set[0].partner_name && data.answer_set[0].partner_name }</span>
+                   
                     </HeaderContent>
                   </HeaderContentAll>
                   )
