@@ -24,45 +24,9 @@ import axios from "axios";
 @inject("Home")
 @observer
 class HomeConatiner extends React.Component {
-  state = {
-    next: true,
-    prev: false,
-    width: 0,
-    tab: 0,
-  };
 
-  componentDidMount() {
-    const { history } = this.props;
-    window.addEventListener("resize", this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
   render() {
     const { width, reqList, Home } = this.props;
-
-    function test() {
-      return axios({
-        method: "POST",
-        url: `https://analyticsreporting.googleapis.com/v4/userActivity:search`,
-        data: {
-          viewId: "0214568260",
-          user: {
-            type: "392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com",
-            userId: "463218669.1623114407",
-          },
-          dateRange: {
-            startDate: "2021-06-07",
-            endDate: "2021-06-14",
-          },
-        },
-      });
-    }
 
     return (
       <>
