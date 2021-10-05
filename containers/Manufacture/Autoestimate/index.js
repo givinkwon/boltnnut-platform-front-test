@@ -12,6 +12,13 @@ import Banner3 from "./Home/Banner3";
 import Banner4 from "./Home/Banner4";
 import Banner5 from "./Home/Banner5";
 
+import MobileBanner0 from "Mobile/Banner0";
+import MobileBanner1 from "Mobile/Banner1";
+import MobileBanner2 from "Mobile/Banner2";
+import MobileBanner3 from "Mobile/Banner3";
+import MobileBanner4 from "Mobile/Banner4";
+import MobileBanner5 from "Mobile/Banner5";
+
 // Components
 import Buttonv1 from "components/Buttonv1";
 import * as Content from "components/Content";
@@ -223,6 +230,66 @@ class AutoestimateContainer extends React.Component {
   };
   // 파일 업로드 && 드랍 함수 끝
 
+  // 임시 막기용 파일업로드
+    // 파일 드랍다운 & 저장
+    Nozone = () => {
+      const { AutoEstimate } = this.props;
+      return (
+        <>
+            {/* {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />} */}
+            <InputBox onClick = {() =>  alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
+              <DropZoneContainer>
+                {/*파일이 없을 때 */}
+                {!AutoEstimate.checkFileUpload && (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        marginBottom: "24px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          color: "#0933b3",
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                          marginBottom: "-3px",
+                        }}
+                      >
+                        ↑
+                      </div>
+                      <div
+                        style={{
+                          width: "22px",
+                          height: "7px",
+                          border: "3px solid #0933b3",
+                          borderTop: "none",
+                        }}
+                      ></div>
+                    </div>
+                    <p>
+                      이 곳을 클릭해 3D 도면 파일 <span>업로드</span>
+                    </p>
+                    <p>*한 파일에 한 파트만 업로드 해주세요.</p>
+                    <FileImageContainer>
+                      <FileImage name=".STP" />
+                      <FileImage name=".STEP" />
+                      <FileImage name=".STL" />
+                      <FileImage name=".DWG" />
+                    </FileImageContainer>
+                  </>
+                )}
+  
+            
+              </DropZoneContainer>
+            </InputBox>
+        </>
+      );
+    };
+    // 파일 업로드 && 드랍 함수 끝
+
   // 도면 및 관련파일 & 저장
   DWGDropzone = () => {
     const { AutoEstimate } = this.props;
@@ -269,10 +336,12 @@ class AutoestimateContainer extends React.Component {
   // 도면 및 관련파일 && 드랍 함수 끝
 
   render() {
-    const { AutoEstimate } = this.props;
+    const { AutoEstimate, width } = this.props;
     console.log(AutoEstimate.fileList);
     return (
       <>
+        {/*웹*/}
+        {width > 768 &&
         <Container>
           <Banner0 />
           {/* 자동 견적 헤더 */}
@@ -553,6 +622,291 @@ class AutoestimateContainer extends React.Component {
             </>
           )}
         </Container>
+        }
+
+        {/* 모바일 */}
+        {width < 768 &&
+        <Container>
+        <MobileBanner0 />
+        {/* 자동 견적 헤더 */}
+        <HeaderBox style={{width : "95%"}}>
+          <Header style={{ fontSize : 18}}>{AutoEstimate.checkFileUpload ? "도면 추가" : "도면 파일을 업로드 해주세요."}</Header>
+        </HeaderBox>
+        <TableHeader checkFileUpload={AutoEstimate.checkFileUpload}>
+          <div></div>
+          <span style={{ marginRight: 396 }}>파일명</span>
+          <span style={{ marginRight: 180 }}>기본가공</span>
+          <span style={{ marginRight: 180 }}>재료</span>
+          <span style={{ marginRight: 80 }}>수량</span>
+        </TableHeader>
+
+        {/* 자동 견적 창 */}
+        <ItemList checkFileUpload={AutoEstimate.checkFileUpload}>
+          {AutoEstimate.fileList.map((data, idx) => (
+            <ItemBox>
+              <MainBox>
+                <CheckBox
+                  active={data.checked}
+                  onClick={() => {
+                    if (!data.checked) {
+                      data.checked = true;
+                      AutoEstimate.checkQuantity(idx, data.quantity, 0);
+                    } else {
+                      data.checked = false;
+                      AutoEstimate.checkQuantity(idx, data.quantity, 1);
+                    }
+
+                    AutoEstimate.countPrice();
+                  }}
+                >
+                  <div active={data.checked}>
+                    <img src={pass3} active={data.checked} />
+                  </div>
+                </CheckBox>
+
+                <StlBox style={{ marginRight: 220, paddingRight: 0 }}>
+                  {data.fileName}
+
+                  <STLViewer
+                    model={data.stl_file} // stl파일 주소
+                    width={120} // 가로
+                    height={120} // 세로
+                    modelColor="gray" // 색
+                    backgroundColor="white" // 배경색
+                    rotate={true} // 자동회전 유무
+                    orbitControls={true} // 마우스 제어 유무
+                    cameraX={500}
+                  />
+                  <Length>{Math.round(data.x_length) + " x " + Math.round(data.y_length) + " x " + Math.round(data.z_length) + " mm"}</Length>
+                </StlBox>
+                <ColumnBox>
+                  <ManufactureBox>
+                    <Select
+                      styles={customStyles}
+                      value={data.selectedManufacture}
+                      options={AutoEstimate.ManufactureOption}
+                      getOptionLabel={(option) => option.name}
+                      onChange={(e) => {
+                        // 공정 선택
+                        AutoEstimate.setManufacture(e, idx);
+                        // 변경 값에 따라 값 다시 받아오기
+                        AutoEstimate.ReloadAutoEstimate(idx);
+                      }}
+                    />
+                  </ManufactureBox>
+                </ColumnBox>
+                <MaterialBox>
+                  <Select
+                    value={data.selectedMaterial}
+                    styles={customStyles}
+                    options={data.selectedManufacture.id == 1 ? AutoEstimate.CNCMaterialOption : AutoEstimate.MoldMaterialOption}
+                    getOptionLabel={(option) => option.name}
+                    onChange={(e) => {
+                      AutoEstimate.setMaterial(e, idx);
+                      // 변경 값에 따라 값 다시 받아오기
+                      AutoEstimate.ReloadAutoEstimate(idx);
+                    }}
+                  />
+                </MaterialBox>
+                <QuantityBox>
+                  <DirectInputBox>
+                    <input
+                      value={AutoEstimate.fileList[idx].quantity}
+                      placeholder="직접 입력하세요"
+                      onChange={(e) => {
+                        // 숫자 검증을 위해
+                        const re = /^[0-9\b]+$/;
+
+                        if (re.test(e.target.value)) {
+                          AutoEstimate.countQuantity(idx, e.target.value);
+                        } else {
+                          e.target.value = "";
+                          AutoEstimate.countQuantity(idx, e.target.value);
+                        }
+                      }}
+                    />
+                  </DirectInputBox>
+                </QuantityBox>
+              </MainBox>
+
+              {/* 가격 표시 */}
+              <div style={{ textAlign: "right" }}>
+                <TailBox style={{ float: "right", display: "inline-block" }}>
+                  <div>
+                    <span>
+                      {/* 금형인 경우(id = 2), 금속가공인 경우(id = 1)*/}
+                      {data.selectedManufacture.id === 2 ? (
+                        <>
+                          <div>
+                            <span>금형비 </span>
+                            <span>
+                              {/* 1000의 자리까지 반올림 */}
+                              {(Math.round(data.moldPrice / 1000) * 1000).toLocaleString("ko-KR") + " 원"}
+                            </span>
+                            <span> + </span>
+                            <span>사출비 </span>
+                            <span>
+                              {/* 1의 자리까지 반올림 */}
+                              {(Math.round(data.injectionPrice) * data.quantity).toLocaleString("ko-KR") + " 원"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span>가격 </span>
+                            <span style={{ marginRight: 20 }}>
+                              {(Math.round(data.moldPrice / 1000) * 1000 + Math.round(data.injectionPrice) * data.quantity).toLocaleString("ko-KR") + " 원"}
+                            </span>
+                            <span>예상 납기일 </span>
+                            <span>{data.period + " 영업일"}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <span>가격 </span>
+                          <span style={{ marginRight: 20 }}>
+                            {/* 1000의 자리까지 반올림 */}
+                            {(Math.round(data.price / 1000) * 1000 * data.quantity).toLocaleString("ko-KR") + " 원"}
+                          </span>
+                          <span>예상 납기일 </span>
+                          <span>{data.period + " 영업일"}</span>
+                        </>
+                      )}
+                    </span>
+                  </div>
+                </TailBox>
+              </div>
+              <DeleteBox>
+                <span onClick={() => AutoEstimate.fileList.splice(idx, 1)}>
+                  <img src={deleteButtonImg} />
+                </span>
+              </DeleteBox>
+            </ItemBox>
+          ))}
+        </ItemList>
+
+        <NoticeBox checkFileUpload={AutoEstimate.checkFileUpload}>
+          {/* 전체 삭제 */}
+          <EntireDelete
+            onClick={() => {
+              // 모두 초기화
+              AutoEstimate.fileList = [];
+              AutoEstimate.checkFileUpload = false;
+            }}
+          >
+            <span>전체 삭제</span>
+          </EntireDelete>
+          <div>* 금형사출의 경우 최소수량 100개 이상만 가능합니다.</div>
+        </NoticeBox>
+
+        {/* 파일 업로드 창 */}
+        <ContentBox style={{width : "95%"}} checkFileUpload={AutoEstimate.checkFileUpload}>
+          <this.Nozone/>
+        </ContentBox>
+        {/* 자동 견적 소개 창*/}
+
+        {!AutoEstimate.checkFileUpload && (
+          <>
+            <MobileBanner2 />
+            <MobileBanner3 />
+            <MobileBanner4 />
+            <MobileBanner5 />
+          </>
+        )}
+
+        {/* 도면이 업로드된 상태면 견적 카드 보여주기 */}
+        {AutoEstimate.checkFileUpload && (
+          <>
+            <Price checkFileUpload={AutoEstimate.checkFileUpload}>
+              <PriceLabel active={checkBox_one}>
+                <div>
+                  <span>자동 견적 가격 (예상 납기일)</span>
+                  <span
+                    onMouseOver={() => {
+                      this.setIsShown(true, 1);
+                      console.log("mouse-enter");
+                    }}
+                    onMouseOut={() => {
+                      this.setIsShown(false, 1);
+                      console.log("mouse-out");
+                    }}
+                  >
+                    ?
+                  </span>
+                </div>
+                <div>
+                  <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>
+                  <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
+                  <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
+                </div>
+              </PriceLabel>
+              <PriceData>
+                <span>
+                  {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString("ko-KR")}
+                  <span> 원( VAT 미포함,</span>
+                </span>
+                <span>
+                  {AutoEstimate.totalPeriod}
+                  <span> 영업일)</span>
+                </span>
+              </PriceData>
+            </Price>
+
+            {/* 파일 업로드 창 */}
+            <HeaderBox>
+              <Header>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}</Header>
+              {AutoEstimate.request_file_set.map((item, idx) => {
+                return (
+                  <>
+                    <AddFileList>
+                      <span
+                        onClick={() => {
+                          if (AutoEstimate.request_file_set.length > 0) {
+                            AutoEstimate.request_file_set.splice(idx, 1);
+                          }
+                        }}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        <span>
+                          <img
+                            src={clip}
+                            style={{
+                              marginLeft: 17,
+                              marginRight: 17,
+                            }}
+                          ></img>
+                          <span>{item.name}</span>
+                          <DeleteFile
+                            onClick={() => AutoEstimate.delete_File(idx)}
+                            src={deleteButtonImg}
+                            style={{
+                              marginLeft: 17,
+                            }}
+                          />
+                        </span>
+                      </span>
+                    </AddFileList>
+                  </>
+                );
+              })}
+            </HeaderBox>
+            <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
+              <this.DWGDropzone />
+            </ContentBox>
+            {/* 자동 견적 소개 창*/}
+
+            <Button
+              onClick={() => {
+                // 도면 및 발주요청 파일 저장
+                AutoEstimate.create_dwg();
+                Router.push("/payment");
+              }}
+            >
+              결제하기
+            </Button>
+          </>
+        )}
+      </Container>
+      }
       </>
     );
   }

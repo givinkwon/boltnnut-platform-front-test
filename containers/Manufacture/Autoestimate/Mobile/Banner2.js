@@ -23,13 +23,13 @@ class RequestMain extends React.Component {
                 STEP 1
               </StepBox>
               <Title>
-                의뢰 요청
+                발주 요청
               </Title>
 
               </TitleBox>
 
               <Content>
-                의뢰를 요청하면 볼트앤너트의 전문가가 상담을 통해 내용 보완 후 제조사와 연결해드립니다.
+                발주 요청 시 볼트앤너트의 전문가가 상담을 통해 당일 발주를 진행합니다.
               </Content>
 
             </ContentBox>
@@ -40,13 +40,13 @@ class RequestMain extends React.Component {
                 STEP 2
               </StepBox>
               <Title>
-                제조사와 직접 채팅
+                제조 발주 모니터링
               </Title>
 
               </TitleBox>
 
               <Content>
-                연결된 제조사와 채팅을 통해 의뢰에 대한 소통을 진행합니다.
+                발주 요청, 1차 제작, 제품 검수 등 모든 제조 진행사항을 보고드립니다.
               </Content>
               
             </ContentBox>
@@ -56,13 +56,13 @@ class RequestMain extends React.Component {
                 STEP 3
               </StepBox>
               <Title>
-                업체 확정
+                제품 납품
               </Title>
 
               </TitleBox>
 
               <Content>
-                채팅 페이지 상단의 '업체 확정' 버튼을 클릭해 계약을 완료하세요.
+                볼트앤너트 납품 프로세스를 통해 납기일을 준수하여 납품합니다.
               </Content>
               
             </ContentBox>

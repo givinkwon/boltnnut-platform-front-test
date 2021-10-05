@@ -72,7 +72,7 @@ class Account extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>{width > 767.98 ? <Nav /> : <MobileNav width={width} />}</>
-        <AutoEstimate/>
+        <AutoEstimate width={width}/>
         <Footer />
       </div>
     );

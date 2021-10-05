@@ -16,7 +16,7 @@ class RequestMain extends React.Component {
       <Background style={{ backgroundColor: "#f6f6f6" }}>
         <Container>
           <Body>
-            <Header>확실한 의뢰 프로세스로 진행됩니다.</Header>
+            <Header>3단계 의뢰 프로세스로 진행됩니다.</Header>
             <StepBox>
               <img src={step1} />
               <img src={blueline} />
