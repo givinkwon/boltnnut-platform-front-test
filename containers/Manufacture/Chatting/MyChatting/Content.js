@@ -65,6 +65,16 @@ class ChattingContent extends React.Component {
       >
 
          <ContentTitle style={{height: Chat.chatMessages.length == 0 ? ("118px") : ("68px") }}>
+         {/* 채팅이 2개 이상일 때 */}
+         {Chat.chatMessages.length > 1 && Project.projectDataList.map(item => {
+								return (
+                  <>
+                  {/*선택한 id와 데이터가 같을 때 => 렌더링*/}
+                  {item.answer_set[0].id == Chat.answerId && <span>클라이언트 전화번호 : {item.client_phone}</span>}
+                  </>
+                )	
+            })
+          }
         </ContentTitle>
 
         {/* 채팅방을 선택하지 않았을 때 */}
@@ -175,10 +185,27 @@ const ContentLogo = styled.div`
   }
 `
 const ContentTitle = styled.div`
-  width : 100%;
-  height: 63px;
-  border: solid 1px #e1e2e4;
-
+width : 100%;
+height: 63px;
+border-bottom: solid 1px #e1e2e4;
+> span {
+  display : flex,
+  font-size: 19px;
+  width: 106px;
+  height: 28px;
+  margin: 18px 154px 17px 16px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 19px;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.74;
+  letter-spacing: -0.48px;
+  text-align: left;
+  color: #282c36;
+  
+}
 `;
 
 const ContentBody = styled.div`
