@@ -167,6 +167,7 @@ class MobileNav extends React.Component {
               <>
                 <ModalContent>
                   {Auth.logged_in_partner ? <KSLink url={"project"} content={"프로젝트 관리"} /> : <KSLink url={"search"} content={"제조사 찾기"} />}
+                  <KSLink url={"request"} content={"제조 문의하기"} />
                   <KSLink url={"shop"} content={"공장 직거래"} />
                   <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
@@ -291,7 +292,7 @@ const ModalContent = styled.button`
   border-bottom: solid 1px #e1e2e4;
   flex-direction: column;
   justify-content: center;
-
+  text-align: center;
   > a {
     font-family: NotoSansCJKkr;
     font-size: 15px;
@@ -300,7 +301,7 @@ const ModalContent = styled.button`
     font-style: normal;
     line-height: 1.27;
     letter-spacing: -0.38px;
-    text-align: left;
+    text-align: center;
     color: #111111;
     cursor: pointer;
   }
@@ -379,7 +380,7 @@ const ModalContent2 = styled.button`
   flex-direction: column;
   margin-top: 27px;
   justify-content: center;
-
+  text-align: center;
   > a {
     font-family: NotoSansCJKkr;
     font-size: 12px;
@@ -391,6 +392,7 @@ const ModalContent2 = styled.button`
     color: #282c36;
     margin-bottom: 22px;
     cursor: pointer;
+    text-align: center;
   }
 `;
 
