@@ -290,7 +290,7 @@ const ModalContent = styled.button`
   display: flex;
   border-bottom: solid 1px #e1e2e4;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 
   > a {
     font-family: NotoSansCJKkr;
@@ -378,6 +378,7 @@ const ModalContent2 = styled.button`
   display: flex;
   flex-direction: column;
   margin-top: 27px;
+  justify-content: center;
 
   > a {
     font-family: NotoSansCJKkr;
