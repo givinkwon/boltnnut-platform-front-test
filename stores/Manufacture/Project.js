@@ -4,6 +4,7 @@ import * as ProjectAPI from "axios/Manufacture/Project";
 import * as AccountAPI from "axios/Account/Account";
 import { toJS } from "mobx";
 import Auth from "stores/Account/Auth";
+import Router from "next/router";
 
 class Project {
   // 프로젝트 데이터 관련 변수
@@ -147,6 +148,9 @@ class Project {
       alert(
         "프로젝트 상세 내용은 볼트앤너트에 등록된 파트너사 혹은 본인만 확인 가능합니다."
       );
+      Auth.setType("partner");
+      Auth.step = 1;
+      Router.push('/signup');
       return false;
     }
 
