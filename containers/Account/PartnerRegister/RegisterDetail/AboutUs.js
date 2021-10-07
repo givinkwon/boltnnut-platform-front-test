@@ -7,7 +7,7 @@ import TextAreaComponent from "components/TextArea";
 import MultipleInput from "components/MultipleInput";
 import * as Title from "components/Title";
 import TextFieldComponent from "components/Input";
-import LocationContainer from "containers/Account/Profile/LocationSearchModal";
+import LocationContainer from "containers/Account/Profile/ProfileEdit/LocationSearchModal";
 import Select from "components/Select";
 
 const getEmployee = [
