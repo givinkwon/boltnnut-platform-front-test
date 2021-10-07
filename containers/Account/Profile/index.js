@@ -8,6 +8,7 @@ import MainContainer from "./ProfileEdit/MainContainer";
 import BasicInfoModify from "AccountSetting/BasicInfoModify";
 import SubBox from "containers/Account/Bookmark/SubBox";
 import TabContainer from "Profile/Tab";
+import AccountWithdraw from "containers/Account/AccountSetting/AccountWithdraw";
 import Buttonv1 from "components/Buttonv1";
 import * as Text from "components/Text";
 
@@ -84,6 +85,7 @@ class ProfileContainer extends React.Component {
                 {Profile.profileTabIdx === 1 && <MainContainer />}
                 {Profile.profileTabIdx === 2 && <BasicInfoModify />}
                 {Profile.profileTabIdx === 3 && <SubBox />}
+                {Profile.profileTabIdx === 5 && <AccountWithdraw />}
               </Main>
             </Body>
           </Container>

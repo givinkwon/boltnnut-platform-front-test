@@ -10,11 +10,12 @@ import Container from "components/Containerv1";
 import InputComponent from "components/Input";
 import CheckBoxComponent from "components/CheckBox";
 import TabContainer from "AccountSetting/Tab";
+import Profile from "../../../stores/Account/Profile";
 
 const profile_img = "static/images/profileimg.svg";
 const profile_modify = "static/images/profilemodify.svg";
 
-@inject("Auth")
+@inject("Auth", "Profile")
 @observer
 class ChangePassword extends Component {
   async componentDidMount() {
@@ -23,8 +24,8 @@ class ChangePassword extends Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     const { route, pathname } = Router.router;
     await Auth.checkLogin();
-    console.log(Auth.logged_in_client)
-    console.log(Auth.logged_in_partner)
+
+    console.log(Auth.logged_in_user)
 
     this.setState({
       url: route,
@@ -32,6 +33,7 @@ class ChangePassword extends Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     console.log(toJS(Auth.logged_in_user));
+    console.log(toJS(Auth.logged_in_client));
   }
 
   onKeyPress = (e) => {
@@ -53,15 +55,18 @@ class ChangePassword extends Component {
       <>
         <MainHeader>
           <div>기본 정보 수정</div>
-          <div style={{ fontSize: 16, color: "#0933b3" }}>수정하기</div>
+          <Button
+            onClick = {() => Auth.save_account()}
+          >저장하기
+          </Button>
         </MainHeader>
         <MainBox>
-          <MainBoxHeader>
+          {/* <MainBoxHeader>
             <div>
               <img src={profile_img} />
               <img src={profile_modify} />
             </div>
-            {Auth.logged_in_user.type === 0 ? (
+            {Auth.logged_in_user && Auth.logged_in_user.type === 0 ? (
               <span
                 style={{
                   marginTop: 56,
@@ -92,24 +97,17 @@ class ChangePassword extends Component {
                 이미지 파일(.jpg, .jpeg, .png, 등)만 업로드할 수 있습니다.
               </span>
             )}
-          </MainBoxHeader>
+          </MainBoxHeader> */}
+          
           <MainBoxBody>
-            <BodyBox>
-              <BodyBoxTitle>아이디</BodyBoxTitle>
-              <InputComponent
-                class="Input"
-                onFocus={(e) => (e.target.placeholder = "")}
-                value= {Auth.logged_in_user.username}
-                onChange={(e) => {}}
-              />
-            </BodyBox>
             <BodyBox style={{ display: "flex", justifyContent: "flex-start" }}>
               <BodySubBox>
                 <BodyBoxTitle>이름</BodyBoxTitle>
                 <InputComponent
                   class="Input"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  // onChange={(e) => {}}
+                  value= {Auth.realName}
+                  onChange={Auth.setRealName}
                 />
               </BodySubBox>
               <BodySubBox style={{ marginLeft: 52 }}>
@@ -117,38 +115,55 @@ class ChangePassword extends Component {
                 <InputComponent
                   class="Input"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  // onChange={(e) => {}}
+                  value= {Auth.phone}
+                  onChange={Auth.setPhone}
                 />
               </BodySubBox>
             </BodyBox>
+            {/* 비밀번호 */}
+            <BodyBox style={{ display: "flex", justifyContent: "flex-start" }}>
+              <BodySubBox>
+                <BodyBoxTitle>비밀번호</BodyBoxTitle>
+                <InputComponent
+                  class="Input"
+                  type="password"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  value= {Auth.new_password}
+                  onChange={Auth.setNewPassword}
+                />
+              </BodySubBox>
+              <BodySubBox style={{ marginLeft: 52 }}>
+                <BodyBoxTitle>비밀번호 확인</BodyBoxTitle>
+                <InputComponent
+                  class="Input"
+                  type="password"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  value= {Auth.new_password2}
+                  onChange={Auth.setNewPassword2}
+                />
+              </BodySubBox>
+            </BodyBox>
+
             <BodyBox>
               <BodyBoxTitle>회사명</BodyBoxTitle>
               <InputComponent
                 class="Input"
                 onFocus={(e) => (e.target.placeholder = "")}
-                // onChange={(e) => {}}
+                value= {Auth.name}
+                onChange={Auth.setName}
               />
-              <div style={{ marginTop: 14 }}>
-                <CheckBoxComponent onChange={this.toggleCheckBox}>
-                  <span
-                    style={{
-                      color: "#505050",
-                      fontSize: 16,
-                    }}
-                  >
-                    개인일 경우 체크해주세요.
-                  </span>
-                </CheckBoxComponent>
-              </div>
             </BodyBox>
+            {Auth.logged_in_client &&
             <BodyBox>
               <BodyBoxTitle>직급</BodyBoxTitle>
               <InputComponent
                 class="Input"
                 onFocus={(e) => (e.target.placeholder = "")}
-                // onChange={(e) => {}}
+                value= {Auth.title}
+                onChange={Auth.setTitle}
               />
             </BodyBox>
+            }
           </MainBoxBody>
         </MainBox>
       </>
@@ -200,11 +215,19 @@ font-size: 20px;
 }
 `;
 
-const MainBoxHeader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
 
+const Button = styled.button`
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: -0.45px;
+  color: #0933b3;
+  font-weight: 600;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+  }
+`;
 const MainBoxBody = styled.div``;

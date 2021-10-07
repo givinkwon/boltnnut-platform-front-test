@@ -8,3 +8,12 @@ export function savePartnerInfo(req, id) {
     data: req.data,
   });
 }
+
+export function saveAccount(req, id) {
+    return axios({
+      method: "PATCH",
+      url: `${ROOT_URL}/user/${id}/`,
+      data: req.data,
+    });
+  }
+  

@@ -41,6 +41,12 @@ class TabConatiner extends React.Component {
         >
           채팅
         </Tab>
+        <Tab
+          active={Profile.profileTabIdx === 5}
+          onClick={() => this.setTab(5)}
+        >
+          회원 탈퇴
+        </Tab>
       </Tabs>
     );
   }

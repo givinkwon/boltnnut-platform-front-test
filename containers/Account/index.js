@@ -49,7 +49,7 @@ class AccountConatiner extends React.Component {
             <HeaderTitle>
               <div style={{ marginBottom: 12 }}>
                 {" "}
-                계정 설정 > 기본 정보 수정
+                계정 설정
               </div>
             </HeaderTitle>
           </Header>
@@ -81,12 +81,15 @@ export default AccountConatiner;
 
 const Header = styled.div`
   background-color: #ffffff;
-  width: 1200px;
+  width: 100%;
   height: 116px;
   font-family: NotoSansCJKkr;
 `;
 
 const HeaderTitle = styled.div`
+  margin-left: auto;
+  margin-right : auto;
+  width : 1200px;
   height: 100%;
   display: flex;
   align-items: flex-end;

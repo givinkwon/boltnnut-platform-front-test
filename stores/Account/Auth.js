@@ -2,6 +2,7 @@ import { observable, action, makeObservable, toJS } from "mobx";
 import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
+import * as ProfileAPI from "axios/Account/Profile";
 import Account from "pages/account";
 import Signup from "stores/Account/Signup";
 
@@ -115,26 +116,11 @@ class Auth {
   @action setPassword = (val) => {
     this.password = val;
   };
-  @action setNewPassword = (val) => {
-    this.new_password = val;
-  };
+
   @action setPassword2 = (val) => {
     this.password2 = val;
   };
-  //회사명
-  @action setName = (val) => {
-    this.name = val;
-  };
-  //실명
-  @action setRealName = (val) => {
-    this.realName = val;
-  };
-  @action setTitle = (val) => {
-    this.title = val;
-  };
-  @action setPhone = (val) => {
-    this.phone = val;
-  };
+
   @action setType = (val) => {
     this.type = val;
   };
@@ -347,19 +333,11 @@ class Auth {
       });
   };
 
-  @action deactivateUser = (home_index) => {
-    if (!this.password) {
-      alert("비밀번호를 입력해주세요.");
-      return;
-    }
-
+  @action deactivateUser = () => {
     const token = localStorage.getItem("token");
     const req = {
       headers: {
         Authorization: `Token ${token}`,
-      },
-      data: {
-        password: this.password,
       },
     };
 
@@ -691,6 +669,75 @@ class Auth {
         }, 1500);
       });
   };
+
+  // 새 비밀번호
+  @action setNewPassword = (val) => {
+    this.new_password = val;
+  };
+
+  // 새 비밀번호 확인
+  @action setNewPassword2 = (val) => {
+    this.new_password2 = val;
+  };
+
+  //회사명
+  @action setName = (val) => {
+    this.name = val;
+  };
+  
+  //실명
+  @action setRealName = (val) => {
+    this.realName = val;
+  };
+
+  // 직급
+  @action setTitle = (val) => {
+    this.title = val;
+  };
+
+  // 전화번호
+  @action setPhone = (val) => {
+    this.phone = val;
+  };
+
+  // 계정 설정 변경 저장하기
+  @action save_account = () => {
+    // 예외 처리
+    if (this.new_password != this.new_password2) {
+      alert("입력한 비밀번호가 서로 다릅니다.");
+      return false;
+    }
+
+      var formData = new FormData();
+
+      formData.append("realName", this.realName);
+      formData.append("phone", this.phone);
+      formData.append("password", this.new_password);
+      formData.append("name", this.name); // 회사명
+      formData.append("title", this.title) // 직급
+      formData.append("type", this.logged_in_user.type) // 유저 타입 => 0이면 client, 1이면 partner
+    
+      // axois 쏘기
+      const req = {
+        data: formData,
+      };
+
+      ProfileAPI.saveAccount(req, this.logged_in_user.id)
+        .then((res) => {
+          alert("저장되었습니다.");
+        })
+        .catch((e) => {
+          try {
+            console.log(e);
+            console.log(e.response);
+            alert(e.response.data.message);
+          } catch {
+            console.log(e);
+            console.log(e.response);
+          }
+        });
+
+    }
 }
 
 export default new Auth();

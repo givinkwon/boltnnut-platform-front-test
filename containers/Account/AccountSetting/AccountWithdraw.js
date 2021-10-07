@@ -182,7 +182,7 @@ class PasswordChange extends Component {
         <div
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <WithdrawBtn style={{ marginTop: 76 }}>회원 탈퇴</WithdrawBtn>
+          <WithdrawBtn onClick={() => {Auth.deactivateUser()}} style={{ marginTop: 76 }}>회원 탈퇴</WithdrawBtn>
         </div>
       </>
     );
@@ -265,5 +265,5 @@ const WithdrawBtn = styled(Buttonv1)`
   border-radius: 5px !important;
   font-size: 18px;
   line-height: 1.89;
-  background-color: #b3b3b3 !important;
+  background-color: #0933b3 !important;
 `;

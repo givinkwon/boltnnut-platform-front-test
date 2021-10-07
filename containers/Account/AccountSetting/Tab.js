@@ -22,9 +22,9 @@ class TabConatiner extends React.Component {
         <Tab active={Auth.accountTabIdx === 2} onClick={() => this.setTab(2)}>
           알림 설정
         </Tab>
-        <Tab active={Auth.accountTabIdx === 3} onClick={() => this.setTab(3)}>
+        {/* <Tab active={Auth.accountTabIdx === 3} onClick={() => this.setTab(3)}>
           비밀번호 변경
-        </Tab>
+        </Tab> */}
         <Tab active={Auth.accountTabIdx === 4} onClick={() => this.setTab(4)}>
           회원 탈퇴
         </Tab>
