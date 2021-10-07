@@ -196,7 +196,7 @@ class Profile {
     formData.append("material", Category.material_selected);
 
     // 사업자등록증 저장
-    formData.append("certification", this.certification);
+    formData.append("Certification", this.certification);
 
     // 지역 상세분류
     formData.append("region", this.region);
