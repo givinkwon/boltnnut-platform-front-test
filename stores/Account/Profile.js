@@ -71,6 +71,9 @@ class Profile {
   // 사업자등록증
   @observable certification = null;
 
+  // 회사소개서
+  @observable file = null;
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -180,41 +183,11 @@ class Profile {
     console.log(this.info_company);
   };
 
-  @action onChangeFile = (e, type) => {
-    console.log(e);
-    console.log(type);
-    if (e && e.currentTarget.files[0]) {
-      console.log(e.currentTarget);
-      console.log(e.currentTarget.files[0]);
-
-      for (var item in e.currentTarget.files) {
-        console.log(item);
-        if (typeof e.currentTarget.files[item] === "object") {
-          this.authenticationFile = e.currentTarget.files[item];
-          // this.authenticationFileArray.push(e.currentTarget.files[item]);
-          console.log(this.authenticationFile);
-        } else {
-          break;
-        }
-      }
-    }
-
-    console.log(toJS(this.authenticationFileArray));
-    const fileName = e.currentTarget.files[0].name;
-
-    // this.file = e.currentTarget.files[0];
-    this.authenticationFileName = fileName;
-    this.authenticationCheckFileUpload = true;
-  };
-
   // 프로필 수정 시 저장하는 함수
   @action save_profile = () => {
-
+    console.log(this.file)
     // 데이터 저장
     var formData = new FormData();
-
-    // 파트너 아이디 => PATCH를 위함
-    formData.append("id", this.data.id)
     
     // 카테고리 저장
     formData.append("business", Category.business_selected);
@@ -245,9 +218,9 @@ class Profile {
       data: formData,
     };
 
-    ProfileAPI.savePartnerInfo(req)
+    ProfileAPI.savePartnerInfo(req, this.data.id)
       .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e.response));
     }
 
 }

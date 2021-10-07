@@ -74,7 +74,7 @@ class Introduction extends React.Component {
                   src={closeImg}
                   style={{cursor : "pointer"}}
                   onClick={() => {
-                    Profile.file = "";
+                    Profile.file = null;
                     Profile.introductionCheckFileUpload = false;
                   }}
                 />
@@ -111,18 +111,18 @@ const Name = styled.div`
 `;
 
 const Button = styled.button`
-font-size: 18px;
-line-height: 27px;
-letter-spacing: -0.45px;
-color: #0933b3;
-font-weight: 600;
-background-color: #ffffff;
-border: none;
-cursor: pointer;
-&:hover {
-  background-color: #f6f6f6;
-  border-radius: 3px;
-}
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: -0.45px;
+  color: #0933b3;
+  font-weight: 600;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+  }
 `;
 
 const Header = styled.div`
