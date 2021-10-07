@@ -3,6 +3,7 @@ import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
+import * as ProfileAPI from "axios/Account/Profile";
 import Category from "stores/Manufacture/Category";
 
 class Profile {
@@ -212,6 +213,9 @@ class Profile {
     // 데이터 저장
     var formData = new FormData();
 
+    // 파트너 아이디 => PATCH를 위함
+    formData.append("id", this.data.id)
+    
     // 카테고리 저장
     formData.append("business", Category.business_selected);
     formData.append("category", Category.category_selected);
@@ -234,29 +238,18 @@ class Profile {
     formData.append("history", this.history);
 
     // 포토폴리오 파일 리스트
-    formData.append("portfolio", this.portfolio)
+    formData.append("portfolio", this.portfolio_set)
 
     // axois 쏘기
     let req = {
       data: formData,
     };
 
-    CategoryAPI.savePartnerInfo(req)
+    ProfileAPI.savePartnerInfo(req)
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
     }
 
-
-
-  // 진행한 제품군 수정하기
-  @action saveProduct = (edit_text) => {
-    // 진행한 제품군 수정 시 저장(API Update)
-  };
-
-  // 상세 위치 수정하기
-  @action saveRegion = (edit_text) => {
-    // 상세 위치 수정 시 저장(API Update)
-  };
 }
 
 export default new Profile();
