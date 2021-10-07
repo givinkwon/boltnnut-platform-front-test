@@ -11,11 +11,6 @@ const closeImg = "/static/images/signup/close.svg";
 @inject("Auth", "Answer", "Profile")
 @observer
 class portfolio extends React.Component {
-  componentWillUnmount = () => {
-    const { Profile } = this.props;
-    console.log("unmount");
-    Profile.portfolioCheckFileUpload = false;
-  };
 
   componentDidMount = () => {
     const { Profile } = this.props;
@@ -25,25 +20,17 @@ class portfolio extends React.Component {
   };
   MyDropzone = () => {
     const { Profile } = this.props;
-    const dropHandler = (files) => {
-      console.log(files);
-    };
 
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
         console.log(data);
-        Profile.Portfolio_set.push(data);
-        // Profile.introductionFile = data;
+        Profile.portfolio_set.push(data);
 
-        // console.log(Profile.introductionFile);
-        console.log(Profile.Portfolio_set);
 
         Profile.portfolioCheckFileUpload = true;
 
         Object.assign(data, { preview: URL.createObjectURL(data) });
       });
-
-      dropHandler(acceptedFiles);
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -68,10 +55,7 @@ class portfolio extends React.Component {
   };
 
   render() {
-    const { Profile, Portfolio_set } = this.props;
-    console.log(toJS(Profile.portfolio_set));
-    console.log(toJS(Portfolio_set));
-
+    const { Profile } = this.props;
     return (
       <Container>
         <Header>
@@ -80,25 +64,29 @@ class portfolio extends React.Component {
             <Description>진행했던 제품들 사진을 올려주세요.</Description>
           </Info>
 
-          <Button>파일 업로드하기</Button>
+          <Button
+            onClick={Profile.save_profile}  
+          >
+            저장하기
+          </Button>
         </Header>
 
         <this.MyDropzone onChange={this.scrollChange} />
 
         <Main>
           <SmallImageContainer>
-            {Profile.Portfolio_set &&
-              Profile.Portfolio_set.map((item, idx) => {
+            {Profile.portfolio_set &&
+              Profile.portfolio_set.map((item, idx) => {
                 return (
                   <SmallImageBox>
                     <img
                       src={closeImg}
                       onClick={() => {
                         console.log(idx);
-                        Profile.Portfolio_set.splice(idx, 1);
+                        Profile.portfolio_set.splice(idx, 1);
                       }}
                     />
-                    <img src={item.preview} />
+                    <img src={item} />
                   </SmallImageBox>
                 );
               })}
@@ -149,6 +137,11 @@ const Button = styled.button`
   font-weight: 600;
   background-color: #ffffff;
   border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+  }
 `;
 
 const Header = styled.div`

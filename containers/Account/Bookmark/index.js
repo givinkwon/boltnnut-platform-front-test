@@ -9,12 +9,13 @@ import { toJS } from "mobx";
 
 import SubBoxContainer from "containers/Account/Bookmark/SubBox";
 
-@inject("Auth", "Partner", "Search")
+@inject("Auth", "Partner", "Project")
 @observer
 class BookmarkContainer extends React.Component {
   // bookmark 데이터 가져오기
   async componentDidMount() {
-    const { Partner, Auth, Search } = this.props;
+    const { Partner, Auth, Project } = this.props;
+
     await Auth.checkLogin();
     const clientId =
       this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
@@ -25,8 +26,8 @@ class BookmarkContainer extends React.Component {
   }
 
   render() {
-    const { Partner, Search, Auth } = this.props;
-
+    const { Project, Auth } = this.props;
+    
     return (
       <>
         {/* 클라이언트일 때 */}

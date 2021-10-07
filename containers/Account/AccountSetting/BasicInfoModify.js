@@ -31,7 +31,6 @@ class ChangePassword extends Component {
       token: token,
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
-    Auth.checkLogin();
     console.log(toJS(Auth.logged_in_user));
   }
 
@@ -62,7 +61,7 @@ class ChangePassword extends Component {
               <img src={profile_img} />
               <img src={profile_modify} />
             </div>
-            {this.props.Auth.logged_in_user.type === 0 ? (
+            {Auth.logged_in_user.type === 0 ? (
               <span
                 style={{
                   marginTop: 56,

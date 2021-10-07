@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import FileComponent from "./AddFile";
+import AddFile from "./AddFile";
 
 import * as Text from "components/Text";
 import Buttonv1 from "components/Buttonv1";
@@ -28,13 +28,6 @@ class Authentication extends React.Component {
     }
   };
 
-  fileHandler = () => {
-    if (this.state.addfile) {
-      this.setState({ addfile: false });
-    } else {
-      this.setState({ addfile: true });
-    }
-  };
   render() {
     const { Profile } = this.props;
 
@@ -54,9 +47,10 @@ class Authentication extends React.Component {
                 active={this.state.modalOn}
                 onClick={this.modalHandler}
               >
-                인증하기
+                {Profile.certification ? "인증 완료" : "인증하기"}
               </Certification>
-              {this.state.modalOn && !Profile.authenticationFile ? (
+              {/* 인증하지 않은 경우만 인증하기 모달창 띄우기 */}
+              {this.state.modalOn && !Profile.certification ? (
                 <ModalBackground>
                   <Modal>
                     <div
@@ -90,10 +84,10 @@ class Authentication extends React.Component {
                         나중에 할래요
                       </ModalButton1>
                       <ModalButton2>
-                        <FileComponent
+                        <AddFile
                           file={true}
                           content="인증하기"
-                          type="authentication"
+                          isOpen={true}
                         />
                       </ModalButton2>
                     </ModalButtonBox>
@@ -104,11 +98,11 @@ class Authentication extends React.Component {
               )}
             </Info>
           </Header>
-          {Profile.authenticationFile && (
+          {Profile.certification && (
             <Main>
-              <Item onClick={() => (Profile.authenticationFile = "")}>
-                <div>{Profile.authenticationFile.name}</div>
-                <img src={closeImg} />
+              <Item>
+                <div>{Profile.certification[0].name}</div>
+                <img onClick={() => (Profile.certification = "")} src={closeImg} />
               </Item>
             </Main>
           )}
@@ -181,7 +175,7 @@ const Header = styled.div`
 const Main = styled.div`
   width: 100%;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
-  height: 406px;
+  height: 100%;
   padding: 20px 10px;
   box-sizing: border-box;
 `;

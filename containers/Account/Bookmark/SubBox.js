@@ -20,6 +20,7 @@ class SubBoxContainer extends React.Component {
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     
+    await Project.reset()
     // 클라이언트 로그인일 때
     if(Auth.logged_in_client) {
       await Partner.getBookmarkByClient(clientId);
@@ -33,7 +34,7 @@ class SubBoxContainer extends React.Component {
   render() {
     const { Auth, partnerId, Project, Partner, Search } = this.props;
     console.log(Project.projectDataList)
-
+    
     return (
       <>
         {/* 클라이언트일 때 */}

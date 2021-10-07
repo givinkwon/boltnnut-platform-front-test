@@ -280,8 +280,8 @@ class Calendar extends Component {
                 fontWeight: "normal",
               }}
             >
-              {Schedule.clickDay !== 0 ? (
-                <>~{Schedule.clickDay}</>
+              {Schedule.selectedDay !== 0 ? (
+                <>~ {now.format("YYYY.MM")}.{Schedule.selectedDay}</>
               ) : (
                 <>
                   <span
@@ -292,7 +292,7 @@ class Calendar extends Component {
                       color: "#c7c7c7",
                     }}
                   >
-                    예상 진행 기간 선택
+                    희망 마감 시간
                   </span>
                 </>
               )}

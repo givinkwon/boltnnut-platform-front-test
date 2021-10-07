@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 import { CompressedPixelFormat } from "three";
 
 const addButtonImg = "static/images/components/Input2/Mask.png";
-const deleteButtonImg = "/static/images/delete.png";
+const deleteButtonImg = "/static/images/delete.svg";
 const clip = "./static/images/request/clip.svg";
 const addfile = "./static/images/request/addfile.svg";
 
@@ -52,7 +52,7 @@ class InputComponent extends React.Component {
           console.log(Request.request_file_set);
           return (
             <>
-              <AddFileList>
+              <AddFileList style={{marginTop : 10}}>
                 <span
                   onClick={() => {
                     if (checkFileUpload) {
@@ -120,14 +120,13 @@ class InputComponent extends React.Component {
                       marginLeft: 20,
                     }}
                   >
-                    파일을 이곳에 드래그 또는{" "}
+                  
                     <span
                       style={{
                         color: "#0933b3",
                       }}
                     >
-                      {" "}
-                      파일찾기
+                      파일 첨부하기
                     </span>
                   </span>
                 </div>

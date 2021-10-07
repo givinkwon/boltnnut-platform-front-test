@@ -8,18 +8,12 @@ import Profile from "../../../stores/Account/Profile";
 @inject("Auth", "Answer", "Profile")
 @observer
 class Explaination extends React.Component {
-  state = {
-    modify: false,
-  };
   componentdidmount() {
     const { Profile } = this.props;
   }
   onChangeHandler = (e) => {
     const { Profile } = this.props;
-    console.log(e.target.value);
-    if (this.state.modify) {
-      Profile.info_company = e.target.value;
-    }
+    Profile.info_company = e.target.value;
   };
   render() {
     const { Profile } = this.props;
@@ -27,34 +21,21 @@ class Explaination extends React.Component {
       <Container>
         <Header>
           <Name>회사 상세설명</Name>
-
-          {this.state.modify ? (
             <Button
               onClick={(e) => {
-                this.setState({ modify: false });
-                Profile.saveCompanyInfo(Profile.info_company)
+                Profile.save_profile()
               }}
             >
               저장하기
             </Button>
-          ) : (
-            <Button
-              onClick={() => {
-                document.getElementById("explaination").value = null;
-                this.setState({ modify: true });
-              }}
-            >
-              수정하기
-            </Button>
-          )}
         </Header>
         <Main>
           <textarea
             id="explaination"
-            placeholder="메세지를 입력하세요."
+            placeholder="회사소개를 입력하세요."
             autofocus="true"
             onFocus={(e) => (e.target.placeholder = "")}
-            onBlur={(e) => (e.target.placeholder = "메세지를 입력하세요.")}
+            onBlur={(e) => (e.target.placeholder = "회사소개를 입력하세요.")}
             // rows={this.state.rows}
             type="text"
             className={"textarea"}
@@ -97,6 +78,11 @@ const Button = styled.button`
   font-weight: 600;
   background-color: #ffffff;
   border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+  }
 `;
 
 const Header = styled.div`

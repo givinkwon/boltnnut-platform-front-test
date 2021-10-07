@@ -25,7 +25,7 @@ class LocationSearchModal extends React.Component {
     }
 
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    Profile.LocationAddress = fullAddress;
+    Profile.region = fullAddress;
     Profile.locationModalActive = false;
     Category.LocationAddress = fullAddress;
     Category.locationModalActive = false;

@@ -68,7 +68,7 @@ class MainPagePartnerCard extends React.Component {
           <>
             <Card>
               <Header>
-                {data && data.portfolio_set.length > 0 ? (
+                {data && data.portfolio_set && data.portfolio_set.length > 0 ? (
                   <Item>
                     {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
                     {Partner.matching_image.length > 0 ? (
@@ -137,7 +137,7 @@ class MainPagePartnerCard extends React.Component {
           <>
             <Card>
               <Header>
-                {data && data.portfolio_set.length > 0 ? (
+                {data && data.portfolio_set && data.portfolio_set.length > 0 ? (
                   <Item>
                     <img src={data && data.portfolio_set[0].img_portfolio} />
                   </Item>
@@ -151,7 +151,7 @@ class MainPagePartnerCard extends React.Component {
               </Header>
               <Main>
                 <Name>{data && data.name}</Name>
-                <InfoOne>{data && (data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company)}</InfoOne>
+                <InfoOne>{data && data.info_company && (data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company)}</InfoOne>
               </Main>
             </Card>
           </>

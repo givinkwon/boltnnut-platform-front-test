@@ -251,11 +251,14 @@ class Category {
     this.material_selected_name = [];
     this.develop_selected_name = [];
 
+    // 선택 박스 초기화
+    this.category_selected_tagbox = [];
+
     // 파트너 등록 데이터
     this.locationModalActive = false;
     this.LocationAddress = "";
     this.LocationZipCode = "";
-    //회사소개서 파일(1개)
+    //회사소개서 파일(1개)this.
     this.partnerInfoFile = null;
     //파트너 포트폴리오(배열)
     this.partnerPortfolioArray = [];
@@ -497,6 +500,48 @@ class Category {
       });
   };
 
+  // 제조사가 보유하고 있는 카테고리 값들을 프로필 수정을 위해 불러오기
+  @action getPartnerCategory = async (PartnerData) => {
+    // init
+    this.reset();
+
+    if(PartnerData){
+    // 카테고리 선택
+    if (PartnerData.business.length > 0) {
+      for (let i = 0; i < PartnerData.business.length; i++) {
+        this.business_selected.push(PartnerData.business[i].id);
+        this.category_selected_tagbox.push({ id: PartnerData.business[i].id, type: "business", data: PartnerData.business[i].category });
+        this.selected_business_subbox.push(PartnerData.business[i].category);
+      }
+    }
+    // 카테고리 선택
+    if (PartnerData.category.length > 0) {
+      for (let i = 0; i < PartnerData.category.length; i++) {
+        this.category_selected.push(PartnerData.category[i].id);
+        this.category_selected_tagbox.push({ id: PartnerData.category[i].id, type: "category", data: PartnerData.category[i].category });
+        this.selected_category_subbox.push(PartnerData.category[i].category);
+      }
+    }
+
+    // 공정 선택
+    if (PartnerData.develop.length > 0) {
+      for (let i = 0; i < PartnerData.develop.length; i++) {
+        this.develop_selected.push(PartnerData.develop[i].id);
+        this.category_selected_tagbox.push({ id: PartnerData.develop[i].id, type: "develop", data: PartnerData.develop[i].category });
+      }
+    }
+
+    // 소재 선택
+    if (PartnerData.material.length > 0) {
+      for (let i = 0; i < PartnerData.material.length; i++) {
+        this.material_selected.push(PartnerData.material[i].id);
+        this.category_selected_tagbox.push({ id: PartnerData.material[i].id, type: "material", data: PartnerData.material[i].category });
+      }
+    }
+  }
+  }
+
+  // 파트너 등록 시 저장하는 함수
   @action save_selected = async (pageName, id) => {
     let req = null;
 

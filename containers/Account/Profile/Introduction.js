@@ -11,11 +11,6 @@ const closeImg = "/static/images/signup/close.svg";
 @inject("Auth", "Answer", "Profile")
 @observer
 class Introduction extends React.Component {
-  componentWillUnmount = () => {
-    const { Profile } = this.props;
-    console.log("unmount");
-    Profile.introductionCheckFileUpload = false;
-  };
 
   componentDidMount = () => {
     const { Profile } = this.props;
@@ -26,27 +21,16 @@ class Introduction extends React.Component {
   };
   MyDropzone = () => {
     const { Profile } = this.props;
-    const dropHandler = (files) => {
-      console.log(files);
-    };
 
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
-        console.log(data);
-        // Profile.introductionFileArray.push(data);
-        Profile.introductionFile = data;
 
-        console.log(Profile.introductionFile);
-        // console.log(Profile.introductionFileArray);
-        // <li key={data.path}>
-        //   {data.path} - {data.size} bytes
-        // </li>;
+        Profile.file = data;
+
         Profile.introductionCheckFileUpload = true;
 
         Object.assign(data, { preview: URL.createObjectURL(data) });
       });
-
-      dropHandler(acceptedFiles);
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -70,23 +54,25 @@ class Introduction extends React.Component {
 
   render() {
     const { Profile } = this.props;
-    console.log(Profile.introductionFile);
 
     return (
       <Container>
         <Header>
           <Name>회사 소개서</Name>
 
-          <Button>파일 업로드하기</Button>
+          <Button
+            onClick = {() => Profile.save_profile()}
+          >저장하기</Button>
         </Header>
 
         {Profile.introductionCheckFileUpload ? (
           <Main>
             {Profile.file && (
               <Item>
-                <div>{Profile.introductionFile.name}</div>
+                <div>{Profile.file.name}</div>
                 <img
                   src={closeImg}
+                  style={{cursor : "pointer"}}
                   onClick={() => {
                     Profile.file = "";
                     Profile.introductionCheckFileUpload = false;
@@ -125,13 +111,18 @@ const Name = styled.div`
 `;
 
 const Button = styled.button`
-  font-size: 18px;
-  line-height: 27px;
-  letter-spacing: -0.45px;
-  color: #0933b3;
-  font-weight: 600;
-  background-color: #ffffff;
-  border: none;
+font-size: 18px;
+line-height: 27px;
+letter-spacing: -0.45px;
+color: #0933b3;
+font-weight: 600;
+background-color: #ffffff;
+border: none;
+cursor: pointer;
+&:hover {
+  background-color: #f6f6f6;
+  border-radius: 3px;
+}
 `;
 
 const Header = styled.div`

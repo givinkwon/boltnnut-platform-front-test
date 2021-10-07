@@ -114,14 +114,14 @@ class SelectCard extends React.Component {
           <img src={image} />
           <span>{name}</span>
         </Header>
-        <Field>
-          <div>전체</div>
-          <img
-            src={this.state.category_arrow ? up_arrow : down_arrow}
+        <Field             
             onClick={() => {
               this.dropdownHandler(this.props.type);
               this.activeHandler("category_arrow");
-            }}
+            }}>
+          <div>클릭하세요.</div>
+          <img
+            src={this.state.category_arrow ? up_arrow : down_arrow}
           ></img>
         </Field>
 
@@ -224,6 +224,7 @@ const Select = styled(SelectComponent)`
 `;
 
 const Field = styled.div`
+  cursor: pointer;
   width: 100%;
   height: 44px;
   display: flex;

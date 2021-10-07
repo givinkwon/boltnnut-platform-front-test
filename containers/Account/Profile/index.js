@@ -14,13 +14,16 @@ import * as Text from "components/Text";
 const perfection = "static/images/perfection_bar.svg";
 const perfection_blue = "static/images/perfection_bluebar.svg";
 
-@inject("Auth", "Answer", "Profile")
+@inject("Auth", "Answer", "Profile", "Category")
 @observer
 class ProfileContainer extends React.Component {
   async componentDidMount() {
-    const { Category, Profile } = this.props;
+    const { Category, Profile, Auth } = this.props;
     console.log("componentdidmount");
     await Profile.checkLogin();
+    await Auth.checkLogin();
+    console.log(Auth.logged_in_partner)
+    await Category.getPartnerCategory(Auth.logged_in_partner)
   }
   render() {
     const { width, Profile, Auth } = this.props;
@@ -35,7 +38,7 @@ class ProfileContainer extends React.Component {
           <Container>
             <Body>
               <Aside>
-                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user && Auth.logged_in_user.username}</AsideHeader>
 
                 <AsideBody>
                   <Fragment>
@@ -89,17 +92,6 @@ class ProfileContainer extends React.Component {
             </Body>
           </Container>
         </Background>
-        {/* <Background style={{ marginTop: "80px" }}>
-          <Containerv1>
-            <Container>
-              <SubContainer
-                width={width}
-                style={{ border: "5px solid green" }}
-              />
-              <MainContainer width={width} />
-            </Container>
-          </Containerv1>
-        </Background> */}
       </>
     );
   }

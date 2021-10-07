@@ -16,8 +16,9 @@ import { toJS } from "mobx";
 
 const arrowRightImg = "/static/images/search/arrow_right.svg";
 const checkImg = "/static/images/search/check.svg";
+const bluearrow = "static/images/request/bluearrow.svg";
 
-@inject("Category", "Partner", "Profile")
+@inject("Auth", "Category", "Partner", "Profile")
 @observer
 class MainContainer extends React.Component {
   modalHandler = () => {
@@ -30,84 +31,40 @@ class MainContainer extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    const { Category, Profile } = this.props;
-    // await Profile.checkLogin();
-    console.log(toJS(Profile.info_company));
-    console.log(toJS(Profile.portfolio_set));
-
-    //   await Category.init();
-    //   console.log(Category.business_list);
-    //   var mainCategoryTypeDic = {};
-    //   var subCategoryTypeDic = {};
-    //   mainCategoryTypeDic["business"] = Category.mainbusiness_list;
-    //   mainCategoryTypeDic["category"] = Category.maincategory_list;
-    //   mainCategoryTypeDic["city"] = Category.city_list;
-    //   mainCategoryTypeDic["material"] = Category.mainmaterial_list;
-    //   mainCategoryTypeDic["develop"] = Category.developbig_list;
-    //   // 파트너 데이터 가져오기
-    //
-    //   // console.log(Category.mainbusiness_list);
-    //   this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
-    //   console.log(this.state.mainCategoryTypeDic);
-    // }
-    // state = {
-    //   mainSelectIdx: 0,
-    //   subSelectIdx: 0,
-    //   mainCategoryTypeDic: {},
-    //   // 공정 대분류
-    //   develop_active: false,
-    //   // 소재 대분류
-    //   material_active: false,
-    // };
-    // activeHandler = (type, idx) => {
-    //   const { Category } = this.props;
-    //   if (type === "main") {
-    //     if (idx === this.state.mainSelectIdx) {
-    //       return true;
-    //     } else {
-    //       return false;
-    //     }
-    //   } else {
-    //     if (Category.category_selected.includes(idx)) {
-    //       return true;
-    //     } else {
-    //       return false;
-    //     }
-    //   }
-  }
-
-  // buttonClick = (type, idx) => {
-  //   const { Category } = this.props;
-
-  //   if (Category.categoryActiveHandler(idx, type)) {
-  //     console.log("remove selected");
-  //     console.log(type, idx);
-  //     Category.remove_selected(type, idx);
-  //   } else {
-  //     console.log("add selected");
-  //     console.log(type, idx);
-  //     Category.add_selected(type, idx);
-  //   }
-  // };
-
-  // 모달 종료하기
-  // modalclose = () => {
-  //   const { Partner } = this.props;
-
-  //   Partner.filter_dropdown = false;
-  // };
-
   render() {
-    const { Category, Profile, type, width } = this.props;
-    const type1 = "business";
+    const { Auth, Category, Profile, type, width } = this.props;
+
     return (
       <Container>
         <Name>{Profile.company_name}</Name>
+        <div style={{display : "flex"}}>
         <Description>
           해당 정보를 채울수록 클라이언트에게 '{Profile.company_name}'(가)이
           노출될 확률이 올라가요!
         </Description>
+        <Button>
+          저장하기
+        </Button>
+        </div>
+        <SelectedCategoryContainer style={{marginBottom : 10}}>
+          {Category.category_selected_tagbox.length > 0 &&
+            Category.category_selected_tagbox.map((v, idx) => (
+              <SelectedCategoryBox>
+                <div style={{ marginLeft: "10px" }}>{v.data}</div>
+                <CloseImgBox
+                  src="/static/images/xbox.svg"
+                  onClick={() =>
+                    Category.remove_selected(
+                      v.type,
+                      idx,
+                      "search",
+                      v.data
+                    )
+                  }
+                />
+              </SelectedCategoryBox>
+            ))}
+        </SelectedCategoryContainer>
         <div style={{ width: "100%" }}>
           <SelectCard
             name="전문분야"
@@ -140,6 +97,15 @@ class MainContainer extends React.Component {
         <Introduction file={Profile.file}></Introduction>
         <Portfolio Portfolio_set={Profile.portfolio_set}></Portfolio>
         <Location region={Profile.region} width={width}></Location>
+        <SubContainerBtn
+              style={{
+                border: "none",
+                color: "#fff",
+              }}
+              onClick= {() => Profile.save_profile()}
+            >
+              모든 변경사항 수정하기
+        </SubContainerBtn>
       </Container>
     );
   }
@@ -171,149 +137,68 @@ const Description = styled.div`
   margin-bottom: 20px;
 `;
 
-const SubCategoryBox = styled.div`
-  height: 80%;
-  border-bottom: 1px solid #e1e2e4;
-  overflow-y: scroll;
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 85%;
-  }
-`;
-
-const SubInnerBox = styled.div`
-  padding: 34px 18px;
-  display: flex;
+const SelectedCategoryContainer = styled.div`
+  display: inline-flex;
+  gap: 15px;
+  width: 760px;
   flex-wrap: wrap;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 9px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 27px 15px;
-  }
+  margin-top: 12px;
+  top: 50%;
 `;
-const SubCategoryButton = styled.div`
-  width: 50%;
-  // background: ${(props) => (props.active ? "#ededef" : "none")};
-  background: none;
-  /* height:30px; */
+
+const SelectedCategoryBox = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  justify-content: center;
+  background-color: #eeeeee;
+  border-radius: 20px;
+  width: auto;
+  height: 30px;
 `;
-const ButtonBox = styled.div`
+
+const CloseImgBox = styled.img`
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  margin: 0px 10px 0px 10px;
+`;
+
+
+const Button = styled.div`
+  margin-left : auto;
+  width: 70px;
+  height: 52px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  height: 20%;
-  padding-right: 20px;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 15%;
-  }
-`;
-const SubCategoryFont = styled(Content.FontSize14)`
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.43;
-  letter-spacing: -0.35px;
-  text-align: left;
-  color: #282c36;
+  justify-content: center;
+  margin-top: 27px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.45px;
+  color: #0933b3;
   cursor: pointer;
-  word-break: break-word;
-}`;
-
-const CheckBox = styled.div`
-  width: 18px;
-  height: 18px;
-  border: 1px solid #c6c7cc;
-  margin-right: 12px;
-  cursor: pointer;
-  > img {
-    display: ${(props) => (props.active ? "block" : "none")};
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 14px;
-    height: 14px;
-    min-width: 14px;
-    min-height: 14px;
-    position: relative;
-    > img {
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      top: -1px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 16px;
-    height: 16px;
-    > img {
-      width: 17px;
-      height: 17px;
-    }
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
   }
 `;
 
-const MainCategoryBox = styled.div`
-  height: 100%;
-  width: 26.6%;
-  border-right: 1px solid #e1e2e4;
-  // overflow-y: scroll;
-`;
-
-const MainCategoryButton = styled.div`
-  background: ${(props) => (props.active ? "#ededef" : "none")};
-  height: 46px;
+const SubContainerBtn = styled.button`
+  width: 300px;
+  height: 48px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 12px 12px 12px 20px;
-  box-sizing: border-box;
-  > img {
-    display: ${(props) => (props.active ? "block" : "none")};
-  }
-  > p {
-    color: ${(props) => props.active && "#0933b3"};
-  }
+  object-fit: contain;
+  border-radius: 24px;
+  font-size: 16px;
+  font-family: NotoSansCJKkr;
   cursor: pointer;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 3px;
-    > img {
-      width: 12px;
-      height: 12px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 6px 6px 6px 9px;
-    > img {
-      width: 14px;
-      height: 14px;
-    }
-  }
-`;
-
-const MainCategoryFont = styled(Content.FontSize15)`
-  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "normal")};
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.27;
-  letter-spacing: -0.38px;
-  text-align: left;
-  color: ${(props) => (props.color ? props.color : "#282c36")};
-  word-break: break-word;
-}
-
-
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 11px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    font-size: 13px;
+  background: #0933b3;
+  margin-left : auto;
+  margin-right : auto;
+  :hover {
+    background-color: #174aee;
   }
 `;

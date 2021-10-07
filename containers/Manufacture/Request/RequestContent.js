@@ -163,7 +163,7 @@ class RequestContent extends Component {
     }
   };
 
-  // 프로젝트 분류 state
+  // 제조문의 분류 state
   categoryCheckBox = () => {};
 
   render() {
@@ -232,7 +232,7 @@ class RequestContent extends Component {
               {Request.request_type == 0 && (
                 <RequestContentBox>
                   <ContentTitle style={{ marginBottom: 8 }}>
-                    <div>프로젝트 분류</div>
+                    <div>제조문의 분류</div>
                     <img src={starred} style={{ marginLeft: 4 }}></img>
                     <span
                       style={{
@@ -254,7 +254,7 @@ class RequestContent extends Component {
                       fontWeight: "normal",
                     }}
                   >
-                    - 프로젝트 분류에 해당하는 항목을 선택해주세요.
+                    - 제조문의 분류에 해당하는 항목을 선택해주세요.
                   </span>
                   <ProjectFieldCheckbox>
                     <CheckBoxComponent onChange={this.categoryCheckBox}>
@@ -377,7 +377,7 @@ class RequestContent extends Component {
               {/* 프로젝트 의뢰에서만 */}
               <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 16 }}>
-                  <div>프로젝트 예상 진행 기간</div>
+                  <div>제조문의 응답 희망 마감시간</div>
                 </ContentTitle>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Calendar />

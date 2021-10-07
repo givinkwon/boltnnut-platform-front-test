@@ -56,7 +56,7 @@ class Location extends React.Component {
         <Main>
           <span>도로명주소</span>
           <div>
-            <span>{Profile.LocationAddress}</span>
+            <span>{Profile.region}</span>
           </div>
           {/* <button onClick={this.onSubmitHandler}>입력</button> */}
         </Main>
@@ -108,6 +108,10 @@ const Button = styled.button`
   background-color: #ffffff;
   border: none;
   cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+  }
 `;
 
 const Header = styled.div`

@@ -5,10 +5,11 @@ import { DARKGRAY } from "static/style";
 import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
 import { CompressedPixelFormat } from "three";
-import { toJS } from "mobx";
 
 const addButtonImg = "static/images/components/Input2/Mask.png";
-const deleteButtonImg = "/static/images/delete.png";
+const deleteButtonImg = "/static/images/delete.svg";
+const clip = "./static/images/request/clip.svg";
+const addfile = "./static/images/request/addfile.svg";
 
 @inject("Profile")
 @observer
@@ -18,52 +19,36 @@ class InputComponent extends React.Component {
     this.file = React.createRef();
   }
   state = {
+    // 파일 업로드 state
+    checkFileUpload: false,
     fileArray: [],
     fileName: "",
     file: "",
-    checkFileUpload: false,
   };
 
-  async componentDidMount() {}
+  // 파일이 업로드 시 돌아가는 함수
+  onChangeFile = (e) => {
+    const { Profile } = this.props;
+
+    if (e && e.currentTarget.files[0]) {
+      // 파일 추가하기
+      Profile.set_certification(e.currentTarget.files[0]);
+      // 파일 업로드 state true로 변경
+      this.setState({
+        ...this.state,
+        checkFileUpload: true,
+      });
+    }
+  };
 
   render() {
-    const {
-      onChange,
-      children,
-      label,
-      file,
-      isOpen,
-      mobile,
-      Profile,
-      content,
-      type,
-      ...props
-    } = this.props;
-    const { fileName, checkFileUpload } = this.state;
-
-    if (!file) {
-      return (
-        <Wrap width={this.props.width}>
-          {label && (
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {label}
-            </Text.FontSize20>
-          )}
-          <InputBox marginTop={label ? 12 : 0}>
-            <Input>
-              <input {...props} onChange={Profile.onChange} />
-            </Input>
-            {children}
-          </InputBox>
-        </Wrap>
-      );
-    }
+    const { onChange, children, label, Profile, isOpen, content, ...props } = this.props;
+    const { checkFileUpload } = this.state;
 
     return (
       <Wrap width={this.props.width}>
-        <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
+         <FileText checkFileUpload={this.state.checkFileUpload}>
           <InputBox
-            mobile={mobile}
             style={{ width: "100%", display: "inline-flex" }}
           >
             <div>
@@ -71,7 +56,7 @@ class InputComponent extends React.Component {
                 type="file"
                 fileName={"fileName[]"}
                 style={{ display: "none" }}
-                onChange={(e) => Profile.onChangeFile(e, type)}
+                onChange={this.onChangeFile}
                 id="inputFile"
                 ref={this.file}
                 value=""
@@ -98,6 +83,7 @@ class InputComponent extends React.Component {
 }
 
 export default InputComponent;
+
 
 const InputBox = styled.div`
   height: 100%;
@@ -350,9 +336,27 @@ const DeleteFile = styled.img`
   margin-right: 29px;
   vertical-align: middle;
   cursor: pointer;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
-  }
+`;
+
+const AddFile = styled.div`
+  display: flex;
+  justify-content: center;
+  algin-items: center;
+`;
+
+const AddFileList = styled.div`
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  object-fit: contain;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #1e2222;
+  margin-bottom: 8px;
 `;
