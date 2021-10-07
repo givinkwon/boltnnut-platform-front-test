@@ -2,8 +2,6 @@ import React, { useCallback } from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
-import * as Text from "components/Text";
-import { toJS } from "mobx";
 
 const plusImg = "/static/images/signup/plus.svg";
 const closeImg = "/static/images/signup/close.svg";

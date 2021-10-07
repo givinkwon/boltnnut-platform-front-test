@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 import Container from "components/Containerv1";
 import Background from "components/Background";
-import MainContainer from "./MainContainer";
+import MainContainer from "./ProfileEdit/MainContainer";
 import BasicInfoModify from "AccountSetting/BasicInfoModify";
 import SubBox from "containers/Account/Bookmark/SubBox";
 import TabContainer from "Profile/Tab";
@@ -31,9 +31,6 @@ class ProfileContainer extends React.Component {
       <>
         <Background style={{ paddingBottom: 300 }}>
           <Header>
-            <HeaderTitle>
-              <div style={{ marginBottom: 12 }}> > 프로필 수정</div>
-            </HeaderTitle>
           </Header>
           <Container>
             <Body>
@@ -87,7 +84,6 @@ class ProfileContainer extends React.Component {
                 {Profile.profileTabIdx === 1 && <MainContainer />}
                 {Profile.profileTabIdx === 2 && <BasicInfoModify />}
                 {Profile.profileTabIdx === 3 && <SubBox />}
-                {/* {Profile.profileTabIdx === 4 && <AccountWithdraw />} */}
               </Main>
             </Body>
           </Container>

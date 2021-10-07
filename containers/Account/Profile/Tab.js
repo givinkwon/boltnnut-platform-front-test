@@ -5,15 +5,16 @@ import Container from "components/Container";
 import * as Text from "components/Text";
 import { WHITE, PRIMARY } from "static/style";
 import { inject, observer } from "mobx-react";
+import Router from "next/router";
 
-@inject("Profile")
+@inject("Profile", "Auth")
 @observer
 class TabConatiner extends React.Component {
   setTab = (val) => {
     this.props.Profile.profileTabIdx = val;
   };
   render() {
-    const { tab, Profile } = this.props;
+    const { tab, Profile, Auth } = this.props;
     return (
       <Tabs>
         <Tab
@@ -32,11 +33,11 @@ class TabConatiner extends React.Component {
           active={Profile.profileTabIdx === 3}
           onClick={() => this.setTab(3)}
         >
-          관심 제조사
+          {Auth.logged_in_partner ? "관심 프로젝트" : "관심 제조사"}
         </Tab>
         <Tab
           active={Profile.profileTabIdx === 4}
-          onClick={() => this.setTab(4)}
+          onClick={() => Router.push('/chatting')}
         >
           채팅
         </Tab>

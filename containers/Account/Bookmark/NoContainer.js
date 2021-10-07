@@ -49,7 +49,7 @@ class NoContainer extends React.Component {
             Router.push('/project')
             }
             }>
-              관심 프로젝트 등록
+              프로젝트 살펴보기
           </Button>
           
           

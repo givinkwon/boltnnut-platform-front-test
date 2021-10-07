@@ -114,7 +114,11 @@ class MainContainer extends React.Component {
 export default MainContainer;
 
 const Container = styled.div`
-  width: 100%;
+  width: 894px;
+  border-radius: 15px;
+  border: solid 1px #e1e2e4;
+  background-color: #fff;
+  padding: 40px 51px 80px;
 `;
 
 const Name = styled.div`
