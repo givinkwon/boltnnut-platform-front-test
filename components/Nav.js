@@ -163,7 +163,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink active={url.indexOf("autoestimate") > -1}>
+                      {/* <NavLink active={url.indexOf("autoestimate") > -1}>
                         <RouterWrapper>
                           <KSLink
                             url={"autoestimate"}
@@ -172,16 +172,16 @@ class Nav extends React.Component {
                             }}
                           />
                         </RouterWrapper>
-                      </NavLink>
+                      </NavLink> */}
 
                       {/* 공장 직거래 */}
-                      <NavLink active={url.indexOf("shop") > -1}>
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={"shop"} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
-                      </NavLink>
+                      </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -210,7 +210,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
 
-                      <NavLink active={url.indexOf("autoestimate") > -1}>
+                      {/* <NavLink active={url.indexOf("autoestimate") > -1}>
                         <RouterWrapper>
                           <KSLink
                             url={"autoestimate"}
@@ -219,16 +219,16 @@ class Nav extends React.Component {
                             }}
                           />
                         </RouterWrapper>
-                      </NavLink>
+                      </NavLink> */}
 
                       {/* 공장 직거래 */}
-                      <NavLink active={url.indexOf("shop") > -1}>
+                      {/* <NavLink active={url.indexOf("shop") > -1}>
                         <RouterWrapper>
                           <Font16>
                             <KSLink url={"shop"} content={"공장 직거래"} />
                           </Font16>
                         </RouterWrapper>
-                      </NavLink>
+                      </NavLink> */}
 
                       {/* <NavLink active={url.indexOf("magazine") > -1}>
                         <RouterWrapper>
@@ -264,7 +264,7 @@ class Nav extends React.Component {
                       </RouterWrapper>
                     </NavLink>
 
-                    <NavLink active={url.indexOf("autoestimate") > -1}>
+                    {/* <NavLink active={url.indexOf("autoestimate") > -1}>
                       <RouterWrapper>
                         <KSLink
                           url={"autoestimate"}
@@ -273,16 +273,16 @@ class Nav extends React.Component {
                           }}
                         />
                       </RouterWrapper>
-                    </NavLink>
+                    </NavLink> */}
 
                     {/* 공장 직거래 */}
-                    <NavLink active={url.indexOf("shop") > -1}>
+                    {/* <NavLink active={url.indexOf("shop") > -1}>
                       <RouterWrapper>
                         <Font16>
                           <KSLink url={"shop"} content={"공장 직거래"} />
                         </Font16>
                       </RouterWrapper>
-                    </NavLink>
+                    </NavLink> */}
 
                     {/* <NavLink active={url.indexOf("magazine") > -1}>
                       <RouterWrapper>
