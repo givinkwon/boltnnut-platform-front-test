@@ -205,7 +205,7 @@ class Nav extends React.Component {
                       <NavLink active={url.indexOf("project") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink step_index={1} url={"project"} content={"프로젝트 보기"} />
+                            <KSLink step_index={1} url={"project"} content={"제조문의 보기"} />
                           </Font16>
                         </RouterWrapper>
                       </NavLink>

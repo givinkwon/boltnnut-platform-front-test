@@ -52,6 +52,9 @@ class Project extends React.Component {
       document.referrer === ""
         ? formData.append("prevUrl", "direct")
         : formData.append("prevUrl", document.referrer);
+
+      // 직접 유입의 경우 모든 프로젝트 보기로 하기
+      Project.step_index = 1;
     }
 
     formData.append("url", window.location.href);
@@ -96,7 +99,7 @@ class Project extends React.Component {
             <div>
               <MobileNav
                 src={back_ic}
-                headText={"프로젝트 관리"}
+                headText={"제조문의 보기"}
                 width={width}
               />
               <div style={{ height: "54px" }}></div>
