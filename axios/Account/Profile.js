@@ -12,7 +12,7 @@ export function savePartnerInfo(req, id) {
 export function saveAccount(req, id) {
     return axios({
       method: "PATCH",
-      url: `${ROOT_URL}/user/${id}/`,
+      url: `${ROOT_URL}/users/${id}/`,
       data: req.data,
     });
   }
