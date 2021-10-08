@@ -161,12 +161,19 @@ class Content1 extends React.Component {
                   <img src={calendar}></img>
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
-                  <Font18 style={{ color: "#86888c" }}>희망 납기</Font18>
+                  <Font18 style={{ color: "#86888c" }}>희망 문의 마감 시간</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
                     {projectDetailData &&
                       projectDetailData.request_set[0].deadline
                         .slice(2, 10)
-                        .replace(/-/gi, ".")}
+                        .replace(/-/gi, ".") != "20.11.11" ? 
+                      (projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".") 
+                      ) : (
+                        "미정"
+                      )
+                    }
                   </Font18>
                 </div>
               </Box2>
