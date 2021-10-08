@@ -210,7 +210,7 @@ class Profile {
 
   // 프로필 포토폴리오 삭제
   @action remove_portfolio = (id) => {
-  
+    console.log(id)
     ProfileAPI.removePortfolio(id)
       .then((res) => console.log(res))
       .catch((e) => console.log(e.response));

@@ -82,9 +82,10 @@ class portfolio extends React.Component {
                       src={closeImg}
                       onClick={() => {
                         console.log(idx);
+                        console.log(Profile.portfolio_set[idx], Profile.portfolio_id_set[idx])
+                        Profile.remove_portfolio(Profile.portfolio_id_set[idx])
                         Profile.portfolio_set.splice(idx, 1);
                         Profile.portfolio_id_set.splice(idx,1);
-                        Profile.remove_portfolio(Profile.portfolio_id_set[idx])
                       }}
                     />
                     <img src={item} />
