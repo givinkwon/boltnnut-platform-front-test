@@ -89,16 +89,6 @@ class Content1 extends React.Component {
     return (
       <>
         <Container1>
-          {Project.chatModalActive && (
-            <Layer>
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-                requestTitle={
-                  this.props.Project.projectDetailData.request_set[0].name
-                }
-              ></ChatTestContainer>
-            </Layer>
-          )}
 
           <InnerContainer>
             <Top>
@@ -140,7 +130,7 @@ class Content1 extends React.Component {
               </div>
             </Head>
             <Box2Container>
-              <Box2>
+              <Box2 style={{marginRight : 20}}>
                 <Box2ImageContainer>
                   <img src={money}></img>
                 </Box2ImageContainer>
@@ -174,18 +164,6 @@ class Content1 extends React.Component {
                         "미정"
                       )
                     }
-                  </Font18>
-                </div>
-              </Box2>
-
-              <Box2>
-                <Box2ImageContainer>
-                  <img src={applicant}></img>
-                </Box2ImageContainer>
-                <div style={{ marginBottom: 27 }}>
-                  <Font18 style={{ color: "#86888c" }}>지원자 수</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>
-                    {this.state.partnerList.length} 명
                   </Font18>
                 </div>
               </Box2>
@@ -276,50 +254,7 @@ class Content1 extends React.Component {
 }
 
 export default Content1;
-const Layer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10000;
-  background: #00000080;
-`;
-const Icon = styled.div`
-  position: relative;
-`;
-const Font14 = styled(Content.FontSize14)`
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.86;
-  letter-spacing: -0.35px;
-  text-align: left;
-  color: #ffffff;
-`;
-const ChatNotice = styled.div`
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  // bottom: 15px;
-  bottom: 8px;
-  left: 12px;
-  border-radius: 50%;
-  // padding: 3px 7px 2px;
-  display: ${(props) => (props.active ? "flex" : "none")};
-  align-items: center;
-  justify-content: center;
-  object-fit: contain;
-  background-color: #ff3400;
-`;
-const IconBox = styled.div`
-  width: 110px;
-  display: flex;
-  justify-content: space-between;
-`;
-const PartnerInfo = styled.div`
-  display: flex;
-`;
+
 const PartnerBox = styled.div`
   margin-bottom: 12px;
   // width: 100%;
@@ -338,7 +273,6 @@ const AppliedPartner = styled.div`
 `;
 
 const Container1 = styled.div`
-  width: 936px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -395,7 +329,7 @@ const Box2Container = styled.div`
 `;
 
 const Box2 = styled.div`
-  width: 293px;
+  width: 50%;
   height: 199px;
   border-radius: 10px;
   border: solid 1px #c6c7cc;
@@ -422,44 +356,6 @@ const BlackBox = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-`;
-const Info = styled.div`
-  display: inline-flex;
-  flex-direction: row;
-  > div {
-    display: flex;
-    flex-direction: column;
-    > p {
-      margin-bottom: 12px;
-    }
-    > p:nth-of-type(3) {
-      margin-bottom: 0;
-    }
-    > div {
-      margin-bottom: 12px;
-      display: inline-flex;
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-  padding-bottom: 50px;
-  border-bottom: solid 2px #e1e2e4;
-`;
-
-const InfoDetail = styled.div`
-  padding-top: 40px;
-  > p:nth-of-type(1) {
-    margin-bottom: 20px;
-  }
-  > p:nth-of-type(3) {
-    margin-bottom: 20px;
-  }
-  > div p {
-    margin-bottom: 12px;
-  }
-  > div p:last-of-type {
-    margin-bottom: 0;
   }
 `;
 

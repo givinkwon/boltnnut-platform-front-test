@@ -410,7 +410,7 @@ const Tail = styled.div`
 const BlackBox = styled.div`
   position: relative;
   > span {
-    font-size: 18px;
+    font-size: 12px;
     color: #0933b3;
     font-weight: bold;
     position: absolute;

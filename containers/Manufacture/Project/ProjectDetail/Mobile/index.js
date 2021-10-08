@@ -25,7 +25,7 @@ class ProjectDetail extends React.Component {
             marginTop: 50,
           }}
         >
-          <Containerv1>
+          <Containerv1 style={{display : "block"}}>
             <Container13>
               <Content1 user={user} />
             </Container13>
@@ -41,7 +41,6 @@ export default ProjectDetail;
 
 const Container13 = styled.div`
   width: 100%;
-  display: flex;
   flex-direction: column;
   justify-content: center;
 `;

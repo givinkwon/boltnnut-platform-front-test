@@ -6,7 +6,7 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 import { toJS } from "mobx";
-import Answer from "../../../../stores/Manufacture/Answer";
+import Answer from "stores/Manufacture/Answer";
 
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
@@ -114,13 +114,13 @@ class ContentSub extends React.Component {
             <>
               
                 <Box3
-                  style={{ marginBottom: 20 }}
+                  style={{ marginTop: 50, marginBottom: 90 }}
                   active={this.state.activeOne}
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
                     await Answer.CreateAnswer(Project.projectDetailData.id, Auth.logged_in_partner.id, Project.projectDetailData.request_set[0].id)
-                    Router.push('/chatting')
+                    alert("모바일 환경에서 클라이언트와의 채팅은 준비중입니다. 의뢰자에게 답변 메세지가 발송되었으니, 데스크탑으로 로그인하여 제안을 해보세요.")
                   }}
                 >
                   <Font18
@@ -142,10 +142,9 @@ class ContentSub extends React.Component {
 export default ContentSub;
 
 const ContainerSub = styled.div`
-  width: 180px;
   display: flex;
   flex-direction: column;
-  margin-left: 24px;
+  justify-content: center;
 `;
 
 const Box3 = styled(Buttonv1)`
