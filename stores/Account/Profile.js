@@ -5,6 +5,7 @@ import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import * as ProfileAPI from "axios/Account/Profile";
 import Category from "stores/Manufacture/Category";
+import Auth from "stores/Account/Auth";
 
 class Profile {
 
@@ -38,6 +39,7 @@ class Profile {
   @observable region_data = [];
 
   @observable portfolio_set = [];
+  @observable portfolio_id_set = [];
   @observable portfolio_checked = [];
 
   @observable structure_set = [];
@@ -161,8 +163,11 @@ class Profile {
 
           // 포토폴리오
           this.portfolio_set = [];
+          this.portfolio_id_set = [];
           res.data.data.Partner[0].portfolio_set.map((data) => {
             this.portfolio_set.push(data.img_portfolio);
+            this.portfolio_id_set.push(data.id)
+            console.log(data)
           });
           console.log(this.info_company);
         }
@@ -193,16 +198,23 @@ class Profile {
     formData.append('img_portfolio', file)
     formData.append('partner', Auth.logged_in_partner.id)
     
+    // axois 쏘기
+    let req = {
+      data: formData,
+    };
+
+    ProfileAPI.addPortfolio(req, this.data.id)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e.response));
   }
 
   // 프로필 포토폴리오 삭제
   @action remove_portfolio = (id) => {
+  
+    ProfileAPI.removePortfolio(id)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e.response));
     
-    req = {
-      id : id
-    }
-
-
   }
 
   // 프로필 수정 시 저장하는 함수

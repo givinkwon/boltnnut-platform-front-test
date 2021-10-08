@@ -25,11 +25,10 @@ export function addPortfolio(req) {
   });
 }
 
-export function removePortfolio(req, id) {
+export function removePortfolio(id) {
   return axios({
     method: "DELETE",
     url: `${ROOT_URL}/portfolio/${id}/`,
-    data: req.data,
   });
 }
   

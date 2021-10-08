@@ -14,6 +14,7 @@ class portfolio extends React.Component {
     const { Profile } = this.props;
     console.log("mount");
     console.log(Profile.portfolioCheckFileUpload);
+    console.log(Profile.portfolio_id_set)
     // Profile.introductionCheckFileUpload = false;
   };
   MyDropzone = () => {
@@ -24,8 +25,8 @@ class portfolio extends React.Component {
         console.log(data);
         Profile.portfolio_set.push(data);
 
-
         Profile.portfolioCheckFileUpload = true;
+        Profile.add_portfolio(data)
 
         Object.assign(data, { preview: URL.createObjectURL(data) });
       });
@@ -82,6 +83,8 @@ class portfolio extends React.Component {
                       onClick={() => {
                         console.log(idx);
                         Profile.portfolio_set.splice(idx, 1);
+                        Profile.portfolio_id_set.splice(idx,1);
+                        Profile.remove_portfolio(Profile.portfolio_id_set[idx])
                       }}
                     />
                     <img src={item} />
