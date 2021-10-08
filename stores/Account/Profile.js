@@ -183,6 +183,28 @@ class Profile {
     console.log(this.info_company);
   };
 
+  // 프로필 포토폴리오 추가
+  @action add_portfolio = (file) => {
+    console.log(file)
+    
+    // 데이터 저장
+    var formData = new FormData();
+
+    formData.append('img_portfolio', file)
+    formData.append('partner', Auth.logged_in_partner.id)
+    
+  }
+
+  // 프로필 포토폴리오 삭제
+  @action remove_portfolio = (id) => {
+    
+    req = {
+      id : id
+    }
+
+
+  }
+
   // 프로필 수정 시 저장하는 함수
   @action save_profile = () => {
     console.log(this.file)
