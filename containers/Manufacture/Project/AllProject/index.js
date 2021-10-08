@@ -35,6 +35,7 @@ class AllProject extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth, Cookie } = this.props;
+
     // 프로젝트 초기화
     await Project.reset();
     Project.newIndex = 0;
@@ -68,16 +69,20 @@ class AllProject extends React.Component {
 
     // subbox 프로젝트 개수 호출
     Project.getProject("subbox");
+
+    Project.loading = true;
   }
 
   render() {
-    const { Project, Partner, Auth, Cookie } = this.props;
+    const { Project, Partner, Auth, Cookie, width } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
 
     return (
       <>
+        {Project.loading &&
+        <>
         <Background id="MyBackground">
           <Container style={{ flexDirection: "column", marginTop: 80 }}>
             <div
@@ -132,7 +137,8 @@ class AllProject extends React.Component {
                     );
                   })}
               </Main>
-              <SubCard>
+              
+              {width > 768 && <SubCard>
                 <SubCardContainer>
                   <SubCardTitle>
                     <div>
@@ -196,6 +202,7 @@ class AllProject extends React.Component {
                   </SubItem>
                 </ShowItem>
               </SubCard>
+              }
             </Body>
           </Container>
         </Background>
@@ -301,6 +308,8 @@ class AllProject extends React.Component {
             }}
           />
         </PageBar>
+        </>
+      }
       </>
     );
   }

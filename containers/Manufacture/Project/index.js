@@ -39,7 +39,7 @@ class ProjectContainer extends React.Component {
               {/* 내 프로젝트 */}
               {Project.step_index == 0 && <MyProject />}
               {/* 전체 프로젝트 */}
-              {Project.step_index == 1 && <AllProject />}
+              {Project.step_index == 1 && <AllProject width={width} />}
 
               {/* 프로젝트 상세 */}
               {/* 클라이언트로 로그인 */}

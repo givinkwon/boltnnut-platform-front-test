@@ -17,6 +17,7 @@ class Project {
   @observable search_text = ""; // 프로젝트 검색 시 텍스트 저장
   @observable currentPage = 1; // page index(현재)
   @observable project_page = ["", "", "", "", ""]; // 페이지 관련 함수 작동을 위해 쓰는 변수
+  @observable loading = false; // 로딩되면 true
 
   // 채팅 관련 변수
 
