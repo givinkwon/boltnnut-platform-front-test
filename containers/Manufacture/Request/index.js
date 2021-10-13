@@ -19,7 +19,7 @@ class RequestContainer extends React.Component {
     const { Request } = this.props;
     
     if (Request.requestTabIdx === 0) {
-      Request.requestTabIdx = 2;
+      Request.requestTabIdx = 0;
     }
   }
   render() {
