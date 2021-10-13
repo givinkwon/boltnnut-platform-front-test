@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import * as Text from "components/Text";
 import { DARKGRAY } from "static/style";
 import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
 import { CompressedPixelFormat } from "three";
+import { useDropzone } from "react-dropzone";
 
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.svg";
@@ -32,8 +33,12 @@ class InputComponent extends React.Component {
 
     if (e && e.currentTarget.files[0]) {
       // 파일 추가하기
-      Request.set_file_set(e.currentTarget.files[0]);
-      console.log(Request.request_file_set);
+      for (var i = 0; i < e.currentTarget.files.length; i++) {
+        Request.request_file_set.push(e.currentTarget.files[i]);
+      }
+
+      console.log(Request.request_file_set)
+
       // 파일 업로드 state true로 변경
       this.setState({
         ...this.state,
@@ -42,29 +47,40 @@ class InputComponent extends React.Component {
     }
   };
 
-  render() {
-    const { onChange, children, label, Request, isOpen, ...props } = this.props;
+  MyDropzone = () => {
+    const { Request } = this.props;
+
+    const onDrop = useCallback((acceptedFiles) => {
+      acceptedFiles.map((data, idx) => {
+        console.log(data);
+        Request.request_file_set.push(data);
+        this.setState({f:3})
+        // 파일 업로드 state true로 변경
+        this.setState({
+          ...this.state,
+          checkFileUpload: true,
+        });
+
+      });
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+    
+    const { onChange, children, label, isOpen, ...props } = this.props;
     const { checkFileUpload } = this.state;
 
     return (
-      <Wrap width={this.props.width}>
+      <div
+        {...getRootProps()}
+      >
+        <Wrap width={this.props.width}>
         {Request.request_file_set.map((item, idx) => {
-          console.log(Request.request_file_set);
           return (
             <>
               <AddFileList style={{marginTop : 10}}>
                 <span
-                  onClick={() => {
-                    if (checkFileUpload) {
-                      Request.request_file_set.splice(idx, 1);
-                      const inputFile = document.getElementById("inputFile");
-                      inputFile.innerHTML = "";
-
-                      if (Request.request_file_set.length === 0) {
-                        this.setState({ checkFileUpload: false });
-                      }
-                    }
-                  }}
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <span>
@@ -77,7 +93,11 @@ class InputComponent extends React.Component {
                     ></img>
                     <span>{item.name}</span>
                     <DeleteFile
-                      onClick={() => Request.delete_File(idx)}
+                      onClick={() => 
+                        {
+                          Request.delete_File(idx);
+                          this.setState({f:3});
+                        }}
                       src={deleteButtonImg}
                       style={{
                         display: this.state.checkFileUpload ? "inline" : "none",
@@ -135,6 +155,17 @@ class InputComponent extends React.Component {
           </InputBox>
         </FileText>
       </Wrap>
+      </div>
+    );
+  };
+
+
+  render() {
+    const { onChange, children, label, Request, isOpen, ...props } = this.props;
+    const { checkFileUpload } = this.state;
+
+    return (
+      <this.MyDropzone/>
     );
   }
 }

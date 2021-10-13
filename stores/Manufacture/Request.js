@@ -127,6 +127,7 @@ class Request {
 
   // 의뢰 파일 삭제하기
   @action delete_File = (deleteIdx) => {
+    console.log(this.request_file_set)
     // 파일 삭제하기
     this.request_file_set.splice(deleteIdx, 1);
     console.log(deleteIdx, this.request_file_set);
