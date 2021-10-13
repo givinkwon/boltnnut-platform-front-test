@@ -39,15 +39,12 @@ class RequestComplete extends React.Component {
             style={{ marginTop: 80, width: 296, height: 296 }}
           ></img>
           <Title>
-            {/* 제조사에 직접 견적 요청 */}
-            <span style={{ color: "#0933b3" }}>견적 요청이 완료</span>
-            {/* 프로젝트 의뢰 & 맞춤형 문의 견적 요청 */}
             <span style={{ color: "#0933b3" }}>요청이 완료</span>
             되었습니다.
           </Title>
           <span
             style={{
-              fontSize: 22,
+              fontSize: 15,
               letterSpacing: -0.55,
               color: "#1e2222",
               textAlign: "center",
@@ -60,7 +57,7 @@ class RequestComplete extends React.Component {
           </span>
           <span
             style={{
-              fontSize: 16,
+              fontSize: 13,
               fontWeight: 500,
               letterSpacing: -0.4,
               color: "#a4aab4",
@@ -77,7 +74,7 @@ class RequestComplete extends React.Component {
           </Button>
           <Button
             onClick={() => Router.push("/")}
-            style={{ marginBottom: 300 }}
+            style={{ marginBottom: 300, background: "#fff", color:"#a4aab4", border : "1px solid #a4aab4" }}
           >
             이전 페이지로
           </Button>
@@ -92,6 +89,7 @@ export default RequestComplete;
 const Content = styled.div`
   width: 100%;
   display: flex;
+  font-size: 15px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -99,7 +97,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.06;
   letter-spacing: -0.8px;
@@ -108,11 +106,11 @@ const Title = styled.div`
 `;
 
 const Button = styled(Buttonv1)`
-  width: 228px !important;
+  width: 100% !important;
   height: 48px !important;
   background-color: #c6c7cc;
   box-shadow: none;
-  font-size: 18px;
+  font-size: 15px !important;
   line-height: 1.89;
   letter-spacing: -0.45px;
 `;
