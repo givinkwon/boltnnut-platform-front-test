@@ -7,42 +7,43 @@ import SelectComponent from "components/Select";
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
-import InputComponent from "components/Input";
+import InputComponent from "components/Input3";
 import InputComponent2 from "components/Input5";
-import Calendar from "../Calendar";
-import AddFile from "../AddFile";
+import Calendar from "./Calendar";
+import AddFile from "./AddFile";
 
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
-const help_face = "./static/images/request/help_face.svg";
 const circlecheck = "./static/images/request/circlecheck.svg";
 const circlecheckblue = "./static/images/request/circlecheck_blue.svg";
 const helpimg = "./static/images/request/help_img.svg";
+const help_face ="./static/images/request/phonehuman.png"
 
 const customStyles = {
-  // dropdownIndicator: () => ({
-  //   color: "#555555",
-  //   width: 14,
-  //   height: 42,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // }),
+  dropdownIndicator: () => ({
+    border : 0,
+    color : "#c6c7cc"
+  }),
+  indicatorSeparator: () => ({
+    display : "none"
+  }),
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? "#000000" : "#555555",
     backgroundColor: "#fff",
     borderRadius: 0,
     padding: 16,
-    fontSize: 16,
+    fontSize: 15,
   }),
   control: () => ({
-    border: "1px solid #c7c7c7",
+    border: "0",
+    borderBottom : "1px solid #e1e2e4",
     backgroundColor: "#fff",
     display: "flex",
     borderRadius: 3,
-    width: 204,
+    width: 246,
     height: 42,
+    fontSize : 15,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -56,9 +57,9 @@ const customStyles = {
 class RequestContent extends Component {
   state = {
     purposeAry: [
-      { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
-      { id: 2, name: "견적을 받고 싶어요.", checked: false },
-      { id: 3, name: "전문 업체를 찾고 싶어요.", checked: false },
+      { id: 1, name: "기획 상담", checked: false },
+      { id: 2, name: "견적 요청", checked: false },
+      { id: 3, name: "업체 수배", checked: false },
     ],
     priceAry: [
       { id: 1, name: "100만원 이하" },
@@ -173,7 +174,6 @@ class RequestContent extends Component {
       <>
         <Container>
           <RequestHeader>
-            <img src={reqeustlogo} style={{ widht: 45, height: 45 }} />
             <RequestTitle>
               <span style={{ color: "#0933b3" }}>프로젝트 정보</span>를
               입력해주세요.
@@ -181,94 +181,72 @@ class RequestContent extends Component {
           </RequestHeader>
           <Body>
             <Requestontent>
+            <RequestContentBox>
+                <ContentTitle>
+                  <div style={{fontSize : 13}}>프로젝트 제목</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
+                </ContentTitle>
+                <ContentInput style={{border: "0px solid white", height : 30}}>
+                  <InputComponent
+                    class="Input"
+                    placeholder="프로젝트 제목을 입력해주세요."
+                    onChange={(e) => {
+                      Request.set_name(e);
+                    }}
+                    style={{border: "0px solid white", height : "100%"}}
+                  />
+                </ContentInput>
+              </RequestContentBox>
               <RequestContentBox>
                 <ContentTitle>
-                  <span>문의 목적</span>
+                  <span style={{fontSize : 13}}>문의 목적</span>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
                 <SelectBox>
-                  <InlineDiv>
+                  <InlineDiv style={{display : "inline-grid"}}>
                     {this.state.purposeAry.map((item, idx) => {
                       return (
-                        <PurposeSelectCircle
-                          active={item.checked}
-                          onClick={() => {
-                            console.log(item.checked);
-                            Request.set_state(idx);
-                            if (!item.checked) {
-                              item.checked = true;
-                            } else {
-                              item.checked = false;
-                            }
-                            this.setState({ f: 3 });
-                          }}
-                        >
-                          <PurposeFont18 active={item.checked}>
-                            {item.name}
-                          </PurposeFont18>
-                        </PurposeSelectCircle>
+                        <CheckBoxComponent onChange={() => {
+                          console.log(item.checked);
+                          Request.set_state(idx);
+                          if (!item.checked) {
+                            item.checked = true;
+                          } else {
+                            item.checked = false;
+                          }
+                          this.setState({ f: 3 });
+                        }}>
+                          <ProjectCategoryTitle style={{fontSize : 15, lineHeight : 2.07, color : "#999"}}>
+                              {item.name}
+                          </ProjectCategoryTitle>
+                        </CheckBoxComponent>
+                        
                       );
                     })}
                   </InlineDiv>
                 </SelectBox>
               </RequestContentBox>
-              <RequestContentBox>
-                <ContentTitle>
-                  <div>프로젝트 제목</div>
-                  <img src={starred} style={{ marginLeft: 4 }}></img>
-                </ContentTitle>
-                <ContentInput>
-                  <InputComponent
-                    class="Input"
-                    placeholder="진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
-                    onChange={(e) => {
-                      Request.set_name(e);
-                    }}
-                  />
-                </ContentInput>
-              </RequestContentBox>
 
               {/* 프로젝트 의뢰에서만 */}
               {Request.request_type == 0 && (
-                <RequestContentBox>
-                  <ContentTitle style={{ marginBottom: 8 }}>
-                    <div>제조문의 분류</div>
+                <RequestContentBox style={{height : "141px"}}>
+                  <ContentTitle>
+                    <div  style={{fontSize : 13}}>제조문의 분류</div>
                     <img src={starred} style={{ marginLeft: 4 }}></img>
-                    <span
-                      style={{
-                        fontSize: 14,
-                        letterSpacing: -0.35,
-                        color: "#86888c",
-                        fontWeight: "normal",
-                        marginLeft: 12,
-                      }}
-                    >
-                      (중복 선택 가능)
-                    </span>
                   </ContentTitle>
-                  <span
-                    style={{
-                      fontSize: 16,
-                      color: "#505050",
-                      letterSpacing: -0.4,
-                      fontWeight: "normal",
-                    }}
-                  >
-                    - 제조문의 분류에 해당하는 항목을 선택해주세요.
-                  </span>
                   <ProjectFieldCheckbox>
                     <CheckBoxComponent onChange={this.categoryCheckBox}>
-                      <ProjectCategoryTitle>
+                      <ProjectCategoryTitle style={{fontSize : 15, lineHeight : 2.07, color : "#999"}}>
                         완제품/부품 구매
                       </ProjectCategoryTitle>
                     </CheckBoxComponent>
                     <CheckBoxComponent onChange={this.categoryCheckBox}>
-                      <ProjectCategoryTitle>
+                      <ProjectCategoryTitle style={{fontSize : 15, lineHeight : 2.07, color : "#999"}}>
                         개발/설계 업체
                       </ProjectCategoryTitle>
                     </CheckBoxComponent>
                     <CheckBoxComponent onChange={this.categoryCheckBox}>
-                      <ProjectCategoryTitle>
+                      <ProjectCategoryTitle style={{fontSize : 15, lineHeight : 2.07, color : "#999"}}>
                         제작 가능 업체
                       </ProjectCategoryTitle>
                     </CheckBoxComponent>
@@ -278,7 +256,7 @@ class RequestContent extends Component {
 
               <RequestContentBox>
                 <ContentTitle>
-                  <div>희망 예산</div>
+                  <div style={{fontSize : 13}}>희망 예산</div>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
                 <Budget>
@@ -297,17 +275,6 @@ class RequestContent extends Component {
                       placeholder={"예산 선택"}
                       onChange={Request.set_price}
                     />
-
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: 16,
-                        marginLeft: 12,
-                      }}
-                    >
-                      원
-                    </span>
                   </div>
                   {/* <CheckBoxComponent onChange={() => this.priceCheckBox()}>
                     <span
@@ -335,7 +302,9 @@ class RequestContent extends Component {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginLeft: 4,
+                        marginLeft: 8,
+                        fontSize : 12,
+                        borderBottom : "1px solid #0933b3"
                       }}
                     >
                       예산 측정이 어려우신가요?
@@ -348,7 +317,7 @@ class RequestContent extends Component {
                       <span
                         style={{
                           color: "#1e2222",
-                          fontSize: 15,
+                          fontSize: 13,
                           display: "flex",
                           alignItems: "center",
                         }}
@@ -358,7 +327,7 @@ class RequestContent extends Component {
                     </CheckBoxComponent>
                     <span
                       style={{
-                        fontSize: 15,
+                        fontSize: 13,
                         lineHeight: 2.27,
                         letterSpacing: -0.38,
                         color: "#505050",
@@ -376,22 +345,22 @@ class RequestContent extends Component {
 
               {/* 프로젝트 의뢰에서만 */}
               <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 16 }}>
+                <ContentTitle style={{ fontSize : 13, marginBottom: 16 }}>
                   <div>제조문의 응답 희망 마감시간</div>
                 </ContentTitle>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{width : 246, display: "flex", flexDirection: "column" }}>
                   <Calendar />
                 </div>
               </RequestContentBox>
 
               <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 4 }}>
+                <ContentTitle style={{ fontSize : 13, marginBottom: 4 }}>
                   <span>프로젝트 내용</span>
                   <img src={starred} style={{ marginLeft: 5 }}></img>
                   <span
                     style={{
-                      marginLeft: 12,
-                      fontSize: 14,
+                      marginLeft: 6,
+                      fontSize: 13,
                       letterSpacing: -0.35,
                       color: "#e53c38",
                       fontWeight: "normal",
@@ -400,18 +369,22 @@ class RequestContent extends Component {
                     (공개)
                   </span>
                 </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    letterSpacing: "-0.4px",
-                  }}
-                >
-                  - 프로젝트 내용을 상세히 작성할수록 더 적합한 파트너를 만날 수
-                  있습니다.
-                </span>
+                
                 <Help>
-                  <img src={help_face}></img>
+                  <img src={help_face} style={{width : 30}}></img>
+                  <span
+                    style={{
+                      marginLeft: 6,
+                      fontSize: 13,
+                      letterSpacing: -0.35,
+                      color: "#505050",
+                      lineHeight : 1.67,
+                      fontFamily : "NotoSansCJKkr"
+                    }}
+                  >
+                    내용 작성이 어렵다면, 가능한만큼만 작성해주세요. <br/>
+                    볼트앤너트가 유선으로 상담을 도와드립니다.
+                  </span>
                 </Help>
                 <ProjectInput>
                   <InputComponentContent
@@ -428,19 +401,19 @@ class RequestContent extends Component {
             {/* 제조사 선택에서 온 게 아닌 경우만 지역 노출 */}
             {Request.request_type != 2 && (
               <PartnerInfo>
-                <ContentTitle style={{ marginBottom: 8 }}>
+                <ContentTitle style={{ marginBottom: 12 }}>
                   <div>선호 지역</div>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
                 <span
                   style={{
-                    fontSize: 16,
+                    fontSize: 13,
                     color: "#505050",
                     letterSpacing: -0.4,
                     fontWeight: "normal",
                   }}
                 >
-                  -업체와의 오프라인 미팅 시 고객님의 선호 위치를 참고합니다.
+                  업체와의 오프라인 미팅 시 고객님의 선호 위치를 참고합니다.
                 </span>
                 <div
                   style={{
@@ -472,34 +445,21 @@ class RequestContent extends Component {
             )}
 
             <RequestContentBox>
-              <span
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontSize: 32,
-                  fontWeight: 500,
-                  letterSpacing: -0.8,
-                  color: "#1e2222",
-                  marginTop: 140,
-                  marginBottom: 70,
-                }}
-              >
-                <span style={{ color: "#0933b3", fontWeight: 700 }}>
-                  관련 파일
-                </span>
-                을 업로드 해주세요.
-              </span>
+            <RequestTitle style={{ marginTop : 120, marginBottom : 50 }}>
+              <span style={{color: "#0933b3" }}>관련 파일</span>을
+              업로드해주세요.
+            </RequestTitle>
               <ContentTitle style={{ marginBottom: 12 }}>
                 <span>파일 업로드</span>
               </ContentTitle>
               <RequestContentBox style={{ marginTop: 8 }}>
                 <span
                   style={{
-                    fontSize: 16,
+                    fontSize: 13,
                     color: "#505050",
                   }}
                 >
-                  - 공개로 올리지 못했던 내용과 프로젝트 관련 파일을 모두
+                  프로젝트 관련 파일을 모두
                   올려주세요. (도면 포함)
                 </span>
                 {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
@@ -516,6 +476,7 @@ class RequestContent extends Component {
                   onClick={() => {
                     this.activeHandler("check1");
                   }}
+                  style={{marginRight : 10}}
                 >
                   <img
                     src={
@@ -527,7 +488,7 @@ class RequestContent extends Component {
                     모든 제조사가 파일 보기 가능
                   </SecurityBoxTitle>
                   <SecurityBoxContent>
-                    모든 파트너가 도면을 볼 수 있으며
+                    모든 파트너가 파일을 볼 수 있으며
                     <br />
                     가장 정확한 견적을 받을 수 있습니다.
                   </SecurityBoxContent>
@@ -575,44 +536,30 @@ class RequestContent extends Component {
                 <></>
               ) : (
                 <>
-                  <span
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      fontSize: 32,
-                      fontWeight: 700,
-                      letterSpacing: -0.8,
-                      color: "#1e2222",
-                      marginTop: 140,
-                      marginBottom: 70,
-                    }}
-                  >
-                    <span style={{ color: "#0933b3" }}>
-                      의뢰 확인을 위한 필수 정보
-                    </span>
-                    를 입력해주세요.
-                  </span>
-                  <ClientInfo>
+                <RequestTitle style={{ marginTop : 120, marginBottom : 50 }}>
+                  <span style={{color: "#0933b3" }}>의뢰 확인을 위한</span><br/><br/>
+                  <span style={{color: "#0933b3" }}>필수 정보</span>를 입력해주세요.
+                </RequestTitle>
+                  <ClientInfo style={{display : "block"}}>
                     <div
                       style={{
-                        display: "flex",
+                        display: "block",
                         justifyContent: "space-between",
                       }}
                     >
-                      <ClientInfoBox style={{ marginRight: 10 }}>
+                      <ClientInfoBox>
                         <ContentTitle>
                           <div>이메일</div>
                           <img src={starred} style={{ marginLeft: 4 }}></img>
                         </ContentTitle>
                         <InputComponent
-                          style={{ width: "100%", marginTop: 0 }}
+                          style={{border: "0px solid white", height : 18}}
                           placeholder="이메일을 입력하세요"
-                          label="아이디"
                           onChange={Request.setEmail}
                           value={Request.email}
                         />
                       </ClientInfoBox>
-                      <ClientInfoBox style={{ marginLeft: 10 }}>
+                      <ClientInfoBox>
                         <ContentTitle>
                           <div>전화번호</div>
                           <img
@@ -621,37 +568,35 @@ class RequestContent extends Component {
                           ></img>
                         </ContentTitle>
                         <InputComponent
-                          style={{ width: "100%", marginTop: 0 }}
+                          style={{border: "0px solid white", height : 18}}
                           placeholder="-없이 입력해주세요"
-                          label="휴대전화"
                           type="phone"
                           onChange={Request.setPhone}
                           value={Request.phone}
                         />
                       </ClientInfoBox>
                     </div>
-                    <ClientInfoBox style={{ width: "48.5%", marginBottom: 11 }}>
+                    <ClientInfoBox>
                       <ContentTitle>
                         <div>비밀번호</div>
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
                       <InputComponent
-                        style={{ width: "100%", marginTop: 0 }}
+                        style={{border: "0px solid white", height : 18}}
                         placeholder="비밀번호를 입력하세요"
-                        label="비밀번호"
                         type="password"
                         onChange={Request.setPassword}
                         value={Request.password}
                       />
                     </ClientInfoBox>
-                    <CheckBoxComponent checked>
+                    <CheckBoxComponent checked onChange={this.categoryCheckBox}>
                       <span
                         style={{
                           color: "#1e2222",
-                          fontSize: 15,
+                          fontSize: 12,
                           display: "flex",
                           alignItems: "center",
-                          fontWeight: "bold",
+                          fontWeight : "bold"
                         }}
                       >
                         이용약관 및 개인정보 처리방침에 동의합니다. (필수)
@@ -710,7 +655,7 @@ const InlineDiv = styled.div`
 `;
 
 const PurposeSelectCircle = styled.div`
-  width: 224px;
+  width: 100%;
   height: 42px;
   display: flex;
   justify-content: center;
@@ -739,9 +684,10 @@ const Security = styled.div`
 `;
 
 const SecurityBox = styled.div`
-  width: 384px;
-  height: 140px;
+  width: 50%;
+  height: 159px;
   border-radius: 5px;
+  font-size : 13px;
   border: solid 1px #c6c7cc;
   display: flex;
   justify-content: center;
@@ -753,26 +699,29 @@ const SecurityBox = styled.div`
 `;
 
 const SecurityBoxTitle = styled.span`
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
   line-height: 1.88;
   letter-spacing: -0.4px;
   color: #1e2222;
-  margin-top: 14px;
+  margin-top: 15px;
+  margin-bottom : 8px;
 `;
 
 const SecurityBoxContent = styled.span`
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.47;
   letter-spacing: -0.38px;
   color: #999999;
-  margin-bottom: 17px;
+  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100% - 28px);
   display: flex;
   flex-direction: column;
+  margin-left : 14px;
+  margin-right : 14px;
 `;
 
 const RequestHeader = styled.div`
@@ -781,16 +730,17 @@ const RequestHeader = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-top: 80px;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
   text-align: center;
   font-family: NotoSansCJKkr;
 `;
 
 const RequestTitle = styled.div`
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 500;
   color: #1e2222;
   margin-top: 20px;
+  text-align: left;
 `;
 
 const Body = styled.div`
@@ -802,17 +752,17 @@ const Requestontent = styled.div``;
 
 const RequestContentBox = styled.div`
   width: 100%;
-  margin-bottom: 74px;
+  margin-bottom: 56px;
 `;
 
 const ContentTitle = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 20px;
+  font-size: 13px;
   font-weight: bold;
   color: #1e2222;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 `;
 
 const Budget = styled.div`
@@ -835,7 +785,7 @@ const Help = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 42px;
+  height: 54px;
   border-radius: 3px;
   background-color: #edf4fe;
   margin-top: 16px;
@@ -843,6 +793,8 @@ const Help = styled.div`
 `;
 
 const RequestBtn = styled.div`
+  font-size : 15px;
+  width : 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -851,9 +803,9 @@ const RequestBtn = styled.div`
 `;
 
 const RequestButton = styled(Buttonv1)`
-  width: 228px !important;
+  width: 100% !important;
   height: 48px !important;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.89;
   letter-spacing: -0.45px;
   font-family: NotoSansCJKkr !important;
@@ -867,6 +819,7 @@ const ContentInput = styled.div`
 `;
 
 const ProjectInput = styled.div`
+  width : 100%;
   .MuiInputBase-root {
     height: 433px;
     width: 100%;
@@ -897,13 +850,13 @@ const HelpBox = styled.div`
 `;
 
 const ProjectFieldCheckbox = styled.div`
-  padding-left: 20px;
   height: 42px;
-  display: flex;
+  display: block;
   gap: 91px;
   margin-top: 16px;
-  border-radius: 3px;
-  border: solid 1px #c6c7cc;
+  > label {
+    width : 100%;
+  }
 `;
 
 const ProjectCategoryTitle = styled.span`

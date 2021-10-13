@@ -78,7 +78,7 @@ class AllProject extends React.Component {
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-
+    console.log(Project.projectDataList)
     return (
       <>
         {Project.loading &&

@@ -30,8 +30,7 @@ class RequestMain extends React.Component {
                   제조사 파트너로부터 의뢰 받는 형식입니다.
                 </Text>
                 <Button
-                  onClick = {() =>  alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}
-                  // onClick={() => ((Request.requestTabIdx = 1), scrollTo(0, 0))}
+                  onClick={() => ((Request.requestTabIdx = 1), scrollTo(0, 0))}
                 >
                   지금 무료로 제조 문의
                   <img src={bluearrow} style={{ marginLeft: 8 }} />

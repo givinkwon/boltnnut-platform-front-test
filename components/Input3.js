@@ -56,7 +56,8 @@ export default InputComponent
 const InputBox = styled.div`
   display: flex;
   margin-top: 10px;
-  
+  border-bottom: 1px solid #e1e2e4;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 0;
   }

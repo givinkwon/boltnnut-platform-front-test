@@ -85,7 +85,7 @@ class ReviewCardContainer extends React.Component {
                 Request.path = 3;
               }}
             >
-              견적 요청하기
+              제조사에게 문의하기
             </SubContainerBtn>
 
             <SubContainerBtn

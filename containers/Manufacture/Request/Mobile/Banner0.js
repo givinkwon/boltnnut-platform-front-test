@@ -45,8 +45,8 @@ class RequestMain extends React.Component {
               <span style={{ fontSize: 25, letterSpacing: -0.63 }}> 건</span>
             </RequestCount>
             <Text>볼트앤너트에 등록된 제조문의 수</Text>
-            <Button onClick={() =>  alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
-              지금 무료로 제조 문의
+            <Button onClick={() => ((Request.requestTabIdx = 1), scrollTo(0, 0))}
+                > 지금 무료로 제조 문의
               <img src={arrow} style={{ marginLeft: 14.3, height: 13.4 }} />
             </Button>
             <BackImg>
