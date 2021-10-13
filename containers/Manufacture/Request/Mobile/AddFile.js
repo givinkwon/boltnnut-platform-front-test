@@ -146,7 +146,7 @@ class InputComponent extends React.Component {
                         color: "#0933b3",
                       }}
                     >
-                      파일 첨부하기
+                      파일 첨부(드래그 | 클릭)
                     </span>
                   </span>
                 </div>
