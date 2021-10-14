@@ -17,7 +17,6 @@ class Introduction extends React.Component {
     console.log("mount");
     console.log(Profile.introductionCheckFileUpload);
 
-    // Profile.introductionCheckFileUpload = false;
   };
   MyDropzone = () => {
     const { Profile } = this.props;
@@ -69,7 +68,7 @@ class Introduction extends React.Component {
           <Main>
             {Profile.file && (
               <Item>
-                <div>{Profile.file.name}</div>
+                <div>{typeof Profile.file == "object" ? Profile.file.name : Profile.file.split("/").pop() }</div>
                 <img
                   src={closeImg}
                   style={{cursor : "pointer"}}

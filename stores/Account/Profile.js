@@ -6,6 +6,8 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 import * as ProfileAPI from "axios/Account/Profile";
 import Category from "stores/Manufacture/Category";
 import Auth from "stores/Account/Auth";
+import { EqualStencilFunc } from "three";
+import MapsTransferWithinAStation from "material-ui/svg-icons/maps/transfer-within-a-station";
 
 class Profile {
 
@@ -154,6 +156,9 @@ class Profile {
 
           // 회사소개서 파일
           this.file = res.data.data.Partner[0].file;
+          if(this.file){
+            this.introductionCheckFileUpload = true;
+          };
 
           // 포토폴리오
           this.portfolio_set = [];
@@ -164,6 +169,7 @@ class Profile {
             console.log(data)
           });
           console.log(this.info_company);
+
         }
       })
       .catch((e) => {
@@ -228,6 +234,11 @@ class Profile {
     if(this.certification && typeof this.certification == "object"){
       formData.append("Certification", this.certification);
     }
+    // 변동 없음
+    else if (this.certification && this.certification.includes("http") !== -1){    
+      console.log(1) 
+    }
+    // 삭제
     else{
       formData.append("Certification", null);
     }
@@ -241,6 +252,10 @@ class Profile {
     // 회사소개서 파일
     if(this.file && typeof this.file == "object"){
       formData.append("file", this.file);
+    }
+    // 변동 없음
+    else if (this.file && this.file.includes("http") !== -1){ 
+      console.log(2)    
     }
     else{
       formData.append("file", null);
@@ -258,7 +273,12 @@ class Profile {
     };
 
     ProfileAPI.savePartnerInfo(req, this.data.id)
-      .then((res) => console.log(res))
+      .then(
+        (res) => 
+        { console.log(res)
+          alert("수정되었습니다.")
+        }
+      )
       .catch((e) => console.log(e.response));
     }
 
