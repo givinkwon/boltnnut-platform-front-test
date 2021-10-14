@@ -21,13 +21,12 @@ import MobileBanner5Container from "./Mobile/MobileBanner5";
 import { inject, observer } from "mobx-react";
 import axios from "axios";
 
-@inject("Home")
+@inject("Home", "Auth")
 @observer
 class HomeConatiner extends React.Component {
 
   render() {
-    const { width, reqList, Home } = this.props;
-
+    const { width, reqList, Home, Auth } = this.props;
     return (
       <>
         {width < 767.98 ? (

@@ -11,10 +11,12 @@ import Button from "containers/Account/PartnerRegister/Button";
 @observer
 class PartnerRegisterContainer extends React.Component {
   componentDidMount() {
-    const { Category } = this.props;
+    const { Category, Auth } = this.props;
     Category.reset();
     Category.init();
     Category.isChecked("main");
+    const token = localStorage.getItem("token");
+    Auth.reloadUserInfo(token);
   }
 
   render() {

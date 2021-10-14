@@ -248,6 +248,7 @@ class Auth {
   @action checkLogin = async () => {
     const token = localStorage.getItem("token");
     const expiry = localStorage.getItem("expiry");
+    console.log(token, expiry, this.logged_in_user)
 
     if (expiry) {
       const now = new Date();
@@ -546,7 +547,7 @@ class Auth {
                   localStorage.setItem("expiry", tomorrow.getTime().toString());
                 }
                 localStorage.setItem("token", token);
-
+                
                 setTimeout(() => {
                   myStore.loading = false;
 

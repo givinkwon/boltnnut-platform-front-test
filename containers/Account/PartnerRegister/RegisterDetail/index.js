@@ -63,7 +63,7 @@ class RegisterDetailContainer extends React.Component {
   render() {
     const { Auth, Category } = this.props;
     const { pageName, error } = this.props;
-
+    
     return (
       <>
         {pageName === "Complete" ? (
@@ -157,6 +157,7 @@ class RegisterDetailContainer extends React.Component {
                       <Button
                         buttonType="next"
                         onClick={async () => {
+                          
                           await Auth.checkLogin();
                           console.log(Auth.logged_in_partner);
                           console.log(Auth.registerPageIdx);
