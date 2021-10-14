@@ -101,14 +101,8 @@ class Profile {
   };
   
   // 사업자등록증 추가하기
-  @action set_certification = (obj) => {
-    if (typeof obj == "object") {
-      this.certification = []
-      this.certification.push(obj);
-      console.log("file uploaded");
-    } else {
-      this.certification = null;
-    }
+  @action set_certification = (file) => {
+    this.certification = file;
     
     // 저장하기
     this.save_profile()
@@ -156,7 +150,7 @@ class Profile {
           this.history = res.data.data.Partner[0].history;
 
           // 사업자등록증 파일
-          this.certification = res.data.data.Partner[0].certification;
+          this.certification = res.data.data.Partner[0].Certification;
 
           // 회사소개서 파일
           this.file = res.data.data.Partner[0].file;
@@ -220,6 +214,7 @@ class Profile {
   // 프로필 수정 시 저장하는 함수
   @action save_profile = () => {
     console.log(this.file)
+    console.log(this.certification)
     // 데이터 저장
     var formData = new FormData();
     
@@ -230,7 +225,12 @@ class Profile {
     formData.append("material", Category.material_selected);
 
     // 사업자등록증 저장
-    formData.append("Certification", this.certification);
+    if(this.certification && typeof this.certification == "object"){
+      formData.append("Certification", this.certification);
+    }
+    else{
+      formData.append("Certification", null);
+    }
 
     // 지역 상세분류
     formData.append("region", this.region);
@@ -239,7 +239,12 @@ class Profile {
     formData.append("info_company", this.info_company);
 
     // 회사소개서 파일
-    formData.append("file", this.file);
+    if(this.file && typeof this.file == "object"){
+      formData.append("file", this.file);
+    }
+    else{
+      formData.append("file", null);
+    }
 
     // 만든 제품 소개
     formData.append("history", this.history);

@@ -101,7 +101,7 @@ class Authentication extends React.Component {
           {Profile.certification && (
             <Main>
               <Item>
-                <div>{Profile.certification[0].name}</div>
+                <div>{Profile.certification.name}</div>
                 <img onClick={() => (Profile.certification = "")} src={closeImg} />
               </Item>
             </Main>
