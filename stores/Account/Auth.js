@@ -563,6 +563,7 @@ class Auth {
               //아이디가 DB에 없을 때
               .catch((res) => {
                 console.log(res);
+                alert("가입된 아이디가 없어 회원가입창으로 이동합니다.")
                 myStore.isSnsSignup = true;
                 myStore.email = kakao_account.email;
                 this.SNSemail = myStore.email;
