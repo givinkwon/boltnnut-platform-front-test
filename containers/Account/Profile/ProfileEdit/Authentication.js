@@ -101,7 +101,7 @@ class Authentication extends React.Component {
           {Profile.certification && (
             <Main>
               <Item>
-                <div>{Profile.certification.name}</div>
+                <div>{typeof Profile.certification == "object" ? Profile.certification.name : Profile.certification.split("/").pop() }</div>
                 <img onClick={() => (Profile.certification = "")} src={closeImg} />
               </Item>
             </Main>
