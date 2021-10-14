@@ -47,7 +47,7 @@ class Product extends React.Component {
             className={"textarea"}
             placeholderStyle={{ fontWeight: "400" }}
             onChange={(e) => this.onChangeHandler(e)}
-            value={Profile.deal}
+            value={Profile.history}
           />
         </Main>
       </Container>
