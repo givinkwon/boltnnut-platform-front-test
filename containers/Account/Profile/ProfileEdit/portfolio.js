@@ -22,6 +22,12 @@ class portfolio extends React.Component {
 
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
+        const fileType = data.name.split(".")[data.name.split(".").length - 1].toLowerCase();
+        const availableFileType = ["jpg","jpeg", "png", "gif"]
+        if (availableFileType.indexOf(fileType) > -1){
+          alert("유효한 포토폴리오 파일을 넣어주세요. jpg, jpeg, png, gif만 가능합니다.")
+          return false;
+        }
         console.log(data);
         Profile.portfolio_set.push(data);
 

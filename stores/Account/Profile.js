@@ -191,7 +191,6 @@ class Profile {
   // 프로필 포토폴리오 추가
   @action add_portfolio = (file) => {
     console.log(file)
-    
     // 데이터 저장
     var formData = new FormData();
 
