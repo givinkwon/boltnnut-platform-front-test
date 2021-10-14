@@ -22,6 +22,13 @@ class portfolio extends React.Component {
 
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
+        const fileType = data.name.split(".")[data.name.split(".").length - 1].toLowerCase();
+        const availableFileType = ["jpg","jpeg", "png", "gif"]
+
+        if (availableFileType.indexOf(fileType) < 0){
+          alert("유효한 포토폴리오 파일을 넣어주세요. jpg, jpeg, png, gif만 가능합니다.")
+          return false;
+        }
         console.log(data);
         Profile.portfolio_set.push(data);
 
@@ -29,6 +36,8 @@ class portfolio extends React.Component {
         Profile.add_portfolio(data)
 
         Object.assign(data, { preview: URL.createObjectURL(data) });
+        this.setState({f:3});
+        console.log(data.preview, "blob:" + data['preview'])
       });
     }, []);
 
@@ -55,6 +64,7 @@ class portfolio extends React.Component {
 
   render() {
     const { Profile } = this.props;
+    console.log()
     return (
       <Container>
         <Header>
@@ -88,7 +98,7 @@ class portfolio extends React.Component {
                         Profile.portfolio_id_set.splice(idx,1);
                       }}
                     />
-                    <img src={item} />
+                    <img src={typeof item =="object" ? item['preview'] : item} />
                   </SmallImageBox>
                 );
               })}
