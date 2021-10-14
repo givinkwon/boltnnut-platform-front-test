@@ -42,7 +42,7 @@ class MainContainer extends React.Component {
           해당 정보를 채울수록 클라이언트에게 '{Profile.company_name}'(가)이
           노출될 확률이 올라가요!
         </Description>
-        <Button>
+        <Button onClick = {() => Profile.save_profile()}>
           저장하기
         </Button>
         </div>

@@ -16,7 +16,7 @@ class Product extends React.Component {
   }
   onChangeHandler = (e) => {
     const { Profile } = this.props;
-    Profile.deal = e.target.value;
+    Profile.history = e.target.value;
 
   };
 
