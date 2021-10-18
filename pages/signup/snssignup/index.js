@@ -8,6 +8,7 @@ import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 import SnsSignupContent from "containers/Account/Signup/SnsSignupContent";
+import MobileSnsSignupContent from "containers/Account/Signup/Mobile/SnsSignupContent";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 import * as AccountAPI from "axios/Account/Account";
@@ -82,7 +83,7 @@ class Signup extends React.Component {
           <title>볼트앤너트|회원가입</title>
         </Head>
         <>{width > 767.98 ? <Nav /> : <MobileNav width={width} src={logo_ic} />}</>
-        <SnsSignupContent />
+        <>{width > 767.98 ? <SnsSignupContent /> : <MobileSnsSignupContent/>}</>
         <Footer />
       </div>
     );

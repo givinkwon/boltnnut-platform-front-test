@@ -64,6 +64,7 @@ class Signup extends React.Component {
   render() {
     const { Loading } = this.props;
     const { width } = this.state;
+    console.log(width)
     return (
       <div>
         {Loading.is_open}
@@ -96,7 +97,7 @@ class Signup extends React.Component {
         <>
           {width > 767.98 ? <Nav /> : <MobileNav width={width} src={logo_ic} />}
         </>
-        <SignupConatiner />
+        <SignupConatiner width={width} />
         <Footer />
       </div>
     );
