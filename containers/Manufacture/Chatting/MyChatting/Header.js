@@ -135,7 +135,7 @@ class ChattingHeader extends React.Component {
         if (data.type != Auth.logged_in_user.type) {
         
           // 수신 완료 메세지를 보내서 체크하기
-          this.chatSocket.send(
+          Chat.chatSocket.send(
               JSON.stringify({
               message: "수신완료",
               type: Auth.logged_in_user.type,
