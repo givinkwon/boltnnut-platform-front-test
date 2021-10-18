@@ -90,32 +90,11 @@ class Chat {
       });
     }
 
-    console.log(currentMessage.type)
-    console.log(fullMessage)
-    // 처음 생성하여 메세지 답을 보낸 경우
-    if(fullMessage.length == 2 && currentMessage.message != "접속완료" && currentMessage.message != "수신완료"){
-    console.log(this.answerId, currentMessage.message)
-      const req = {
-        data : {
-          // project id
-        answer : this.answerId,
-        // 채팅 텍스트
-        text : currentMessage.message,
-        user_type : currentMessage.type // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
-        }
-      }
-      // 카카오톡 보내는 API 호출
-      ChatAPI.sendChat(req)
-      .then((res) => console.log(res))
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-    }
-    // 메세지를 보낸 경우에 체크하여 카카오톡 보내기 => 메세지가 2개 이상인 경우에만
+  
+    // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
     if (
       // 메세지가 있는 경우 && "접속완료" 메세지가 온 경우 && 마지막 메세지만 읽지 않은 경우 => 읽지 않은 메세지가 여러 개일 때, 1개만 보내기 위함
-      fullMessage.length > 2 &&
+      fullMessage.length > 1 &&
       currentMessage.message != "접속완료" && currentMessage.message != "수신완료" &&
       fullMessage[fullMessage.length - 1].bRead == false &&
       fullMessage[fullMessage.length - 2].bRead == true

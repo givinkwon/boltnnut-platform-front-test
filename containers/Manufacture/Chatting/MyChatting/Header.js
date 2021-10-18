@@ -146,7 +146,7 @@ class ChattingHeader extends React.Component {
               })
           );
         }
-
+        
         // 메세지가 없는 경우 그냥 메세지 배열에 저장하기
         if (Chat.chatMessages.length == 0 && data.message != "접속완료" && data.message != "수신완료")          
         // 메세지 배열에 저장하기
