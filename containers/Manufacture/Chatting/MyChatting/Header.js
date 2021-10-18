@@ -111,7 +111,7 @@ class ChattingHeader extends React.Component {
             message: "접속완료",
             type: Auth.logged_in_user.type,
             time: Chat.current_time,
-            bReceive: true,
+            bReceive: false,
             file: Chat.currentFile,
             chatType: 0,
         })
