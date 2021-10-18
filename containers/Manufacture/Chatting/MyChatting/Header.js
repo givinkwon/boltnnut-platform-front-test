@@ -148,7 +148,7 @@ class ChattingHeader extends React.Component {
         }
 
         // 메세지가 없는 경우 그냥 메세지 배열에 저장하기
-        if (Chat.chatMessages.length == 0)          
+        if (Chat.chatMessages.length == 0 && data.message != "접속완료" && data.message != "수신완료")          
         // 메세지 배열에 저장하기
           {
             Chat.chatMessages.push({
@@ -162,8 +162,8 @@ class ChattingHeader extends React.Component {
             console.log(1)
           } 
 
-        // 최근 메세지인지 확인하고 메세지 배열에 저장하기
-        else if (!(data.time === Chat.chatMessages[Chat.chatMessages.length - 1].time && data.message === Chat.chatMessages[Chat.chatMessages.length - 1].message)) 
+        // 최근 메세지인지 확인하고 메세지 배열에 저장하기 => 접속 완료 | 수신 완료는 렌더링 X
+        else if (!(data.time === Chat.chatMessages[Chat.chatMessages.length - 1].time && data.message === Chat.chatMessages[Chat.chatMessages.length - 1].message) && data.message != "접속완료" && data.message != "수신완료") 
           // 메세지 배열에 저장하기
           {
 
