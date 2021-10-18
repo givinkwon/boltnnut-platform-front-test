@@ -4,11 +4,14 @@ import styled from "styled-components";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import Switch from "react-switch";
-
+import { inject, observer } from "mobx-react";
+import Router from "next/router";
 // images
 const emailIcon = "/static/images/login/mobile/emailicon.svg";
 const passwordIcon = "/static/images/login/mobile/passwordicon.svg";
 
+@inject("Auth", "Home")
+@observer
 class MobileLoginContainer extends React.Component {
   constructor() {
     super();
@@ -16,11 +19,24 @@ class MobileLoginContainer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  toKakaoSignUp = () => {
+    this.props.Auth.kakaoLogin();
+    // Router.push("/signup/kakao");
+  };
+
   handleChange(checked) {
     this.setState({ checked });
   }
 
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.props.Auth.login();
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center", paddingTop: 150 }}>
         <Container>
@@ -28,12 +44,12 @@ class MobileLoginContainer extends React.Component {
 
           <IconImgContainer>
             <IconImgBox src={emailIcon} />
-            <InputBox placeholder="이메일" />
+            <InputBox placeholder="이메일" onChange={(e) => Auth.setEmail(e.target.value)} />
           </IconImgContainer>
 
           <IconImgContainer style={{ marginTop: 25 }}>
             <IconImgBox src={passwordIcon} />
-            <InputBox type="password" placeholder="비밀번호" />
+            <InputBox type="password" placeholder="비밀번호" onChange={(e) => Auth.setPassword(e.target.value)} onKeyDown={this.handleKeyDown} />
           </IconImgContainer>
 
           <InnerBox style={{ margin: "13px 0px 0px 16px", justifyContent: "flex-start" }}>
@@ -50,16 +66,21 @@ class MobileLoginContainer extends React.Component {
             />
           </InnerBox>
 
-          <LoginBtn>로그인</LoginBtn>
+          <LoginBtn onClick={Auth.login}>로그인</LoginBtn>
 
-          <InnerBox style={{ width: "70%", justifyContent: "center", alignItems: "center", marginTop: 17 }}>
-            <Font12 style={{ paddingTop: 2 }}>회원가입</Font12>
+          <InnerBox style={{ width: "75%", cursor: "pointer", justifyContent: "center", alignItems: "center", marginTop: 17 }}>
+            <Font12 
+              style={{ paddingTop: 2 }}
+              onClick={() => {
+                Router.push(`/signup`);
+              }}
+            >회원가입</Font12>
             <LineDivShort />
 
-            <Font12 style={{ paddingTop: 2 }}>아이디 찾기</Font12>
+            <Font12 style={{ paddingTop: 2, cursor: "pointer" }}>아이디찾기</Font12>
             <LineDivShort />
 
-            <Font12 style={{ paddingTop: 2 }}>비밀번호 찾기</Font12>
+            <Font12 style={{ paddingTop: 2, cursor: "pointer" }}>비밀번호찾기</Font12>
           </InnerBox>
 
           <InnerBox style={{ width: 341, justifyContent: "space-between", alignItems: "center", marginTop: 54 }}>
@@ -68,7 +89,7 @@ class MobileLoginContainer extends React.Component {
             <LineDivLong />
           </InnerBox>
 
-          <KaKaoLoginBtn>
+          <KaKaoLoginBtn onClick={this.toKakaoSignUp}>
             <KaKaoLogo src="/static/images/login/mobile/kakaologo.svg" />
             <Font14>카카오로 시작하기</Font14>
           </KaKaoLoginBtn>
@@ -148,7 +169,7 @@ const LoginBtn = styled.button`
   border-radius: 23px;
   border: none;
   background-color: #0933b3;
-
+  cursor : pointer;
   font-family: NotoSansCJKkr;
   font-size: 15px;
   font-weight: 500;
@@ -170,6 +191,7 @@ const LineDivLong = styled.div`
 `;
 
 const KaKaoLoginBtn = styled.button`
+  cursor: pointer;
   display: flex;
   align-items: center;
   width: 341px;
