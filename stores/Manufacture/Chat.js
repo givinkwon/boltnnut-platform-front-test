@@ -91,6 +91,7 @@ class Chat {
       });
     }
 
+    console.log(currentMessage.type)
     console.log(fullMessage)
     // 처음 생성하여 메세지 답을 보낸 경우
     if(fullMessage.length == 2){
@@ -101,7 +102,7 @@ class Chat {
         answer : this.answerId,
         // 채팅 텍스트
         text : currentMessage.message,
-        user_type : this.usertype // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
+        user_type : currentMessage.type // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
         }
       }
       // 카카오톡 보내는 API 호출
@@ -132,7 +133,7 @@ class Chat {
             answer : this.answerId,
             // 채팅 텍스트
             text : currentMessage.message,
-            user_type : this.usertype // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
+            user_type : currentMessage.type // 0이면 클라이언트 -> 파트너, 1이면 파트너 -> 클라이언트
             }
           }
 
