@@ -93,7 +93,7 @@ class Chat {
     console.log(currentMessage.type)
     console.log(fullMessage)
     // 처음 생성하여 메세지 답을 보낸 경우
-    if(fullMessage.length == 2){
+    if(fullMessage.length == 2 && currentMessage.message != "접속완료" && currentMessage.message != "수신완료"){
     console.log(this.answerId, currentMessage.message)
       const req = {
         data : {
@@ -116,7 +116,7 @@ class Chat {
     if (
       // 메세지가 있는 경우 && "접속완료" 메세지가 온 경우 && 마지막 메세지만 읽지 않은 경우 => 읽지 않은 메세지가 여러 개일 때, 1개만 보내기 위함
       fullMessage.length > 2 &&
-      currentMessage.message != "접속완료" &&
+      currentMessage.message != "접속완료" && currentMessage.message != "수신완료" &&
       fullMessage[fullMessage.length - 1].bRead == false &&
       fullMessage[fullMessage.length - 2].bRead == true
     ) {
