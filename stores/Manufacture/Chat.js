@@ -77,8 +77,7 @@ class Chat {
       fullMessage.forEach((element) => {
         
         // 두 개의 메세지 모두 도착하면 
-        if (element.time && currentMessage.time) {
-          
+        if (element.time && currentMessage.time) { 
           // 메세지의 type이 다른 경우 => 본인 메세지가 아닌 경우   
           if (
             currentMessage.type != element.member &&
