@@ -58,7 +58,47 @@ class Content4 extends React.Component {
           <Font20>프로젝트 관련 파일</Font20>
           {/* 파트너일 경우 */}
           {user === "partner" ? (
-            <BlackBox>
+            Project.projectDetailData && Project.projectDetailData.request_set && Project.projectDetailData.request_set[0].requestfile_set[0] && Project.projectDetailData.request_set[0].requestfile_set[0].share_inform ?
+            (
+              <RequestSubContainer >
+              {/* 의뢰 관련 파일 추가 */}
+              <File>
+                {Project.projectDetailData &&
+                  Project.projectDetailData.request_set[0].requestfile_set.map(
+                    (item, idx) => {
+                      {
+                        console.log(toJS(item));
+                      }
+                      if (item.share_inform) {
+                        return (
+                          <div>
+                            <div>
+                              <img
+                                src={file_img}
+                                style={{ marginRight: "14px" }}
+                              />
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                    }
+                  )}
+              </File>
+                <RequestBox>
+                  {" "}
+                  <RequestContent></RequestContent>
+                  <File></File>
+                </RequestBox>
+              </RequestSubContainer>
+            ) :
+            (
+              <BlackBox>
               <span>
                 '의뢰하신 클라이언트가 공개 요청을 승인하면 열람할 수 있습니다.'
               </span>
@@ -100,7 +140,8 @@ class Content4 extends React.Component {
                   <File></File>
                 </RequestBox>
               </RequestSubContainer>
-            </BlackBox>
+              </BlackBox>
+            )
           ) : Auth.logged_in_client && Project.projectDetailData.request_set[0].client ==
             Auth.logged_in_client.id ? (
             <>
