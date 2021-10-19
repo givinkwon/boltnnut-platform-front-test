@@ -4,7 +4,8 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Content4 from "./Content4";
 import { inject, observer } from "mobx-react";
-
+import Buttonv1 from "components/Buttonv1";
+import Router from "next/router";
 import { toJS } from "mobx";
 import ChatTestContainer from "containers/Manufacture/Chatting/ChattingDetail/ChatTest";
 import ChatItemContainer from "components/ChatItem";
@@ -71,8 +72,25 @@ class Content1 extends React.Component {
     });
   }
 
+  
+  activeHandler = (active) => {
+    if (active === "activeOne") {
+      if (this.state.activeOne) {
+        this.setState({ activeOne: false });
+      } else {
+        this.setState({ activeOne: true });
+      }
+    } else {
+      if (this.state.activeTwo) {
+        this.setState({ activeTwo: false });
+      } else {
+        this.setState({ activeTwo: true });
+      }
+    }
+  };
+
   render() {
-    const { Project, Partner, user, Auth } = this.props;
+    const { Project, Partner, user, Auth, Answer } = this.props;
 
     const { projectDetailData } = Project;
 
@@ -268,6 +286,29 @@ class Content1 extends React.Component {
               )}
             </AppliedPartner>
             <Content4 user={user} />
+            {user === "partner" && (
+            <>
+              
+                <Box3
+                  style={{ marginBottom: 20 }}
+                  active={this.state.activeOne}
+                  onMouseOver={() => this.activeHandler("activeOne")}
+                  onMouseOut={() => this.activeHandler("activeOne")}
+                  onClick={async () => {
+                    await Answer.CreateAnswer(Project.projectDetailData.id, Auth.logged_in_partner.id, Project.projectDetailData.request_set[0].id)
+                    Router.push('/chatting')
+                  }}
+                >
+                  <Font18
+                    style={{ fontWeight: "bold" }}
+                    active={this.state.activeOne}
+                  >
+                    {!this.state.isAnswered ? "제조문의 답변하기" : "채팅 이어하기"}
+                  </Font18>
+                </Box3>
+              
+            </>
+          )}
           </InnerContainer>
         </Container1>
       </>
@@ -276,6 +317,21 @@ class Content1 extends React.Component {
 }
 
 export default Content1;
+
+
+const Box3 = styled(Buttonv1)`
+  border-radius: 5px;
+  display: flex;
+  width: 100% !important;
+  height: 46px !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #0933b3;
+  box-sizing: border-box;
+  background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+`;
+
 const Layer = styled.div`
   position: fixed;
   top: 0;

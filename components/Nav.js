@@ -304,7 +304,7 @@ class Nav extends React.Component {
                 {token ? (
                   <ul>
                     {/* 클라이언트 로그인 */}
-                    {this.props.Auth.logged_in_user.type === 0 && (
+                    {this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type === 0 && (
                       <>
                         <NavLink>
                           <div
