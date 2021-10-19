@@ -93,7 +93,7 @@ class ChattingHeader extends React.Component {
 
     // 채팅 소켓 링크 설정
     Chat.chatSocket = new WebSocket(
-      `wss://api.boltnnut.com/ws/chat/` + `${Chat.answerId}` + "/"
+      `ws://52.79.230.30:8080/ws/chat/` + `${Chat.answerId}` + "/"
     );
     
     // 시간 설정하기
@@ -132,8 +132,8 @@ class ChattingHeader extends React.Component {
     if (!data.bReceive) {
 
         // 해당 메세지가 본인의 type이 아니라면
-        if (data.type != Auth.logged_in_user.type) {
-        
+        if (data.type != Auth.logged_in_user.type && data.message != "수신완료") {
+          console.log("우오아아앙 오애구구애애")
           // 수신 완료 메세지를 보내서 체크하기
           Chat.chatSocket.send(
               JSON.stringify({
