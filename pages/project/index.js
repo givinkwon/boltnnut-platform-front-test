@@ -53,8 +53,8 @@ class Project extends React.Component {
         ? formData.append("prevUrl", "direct")
         : formData.append("prevUrl", document.referrer);
 
-      // 직접 유입의 경우 모든 프로젝트 보기로 하기
-      Project.step_index = 1;
+      // // 직접 유입의 경우 모든 프로젝트 보기로 하기
+      // Project.step_index = 1;
     }
 
     formData.append("url", window.location.href);

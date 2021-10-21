@@ -38,7 +38,7 @@ class ProjectNone extends React.Component {
           <>
           <NoneTitleBox>
             업체를 찾고 계시나요? <br/>
-            5분 만에 프로젝트를 등록하고 원하는 업체를 찾아보세요.
+            3분 만에 제조문의를 등록하고 원하는 업체를 찾아보세요.
           </NoneTitleBox>
 
           <Button onClick={() => {

@@ -37,8 +37,6 @@ class MyProject extends React.Component {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
     Project.currentPage = 1;
-    Project.step_index = 1;
-
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getProject("myproject", Auth.logged_in_client.id);
@@ -51,6 +49,7 @@ class MyProject extends React.Component {
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     console.log(Auth.logged_in_user);
+    console.log(Project.projectDataList, Project.currentPage);
 
     return (
       <>
@@ -94,15 +93,12 @@ class MyProject extends React.Component {
                       : "종료된 프로젝트"}
                   </div>
                 </MainHeader>
-                {Project.project_existence &&
-                Project.projectDataList &&
+                {Project.projectDataList &&
                 Project.projectDataList[0] ? (
                   <>
                     {Project.currentPage > 0 &&
                       Project.projectDataList.map((item, idx) => {
-                        {
-                          console.log(toJS(item));
-                        }
+                        console.log(item)
                         return (
                           <>
                             {toJS(item.request_set.length > 0) &&
@@ -155,7 +151,7 @@ class MyProject extends React.Component {
                           </>
                         );
                       })}
-                    {/* <PageBar>
+                    <PageBar>
                       <img
                         src={pass1}
                         style={{
@@ -248,7 +244,7 @@ class MyProject extends React.Component {
                         }}
                         onClick={Project.pageNext}
                       />
-                    </PageBar> */}
+                    </PageBar>
                   </>
                 ) : (
                   <>

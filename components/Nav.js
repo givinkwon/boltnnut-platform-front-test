@@ -321,14 +321,15 @@ class Nav extends React.Component {
                               width: "160px",
                             }}
                           >
-                            {/* <li>
+                            <li>
                               <KSLink
+                                step_index={0}
                                 url={"project"}
                                 FontContent={() => {
                                   return <Font14>내 프로젝트</Font14>;
                                 }}
                               />
-                            </li> */}
+                            </li>
                             <li>
                               <KSLink
                                 url={"bookmark"}
