@@ -66,11 +66,11 @@ class Nav extends React.Component {
 
           Router.push("/");
         }
+
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
           let currentTab = 0;
           const queryParams = window.location.href.split("?").pop();
-
           // 'http://localhost:3000/offered?tab=1&state=2'이면
           // queryParams = 'tab=1&state=2'
           queryParams.split("&").forEach((param) => {
@@ -124,7 +124,6 @@ class Nav extends React.Component {
   render() {
     const { Auth, Request, Home, Profile } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-
     return (
       <>
         <NavBox>
@@ -349,7 +348,6 @@ class Nav extends React.Component {
 
                             <li onClick = {() => {
                                   Profile.profileTabIdx = 2
-                                  console.log(Profile.profileTabIdx);
                                 }}>
                               <KSLink
                                 url={"Profile"}
@@ -631,7 +629,7 @@ class Nav extends React.Component {
                           }}
                         />
 
-                        {Auth.signupBoxActive && (
+                        {Auth.signupBoxActive && url == "/" && (
                           <AnimationBox
                             active={this.state.closeImgState}
                             onClick={() => {
