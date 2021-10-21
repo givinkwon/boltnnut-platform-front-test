@@ -17,29 +17,30 @@ class TabConatiner extends React.Component {
     const { tab, Profile, Auth } = this.props;
     return (
       <Tabs>
-        <Tab
+        {Auth.logged_in_partner && <Tab
           active={Profile.profileTabIdx === 1}
           onClick={() => this.setTab(1)}
         >
-          프로필 수정
+          기업정보 수정
         </Tab>
+        }
         <Tab
           active={Profile.profileTabIdx === 2}
           onClick={() => this.setTab(2)}
         >
-          계정 설정
+          계정정보 수정
+        </Tab>
+        <Tab
+          active={Profile.profileTabIdx === 4}
+          onClick={() => Router.push('/chatting')}
+        >
+          채팅하기
         </Tab>
         <Tab
           active={Profile.profileTabIdx === 3}
           onClick={() => this.setTab(3)}
         >
           {Auth.logged_in_partner ? "관심 프로젝트" : "관심 제조사"}
-        </Tab>
-        <Tab
-          active={Profile.profileTabIdx === 4}
-          onClick={() => Router.push('/chatting')}
-        >
-          채팅
         </Tab>
         <Tab
           active={Profile.profileTabIdx === 5}

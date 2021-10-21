@@ -17,7 +17,7 @@ class TabConatiner extends React.Component {
     return (
       <Tabs>
         <Tab active={Auth.accountTabIdx === 1} onClick={() => this.setTab(1)}>
-          기본 정보 수정
+          계정 정보 수정
         </Tab>
         <Tab active={Auth.accountTabIdx === 2} onClick={() => this.setTab(2)}>
           알림 설정

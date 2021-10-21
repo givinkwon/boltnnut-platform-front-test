@@ -134,8 +134,15 @@ class Profile {
     await AccountAPI.reloadUserInfo(req)
       .then((res) => {
         if (res.data.data.User.type == 0) {
-          alert("잘못된 접근입니다.");
-          Router.push("/");
+          console.log(res.data.data.User)
+          console.log(res.data.data.Client[0])
+
+          // 기본 정보 수정용
+          Auth.name = res.data.data.User.username;
+          Auth.phone = res.data.data.User.phone;
+          Auth.realName = res.data.data.Client[0].name;
+          Auth.title = res.data.data.Client[0].title;
+
         } else if (res.data.data.User.type == 1) {
           console.log("파트너 정보 리로딩");
           console.log(res.data.data.Partner[0]);
@@ -159,6 +166,12 @@ class Profile {
           if(this.file){
             this.introductionCheckFileUpload = true;
           };
+
+          // 기본 정보 수정용
+          Auth.name = this.company_name;
+          Auth.phone = res.data.data.User.phone;
+          Auth.realName = res.data.data.User.username;
+
 
           // 포토폴리오
           this.portfolio_set = [];

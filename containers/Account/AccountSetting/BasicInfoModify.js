@@ -54,7 +54,7 @@ class ChangePassword extends Component {
     return (
       <>
         <MainHeader>
-          <div>기본 정보 수정</div>
+          <div>계정 정보 수정</div>
           <Button
             onClick = {() => Auth.save_account()}
           >저장하기
@@ -102,7 +102,7 @@ class ChangePassword extends Component {
           <MainBoxBody>
             <BodyBox style={{ display: "flex", justifyContent: "flex-start" }}>
               <BodySubBox>
-                <BodyBoxTitle>이름</BodyBoxTitle>
+                <BodyBoxTitle>아이디</BodyBoxTitle>
                 <InputComponent
                   class="Input"
                   onFocus={(e) => (e.target.placeholder = "")}

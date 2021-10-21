@@ -22,7 +22,7 @@ const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
 const signupBoxImg = "/static/images/SignupBox.png";
 
-@inject("Auth", "Partner", "Project", "Home", "Request")
+@inject("Auth", "Partner", "Project", "Home", "Request","Profile")
 @observer
 class Nav extends React.Component {
   state = {
@@ -122,7 +122,7 @@ class Nav extends React.Component {
     Auth.checkLogin();
   }
   render() {
-    const { Auth, Request, Home } = this.props;
+    const { Auth, Request, Home, Profile } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
@@ -346,7 +346,20 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li onClick={() => alert("서비스 준비 중입니다.")}>
+
+                            <li onClick = {() => {
+                                  Profile.profileTabIdx = 2
+                                  console.log(Profile.profileTabIdx);
+                                }}>
+                              <KSLink
+                                url={"Profile"}
+                                FontContent={() => {
+                                  return <Font14>계정정보 수정</Font14>;
+                                }}
+                              />
+                            </li>
+
+                            {/* <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
                                 //url={"review"}
                                 url={""}
@@ -354,15 +367,8 @@ class Nav extends React.Component {
                                   return <Font14>후기 관리</Font14>;
                                 }}
                               />
-                            </li>
-                            <li>
-                              <KSLink
-                                url={"account"}
-                                FontContent={() => {
-                                  return <Font14>계정 설정</Font14>;
-                                }}
-                              />
-                            </li>
+                            </li> */}
+                           
                           </SubMenu>
 
                           {/* {is_profile && (
@@ -529,7 +535,7 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li onClick={() => alert("서비스 준비 중입니다.")}>
+                            {/* <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
                                 //url={"review"}
                                 url={""}
@@ -537,15 +543,8 @@ class Nav extends React.Component {
                                   return <Font14>후기 관리</Font14>;
                                 }}
                               />
-                            </li>
-                            <li>
-                              <KSLink
-                                url={"account"}
-                                FontContent={() => {
-                                  return <Font14>계정 설정</Font14>;
-                                }}
-                              />
-                            </li>
+                            </li> */}
+                            
                           </SubMenu>
 
                           {/* {is_profile && (
