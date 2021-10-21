@@ -66,7 +66,7 @@ class ContentSub extends React.Component {
   };
 
   render() {
-    const { Auth, Project, user } = this.props;
+    const { Auth, Project, user, Request } = this.props;
 
     return (
       <ContainerSub>
@@ -82,14 +82,17 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
-                alert("준비중입니다. 수정이 필요하시면 고객센터로 문의주세요.")
+                Request.requestTabIdx = 1;
+                Request.edit_state = 1;
+                Request.request_id = Project.projectDetailData.request_set[0].id;
+                Router.push('/request');
               }}
             >
               <Font18
                 style={{ fontWeight: "bold" }}
                 active={this.state.activeOne}
               >
-                프로젝트 수정하기
+                제조문의 수정하기
               </Font18>
             </Box3>
             <Box3

@@ -82,6 +82,7 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
+                Request.requestTabIdx = 1;
                 Request.edit_state = 1;
                 Request.request_id = Project.projectDetailData.request_set[0].id;
                 Router.push('/request');
@@ -91,7 +92,7 @@ class ContentSub extends React.Component {
                 style={{ fontWeight: "bold" }}
                 active={this.state.activeOne}
               >
-                프로젝트 수정하기
+                제조문의 수정하기
               </Font18>
             </Box3>
             <Box3
