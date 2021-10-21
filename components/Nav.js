@@ -156,7 +156,7 @@ class Nav extends React.Component {
                         </RouterWrapper>
                       </NavLink>
                       <NavLink active={url.indexOf("request") > -1}>
-                        <RouterWrapper>
+                        <RouterWrapper onClick={() => Request.request_id = 0}>
                           <Font16>
                             <KSLink url={"request"} content={"제조 문의하기"} />
                           </Font16>

@@ -667,7 +667,7 @@ class RequestContent extends Component {
                     Request.requestSubmit();
                   }}
                 >
-                  의뢰 요청하기
+                  {Request.request_id ? "의뢰 수정하기" : "의뢰 요청하기"}
                 </RequestButton>
                 <span
                   style={{

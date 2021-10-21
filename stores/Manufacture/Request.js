@@ -46,6 +46,9 @@ class Request {
 
   @observable path = 1; // 이전 방문 경로 => Nav 의뢰하기 1, 제조사 찾기 배너 의뢰하기 2, 파트너를 통해 의뢰하면 3
 
+  @observable edit_state = 0; // 프로젝트 edit일 때 1, edit 아닐 때는 0
+  @observable request_id = 0; // 수정하기용 의뢰 id 
+
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
     this.selected_partner = val;
@@ -127,7 +130,6 @@ class Request {
 
   // 의뢰 파일 삭제하기
   @action delete_File = (deleteIdx) => {
-    console.log(this.request_file_set)
     // 파일 삭제하기
     this.request_file_set.splice(deleteIdx, 1);
     console.log(deleteIdx, this.request_file_set);
@@ -319,33 +321,66 @@ class Request {
 
     // 로그인 시
     else {
+
       formData.append("login_state", 1); // 로그인 시
       const Token = localStorage.getItem("token");
       console.log(Token);
 
-      // axois 쏘기
-      const req = {
-        headers: {
-          Authorization: `Token ${Token}`,
-        },
-        data: formData,
-      };
-      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
-      this.requestTabIdx = 2;
-      console.log(req);
+      // 일반 의뢰의 경우
+      if(this.edit_state == 0) {
+        // axois 쏘기
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: formData,
+        };
+        // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
+        this.requestTabIdx = 2;
+        console.log(req);
+        
+        RequestAPI.create(req)
+          .then((res) => {
+            console.log("create: ", res);
+            // page 넘기기 위한 트리거 만들기
+            this.requestTabIdx = 2;
+            // GA 데이터 보내기
+            MyDataLayerPush({ event: "request_Drawing" });
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+      }
 
-      RequestAPI.create(req)
-        .then((res) => {
-          console.log("create: ", res);
-          // page 넘기기 위한 트리거 만들기
+      // 수정하기인 경우
+      else {
+          // 의뢰 아이디
+          formData.append("id", 1); // 의뢰 아이디
+          // axois 쏘기
+          const req = {
+            headers: {
+              Authorization: `Token ${Token}`,
+            },
+            data: formData,
+          };
+          // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
           this.requestTabIdx = 2;
-          // GA 데이터 보내기
-          MyDataLayerPush({ event: "request_Drawing" });
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
+          console.log(req);
+          
+          RequestAPI.create(req)
+            .then((res) => {
+              console.log("edit: ", res);
+              // page 넘기기 위한 트리거 만들기
+              this.requestTabIdx = 2;
+              // GA 데이터 보내기
+              MyDataLayerPush({ event: "request_Drawing" });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+      }
     }
 
     // 페이지 넘어가기
