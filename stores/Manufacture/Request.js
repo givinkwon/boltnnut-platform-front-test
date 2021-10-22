@@ -368,7 +368,7 @@ class Request {
           this.requestTabIdx = 2;
           console.log(req);
           
-          RequestAPI.create(req)
+          RequestAPI.modifyProject(req)
             .then((res) => {
               console.log("edit: ", res);
               // page 넘기기 위한 트리거 만들기
