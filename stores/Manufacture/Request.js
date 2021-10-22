@@ -356,7 +356,7 @@ class Request {
       // 수정하기인 경우
       else {
           // 의뢰 아이디
-          formData.append("id", 1); // 의뢰 아이디
+          formData.append("id", this.request_id); // 의뢰 아이디
           // axois 쏘기
           const req = {
             headers: {
