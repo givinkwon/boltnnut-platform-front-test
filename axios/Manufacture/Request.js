@@ -27,7 +27,7 @@ export function create(req) {
 export function modifyProject(req) {
   return axios({
     method: "PATCH",
-    url: `${ROOT_URL}/requests/${req.id}/`,
+    url: `${ROOT_URL}/requests/${req.data.id}/`,
     headers: req.headers ? req.headers : null,
     data: req.data,
   });

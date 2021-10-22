@@ -95,6 +95,7 @@ class RequestContent extends Component {
     console.log(purposeAry);
     // request 초기화
     Request.reset();
+    console.log(Request.request_id)
   }
 
   activeHandler = (flag) => {
