@@ -42,6 +42,9 @@ class MyProject extends React.Component {
       Project.getProject("myproject", Auth.logged_in_client.id);
     }
     console.log(Auth.logged_in_client);
+    // 처음은 진행중 프로젝트 보여주기
+    Project.myproject_state == 1
+
   }
 
   render() {

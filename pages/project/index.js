@@ -25,6 +25,7 @@ class Project extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props;
+    await Project.reset();
     Auth.previous_url = "project";
     console.log(Auth);
     console.log(toJS(Auth.logged_in_user));
