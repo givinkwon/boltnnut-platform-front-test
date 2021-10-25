@@ -40,7 +40,7 @@ class RequestMain extends React.Component {
               AI 견적으로 제조 부품 바로발주
             </Header>
             <RequestCount>
-            <CountFunc index={0} projCount={5285}/>
+            <CountFunc index={0} projCount={5832}/>
               <span style={{ fontSize: 25, letterSpacing: -0.63 }}> 건</span>
             </RequestCount>
             <Text>볼트앤너트에 등록된 견적 문의 건 수</Text>
