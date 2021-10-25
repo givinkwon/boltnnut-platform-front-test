@@ -135,7 +135,7 @@ class AutoestimateContainer extends React.Component {
 
       // 넣은 파일의 확장자 체크 함수
       acceptedFiles.map((data, idx) => {
-        let fileNameAvailable = ["stp", "step"];
+        let fileNameAvailable = ["stp", "step", "stl", "dwg"];
         const extension = data.name.split(".");
 
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
@@ -492,7 +492,11 @@ class AutoestimateContainer extends React.Component {
                   </TailBox>
                 </div>
                 <DeleteBox>
-                  <span onClick={() => AutoEstimate.fileList.splice(idx, 1)}>
+                  <span onClick={() => 
+                    {
+                      AutoEstimate.fileList.splice(idx, 1)
+                      AutoEstimate.countPrice()
+                    }}>
                     <img src={deleteButtonImg} />
                   </span>
                 </DeleteBox>
