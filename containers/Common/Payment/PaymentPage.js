@@ -364,6 +364,7 @@ class PaymentPageContainer extends React.Component {
             </PaymentBtn>
           </PaymentPageRight>
         </PaymentPageDiv>
+        <div style={{marginBottom : 90}}/>
         {/* <TestC></TestC> */}
       </Background>
     );
@@ -384,6 +385,10 @@ const Layer = styled.div`
 `;
 const PaymentPageDiv = styled(Containerv1)`
   justify-content: space-between;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display : block;
+    width: 90%;
+}
 `;
 
 const InlineFlexDiv = styled.div`

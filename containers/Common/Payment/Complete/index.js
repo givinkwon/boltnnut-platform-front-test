@@ -92,9 +92,9 @@ class PaymentCompleteContainer extends React.Component {
 					</CompleteInfoBackground>
 
 					<div style={{ display: 'inline-flex', marginTop: '60px', marginBottom: 230, justifyContent: 'center' }}>
-						<CompleteBtn onClick={() => Router.push('/request')}>
+						{/* <CompleteBtn onClick={() => Router.push('/request')}>
 							<FontSize20 style={{ color: '#0933b3', fontWeight: 'bold', textAlign: 'center' }}>제조사 찾아보기</FontSize20>
-						</CompleteBtn>
+						</CompleteBtn> */}
 
 						<CompleteBtn onClick={() => Router.push('/')} style={{ backgroundColor: '#0933b3', marginLeft: '22px' }}>
 							<FontSize20 style={{ color: '#ffffff', fontWeight: 'bold', textAlign: 'center' }}>홈으로가기</FontSize20>
@@ -140,6 +140,9 @@ const CompleteInfoBackground = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 556px;
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		height: 100%;
+	}
 `;
 
 const CompleteInfoBox = styled.div`
@@ -150,14 +153,29 @@ const CompleteInfoBox = styled.div`
 	border-radius: 5px;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 	background-color: #ffffff;
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		display: block;
+		height: 100%;
+	}
 `;
 
 const CompleteInfoLeft = styled.div`
 	width: 460px;
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
 `;
 
 const CompleteInfoRight = styled.div`
 	width: 460px;
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-bottom : 50px;
+	}
 `;
 
 const CompleteBtn = styled.button`
