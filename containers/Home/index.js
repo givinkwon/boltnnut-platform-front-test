@@ -18,6 +18,7 @@ import MobileBanner2Container from "./Mobile/MobileBanner2";
 import MobileBanner3Container from "./Mobile/MobileBanner3";
 import MobileBanner4Container from "./Mobile/MobileBanner4";
 import MobileBanner5Container from "./Mobile/MobileBanner5";
+import MobileBanner6Container from "./Mobile/MobileBanner6";
 
 import { inject, observer } from "mobx-react";
 import axios from "axios";
@@ -39,6 +40,8 @@ class HomeConatiner extends React.Component {
               <MobileBanner3Container width={width} />
               <MobileBanner4Container width={width} />
               <MobileBanner5Container width={width} />
+              <MobileBanner6Container width={width} />
+
             </CustomContainer>
           </>
         ) : (

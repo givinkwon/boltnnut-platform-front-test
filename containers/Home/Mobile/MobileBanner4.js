@@ -1,196 +1,174 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "components/Containerv1";
+import Background from "components/Background";
 import * as Title from "components/Title";
-import StarRatingComponent from "react-star-rating-component";
+import Fade from "react-reveal/Fade";
+import Router from "next/router";
+import Slider from "react-slick";
 
-const banner4score = "static/images/banner4score.svg";
+const image1 = "/static/images/product/product1.jpg";
+const image2 = "/static/images/product/product2.jpg";
+const image3 = "/static/images/product/product3.jpg";
+const image4 = "/static/images/product/product4.jpg";
+const image5 = "/static/images/product/product5.jpg";
+const image6 = "/static/images/product/product6.jpg";
+const image7 = "/static/images/product/product7.jpg";
+const image8 = "/static/images/product/product8.jpg";
+
+const passImg = "/static/images/pass7.png";
+const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
 class MobileBanner4Container extends React.Component {
-  state = {
-    rating: 1,
-  };
-
   render() {
-    const review = [
-      {
-        name: "TAJO",
-        desc: "비전문가다보니 업체 찾고 소통하기가 쉽지 않았습니다. 지인 소개를 통해 바로공장를 알게 되어 문의를 드렸는데 그런 취약점을 잘 채워주시는 것 같아 감사드립니다.",
-        date: "2020.08.30",
-      },
-      {
-        name: "HCLab",
-        desc: "납기가 촉박했는데 추석 연휴 때도 작업을 해주셔서 참 죄송하면서도 고마웠습니다.",
-        date: "2020.06.25",
-      },
-      {
-        name: "연구소 기업",
-        desc: "홈페이지에서 바로 견적이 나오길래 며칠 고생하며 견적 받았던 여러 업체 보다 15% 정도는 싸길래 바로 결제를 했습니다. 첫 발주때는 품질이 100% 맘에 드는 건 아니었는데 이후에 담당자분이 특히 신경써주셔서 빠르게 가공품이 필요할 때마다 이용 중입니다.",
-        date: "2021.07.20",
-      },
-      {
-        name: "코스메틱 회사",
-        desc: "기존 거래처가 계속 견적을 높게 불러서 인터넷에서 새로운 업체를 찾다가 바로공장을 찾게 되었습니다. 투명하게 바로 견적이 나오는 서비스 200% 만족합니다.",
-        date: "2021.07.20",
-      },
-    ];
+    const SlideSettings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
 
     return (
-      <Container>
-        <InnerContainer>
-          <Title20 style={{ marginTop: 100 }}>클라이언트 분들의 "바로발주" 후기.</Title20>
+      <>
+        <Container>
 
-          <Title16 style={{ marginTop: "32px" }}>평균 만족도</Title16>
+          <Box>
+            <Title20>단품부터 양산품 조립까지 바로 발주하세요.</Title20>
+          </Box>
 
-          <RattingBox>
-            <MyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
-            <img src={banner4score} />
-          </RattingBox>
-
-          <ReviewContainer>
-            {review.map((v, idx) => (
-              <div>
-                <ReviewBox>
-                  <InnerReviewBox>
-                    <div style={{ display: "inline-flex", marginTop: "20px" }}>
-                      <Title13>{v.name}</Title13>
-                      <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
-                    </div>
-
-                    <Title12>{v.desc}</Title12>
-
-                    <div style={{ display: "flex", justifyContent: "flex-end", margin: "17px 0px 8px 0px" }}>
-                      <Title9>{v.date}</Title9>
-                    </div>
-                  </InnerReviewBox>
-                </ReviewBox>
-              </div>
-            ))}
-          </ReviewContainer>
-        </InnerContainer>
-      </Container>
+          <SliderContainer {...SlideSettings}>
+            <item>
+              <img src={image1} />
+            </item>
+            <item>
+              <img src={image2} />
+            </item>
+            <item>
+              <img src={image3} />
+            </item>
+            <item>
+              <img src={image4} />
+            </item>
+            <item>
+              <img src={image5} />
+            </item>
+            <item>
+              <img src={image6} />
+            </item>
+            <item>
+              <img src={image7} />
+            </item>
+            <item>
+              <img src={image8} />
+            </item>
+        </SliderContainer>
+        </Container>
+      </>
     );
   }
 }
 
 export default MobileBanner4Container;
 
-const Container = styled.div`
-  height: 100%;
-  margin-top: 100px;
-  background-color: #f6f6f6;
+const StartLine = styled.div`
+  width: 18px;
+  border: solid 1px #999999;
+  margin-bottom: 24px;
 `;
 
-const InnerContainer = styled.div`
+const Container = styled.div`
+  padding-top: 90px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 28px);
+  }
+
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+    width: 720px;
+  }
+  @media (min-width: 1280px) {
+    width: 1200px;
+  }
+`;
+const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 24px;
+  width: 100%;
+  height: 55px;
 `;
 
 const Title20 = styled(Title.FontSize20)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.4;
-  letter-spacing: -0.5px;
-  color: #111111;
+  line-height: 1.57;
+  letter-spacing: -0.35px;
+  margin-bottom: 50px;
 `;
 
-const Title16 = styled(Title.FontSize16)`
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 0.63;
-  letter-spacing: -0.4px;
-  color: #282c36;
-`;
-
-const MyStarRatingComponent = styled(StarRatingComponent)`
-  margin-top: 11px;
-  > label {
-    width: 15px;
-    height: 30px;
-    > i {
-      font-size: 15px;
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+        img {
+          border-radius: 30px;
+          width: 200px;
+          height: 200px;
+        }
+      }
     }
   }
 `;
 
-const ReviewMyStarRatingComponent = styled(StarRatingComponent)`
-  margin-left: 7px;
-  > label {
-    width: 10px;
-    height: 30px;
-    > i {
-      font-size: 7px;
-    }
-  }
+const Layer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 97;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
-const RattingBox = styled.div`
-  display: inline-flex;
-  justify-content: space-between;
-  width: 132px;
-  margin-top: 6px;
-`;
-
-const ReviewBox = styled.div`
+const LogoBox = styled.div`
   display: flex;
   justify-content: center;
-  width: 230px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  margin-top: 40px;
-  margin-right: 8px;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  align-items: center;
+  flex-wrap: wrap;
+
+  > img {
+    width: 600px;
+    height: 600px;
+  }
 `;
 
-const InnerReviewBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 188px;
-`;
+const Item = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: calc(14% - 40px);
+  padding: 20px 0;
+  margin: 0 20px;
 
-const Title13 = styled(Title.FontSize13)`
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.46;
-  letter-spacing: -0.33px;
-  color: #191919;
-`;
+  justify-content: center;
 
-const Title12 = styled(Title.FontSize12)`
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.3px;
-  color: #636363;
-`;
-
-const Title9 = styled(Title.FontSize9)`
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.33;
-  letter-spacing: -0.23px;
-  color: #bcbdc1;
-`;
-
-const ReviewContainer = styled.div`
-  display: inline-flex;
-
-  position: relative;
-  width: 100%;
-  height: 300px;
-  overflow-x: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
+  > img {
+    // width: 100%;
+    // display: inline-block;
+    // position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    // width: 88px;
+    // height: 88px;
+    width: 121px;
   }
 `;

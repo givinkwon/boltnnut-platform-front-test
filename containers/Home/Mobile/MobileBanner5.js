@@ -2,70 +2,195 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import Background from "../../../components/Background";
-import Button from "../../../components/Button";
-import Router from "next/router";
+import StarRatingComponent from "react-star-rating-component";
 
-const background = "static/images/mobilebanner6backgroundimg.png";
+const banner4score = "static/images/banner4score.svg";
 
 class MobileBanner5Container extends React.Component {
-  render() {
-    return (
-      <BackgroundContainer>
-        <Container>
-          <Title16 style={{ fontWeight: "bold" }}>발품 파는 오프라인 가공 발주 이제 그만!</Title16>
-          <Title16>AI 견적으로 제조 부품 바로발주</Title16>
+  state = {
+    rating: 1,
+  };
 
-          <RequestButton onClick={() => Router.push('/autoestimate')}>
-            <Title15>바로발주 시작하기</Title15>
-          </RequestButton>
-        </Container>
-      </BackgroundContainer>
+  render() {
+    const review = [
+      {
+        name: "TAJO",
+        desc: "비전문가다보니 업체 찾고 소통하기가 쉽지 않았습니다. 지인 소개를 통해 바로공장를 알게 되어 문의를 드렸는데 그런 취약점을 잘 채워주시는 것 같아 감사드립니다.",
+        date: "2020.08.30",
+      },
+      {
+        name: "끌린다",
+        desc: "납기가 촉박했는데 추석 연휴 때도 작업을 해주셔서 참 죄송하면서도 고마웠습니다.",
+        date: "2020.06.25",
+      },
+      {
+        name: "HCLAB",
+        desc: "기존 거래처가 계속 견적을 높게 불러서 인터넷에서 새로운 업체를 찾다가 바로공장을 찾게 되었습니다. 투명하게 바로 견적이 나오는 서비스 200% 만족합니다.",
+        date: "2021.07.20",
+      },
+      {
+        name: "코스메틱 회사",
+        desc: "홈페이지에서 바로 견적이 나오길래 며칠 고생하며 견적 받았던 여러 업체 보다 15% 정도는 싸길래 바로 결제를 했습니다. 첫 발주때는 품질이 100% 맘에 드는 건 아니었는데 이후에 담당자분이 특히 신경써주셔서 빠르게 가공품이 필요할 때마다 이용 중입니다.",
+        date: "2021.07.20",
+      },
+    ];
+
+    return (
+      <Container>
+        <InnerContainer>
+          <Title20 style={{ marginTop: 100 }}>클라이언트 분들의 "바로발주" 후기.</Title20>
+
+          <Title16 style={{ marginTop: "32px" }}>평균 만족도</Title16>
+
+          <RattingBox>
+            <MyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
+            <img src={banner4score} />
+          </RattingBox>
+
+          <ReviewContainer>
+            {review.map((v, idx) => (
+              <div>
+                <ReviewBox>
+                  <InnerReviewBox>
+                    <div style={{ display: "inline-flex", marginTop: "20px" }}>
+                      <Title13>{v.name}</Title13>
+                      <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0933b3"} value={5} />
+                    </div>
+
+                    <Title12>{v.desc}</Title12>
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", margin: "17px 0px 8px 0px" }}>
+                      <Title9>{v.date}</Title9>
+                    </div>
+                  </InnerReviewBox>
+                </ReviewBox>
+              </div>
+            ))}
+          </ReviewContainer>
+        </InnerContainer>
+      </Container>
     );
   }
 }
 
 export default MobileBanner5Container;
 
-const BackgroundContainer = styled(Background)`
-  display: flex;
-  justify-content: center;
-  background-image: url(${background});
-  height: 217px;
-`;
-
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+  background-color: #f6f6f6;
 `;
 
-const Title16 = styled(Title.FontSize16)`
+const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title20 = styled(Title.FontSize20)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.75;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  color: #111111;
+`;
+
+const Title16 = styled(Title.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.63;
   letter-spacing: -0.4px;
   color: #282c36;
 `;
 
-const Title15 = styled(Title.FontSize15)`
-  font-family: NotoSansCJKkr;
-  font-weight: 500;
-  color: #0933b3;
+const MyStarRatingComponent = styled(StarRatingComponent)`
+  margin-top: 11px;
+  > label {
+    width: 15px;
+    height: 30px;
+    > i {
+      font-size: 15px;
+    }
+  }
 `;
 
-const RequestButton = styled.button`
+const ReviewMyStarRatingComponent = styled(StarRatingComponent)`
+  margin-left: 7px;
+  > label {
+    width: 10px;
+    height: 30px;
+    > i {
+      font-size: 7px;
+    }
+  }
+`;
+
+const RattingBox = styled.div`
+  display: inline-flex;
+  justify-content: space-between;
+  width: 132px;
+  margin-top: 6px;
+`;
+
+const ReviewBox = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 189px;
-  height: 42px;
+  width: 230px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-top: 40px;
+  margin-right: 8px;
   object-fit: contain;
-  border-radius: 21px;
-  border: solid 1px #0933b3;
-  margin-top: 28px;
-  background: none;
-  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+`;
+
+const InnerReviewBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 188px;
+`;
+
+const Title13 = styled(Title.FontSize13)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.46;
+  letter-spacing: -0.33px;
+  color: #191919;
+`;
+
+const Title12 = styled(Title.FontSize12)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.3px;
+  color: #636363;
+`;
+
+const Title9 = styled(Title.FontSize9)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: -0.23px;
+  color: #bcbdc1;
+`;
+
+const ReviewContainer = styled.div`
+  display: inline-flex;
+
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
