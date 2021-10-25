@@ -35,9 +35,9 @@ class RequestMain extends React.Component {
         <Container>
           <Body>
             <Header>
-              AI 견적 알고리즘으로
+            CNC 가공 빠르고, 안전하게
               <br />
-              1초만에 견적내고, 바로 납품받기 
+              AI 견적으로 제조 부품 바로발주
             </Header>
             <RequestCount>
             <CountFunc index={0} projCount={5285}/>

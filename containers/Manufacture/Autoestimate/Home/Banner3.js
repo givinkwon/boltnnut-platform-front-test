@@ -17,8 +17,7 @@ class RequestMain extends React.Component {
         <Container>
           <Body>
             <Header>
-              타 유사 서비스와 차별화된 <br />
-              볼트앤너트만의 장점도 있습니다.
+            볼트앤너트 "바로발주"의 3 가지 차별점
             </Header>
             <ImageBox>
               <ImageSubBox>
@@ -26,10 +25,10 @@ class RequestMain extends React.Component {
                 <Title>1초 AI 견적!</Title>
                 <Content>
                   <span style={{ fontWeight: "bold", color: "#0933b3" }}>
-                    견적 요청 없이
+                  견적 요청 없이
                   </span>
                   <br />
-                  바로 견적을 받을 수 있어요.
+                  부품 견적/납기 바로 받기
                 </Content>
               </ImageSubBox>
               <ImageSubBox>
