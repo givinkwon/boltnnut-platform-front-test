@@ -74,7 +74,7 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
-    "@babel/helper-regex": "^7.10.5",
+    "@babel/helper-regex": "^7.0.0",
     "babel-eslint": "8",
     "cross-env": "6.0.3",
     "eslint": "^7.13.0",
