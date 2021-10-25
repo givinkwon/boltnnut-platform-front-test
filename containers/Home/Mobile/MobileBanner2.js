@@ -32,7 +32,7 @@ class RequestMain extends React.Component {
     return (
       <Container>
       <InnerContainer>
-        <Title20 >볼트앤너트 "바로발주"의 3가지 차별점</Title20>
+        <Title20 >바로공장의 "바로발주"의 3가지 차별점</Title20>
         <CardContainer>
           {card.map((v, idx) => (
             <div>

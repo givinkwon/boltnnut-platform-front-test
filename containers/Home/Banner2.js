@@ -17,7 +17,7 @@ class RequestMain extends React.Component {
         <Container>
           <Body>
             <Header>
-              볼트앤너트 "바로발주"의 3 가지 차별점
+              바로공장의 "바로발주"의 3 가지 차별점
             </Header>
             <ImageBox>
               <ImageSubBox>

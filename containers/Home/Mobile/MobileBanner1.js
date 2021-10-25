@@ -45,7 +45,7 @@ class MobileBanner1Container extends React.Component {
         <Container>
 
           <Box>
-            <Title14>볼트앤너트는 제조분야를 선도하는</Title14>
+            <Title14>바로공장은 제조분야를 선도하는</Title14>
             <Title14>많은 기업들과 함께합니다.</Title14>
           </Box>
 
