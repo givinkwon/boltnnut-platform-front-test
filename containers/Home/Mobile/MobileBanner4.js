@@ -38,8 +38,7 @@ class MobileBanner4Container extends React.Component {
     return (
       <Container>
         <InnerContainer>
-          <Title20 style={{ marginTop: 100 }}>클라이언트 분들께</Title20>
-          <Title20>검증된 볼트앤너트를 만나보세요.</Title20>
+          <Title20 style={{ marginTop: 100 }}>단품부터 양산품 조립까지 바로 발주하세요.</Title20>
 
           <Title16 style={{ marginTop: "32px" }}>평균 만족도</Title16>
 
