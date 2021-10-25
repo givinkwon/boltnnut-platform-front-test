@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 import Background from "../../components/Background";
 
 // Images
-const stepimg1 = "/static/images/Home/step1web.png";
+const stepimg1 = "/static/videos/video.mp4";
 const stepimg2 = "/static/images/Home/step2.svg";
 const stepimg3 = "/static/images/Home/step3.svg";
 const backgroundlogo = "/static/images/backgroundlogo.svg";
@@ -40,10 +40,11 @@ class Banner4Container extends React.Component {
   onChangeStepImage = () => {
     if (this.state.stepImgIndex === 0) {
       return stepimg1;
-    } else if (this.state.stepBoxIndex === 1) {
-      return stepimg2;
-    } else if (this.state.stepBoxIndex === 2) {
-      return stepimg3;
+    // } else if (this.state.stepBoxIndex === 1) {
+    //   return stepimg2;
+    // } else if (this.state.stepBoxIndex === 2) {
+    //   return stepimg3;
+    // }
     }
   };
 
@@ -79,7 +80,9 @@ class Banner4Container extends React.Component {
             </InnerContainer>
 
             <StepContainer>
-              <img style={{ width: "750px", height: "460px" }} src={this.onChangeStepImage()} />
+              <video style={{ width: "750px", height: "460px"}} autoPlay muted>
+                <source src={this.onChangeStepImage()} type="video/mp4"/>
+              </video>
 
               <div
                 style={{
@@ -148,6 +151,7 @@ const StepContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
+
 `;
 
 const StepBox = styled.div`
