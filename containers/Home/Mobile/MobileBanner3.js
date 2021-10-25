@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as Title from "components/Title";
 
 const bluedot = "static/images/bluedot.svg";
-const stepimg1 = "/static/images/Home/step1.png";
+const stepimg1 = "/static/videos/video.mp4";
 const stepimg2 = "/static/images/Home/step2.svg";
 const stepimg3 = "/static/images/Home/step3.svg";
 
@@ -29,11 +29,12 @@ class MobileBanner3Container extends React.Component {
   onChangeStepImage = () => {
     if (this.state.stepImgIndex === 0) {
       return stepimg1;
-    } else if (this.state.stepBoxIndex === 1) {
-      return stepimg2;
-    } else if (this.state.stepBoxIndex === 2) {
-      return stepimg3;
     }
+    // } else if (this.state.stepBoxIndex === 1) {
+    //   return stepimg2;
+    // } else if (this.state.stepBoxIndex === 2) {
+    //   return stepimg3;
+    // }
   };
 
   render() {
@@ -54,7 +55,9 @@ class MobileBanner3Container extends React.Component {
             ))}
           </StepContainer>
 
-          <img src={this.onChangeStepImage()} />
+          <video style={{height: "400px"}} autoPlay muted>
+              <source src={this.onChangeStepImage()} type="video/mp4"/>
+          </video>
 
           {this.state.stepBoxIndex === 0 ? (
             <>
