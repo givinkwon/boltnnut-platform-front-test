@@ -144,20 +144,19 @@ const SliderContainer = styled(Slider)`
         display: flex;
         justify-content: center;
         border-radius: 10px;
-        box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
       }
     }
   }
 `;
 
 const Item = styled.div`
-  margin: 0 20px;
+  margin: 0 0;
   > img {
-    border-radius: 4px;
+    border-radius: 50px;
     overflow: hidden;
     cursor: pointer;
-    width: 600px;
-    height: 600px;
+    width: 560px;
+    height: 560px;
   }
 `;
 
