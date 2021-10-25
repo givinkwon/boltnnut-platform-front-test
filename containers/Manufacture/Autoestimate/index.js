@@ -1144,6 +1144,9 @@ const HeaderBox = styled.div`
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 90%;
+  }
 `;
 
 const ContentBox = styled.div`
