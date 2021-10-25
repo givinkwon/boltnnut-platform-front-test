@@ -9,6 +9,7 @@ import Banner3Container from "./Banner3";
 import Banner4Container from "./Banner4";
 import Banner5Container from "./Banner5";
 import Banner6Container from "./Banner6";
+import Banner7Container from "./Banner7";
 
 // New
 import MobileBanner0Container from "./Mobile/MobileBanner0";
@@ -50,6 +51,7 @@ class HomeConatiner extends React.Component {
               <Banner4Container width={width} />
               <Banner5Container width={width} />
               <Banner6Container width={width} />
+              <Banner7Container width={width} />
             </div>
           </>
         )}
