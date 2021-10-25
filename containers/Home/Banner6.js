@@ -17,7 +17,7 @@ class Banner6Container extends React.Component {
           >
             <Font29>발품 파는 오프라인 가공 발주 이제 그만!</Font29>
             <Font25>
-            AI 견적으로 제조 부품 바로발주
+            AI 견적으로 제조 부품 바로발주 
             </Font25>
           </div>
 
