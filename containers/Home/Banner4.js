@@ -51,21 +51,21 @@ class Banner4Container extends React.Component {
     const stepBoxArray = [
       {
         step: "Step1",
-        title: "제조사 찾기",
-        desc1: "한번의 검색으로 제품에 맞는",
-        desc2: "카테고리의 제조사를 찾아보세요.",
+        title: "3D 도면 업로드",
+        desc1: "STEP, STP 등 3D 도면 업로드",
+        desc2: "* 2D 도면도 업로드 가능",
       },
       {
         step: "Step2",
-        title: "제조사에 의뢰하기",
-        desc1: "제조사를 비교하고 간단한 양식에",
-        desc2: "맞춰 견적 요청서를 작성해 보세요.",
+        title: "견적과 납기 확인",
+        desc1: "AI 견적과 납기를 확인하고",
+        desc2: "발주를 요청해보세요.",
       },
       {
         step: "Step3",
-        title: "제조사와 직접 채팅하기",
-        desc1: "제조사에게 견적 요청서를 자세히",
-        desc2: "상담받고 견적을 조율해 보세요.",
+        title: "발주 요청",
+        desc1: "배송 정보 입력 후 발주 요청!",
+        desc2: "* 연구비/지원금은 후불 요청도 가능",
       },
     ];
 
@@ -74,8 +74,8 @@ class Banner4Container extends React.Component {
         <CustomContainer>
           <Containerv1 style={{ justifyContent: "center", flexDirection: "column" }}>
             <InnerContainer>
-              <Title32>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"</Title32>
-              <Title32>볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.</Title32>
+              <Title32>CNC 가공 부품 발주까지 단, 3분!</Title32>
+              <Title32>도면 업로드 | 견적과 납기 확인 | 발주 요청 </Title32>
             </InnerContainer>
 
             <StepContainer>

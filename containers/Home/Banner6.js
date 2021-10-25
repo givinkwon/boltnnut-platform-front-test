@@ -15,14 +15,14 @@ class Banner6Container extends React.Component {
               alignItems: "center",
             }}
           >
-            <Font29>마음에 드는 공장을 찾기 힘드시나요?</Font29>
+            <Font29>발품 파는 오프라인 가공 발주 이제 그만!</Font29>
             <Font25>
-              볼트앤너트에서 여러 업체의 회사소개서와 제안서를 받아보세요.
+            AI 견적으로 제조 부품 바로발주
             </Font25>
           </div>
 
-          <a href={"request"}>
-            <RequestButton>무료로 의뢰하기</RequestButton>
+          <a href={"autoestimate"}>
+            <RequestButton>바로발주 시작하기</RequestButton>
           </a>
         </Container>
       </CustomBackground>

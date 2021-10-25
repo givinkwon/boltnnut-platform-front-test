@@ -42,9 +42,8 @@ class MobileBanner3Container extends React.Component {
     return (
       <Container>
         <InnerBox>
-          <Title20>"이 제품 만드는 공장 없나요?"</Title20>
-          <Title20>볼트앤너트에서 내 제품 분야에 꼭 맞는</Title20>
-          <Title20>업체를 찾아보세요.</Title20>
+          <Title20>CNC 가공 부품 발주까지 단, 3분</Title20>
+          <Title20>도면 업로드 | 견적과 납기 확인 | 발주 요청</Title20>
 
           <StepContainer>
             {stepBoxArray.map((v, idx) => (
@@ -59,21 +58,21 @@ class MobileBanner3Container extends React.Component {
 
           {this.state.stepBoxIndex === 0 ? (
             <>
-              <Title18 style={{ marginTop: "32px" }}>제조사 찾기</Title18>
-              <Title15 style={{ marginTop: "8px" }}>한번의 검색으로 제품제 맞는</Title15>
-              <Title15>카테고리의 제조사를 찾아보세요.</Title15>
+              <Title18 style={{ marginTop: "32px" }}>3D 도면 업로드</Title18>
+              <Title15 style={{ marginTop: "8px" }}>STEP, STP 등 3D 도면 업로드</Title15>
+              <Title15>* 2D 도면도 업로드 가능</Title15>
             </>
           ) : this.state.stepBoxIndex === 1 ? (
             <>
-              <Title18 style={{ marginTop: "32px" }}>제조사에 의뢰하기</Title18>
-              <Title15 style={{ marginTop: "8px" }}>제조사를 비교하고 간단한 양식에</Title15>
-              <Title15>맞춰 견적 요청서를 작성해 보세요.</Title15>
+              <Title18 style={{ marginTop: "32px" }}>견적과 납기 확인</Title18>
+              <Title15 style={{ marginTop: "8px" }}>AI 견적과 납기를 확인하고</Title15>
+              <Title15>발주를 요청해보세요.</Title15>
             </>
           ) : (
             <>
-              <Title18 style={{ marginTop: "32px" }}>제조사와 직접 채팅하기</Title18>
-              <Title15 style={{ marginTop: "8px" }}>제조사에게 견적 요청서를 자세히</Title15>
-              <Title15>상담받고 견적을 조율해 보세요.</Title15>
+              <Title18 style={{ marginTop: "32px" }}>발주 요청</Title18>
+              <Title15 style={{ marginTop: "8px" }}>배송 정보 입력 후 발주 요청!</Title15>
+              <Title15>* 연구비/지원금은 후불 요청도 가능</Title15>
             </>
           )}
 

@@ -46,7 +46,7 @@ class HomeConatiner extends React.Component {
               <Banner0Container width={width} />
               <Banner1Container width={width} />
               <Banner2Container width={width} />
-              <Banner3Container width={width} />
+              {/* <Banner3Container width={width} /> */}
               <Banner4Container width={width} />
               <Banner5Container width={width} />
               <Banner6Container width={width} />

@@ -4,8 +4,12 @@ import Containerv1 from "../../components/Containerv1";
 import * as Title from "components/Title";
 import * as Text from "components/Text";
 import SearchBar from "./SearchBar";
+import Router from "next/router";
+import Buttonv1 from "components/Buttonv1";
+
 
 const banner0img = "/static/images/banner0img.svg";
+const arrow = "static/images/request/arrow.svg";
 
 class Banner0Container extends React.Component {
   render() {
@@ -21,14 +25,17 @@ class Banner0Container extends React.Component {
         <Containerv1 style={{ gap: 130, alignItems: "center" }}>
           <LeftBox>
             <Header>
-              대한민국 제조사 정보
+              CNC 가공 빠르고, 안전하게
               <br />
-              여기 다 있다.
+              AI 견적으로 제조 부품 바로발주
             </Header>
 
-            <Middle>당신에게 맞는 제조사 정보를 바로 조회해보세요.</Middle>
+            <Middle>3D 도면만 올리면 부품 납기/견적이 바로!</Middle>
 
-            <SearchBar />
+            <Button onClick={() => (Router.push('/autoestimate'))}>
+              바로 발주 알아보기 
+              <img src={arrow} style={{ marginLeft: 10 }} />
+            </Button>
           </LeftBox>
 
           <img src={banner0img} style={{ marginTop: 40 }} />
@@ -46,7 +53,7 @@ const LeftBox = styled.div`
   width: 588px;
 `;
 
-const Header = styled(Title.FontSize48)`
+const Header = styled(Title.FontSize32)`
   width: 420px;
   height: 151px;
   object-fit: contain;
@@ -58,7 +65,7 @@ const Header = styled(Title.FontSize48)`
   color: #1e2222;
 `;
 
-const Middle = styled(Text.FontSize20)`
+const Middle = styled(Text.FontSize24)`
   width: 100%;
   height: 29px;
   object-fit: contain;
@@ -72,4 +79,17 @@ const Middle = styled(Text.FontSize20)`
   color: #000000;
   margin-top: 20px;
   margin-bottom: 80px;
+`;
+const Button = styled(Buttonv1)`
+  width: 263px !important;
+  height: 58px !important;
+  font-size: 20px;
+  font-family: NotoSansCJKkr !important;
+  line-height: 2.1;
+  letter-spacing: -0.5px;
+  margin-top: 100px;
+  z-index: 2;
+  :hover {
+    background-color: #174aee;
+  }
 `;
