@@ -355,14 +355,13 @@ class Request {
 
       // 수정하기인 경우
       else {
-          // 의뢰 아이디
-          formData.append("id", this.request_id); // 의뢰 아이디
           // axois 쏘기
           const req = {
             headers: {
               Authorization: `Token ${Token}`,
             },
             data: formData,
+            id: this.request_id,
           };
           // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
           this.requestTabIdx = 2;
