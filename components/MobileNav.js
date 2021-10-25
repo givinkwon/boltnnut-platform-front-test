@@ -166,10 +166,10 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {Auth.logged_in_partner ? <KSLink step_index={1} url={"project"} content={"제조문의 보기"} /> :  <KSLink onClick={() => Request.request_id = 0} url={"request"} content={"제조 문의하기"} />}
-                  <KSLink url={"search"} content={"제조사 찾기"}/>
-                  {/* <KSLink url={"shop"} content={"공장 직거래"} />
-                  <KSLink url={"autoestimate"} content={"AI 자동 견적"} /> */}
+                  {/* {Auth.logged_in_partner ? <KSLink step_index={1} url={"project"} content={"제조문의 보기"} /> :  <KSLink onClick={() => Request.request_id = 0} url={"request"} content={"제조 문의하기"} />}
+                  <KSLink url={"search"} content={"제조사 찾기"}/> */}
+                  {/* <KSLink url={"shop"} content={"공장 직거래"} /> */}
+                  <KSLink url={"autoestimate"} content={"AI 자동 견적"} />
 
                   {/* {Auth.logged_in_user && <KSLink url={"chatting"} content={"채팅하기"} />} */}
                 </ModalContent>
@@ -179,37 +179,7 @@ class MobileNav extends React.Component {
                 <br />
                 <KSLink url={"term/personal"} content={"개인정보 처리 방침"} />
               </ModalContent2>
-              {Auth.logged_in_user ? (
-                <Footer>
-                  <div onClick={this.logout}> 로그아웃 </div>
-                </Footer>
-              ) : (
-                <Footer>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRight: "solid 1px #e1e2e4",
-                      height: 32,
-                    }}
-                    onClick={() => (location.href = Common.makeUrl("login"))}
-                  >
-                    로그인
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: 32,
-                    }}
-                    onClick={() => (location.href = Common.makeUrl("signup"))}
-                  >
-                    회원가입
-                  </div>
-                </Footer>
-              )}
+              
             </ProfileMenu>
           </Modal>
         )}
