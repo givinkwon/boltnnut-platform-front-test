@@ -153,7 +153,7 @@ class AutoEstimate {
           selectedMaterial : { id: 0, name: "알루미늄 6061" },
           
           // 납기
-          period : Math.ceil(res.data.price/250000),
+          period : Math.ceil(res.data.price/200000) + 1,
 
           // 기타
           checked : true,
@@ -224,7 +224,8 @@ class AutoEstimate {
           this.MoldPrice = 0;
           this.InjectionPrice = 0;
           // 납기일 => 20만원당 하루
-          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000)
+          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000) + 1
+          console.log(this.fileList[fileIdx].period);
         } 
         // 금형인 경우
         else {
@@ -285,7 +286,7 @@ class AutoEstimate {
   @observable totalCNCPrice = 0 // 전체 CNC 가격
 
   // 전체 납기 관련
-  @observable totalPeriod = 1;
+  @observable totalPeriod = 0;
 
   // 체크에 따라 총 주문 개수를 세는 함수
   @action checkQuantity = (idx = 0, current_value = 0, checked = 0) => {
@@ -301,14 +302,14 @@ class AutoEstimate {
       // CNC 체크인 경우
       if(this.fileList[idx].selectedManufacture.id == 1){
         // 20만원당 하루
-        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) 
+        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) + 1
       }
     }
 
     // 전체 수량 세기
     this.total_quantity = 0
     // 전체 납기 세기
-    this.totalPeriod = 1
+    this.totalPeriod = 0
 
     for (let i = 0; i < this.fileList.length; i++) {
       // 도면 개수 전체 합한 것
@@ -328,13 +329,13 @@ class AutoEstimate {
     // CNC 체크인 경우
     if(this.fileList[idx].selectedManufacture.id == 1){
       // 20만원당 하루
-      this.fileList[idx].period = Math.ceil((this.fileList[idx].price * this.fileList[idx].quantity) / 200000) 
+      this.fileList[idx].period = Math.ceil((this.fileList[idx].price * this.fileList[idx].quantity) / 200000) + 1 
     }
     
     // 전체 수량 세기
     this.total_quantity = 0
     // 전체 납기 세기
-    this.totalPeriod = 1
+    this.totalPeriod = 0
 
     for (let i = 0; i < this.fileList.length; i++) {
       this.total_quantity += parseInt(this.fileList[i].quantity); // 문자열이라 숫자로 바꿔줘야함
@@ -354,7 +355,7 @@ class AutoEstimate {
     this.totalCNCPrice = 0;
     this.totalPrice = 0;
     // 납기일 초기화
-    this.totalPeriod = 1;
+    this.totalPeriod = 0;
 
     this.fileList.map((data, idx) => {
         // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산

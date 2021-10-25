@@ -84,7 +84,7 @@ class PaymentPageContainer extends React.Component {
         client_name: Payment.Name,
         location: Payment.Location,
         period : AutoEstimate.totalPeriod + "영업일" ,
-        product_price: Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000,
+        product_price: Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000,
         count: AutoEstimate.total_quantity,
         phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
       },
@@ -306,7 +306,7 @@ class PaymentPageContainer extends React.Component {
               >
                 <PaymentInfoText24>최종 결제가격(VAT 포함)</PaymentInfoText24>
                 <PaymentInfoText24 style={{ color: "#282c36" }}>
-                  {(Math.round((AutoEstimate.totalPrice/1000) * 1000 + 5000) * 1.1).toLocaleString("ko-KR")} 원
+                  {(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000).toLocaleString("ko-KR")} 원
                 </PaymentInfoText24>
               </InlineFlexDiv>
             </PaymentInfoWrap>
