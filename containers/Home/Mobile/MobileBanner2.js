@@ -13,18 +13,18 @@ class RequestMain extends React.Component {
       {
         img : requestimg1,
         title: "1초 AI 견적!",
-        highlight: "견적 요청 없이", 
-        content : "바로 견적을 받을 수 있어요.",
+        highlight: "견적 요청 없이 ", 
+        content : "부품 견적/납기 바로 받기",
       },
       {
         img : requestimg2,
         title: "보안 걱정은 NO!",
-        highlight: "NDA를 체결한", 
+        highlight: "NDA를 체결한 ", 
         content : "파트너에게만 발주를 진행합니다.",
       },
       {
         img : requestimg3,
-        title: "전문가 상담이 무료!",
+        title: "전문가 상담이 무료! ",
         highlight: "볼트앤너트 전문 의뢰 상담가가", 
         content : "상시 도움을 드려요.",
       },
