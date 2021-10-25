@@ -45,7 +45,7 @@ class Project {
     search_text = ""
   ) => {
     // 토큰 가져오기
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     // 모든 프로젝트 보기에서 호출한 경우
     if (container == "allproject") {
       const req = {

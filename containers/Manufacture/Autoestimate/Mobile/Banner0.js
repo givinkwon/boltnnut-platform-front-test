@@ -41,7 +41,7 @@ class RequestMain extends React.Component {
               1초만에 견적내고, 바로 납품받기
             </Header>
             <RequestCount>
-            <CountFunc index={0} projCount={Project.project_count * 3 - 40}/>
+            <CountFunc index={0} projCount={5832}/>
               <span style={{ fontSize: 25, letterSpacing: -0.63 }}> 건</span>
             </RequestCount>
             <Text>볼트앤너트에 등록된 견적문의 수</Text>

@@ -1,199 +1,353 @@
 import React from "react";
 import styled from "styled-components";
-
-import Container from "components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
+import * as Title from "components/Title";
+import * as Text from "components/Text";
 
-import Buttonv1 from "components/Buttonv1";
+const boltnnutlogo = "/static/images/boltnnutlogo.svg";
+const logo1 = "/static/images/logo1.svg";
+const logo2 = "/static/images/logo2.svg";
+const logo3 = "/static/images/logo3.svg";
+const logo4 = "/static/images/logo4.svg";
+const logo5 = "/static/images/logo5.svg";
+const stars = "/static/images/stars.svg";
 
-const content1 = "static/images/request/content1.svg";
-const content2 = "static/images/request/content2.svg";
-const content3 = "static/images/request/content3.svg";
-const content4 = "static/images/request/content4.svg";
-const content5 = "static/images/request/content5.svg";
-const name = "static/images/request/HCLab.svg";
-const star = "static/images/request/star.svg";
-
-class RequestMain extends React.Component {
+class Banner4Container extends React.Component {
   render() {
     return (
-      <Background style={{ backgroundColor: "#f6f6f6" }}>
+      <CustomBackground>
         <Container>
-          <Body>
-            <Header>클라이언트 분들께 검증된 볼트앤너트를 만나보세요.</Header>
-            <ReviewBox>
-              <DevideBox>
-                <ReviewSubBox style={{ height: "100%" }}>
-                  <ReviewHeader>
-                    <img src={name} style={{ marginRight: 15 }} />
-                    <img src={star} />
-                  </ReviewHeader>
-                  <Title>
-                    개발 업체 찾는 기간이
-                    <br />
-                    3달 단축됐습니다.
-                  </Title>
-                  <img
-                    src={content1}
-                    style={{ width: 306, height: 242, marginBottom: 50 }}
-                  />
-                  <Date>2020.06.25</Date>
-                </ReviewSubBox>
-              </DevideBox>
+          <Title32>클라이언트 분들의 "바로발주" 후기.</Title32>
 
-              <DevideBox>
-                <ReviewSubBox>
-                  <ReviewHeader>
-                    <Name>끌린다</Name>
-                    <img src={star} />
-                  </ReviewHeader>
-                  <Content
-                    src={content2}
-                    style={{
-                      width: 320,
-                      height: 76,
-                      marginBottom: 30,
-                      marginTop: 20,
-                    }}
-                  />
-                  <Date>2021.06.25</Date>
-                </ReviewSubBox>
+          <ReviewContainer>
+            <MainReviewBox>
+              <div style={{ width: "324px" }}>
+                <ImageBox>
+                  <img src={logo4} />
+                  <img src={stars} />
+                </ImageBox>
 
-                <ReviewSubBox>
-                  <ReviewHeader>
-                    <Name>코스메틱 회사</Name>
-                    <img src={star} />
-                  </ReviewHeader>
-                  <Content
-                    src={content3}
+                <Text22>
+                투명하게 바로 견적이 나오는 서비스
+                  <br /> 200% 만족합니다.
+                </Text22>
+                <Text18>
+                기존 거래처가 계속 견적을 높게 불러서 인터넷에서 새로운 업체를 찾다가 바로공장을 찾게 되었습니다. 
+                  <b
                     style={{
-                      width: 320,
-                      height: 103,
-                      marginBottom: 20,
-                      marginTop: 15,
+                      fontWeight: "bold",
+                      color: "#000000",
+                      backgroundColor: "#eaf0fa",
                     }}
-                  />
-                  <Date>2021.06.30</Date>
-                </ReviewSubBox>
-              </DevideBox>
+                  >
+                    투명하게 바로 견적이 나오는 서비스 200% 만족합니다.{" "}
+                  </b>
 
-              <DevideBox>
-                <ReviewSubBox>
-                  <ReviewHeader>
-                    <Name>TAJO</Name>
-                    <img src={star} />
-                  </ReviewHeader>
-                  <Content
-                    src={content4}
-                    style={{
-                      width: 320,
-                      height: 103,
-                      marginBottom: 8,
-                      marginTop: 15,
-                    }}
-                  />
-                  <Date>2020.08.30</Date>
-                </ReviewSubBox>
-                <ReviewSubBox>
-                  <ReviewHeader>
-                    <Name>1인 기업</Name>
-                    <img src={star} />
-                  </ReviewHeader>
-                  <Content
-                    src={content5}
-                    style={{
-                      width: 320,
-                      height: 103,
-                      marginBottom: 23,
-                      marginTop: 12,
-                    }}
-                  />
-                  <Date>2021.07.20</Date>
-                </ReviewSubBox>
-              </DevideBox>
-            </ReviewBox>
-          </Body>
+                </Text18>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginTop: "63px",
+                  }}
+                >
+                  <Text14>2020.06.25</Text14>
+                </div>
+              </div>
+            </MainReviewBox>
+
+            {/* MiniReview */}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "792px",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MiniReviewBox>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "324px",
+                      }}
+                    >
+                      <ImageBox>
+                        <img src={logo2} />
+                        <img src={stars} />
+                      </ImageBox>
+
+                      <Text15>
+                      지인 통해서 알게 되었어요. 단품 발주할 때 좋다고...
+                      {" "}
+                        <b
+                          style={{
+                            fontWeight: "bold",
+                            color: "#000000",
+                            backgroundColor: "#eaf0fa",
+                          }}
+                        >
+                          납기가 촉박했는데 추석 연휴 때도 작업을 해주셔서 참 죄송하면서도 고마웠습니다.
+                        </b>
+                      </Text15>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginTop: "38px",
+                        }}
+                      >
+                        <Text14>2021.06.25</Text14>
+                      </div>
+                    </div>
+                  </MiniReviewBox>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MiniReviewBox>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "324px",
+                      }}
+                    >
+                      <ImageBox>
+                        <img src={logo5} />
+                        <img src={stars} />
+                      </ImageBox>
+
+                      <Text15>
+                        <b
+                          style={{
+                            fontWeight: "bold",
+                            color: "#000000",
+                            backgroundColor: "#eaf0fa",
+                          }}
+                        >
+                          비전문가다보니 업체 찾고 소통하기가 쉽지 않았습니다.
+                        </b>{" "}
+                        지인소개를 통해 볼트앤너트를 알게 되어 문의를 드렸는 데
+                        그런 취약점을 잘 채워주시는 것 같아 감사드립니다.
+                      </Text15>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginTop: "38px",
+                        }}
+                      >
+                        <Text14>2020.08.30</Text14>
+                      </div>
+                    </div>
+                  </MiniReviewBox>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "792px",
+                  marginTop: "24px",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MiniReviewBox>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "324px",
+                      }}
+                    >
+                      <ImageBox>
+                        <img src={logo3} />
+                        <img src={stars} />
+                      </ImageBox>
+
+                      <Text15>
+                      며칠 고생하며 견적 받았던 여러 업체 보다 10% 정도는 싸길래 바로 결제를 했습니다. 첫 발주때는 품질이 100% 맘에 드는 건 아니었는데
+                        <b
+                          style={{
+                            fontWeight: "bold",
+                            color: "#000000",
+                            backgroundColor: "#eaf0fa",
+                          }}
+                        >
+                          이후에 담당자분이 특히 신경써주셔서 빠르게 가공품이 필요할 때마다 이용 중입니다.
+                        </b>
+                      </Text15>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginTop: "38px",
+                        }}
+                      >
+                        <Text14>2021.06.30</Text14>
+                      </div>
+                    </div>
+                  </MiniReviewBox>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MiniReviewBox>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "324px",
+                      }}
+                    >
+                      <ImageBox>
+                        <img src={logo1} />
+                        <img src={stars} />
+                      </ImageBox>
+
+                      <Text15>
+                        연구용 부품이라 업체 찾기가 힘들었는데{" "}
+                        <b
+                          style={{
+                            fontWeight: "bold",
+                            color: "#000000",
+                            backgroundColor: "#eaf0fa",
+                          }}
+                        >
+                          담당자 분께서 본인 프로젝트 처럼 대응
+                        </b>
+                        해주시고 성능 나올 때까지 보완해주셔서 좋았습니다.{" "}
+                        
+                      </Text15>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginTop: "38px",
+                        }}
+                      >
+                        <Text14>2021.07.20</Text14>
+                      </div>
+                    </div>
+                  </MiniReviewBox>
+                </div>
+              </div>
+            </div>
+          </ReviewContainer>
         </Container>
-      </Background>
+      </CustomBackground>
     );
   }
 }
 
-export default RequestMain;
+export default Banner4Container;
 
-const Body = styled.div`
-  width: 100%;
+const CustomBackground = styled(Background)`
   height: 939px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: NotoSansCJKkr;
+  background-color: #f6f6f6;
 `;
 
-const Header = styled.span`
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 140px;
+`;
+
+const Title32 = styled(Title.FontSize32)`
   font-size: 32px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   line-height: 1.56;
   letter-spacing: -0.8px;
-  text-align: center;
   color: #555963;
 `;
 
-const ReviewBox = styled.div`
-  width: 1180px;
-  display: flex;
+const ReviewContainer = styled.div`
+  display: inline-flex;
   justify-content: space-between;
+  width: 1200px;
   margin-top: 80px;
 `;
 
-const DevideBox = styled.div`
+const MainReviewBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 384px;
   height: 532px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const ReviewSubBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 40px 30px 20px 30px;
   border-radius: 10px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
-  background-color: #fff;
+  background-color: #ffffff;
 `;
 
-const ReviewHeader = styled.div`
+const MiniReviewBox = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+
+  width: 384px;
+  height: 254px;
+  border-radius: 10px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
 `;
 
-const Name = styled.span`
-  margin-right: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1.5;
-  letter-spacing: -0.4px;
-  color: #191919;
+const ImageBox = styled.div`
+  display: flex;
+  align-itmes: center;
+  gap: 10px;
 `;
 
-const Title = styled.span`
-  font-size: 22px;
-  font-weight: 500;
-  line-height: 1.64;
-  letter-spacing: -0.55px;
-  text-align: left;
-  color: #1e2222;
-  margin-bottom: 30px;
-`;
-
-const Content = styled.img``;
-
-const Date = styled.div`
-  font-size: 14px;
+const Text14 = styled(Text.FontSize14)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   line-height: 1.64;
   letter-spacing: -0.35px;
   color: #c6c7cc;
-  text-align: right;
+`;
+
+const Text15 = styled(Text.FontSize15)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.53;
+  letter-spacing: -0.38px;
+  color: #555963;
+  margin-top: 43px;
+`;
+
+const Text16 = styled(Text.FontSize16)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  color: #0933b3;
+`;
+
+const Text18 = styled(Text.FontSize18)`
+  margin-top: 48px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.45px;
+  color: #86888c;
+`;
+
+const Text22 = styled(Text.FontSize22)`
+  margin-top: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.64;
+  letter-spacing: -0.55px;
+  color: #1e2222;
 `;

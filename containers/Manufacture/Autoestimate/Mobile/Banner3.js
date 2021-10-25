@@ -25,14 +25,14 @@ class RequestMain extends React.Component {
       {
         img : requestimg3,
         title: "전문가 상담이 무료!",
-        highlight: "볼트앤너트 전문 의뢰 상담가가", 
+        highlight: "바로공장의 전문 의뢰 상담가가", 
         content : "상시 도움을 드려요.",
       },
     ];
     return (
       <Container>
       <InnerContainer>
-        <Title20 >볼트앤너트 서비스만의 3가지 차별점!</Title20>
+        <Title20 >바로공장 서비스만의 3가지 차별점!</Title20>
         <CardContainer>
           {card.map((v, idx) => (
             <div>
@@ -65,8 +65,7 @@ export default RequestMain;
 
 const Container = styled.div`
   height: 100%;
-  margin-top: 70px;
-  background-color: #f6f6f6;
+
 `;
 
 const InnerContainer = styled.div`

@@ -29,7 +29,7 @@ class RequestMain extends React.Component {
               </TitleBox>
 
               <Content>
-                발주 요청 시 볼트앤너트의 전문가가 상담을 통해 당일 발주를 진행합니다.
+                발주 요청 시 바로공장의 전문가가 상담을 통해 당일 발주를 진행합니다.
               </Content>
 
             </ContentBox>
@@ -56,13 +56,13 @@ class RequestMain extends React.Component {
                 STEP 3
               </StepBox>
               <Title>
-                제품 납품
+                가공품 납품
               </Title>
 
               </TitleBox>
 
               <Content>
-                볼트앤너트 납품 프로세스를 통해 납기일을 준수하여 납품합니다.
+                바로공장 납품 프로세스를 통해 납기일을 준수하여 납품합니다.
               </Content>
               
             </ContentBox>

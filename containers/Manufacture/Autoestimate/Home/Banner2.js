@@ -42,7 +42,7 @@ class RequestMain extends React.Component {
                 </Content>
               </TextSubBox>
               <TextSubBox>
-                <Title>제품 납품</Title>
+                <Title>가공품 납품</Title>
                 <Content>
                   볼트앤너트 납품 프로세스를 통해 <br />
                   납기일을 준수하여 납품합니다.

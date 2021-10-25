@@ -25,7 +25,7 @@ class RequestMain extends React.Component {
       {
         img : requestimg3,
         title: "전문가 상담이 무료! ",
-        highlight: "볼트앤너트 전문 의뢰 상담가가", 
+        highlight: "바로공장의 전문 의뢰 상담가가", 
         content : "상시 도움을 드려요.",
       },
     ];
