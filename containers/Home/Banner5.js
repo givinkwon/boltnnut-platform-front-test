@@ -14,11 +14,6 @@ const image5 = "/static/images/product/product5.jpg";
 const image6 = "/static/images/product/product6.jpg";
 const image7 = "/static/images/product/product7.jpg";
 const image8 = "/static/images/product/product8.jpg";
-const image9 = "/static/images/product/product9.jpg";
-const image10 = "/static/images/product/product10.jpg";
-const image11 = "/static/images/product/product11.jpg";
-const image12 = "/static/images/product/product12.jpg";
-
 
 class Banner5Container extends React.Component {
   render() {
@@ -64,19 +59,7 @@ class Banner5Container extends React.Component {
             <Item style={{ width: 600 }}>
               <img src={image8} />
             </Item>
-            <Item style={{ width: 600 }}>
-              <img src={image9} />
-            </Item>
-            <Item style={{ width: 600 }}>
-              <img src={image10} />
-            </Item>
-            <Item style={{ width: 600 }}>
-              <img src={image11} />
-            </Item>
-            <Item style={{ width: 600 }}>
-              <img src={image12} />
-            </Item>
-            
+           
           </SliderContainer>
         </Container>
       </CustomBackground>

@@ -30,10 +30,10 @@ const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 class MobileBanner1Container extends React.Component {
   render() {
     const SlideSettings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 2,
+      slidesToShow: 4,
       slidesToScroll: 1,
       draggable: true,
       autoplay: true,
@@ -43,41 +43,30 @@ class MobileBanner1Container extends React.Component {
     return (
       <>
         <Container>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
-            <StartLine />
-          </div>
 
           <Box>
             <Title14>볼트앤너트는 제조분야를 선도하는</Title14>
             <Title14>많은 기업들과 함께합니다.</Title14>
           </Box>
 
-          <div style={{ display: "flex", flexDirection: "column", width: "347px" }}>
-            <Item style={{ display: "flex" }}>
+          <SliderContainer {...SlideSettings}>
               <img src={image1} />
               <img src={image2} />
               <img src={image17} />
               <img src={image4} />
-            </Item>
-            <Item style={{ display: "flex" }}>
               <img src={image5} />
               <img src={image6} />
               <img src={image7} />
               <img src={image8} />
-            </Item>
-            {/* <Item style={{ display: "flex" }}>
-          <img src={logo_img9} />
-          <img src={logo_img10} />
-          <img src={logo_img11} />
-          <img src={logo_img12} />
-        </Item>
-        <Item style={{ display: "flex" }}>
-          <img src={logo_img13} />
-          <img src={logo_img14} />
-          <img src={logo_img15} />
-          <img src={logo_img16} />
-        </Item> */}
-          </div>
+          <img src={image9} />
+          <img src={image10} />
+          <img src={image11} />
+          <img src={image12} />
+          <img src={image13} />
+          <img src={image14} />
+          <img src={image15} />
+          <img src={image16} />
+        </SliderContainer>
         </Container>
       </>
     );
@@ -93,14 +82,19 @@ const StartLine = styled.div`
 `;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-`;
+  padding-top: 30px;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 28px);
+  }
+
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+    width: 720px;
+  }
+  @media (min-width: 1280px) {
+    width: 1200px;
+  }
+`;
 const Box = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,8 +121,8 @@ const SliderContainer = styled(Slider)`
         display: flex;
         justify-content: center;
         img {
-          width: 121px;
-          height: 121px;
+          width: 100px;
+          height: 100px;
         }
       }
     }

@@ -65,7 +65,6 @@ export default RequestMain;
 
 const Container = styled.div`
   height: 100%;
-  margin-top: 70px;
   background-color: #f6f6f6;
 `;
 
