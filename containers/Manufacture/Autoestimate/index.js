@@ -513,6 +513,13 @@ class AutoestimateContainer extends React.Component {
             ))}
           </ItemList>
 
+
+
+          {/* 파일 업로드 창 */}
+          <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
+            <this.MyDropzone />
+          </ContentBox>
+
           <NoticeBox checkFileUpload={AutoEstimate.checkFileUpload}>
             {/* 전체 삭제 */}
             <EntireDelete
@@ -527,10 +534,6 @@ class AutoestimateContainer extends React.Component {
             <div>* 금형사출의 경우 최소수량 100개 이상만 가능합니다.</div>
           </NoticeBox>
 
-          {/* 파일 업로드 창 */}
-          <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
-            <this.MyDropzone />
-          </ContentBox>
           {/* 자동 견적 소개 창*/}
 
           {!AutoEstimate.checkFileUpload && (
@@ -797,6 +800,12 @@ class AutoestimateContainer extends React.Component {
           ))}
         </ItemList>
 
+
+        {/* 파일 업로드 창 */}
+        <ContentBox style={{width : "95%"}} checkFileUpload={AutoEstimate.checkFileUpload}>
+          <this.Nozone/>
+        </ContentBox>
+
         <NoticeBox checkFileUpload={AutoEstimate.checkFileUpload}>
           {/* 전체 삭제 */}
           <EntireDelete
@@ -810,11 +819,6 @@ class AutoestimateContainer extends React.Component {
           </EntireDelete>
           <div>* 금형사출의 경우 최소수량 100개 이상만 가능합니다.</div>
         </NoticeBox>
-
-        {/* 파일 업로드 창 */}
-        <ContentBox style={{width : "95%"}} checkFileUpload={AutoEstimate.checkFileUpload}>
-          <this.Nozone/>
-        </ContentBox>
         {/* 자동 견적 소개 창*/}
 
         {!AutoEstimate.checkFileUpload && (

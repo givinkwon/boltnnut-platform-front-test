@@ -19,7 +19,7 @@ class KSLink extends React.Component {
         >
           {FontContent && <FontContent />}
           {this.props.content}
-          <Logo src={this.props.logoImg} />
+          <Logo style={{height : 24}} src={this.props.logoImg} />
           <img src={this.props.Image} />
         </Container>
       </>

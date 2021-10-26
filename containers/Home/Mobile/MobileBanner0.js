@@ -8,18 +8,22 @@ import Buttonv1 from "components/Buttonv1";
 const startling = "/static/images/startline.svg";
 const mobilebanner0img = "/static/images/mobilebanner0img.svg";
 const arrow = "static/images/request/arrow.svg";
+const mainvideo = "/static/videos/video.mp4";
 
 class MobileBanner0Container extends React.Component {
   render() {
     return (
       <Container>
         <InnerContainer>
-          <img src={mobilebanner0img} style={{ marginBottom: "34px" }} />
+        <video style={{ width: "100%", height: "100%", marginBottom: 34}} autoPlay muted>
+                <source style={{ width: "100%", height: "100%"}} src={mainvideo} type="video/mp4"/>
+          </video>
+          {/* <img src={mobilebanner0img} style={{ marginBottom: "34px" }} /> */}
 
           <Title24>CNC 가공 빠르고, 안전하게</Title24>
           <Title24>AI 견적으로 제조 부품 바로발주</Title24>
           <Title16 style={{ marginTop: "20px" }}>3D 도면만 올리면</Title16>
-          <Title16>부품 납기/견적이 바로!</Title16>
+          <Title16>부품 납기, 견적이 바로!</Title16>
 
           <Button onClick={() => (Router.push('/autoestimate'))}>
               바로 발주 알아보기 

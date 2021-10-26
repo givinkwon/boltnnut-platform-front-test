@@ -12,6 +12,7 @@ import FileImage from "../Manufacture/Autoestimate/Fileimage";
 
 const banner0img = "/static/images/banner0img.svg";
 const arrow = "static/images/request/arrow.svg";
+const mainvideo = "/static/videos/video.mp4";
 
 @inject("Request", "AutoEstimate")
 @observer
@@ -119,7 +120,7 @@ class Banner0Container extends React.Component {
                     ></div>
                   </div>
                   <p>
-                    3D 도면 파일을 이곳에 드래그 또는 <span>파일찾기</span>
+                    도면 올리고 바로 <span>납기와 견적</span> 확인하세요
                   </p>
                   <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                   <FileImageContainer>
@@ -169,12 +170,15 @@ class Banner0Container extends React.Component {
               AI 견적으로 제조 부품 바로발주
             </Header>
 
-            <Middle>3D 도면만 올리면 부품 납기/견적이 바로!</Middle>
+            <Middle>3D 도면만 올리면 부품 납기, 견적이 바로!</Middle>
+            <Middle>즉시 견적 확인하고 편하게 발주하세요.</Middle>
 
             <this.MyDropzone/>
           </LeftBox>
-
-          <img src={banner0img} style={{ marginTop: 40 }} />
+          <video style={{ width: "600px", height: "600px", marginTop: 40}} autoPlay muted>
+                <source style={{ width: "600px", height: "600px"}} src={mainvideo} type="video/mp4"/>
+          </video>
+          {/* <img src={banner0img} style={{ marginTop: 40 }} /> */}
         </Containerv1>
       </div>
     );

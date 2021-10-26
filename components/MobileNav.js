@@ -14,7 +14,7 @@ import KSLink from "./KSLink";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
-const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
+const logo_ic = "/static/images/bnlogo.png";
 
 @inject("Auth", "Partner", "Home", "Common")
 @observer
@@ -133,7 +133,7 @@ class MobileNav extends React.Component {
                         }
                       }}
                       src={logo_ic}
-                      style={{ float: "left" }}
+                      style={{ height : 24, float: "left" }}
                     />
                   </BoltLogo>
                   <img src={close_ic} style={{ float: "right" }} />
@@ -187,11 +187,11 @@ class MobileNav extends React.Component {
           <NavWrap2>
             {this.props.src === "/static/images/components/MobileNav/MobileLogo.svg" ? (
               <BoltLogo>
-                <Logo src={this.props.src} onClick={() => (location.href = Common.makeUrl(""))} />
+                <Logo style = {{height : 24}} src={"/static/images/bnlogo.png"} onClick={() => (location.href = Common.makeUrl(""))} />
               </BoltLogo>
             ) : (
               <BoltLogo>
-                <Logo src={this.props.src} onClick={() => Router.back()} />
+                <Logo style={{height : 24}} src={"/static/images/bnlogo.png"} onClick={() => Router.back()} />
               </BoltLogo>
             )}
 

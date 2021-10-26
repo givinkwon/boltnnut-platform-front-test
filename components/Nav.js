@@ -16,7 +16,7 @@ import KSLink from "components/KSLink";
 const close_ic = "/static/icon/closeIcon.svg";
 const close_clicked = "/static/icon/close_clicked.svg";
 const signupIcon = "/static/images/signupIcon.svg";
-const bnlogo = "/static/images/bnlogo.svg";
+const bnlogo = "/static/images/bnlogo.png";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
@@ -134,7 +134,7 @@ class Nav extends React.Component {
             }}
           >
             <NavWrap>
-              <BoltLogo>
+              <BoltLogo style={{height : 24}}>
                 <KSLink url={""} logoImg={bnlogo} />
               </BoltLogo>
 
