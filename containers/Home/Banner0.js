@@ -27,10 +27,17 @@ class Banner0Container extends React.Component {
       this.state.loading = true;
       // 파일 값 저장
       files.forEach((file, fileIdx) => {
-        AutoEstimate.set_file(file);
+        const Fileextension = file.name.split(".");
+        // 도면 파일만 견적 추가
+        if(Fileextension == "stp" || Fileextension == "step"){
+          AutoEstimate.set_file(file);
 
-        // 견적 호출하기
-        AutoEstimate.create_estimate();
+          // 견적 호출하기
+          AutoEstimate.create_estimate();
+        }
+        else{
+          AutoEstimate.set_file_set(file);
+        }
       });
 
       setTimeout(() => {
@@ -52,8 +59,10 @@ class Banner0Container extends React.Component {
 
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
           check_file = false;
-          alert("STP, STEP, DWG, STL 파일만 자동 견적을 제공하고 있습니다. \n타 확장자 파일의 경우 하단의 고객센터로 전화주시면 1영업일 내로 견적을 내드립니다.");
-          return false;
+          alert("STP, STEP 파일만 자동 견적을 제공하고 있습니다. \n타 확장자 파일의 경우 하단의 버튼 클릭 후, 기본정보 입력 후 후불결제를 클릭해주세요.");
+          check_file = true;
+          // 파일 업로드 된 것 체크
+          AutoEstimate.checkFileUpload = true;
         } else {
           check_file = true;
           // 파일 업로드 된 것 체크

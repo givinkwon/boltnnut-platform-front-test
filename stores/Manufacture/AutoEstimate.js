@@ -169,6 +169,7 @@ class AutoEstimate {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
+        alert('도면 파일이 너무 크거나 오브젝트에 에러가 있습니다. 한 번에 한 파트씩 넣어주세요.')
       });
   }
 
