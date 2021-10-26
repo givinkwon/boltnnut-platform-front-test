@@ -124,7 +124,7 @@ class AutoestimateContainer extends React.Component {
       files.forEach((file, fileIdx) => {
         const Fileextension = file.name.split(".");
         // 도면 파일만 견적 추가
-        if(Fileextension == "stp" || Fileextension == "step"){
+        if(Fileextension[1] == "stp" || Fileextension[1] == "step"){
           AutoEstimate.set_file(file);
 
           // 견적 호출하기
