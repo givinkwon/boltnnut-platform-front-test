@@ -162,7 +162,7 @@ class Banner0Container extends React.Component {
           marginBottom: "110px",
         }}
       >
-        <Containerv1 style={{ gap: 130, alignItems: "center" }}>
+        <Containerv1 style={{ gap: 30, alignItems: "center" }}>
           <LeftBox>
             <Header>
               CNC 가공 빠르고, 안전하게
@@ -170,13 +170,12 @@ class Banner0Container extends React.Component {
               AI 견적으로 제조 부품 바로발주
             </Header>
 
-            <Middle>3D 도면만 올리면 부품 납기, 견적이 바로!</Middle>
-            <Middle>즉시 견적 확인하고 편하게 발주하세요.</Middle>
+            <Middle>3D 도면만 올리면 부품 납기, 견적이 바로!<br/>즉시 견적 확인하고 편하게 발주하세요.</Middle>
 
             <this.MyDropzone/>
           </LeftBox>
-          <video style={{ width: "600px", height: "600px", marginTop: 40}} autoPlay muted>
-                <source style={{ width: "600px", height: "600px"}} src={mainvideo} type="video/mp4"/>
+          <video style={{ width: "700px", height: "700px", marginTop: 40}} autoPlay muted>
+                <source style={{ width: "700px", height: "700px"}} src={mainvideo} type="video/mp4"/>
           </video>
           {/* <img src={banner0img} style={{ marginTop: 40 }} /> */}
         </Containerv1>
