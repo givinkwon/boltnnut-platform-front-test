@@ -6,7 +6,7 @@ import * as Title from "components/Title";
 import * as Text from "components/Text";
 import Slider from "react-slick";
 
-const image1 = "/static/images/product/product1.jpg";
+// const image1 = "/static/images/product/product1.jpg";
 const image2 = "/static/images/product/product2.jpg";
 const image3 = "/static/images/product/product3.jpg";
 const image4 = "/static/images/product/product4.jpg";
@@ -35,9 +35,9 @@ class Banner5Container extends React.Component {
           </TitleContainer>
           <SliderContainer {...SlideSettings}>
 
-            <Item style={{ width: 600 }}>
+            {/* <Item style={{ width: 600 }}>
               <img src={image1} />
-            </Item>
+            </Item> */}
             <Item style={{ width: 600 }}>
               <img src={image2} />
             </Item>

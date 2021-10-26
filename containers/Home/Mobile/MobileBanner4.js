@@ -6,7 +6,7 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import Slider from "react-slick";
 
-const image1 = "/static/images/product/product1.jpg";
+// const image1 = "/static/images/product/product1.jpg";
 const image2 = "/static/images/product/product2.jpg";
 const image3 = "/static/images/product/product3.jpg";
 const image4 = "/static/images/product/product4.jpg";
@@ -40,9 +40,9 @@ class MobileBanner4Container extends React.Component {
           </Box>
 
           <SliderContainer {...SlideSettings}>
-            <item>
+            {/* <item>
               <img src={image1} />
-            </item>
+            </item> */}
             <item>
               <img src={image2} />
             </item>
