@@ -5,7 +5,8 @@ import * as AutoEstimateAPI from "axios/Manufacture/AutoEstimate";
 
 class AutoEstimate {
 
-
+  // 홈에서 도면을 넣었을 때 true;
+  @observable Home = false;
   // 견적서 로딩 state 
   @observable loadingEstimate = false;
 
