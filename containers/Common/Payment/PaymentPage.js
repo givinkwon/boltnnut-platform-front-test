@@ -52,8 +52,10 @@ class PaymentPageContainer extends React.Component {
   checkboxHandler = () => {
     if (this.state.checkbox === false) {
       this.setState({ checkbox: true });
+      Payment.agree = true;
     } else {
       this.setState({ checkbox: false });
+      Payment.agree = false;
     }
   };
 
@@ -75,6 +77,12 @@ class PaymentPageContainer extends React.Component {
     // 배송 주소
     if(Payment.Location == ""){
       alert("주소를 입력해주세요")
+      return false
+    }
+
+    //결제 동의
+    if(Payment.agree == false){
+      alert("주문 동의를 해주세요.")
       return false
     }
 

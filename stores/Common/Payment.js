@@ -6,6 +6,9 @@ import AutoEstimate from "../Manufacture/AutoEstimate";
 
 class Payment {
 
+  // 결제 동의 관련 state => true일 때만 다음 창으로 넘어감
+  @observable agree = false;
+
   // 주문자 이름 정하기
   @observable Name = ""
 
