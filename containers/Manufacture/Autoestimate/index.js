@@ -505,7 +505,10 @@ class AutoestimateContainer extends React.Component {
                   </TailBox>
                 </div>
                 <DeleteBox>
-                  <span onClick={() => AutoEstimate.fileList.splice(idx, 1)}>
+                  <span onClick={() => 
+                    {AutoEstimate.fileList.splice(idx, 1)
+                     AutoEstimate.countPrice()
+                    }}>
                     <img src={deleteButtonImg} />
                   </span>
                 </DeleteBox>
