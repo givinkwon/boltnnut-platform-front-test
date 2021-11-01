@@ -65,7 +65,7 @@ class PaymentCompleteContainer extends React.Component {
 							<CompleteInfoRight>
 								<InlineFlexDiv style={{ marginTop: '76px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>주문금액</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>{(Math.round(AutoEstimate.totalPrice/1000) * 1000 + 5000).toLocaleString("ko-KR")} 원</FontSize18>
+									<FontSize18 style={{ marginBottom: '12px' }}>{(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000).toLocaleString("ko-KR")} 원(VAT 포함)</FontSize18>
 								</InlineFlexDiv>
 
 								<InlineFlexDiv>
