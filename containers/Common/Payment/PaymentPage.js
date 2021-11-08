@@ -401,12 +401,19 @@ const PaymentPageDiv = styled(Containerv1)`
 
 const InlineFlexDiv = styled.div`
   display: inline-flex;
+  > P {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 13px !important;
+    }
 `;
 
 const PaymentPageLeft = styled.div`
   display: flex;
   flex-direction: column;
   width: 588px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
 `;
 
 const PaymentPageRight = styled.div`
@@ -418,6 +425,9 @@ const PaymentPageRight = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
   align-items: center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
 `;
 
 // left
@@ -497,6 +507,14 @@ const DeliveryAddressBox2 = styled.div`
   background-color: #f6f6f6;
   font-size: 18px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  > P {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 100%;
+      font-size: 14px !important;
+    }
 `;
 
 const SearchBtn = styled.button`
@@ -547,6 +565,17 @@ const PaymentInfoWrap = styled.div`
   flex-direction: column;
   // margin-left: 38px;
   width: 512px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  > p {
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        margin-left : 5%;
+        margin-right : 5%;
+        width: 90%;
+        font-size: 14px !important;
+      }
+  }
 `;
 
 const PaymentInfoTitle = styled(Title.FontSize24)`
@@ -564,6 +593,10 @@ const PaymentInfo1 = styled.div`
   margin-top: 26px;
   border-top: solid 1px #c6c7cc;
   border-bottom: solid 1px #c6c7cc;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+
 `;
 
 const FontSize18 = styled(Title.FontSize18)`
@@ -580,6 +613,9 @@ const PaymentInfo2 = styled.div`
   heigth: 181px;
   margin-bottom: 26px;
   border-bottom: solid 1px #c6c7cc;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
 `;
 
 const PaymentInfoText24 = styled(Title.FontSize24)`
@@ -596,6 +632,15 @@ const PaymentInfo3 = styled.div`
   flex-direction: column;
   height: 297px;
   background-color: #f6f6f6;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%!important;
+  }
+  > P {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 100%;
+      font-size: 14px !important;
+    }
+  }
 `;
 
 const PaymentInfoText16 = styled(Title.FontSize16)`
@@ -611,6 +656,14 @@ const PaymentBtn = styled.button`
   margin: 38px;
   border-radius: 5px;
   background-color: #0933b3;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  > P {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 100%;
+      font-size: 18px !important;
+    }
 `;
 
 const PaymenBtnText24 = styled(Title.FontSize24)`

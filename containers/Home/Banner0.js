@@ -1,19 +1,22 @@
-import React from "react";
+import React, { Component, useCallback } from "react";
 import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
+import { useDropzone } from "react-dropzone";
 import * as Title from "components/Title";
 import * as Text from "components/Text";
 import SearchBar from "./SearchBar";
 import Router from "next/router";
 import Buttonv1 from "components/Buttonv1";
-
+import { inject, observer } from "mobx-react";
+import FileImage from "../Manufacture/Autoestimate/Fileimage";
 
 const banner0img = "/static/images/banner0img.svg";
 const arrow = "static/images/request/arrow.svg";
 const mainvideo = "/static/videos/video.mp4";
 
+@inject("Request", "AutoEstimate")
+@observer
 class Banner0Container extends React.Component {
-<<<<<<< HEAD
   state = {
     loading: false,
   };
@@ -149,8 +152,6 @@ class Banner0Container extends React.Component {
   };
   // 파일 업로드 && 드랍 함수 끝
 
-=======
->>>>>>> parent of 136be5cc (기능 수정 : 메인페이지 도면)
   render() {
     return (
       <div
@@ -171,10 +172,7 @@ class Banner0Container extends React.Component {
 
             <Middle>3D 도면만 올리면 부품 납기, 견적이 바로!<br/>즉시 견적 확인하고 편하게 발주하세요.</Middle>
 
-            <Button onClick={() => (Router.push('/autoestimate'))}>
-              바로 발주 알아보기 
-              <img src={arrow} style={{ marginLeft: 10 }} />
-            </Button>
+            <this.MyDropzone/>
           </LeftBox>
           <video style={{ borderRadius: 10, boxShadow : "4px 5px 20px 0 rgba(0, 0, 0, 0.16)", width: "700px", height: "700px", marginTop: 40}} autoPlay muted>
                 <source style={{ width: "700px", height: "700px"}} src={mainvideo} type="video/mp4"/>
@@ -233,4 +231,77 @@ const Button = styled(Buttonv1)`
   :hover {
     background-color: #174aee;
   }
+`;
+
+const InputBox = styled.div`
+  background-color: rgb(246, 246, 246);
+  border : 2px dashed #a4aab4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: ${(props) => (props.checkFileUpload ? "100px" : "313px")};
+  text-align: center;
+  :focus {
+    outline: 0;
+  }
+  cursor: pointer;
+`;
+
+
+const DropZoneContainer = styled.div`
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      width: 26px;
+      height: 26px;
+      border-radius: 13px;
+      background-color: #0933b3;
+      margin-right: 20px;
+      position: relative;
+      > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        border: 1px solid white;
+      }
+      > div:nth-of-type(1) {
+        //border: 3px solid red;
+        width: 14px;
+        height: 0px;
+      }
+      > div:nth-of-type(2) {
+        width: 0px;
+        height: 14px;
+      }
+    }
+  }
+  p:nth-of-type(1) {
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: #282c36;
+    margin-bottom: 4px;
+    span {
+      color: #0933b3;
+      font-weight: 600;
+    }
+    :focus {
+      outline: none;
+    }
+  }
+  > p:nth-of-type(2) {
+    font-size: 16px;
+    //line-height: 40px;
+    letter-spacing: -0.4px;
+    color: #767676;
+  }
+`;
+
+const FileImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

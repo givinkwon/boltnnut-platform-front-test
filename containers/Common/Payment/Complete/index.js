@@ -23,6 +23,10 @@ const CompleteInfoImg = styled.div`
 const CompleteInfoDesc = styled.div`
 	display: inline-flex;
 	margin-top: 20px;
+	> P {
+		@media (min-width: 0px) and (max-width: 767.98px) {
+		  font-size: 18px !important;
+		}
 `;
 
 @inject("Payment", "AutoEstimate")
@@ -111,6 +115,14 @@ export default PaymentCompleteContainer;
 const InlineFlexDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		margin-top: 20px !important;
+	  }
+	> P {
+		@media (min-width: 0px) and (max-width: 767.98px) {
+		  font-size: 14px !important;
+		  margin-top: 20px !important;
+		}
 `;
 
 const FontSize32 = styled(Title.FontSize32)`
@@ -175,6 +187,11 @@ const CompleteInfoRight = styled.div`
 		margin-left: 5%;
 		margin-right: 5%;
 		margin-bottom : 50px;
+	}
+	> div > p {
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		font-size: 14px !important;
+	  }
 	}
 `;
 
