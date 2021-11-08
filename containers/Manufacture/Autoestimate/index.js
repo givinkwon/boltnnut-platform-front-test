@@ -24,7 +24,7 @@ import Buttonv1 from "components/Buttonv1";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import SelectComponent from "components/Select";
-// import LoadingComponent from "components/Loading";
+import LoadingComponent from "components/Loading";
 
 import Router from "next/router";
 
@@ -117,9 +117,10 @@ class AutoestimateContainer extends React.Component {
   // 파일 드랍다운 & 저장
   MyDropzone = () => {
     const { AutoEstimate } = this.props;
+    const { loading } = this.state;
     const dropHandler = (files) => {
       let loadingCounter = 0;
-      this.state.loading = true;
+      this.setState({ loading: true });
       // 파일 값 저장
       files.forEach((file, fileIdx) => {
         const Fileextension = file.name.split(".");
@@ -137,7 +138,7 @@ class AutoestimateContainer extends React.Component {
 
       setTimeout(() => {
         this.setState({ loading: false });
-      }, 3000);
+      }, 10000);
     };
 
     // 파일 업로드 && 드랍 함수 시작
@@ -177,7 +178,7 @@ class AutoestimateContainer extends React.Component {
       <>
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          {/* {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />} */}
+          {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />}
           <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
             <DropZoneContainer>
               {/*파일이 없을 때 */}
@@ -247,10 +248,69 @@ class AutoestimateContainer extends React.Component {
     // 파일 드랍다운 & 저장
     Nozone = () => {
       const { AutoEstimate } = this.props;
-      return (
-        <>
-            {/* {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />} */}
-            <InputBox onClick = {() =>  alert("모바일 버전은 준비중 입니다. 데스크탑 버전을 이용해 주세요")}>
+    const { loading } = this.state;
+    const dropHandler = (files) => {
+      let loadingCounter = 0;
+      this.setState({ loading: true });
+      // 파일 값 저장
+      files.forEach((file, fileIdx) => {
+        const Fileextension = file.name.split(".");
+        // 도면 파일만 견적 추가
+        if(Fileextension[1] == "stp" || Fileextension[1] == "step"){
+          AutoEstimate.set_file(file);
+
+          // 견적 호출하기
+          AutoEstimate.create_estimate();
+        }
+        else{
+          AutoEstimate.set_file_set(file);
+        }
+      });
+
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 10000);
+    };
+
+    // 파일 업로드 && 드랍 함수 시작
+    const onDrop = useCallback((acceptedFiles) => {
+      // 확장자가 맞는 지 체크하는 state
+      let check_file = false;
+
+      // 넣은 파일의 확장자 체크 함수
+      acceptedFiles.map((data, idx) => {
+        let fileNameAvailable = ["stp", "step"];
+        const extension = data.name.split(".");
+
+        if (!fileNameAvailable.includes(extension[extension.length - 1])) {
+          alert("STP, STEP 파일만 자동 견적을 제공하고 있습니다. \n타 확장자 파일의 경우 하단의 버튼 클릭 후, 기본정보 입력 후 후불결제를 클릭해주세요.");
+          check_file = true;
+          // 파일 업로드 된 것 체크
+          AutoEstimate.checkFileUpload = true;
+        } else {
+          check_file = true;
+          // 파일 업로드 된 것 체크
+          AutoEstimate.checkFileUpload = true;
+        }
+      });
+
+      // 파일 확장자가 맞는 경우에만 자동 견적 도출 || 안 맞는 경우에는 견적 미도출
+      if (check_file) {
+        dropHandler(acceptedFiles);
+      }
+      // 끝
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />}
+          <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
               <DropZoneContainer>
                 {/*파일이 없을 때 */}
                 {!AutoEstimate.checkFileUpload && (
@@ -298,6 +358,7 @@ class AutoestimateContainer extends React.Component {
             
               </DropZoneContainer>
             </InputBox>
+            </div>
         </>
       );
     };
