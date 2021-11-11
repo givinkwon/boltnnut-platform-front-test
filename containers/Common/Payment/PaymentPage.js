@@ -59,56 +59,6 @@ class PaymentPageContainer extends React.Component {
     }
   };
 
-  // 결제 모듈 달 때까지 임시적으로 데이터 저장하는 함수
-  PaymentComplete = () => {
-    
-    // 예외처리
-    // 이름
-    if(Payment.Name == ""){
-      alert("이름을 입력해주세요")
-      return false
-    }
-    
-    // 전화번호
-    if(Payment.PhoneNumber[0] == "" || Payment.PhoneNumber[1] == "" || Payment.PhoneNumber[2] == ""){
-      alert("올바른 전화번호를 입력해주세요")
-      return false
-    }
-    // 배송 주소
-    if(Payment.Location == ""){
-      alert("주소를 입력해주세요")
-      return false
-    }
-
-    //결제 동의
-    if(Payment.agree == false){
-      alert("주문 동의를 해주세요.")
-      return false
-    }
-
-    const req = {
-      data: {
-        product_name: "AI 견적 결제",
-        client_name: Payment.Name,
-        location: Payment.Location,
-        period : AutoEstimate.totalPeriod + "영업일" ,
-        product_price: Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000,
-        count: AutoEstimate.total_quantity,
-        phone: Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2],
-      },
-    };
-
-    console.log(req)
-    PaymentAPI.order(req)
-      .then((res) =>
-      { console.log(res);
-        Router.push("/payment/complete");
-      })
-      .catch((e) => {
-        console.log(e.response);
-      });
-  }
-
   render() {
     const { Payment, AutoEstimate } = this.props;
 
@@ -218,7 +168,7 @@ class PaymentPageContainer extends React.Component {
             </InlineFlexDiv>
             <PaymentWayBox>
               <PaymentWay
-                  onClick={() => this.PaymentComplete()}
+                  onClick={() => AutoEstimate.save_Paylist()}
                 >
                 <PaymentCheckImg />
                 <PaymentWayTitle>후불결제</PaymentWayTitle>
@@ -308,7 +258,6 @@ class PaymentPageContainer extends React.Component {
               <InlineFlexDiv
                 style={{
                   justifyContent: "space-between",
-                  width: "512px",
                   marginBottom: "26px",
                 }}
               >
@@ -367,7 +316,7 @@ class PaymentPageContainer extends React.Component {
             </PaymentInfo3>
 
             {/* <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}> */}
-            <PaymentBtn onClick={() => this.PaymentComplete()}>
+            <PaymentBtn onClick={() => AutoEstimate.save_Paylist()}>
               <PaymenBtnText24>발주 요청하기</PaymenBtnText24>
             </PaymentBtn>
           </PaymentPageRight>

@@ -1,7 +1,9 @@
 import { observable, action } from "mobx";
 import { toJS } from "mobx";
-
+import Payment from "stores/Common/Payment";
+import * as PaymentAPI from "axios/Common/Payment";
 import * as AutoEstimateAPI from "axios/Manufacture/AutoEstimate";
+import Router from "next/router";
 
 class AutoEstimate {
 
@@ -395,6 +397,73 @@ class AutoEstimate {
     this.request_file_set.splice(deleteIdx, 1);
     console.log(deleteIdx, this.request_file_set);
   };
+
+  // 의뢰 파일 결제 요청 시 저장하기
+  @action save_Paylist = () => {
+     // 예외처리
+    // 이름
+    if(Payment.Name == ""){
+      alert("이름을 입력해주세요")
+      return false
+    }
+    
+    // 전화번호
+    if(Payment.PhoneNumber[0] == "" || Payment.PhoneNumber[1] == "" || Payment.PhoneNumber[2] == ""){
+      alert("올바른 전화번호를 입력해주세요")
+      return false
+    }
+    // 배송 주소
+    if(Payment.Location == ""){
+      alert("주소를 입력해주세요")
+      return false
+    }
+
+    //결제 동의
+    if(Payment.agree == false){
+      alert("주문 동의를 해주세요.")
+      return false
+    }
+
+    console.log(this.fileList);
+
+    for( let i = 0; i < this.fileList.length; i++) {
+      // 채팅 로그 저장하기
+      var formData = new FormData();
+
+      formData.append("file", this.fileList[i].originFile);
+      
+      // CNC인 경우
+      if(this.fileList[i].selectedManufacture.name == "절삭가공"){
+        formData.append("product_price", Math.round(this.fileList[i].price/1000) * 1000);
+        formData.append("method", this.fileList[i].selectedManufacture.name);      
+      } 
+
+      // 금형인 경우
+      if(this.fileList[i].selectedManufacture.name == "금형사출"){
+        formData.append("product_price", (Math.round(this.fileList[i].injectionPrice) * this.fileList[i].quantity));
+        formData.append("method", this.fileList[i].selectedManufacture.name + "/ 금형 가격 : " + Math.round(this.fileList[i].moldPrice / 1000) * 1000);
+      }
+      formData.append("count", this.fileList[i].quantity);
+      formData.append("period", this.fileList[i].period);
+      
+      formData.append("material", this.fileList[i].selectedMaterial.name);
+      formData.append("location", Payment.Location);
+      formData.append("phone", Payment.PhoneNumber[0] + Payment.PhoneNumber[1] + Payment.PhoneNumber[2])
+      formData.append("client_name", Payment.Name);
+      const req = {
+        data: formData,
+      };
+
+      PaymentAPI.save(req)
+      .then((res) =>
+      { console.log(res);
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  };
+  Router.push("/payment/complete");
+}
 
   @action reset = async () => {
     this.fileList = [];

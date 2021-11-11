@@ -9,6 +9,15 @@ export function order(req) {
   });
 }
 
+// 자동 견적 결제할 때 저장하기
+export function save(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/autoestimatepaylist/`,
+    data: req.data,
+  });
+}
+
 export function pay(req) {
   return axios({
     method: "POST",
