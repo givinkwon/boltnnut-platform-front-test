@@ -55,7 +55,7 @@ class Banner0Container extends React.Component {
 
       // 넣은 파일의 확장자 체크 함수
       acceptedFiles.map((data, idx) => {
-        let fileNameAvailable = ["stp", "step"];
+        let fileNameAvailable = ["stp", "step","STP", "STEP"];
         const extension = data.name.split(".");
 
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {

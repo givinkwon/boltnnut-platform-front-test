@@ -148,7 +148,7 @@ class AutoestimateContainer extends React.Component {
 
       // 넣은 파일의 확장자 체크 함수
       acceptedFiles.map((data, idx) => {
-        let fileNameAvailable = ["stp", "step"];
+        let fileNameAvailable = ["stp", "step", "STP", "STEP"];
         const extension = data.name.split(".");
 
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
@@ -943,7 +943,7 @@ class AutoestimateContainer extends React.Component {
             <HeaderBox style={{marginLeft : "5%", marginRight : "5%"}}>
               <Header style={{fontSize : 16}}>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}</Header>
               <div>* 3D 도면 없이 발주 요청하는 경우 볼트앤너트 전문가가 견적을 내드립니다.</div>
-                <br/>
+              <br/>
               {AutoEstimate.request_file_set.map((item, idx) => {
                 return (
                   <>
