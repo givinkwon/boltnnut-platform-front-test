@@ -268,7 +268,7 @@ export default class MyDocument extends Document {
       function gtag(){dataLayer.push(arguments);
       }
       gtag('js', new Date());
-      gtag('config', 'UA-162026812-1', {
+      gtag('config', 'UA-162026812-2', {
           'custom_map': {'dimension2': 'clientId' }
       } );
 
