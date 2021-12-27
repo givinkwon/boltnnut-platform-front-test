@@ -29,8 +29,9 @@ class Banner0Container extends React.Component {
       // 파일 값 저장
       files.forEach((file, fileIdx) => {
         const Fileextension = file.name.split(".");
+
         // 도면 파일만 견적 추가
-        if(Fileextension[1] == "stp" || Fileextension[1] == "step"){
+        if(Fileextension[Fileextension.length - 1] == "STEP" || Fileextension[Fileextension.length - 1] == "STP" || Fileextension[Fileextension.length - 1] == "stp" || Fileextension[Fileextension.length - 1] == "step"){
           AutoEstimate.set_file(file);
 
           // 견적 호출하기
