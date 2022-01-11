@@ -158,7 +158,7 @@ class AutoEstimate {
           selectedMaterial : { id: 0, name: "알루미늄 6061" },
           
           // 납기
-          period : Math.ceil(res.data.price/200000) + 1,
+          period : Math.ceil(res.data.price/200000) + 2,
 
           // 기타
           checked : true,
@@ -230,7 +230,7 @@ class AutoEstimate {
           this.MoldPrice = 0;
           this.InjectionPrice = 0;
           // 납기일 => 20만원당 하루
-          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000) + 1
+          this.fileList[fileIdx].period = Math.ceil(res.data.price/200000) + 2
           console.log(this.fileList[fileIdx].period);
         } 
         // 금형인 경우
@@ -308,7 +308,7 @@ class AutoEstimate {
       // CNC 체크인 경우
       if(this.fileList[idx].selectedManufacture.id == 1){
         // 20만원당 하루
-        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) + 1
+        this.fileList[idx].period = Math.ceil(this.fileList[idx].price * this.fileList[idx].quantity / 200000) + 2
       }
     }
 
@@ -335,7 +335,7 @@ class AutoEstimate {
     // CNC 체크인 경우
     if(this.fileList[idx].selectedManufacture.id == 1){
       // 20만원당 하루
-      this.fileList[idx].period = Math.ceil((this.fileList[idx].price * this.fileList[idx].quantity) / 200000) + 1 
+      this.fileList[idx].period = Math.ceil((this.fileList[idx].price * this.fileList[idx].quantity) / 200000) + 2
     }
     
     // 전체 수량 세기
