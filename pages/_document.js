@@ -425,7 +425,7 @@ export default class MyDocument extends Document {
 
                 var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 
-              })(window,document,'script','dataLayer','GTM-PWFPPZ5');`,
+              })(window,document,'script','dataLayer','GTM-TSW6VSN');`,
             }}
             async
           ></script>
@@ -433,7 +433,7 @@ export default class MyDocument extends Document {
         <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
           <noscript>
             <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5"
+              src="https://www.googletagmanager.com/ns.html?id=GTM-TSW6VSN"
               height="0"
               width="0"
               style={{ display: "none", visibility: "hidden" }}
