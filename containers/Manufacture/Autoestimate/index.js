@@ -421,7 +421,7 @@ class AutoestimateContainer extends React.Component {
         {/*웹*/}
         {width > 768 &&
         <Container>
-          <Banner0 />
+          {/*<Banner0 />*/}
           {/* 자동 견적 헤더 */}
           <HeaderBox>
             <Header>{AutoEstimate.checkFileUpload ? "도면 추가" : "도면 파일을 업로드 해주세요."}</Header>
@@ -607,105 +607,105 @@ class AutoestimateContainer extends React.Component {
 
           {!AutoEstimate.checkFileUpload && (
             <>
-              <Banner2 />
-              <Banner3 />
-              <Banner4 />
-              <Banner5 />
+              {/*<Banner2 />*/}
+              {/*<Banner3 />*/}
+              {/*<Banner4 />*/}
+              {/*<Banner5 />*/}
             </>
           )}
 
           {/* 도면이 업로드된 상태면 견적 카드 보여주기 */}
           {AutoEstimate.checkFileUpload && (
             <>
-              <Price style={{width: "90%", marginLeft : "5%", marginRight : "5%"}} checkFileUpload={AutoEstimate.checkFileUpload}>
-                <PriceLabel active={checkBox_one}>
-                  <div>
-                    <span>자동 견적 가격 (예상 납기일)</span>
-                    <span
-                      onMouseOver={() => {
-                        this.setIsShown(true, 1);
-                        console.log("mouse-enter");
-                      }}
-                      onMouseOut={() => {
-                        this.setIsShown(false, 1);
-                        console.log("mouse-out");
-                      }}
-                    >
-                      ?
-                    </span>
-                  </div>
-                  <div>
-                    <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>
-                    <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
-                    <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
-                  </div>
-                </PriceLabel>
-                <PriceData>
-                  <span>
-                    {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString("ko-KR")}
-                    <span> 원( VAT 미포함,</span>
-                  </span>
-                  <span>
-                    {AutoEstimate.totalPeriod}
-                    <span> 영업일)</span>
-                  </span>
-                </PriceData>
-              </Price>
+              {/*<Price style={{width: "90%", marginLeft : "5%", marginRight : "5%"}} checkFileUpload={AutoEstimate.checkFileUpload}>*/}
+              {/*  <PriceLabel active={checkBox_one}>*/}
+              {/*    <div>*/}
+              {/*      <span>자동 견적 가격 (예상 납기일)</span>*/}
+              {/*      <span*/}
+              {/*        onMouseOver={() => {*/}
+              {/*          this.setIsShown(true, 1);*/}
+              {/*          console.log("mouse-enter");*/}
+              {/*        }}*/}
+              {/*        onMouseOut={() => {*/}
+              {/*          this.setIsShown(false, 1);*/}
+              {/*          console.log("mouse-out");*/}
+              {/*        }}*/}
+              {/*      >*/}
+              {/*        ?*/}
+              {/*      </span>*/}
+              {/*    </div>*/}
+              {/*    <div>*/}
+              {/*      <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>*/}
+              {/*      <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>*/}
+              {/*      <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>*/}
+              {/*    </div>*/}
+              {/*  </PriceLabel>*/}
+              {/*  <PriceData>*/}
+              {/*    <span>*/}
+              {/*      {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString("ko-KR")}*/}
+              {/*      <span> 원( VAT 미포함,</span>*/}
+              {/*    </span>*/}
+              {/*    <span>*/}
+              {/*      {AutoEstimate.totalPeriod}*/}
+              {/*      <span> 영업일)</span>*/}
+              {/*    </span>*/}
+              {/*  </PriceData>*/}
+              {/*</Price>*/}
 
               {/* 파일 업로드 창 */}
-              <HeaderBox>
-                <Header>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}</Header>
-                <div>* 3D 도면 없이 발주 요청하는 경우 볼트앤너트 전문가가 견적을 내드립니다.</div>
-                <br/>
-                {AutoEstimate.request_file_set.map((item, idx) => {
-                  return (
-                    <>
-                      <AddFileList>
-                        <span
-                          onClick={() => {
-                            if (AutoEstimate.request_file_set.length > 0) {
-                              AutoEstimate.request_file_set.splice(idx, 1);
-                            }
-                          }}
-                          style={{ display: "flex", alignItems: "center" }}
-                        >
-                          <span>
-                            <img
-                              src={clip}
-                              style={{
-                                marginLeft: 17,
-                                marginRight: 17,
-                              }}
-                            ></img>
-                            <span>{item.name}</span>
-                            <DeleteFile
-                              onClick={() => AutoEstimate.delete_File(idx)}
-                              src={deleteButtonImg}
-                              style={{
-                                marginLeft: 17,
-                              }}
-                            />
-                          </span>
-                        </span>
-                      </AddFileList>
-                    </>
-                  );
-                })}
-              </HeaderBox>
-              <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
-                <this.DWGDropzone />
-              </ContentBox>
+              {/*<HeaderBox>*/}
+              {/*  <Header>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}</Header>*/}
+              {/*  <div>* 3D 도면 없이 발주 요청하는 경우 볼트앤너트 전문가가 견적을 내드립니다.</div>*/}
+              {/*  <br/>*/}
+              {/*  {AutoEstimate.request_file_set.map((item, idx) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <AddFileList>*/}
+              {/*          <span*/}
+              {/*            onClick={() => {*/}
+              {/*              if (AutoEstimate.request_file_set.length > 0) {*/}
+              {/*                AutoEstimate.request_file_set.splice(idx, 1);*/}
+              {/*              }*/}
+              {/*            }}*/}
+              {/*            style={{ display: "flex", alignItems: "center" }}*/}
+              {/*          >*/}
+              {/*            <span>*/}
+              {/*              <img*/}
+              {/*                src={clip}*/}
+              {/*                style={{*/}
+              {/*                  marginLeft: 17,*/}
+              {/*                  marginRight: 17,*/}
+              {/*                }}*/}
+              {/*              ></img>*/}
+              {/*              <span>{item.name}</span>*/}
+              {/*              <DeleteFile*/}
+              {/*                onClick={() => AutoEstimate.delete_File(idx)}*/}
+              {/*                src={deleteButtonImg}*/}
+              {/*                style={{*/}
+              {/*                  marginLeft: 17,*/}
+              {/*                }}*/}
+              {/*              />*/}
+              {/*            </span>*/}
+              {/*          </span>*/}
+              {/*        </AddFileList>*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  })}*/}
+              {/*</HeaderBox>*/}
+              {/*<ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>*/}
+              {/*  <this.DWGDropzone />*/}
+              {/*</ContentBox>*/}
               {/* 자동 견적 소개 창*/}
 
-              <Button
-                onClick={() => {
-                  // 도면 및 발주요청 파일 저장
-                  AutoEstimate.create_dwg();
-                  Router.push("/payment");
-                }}
-              >
-                결제하기
-              </Button>
+              {/*<Button*/}
+              {/*  onClick={() => {*/}
+              {/*    // 도면 및 발주요청 파일 저장*/}
+              {/*    AutoEstimate.create_dwg();*/}
+              {/*    Router.push("/payment");*/}
+              {/*  }}*/}
+              {/*>*/}
+              {/*  결제하기*/}
+              {/*</Button>*/}
             </>
           )}
         </Container>
@@ -714,7 +714,7 @@ class AutoestimateContainer extends React.Component {
         {/* 모바일 */}
         {width < 768 &&
         <Container style={{width : "90%", marginLeft : "5%", marginRight : "5%"}}>
-        <MobileBanner0 />
+        {/*<MobileBanner0 />*/}
         {/* 자동 견적 헤더 */}
         <HeaderBox style={{width : "95%"}}>
           <Header style={{ fontSize : 18}}>{AutoEstimate.checkFileUpload ? "도면 추가" : "도면 파일을 업로드 해주세요."}</Header>
@@ -893,10 +893,10 @@ class AutoestimateContainer extends React.Component {
 
         {!AutoEstimate.checkFileUpload && (
           <>
-            <MobileBanner2 />
-            <MobileBanner3 />
-            <MobileBanner4 />
-            <MobileBanner5 />
+            {/*<MobileBanner2 />*/}
+            {/*<MobileBanner3 />*/}
+            {/*<MobileBanner4 />*/}
+            {/*<MobileBanner5 />*/}
           </>
         )}
 
