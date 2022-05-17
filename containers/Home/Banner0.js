@@ -175,9 +175,9 @@ class Banner0Container extends React.Component {
 
             <this.MyDropzone/>
           </LeftBox>
-          {/*<video style={{ borderRadius: 10, boxShadow : "4px 5px 20px 0 rgba(0, 0, 0, 0.16)", width: "700px", height: "700px", marginTop: 40}} autoPlay muted>*/}
-          {/*      <source style={{ width: "700px", height: "700px"}} src={mainvideo} type="video/mp4"/>*/}
-          {/*</video>*/}
+          <video style={{ borderRadius: 10, boxShadow : "4px 5px 20px 0 rgba(0, 0, 0, 0.16)", width: "700px", height: "700px", marginTop: 40}} autoPlay muted>
+                <source style={{ width: "700px", height: "700px"}} src={mainvideo} type="video/mp4"/>
+          </video>
           {/* <img src={banner0img} style={{ marginTop: 40 }} /> */}
         </Containerv1>
       </div>

@@ -35,12 +35,12 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container width={width} />
-              {/*<MobileBanner1Container width={width} />*/}
-              {/*<MobileBanner2Container width={width} />*/}
-              {/*<MobileBanner3Container width={width} />*/}
-              {/*<MobileBanner4Container width={width} />*/}
-              {/*<MobileBanner5Container width={width} />*/}
-              {/*<MobileBanner6Container width={width} />*/}
+              <MobileBanner1Container width={width} />
+              <MobileBanner2Container width={width} />
+              <MobileBanner3Container width={width} />
+              <MobileBanner4Container width={width} />
+              <MobileBanner5Container width={width} />
+              <MobileBanner6Container width={width} />
 
             </CustomContainer>
           </>
@@ -48,13 +48,13 @@ class HomeConatiner extends React.Component {
           <>
             <div style={{ overflow: "hidden" }}>
               <Banner0Container width={width} />
-              {/*<Banner1Container width={width} />*/}
-              {/*<Banner2Container width={width} />*/}
-              {/*/!* <Banner3Container width={width} /> *!/*/}
-              {/*<Banner4Container width={width} />*/}
-              {/*<Banner5Container width={width} />*/}
-              {/*<Banner6Container width={width} />*/}
-              {/*<Banner7Container width={width} />*/}
+              <Banner1Container width={width} />
+              <Banner2Container width={width} />
+              {/* <Banner3Container width={width} /> */}
+              <Banner4Container width={width} />
+              <Banner5Container width={width} />
+              <Banner6Container width={width} />
+              <Banner7Container width={width} />
             </div>
           </>
         )}
