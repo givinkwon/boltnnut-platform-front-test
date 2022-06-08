@@ -206,7 +206,7 @@ class PaymentPageContainer extends React.Component {
                 >
                   <FontSize18>출하 예정일</FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    생산 완료 후 1 영업일 이내(검수 요청 완료 후)
+                    검수 요청 완료 후 2 영업일 이내(검수 요청 완료 후)
                   </FontSize18>
                 </InlineFlexDiv>
               </PaymentInfo1>
@@ -218,7 +218,7 @@ class PaymentPageContainer extends React.Component {
                   <FontSize18
                     style={{ color: "#767676", marginBottom: "20px" }}
                   >
-                    생산품 갯수
+                    부품 개수
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
                     {AutoEstimate.total_quantity} 개
@@ -228,7 +228,7 @@ class PaymentPageContainer extends React.Component {
                   <FontSize18
                     style={{ color: "#767676", marginBottom: "20px" }}
                   >
-                    생산품 가격
+                    부품 가격
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
                     {(Math.round(AutoEstimate.totalPrice/1000) * 1000).toLocaleString("ko-KR")} 원

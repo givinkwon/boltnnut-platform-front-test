@@ -217,8 +217,8 @@ class AutoestimateContainer extends React.Component {
                   <FileImageContainer>
                     <FileImage name=".STP" />
                     <FileImage name=".STEP" />
-                    <FileImage name=".STL" />
-                    <FileImage name=".DWG" />
+                    {/* <FileImage name=".STL" />
+                    <FileImage name=".DWG" /> */}
                   </FileImageContainer>
                 </>
               )}
@@ -339,8 +339,8 @@ class AutoestimateContainer extends React.Component {
                     <FileImageContainer>
                       <FileImage name=".STP" />
                       <FileImage name=".STEP" />
-                      <FileImage name=".STL" />
-                      <FileImage name=".DWG" />
+                      {/* <FileImage name=".STL" />
+                      <FileImage name=".DWG" /> */}
                     </FileImageContainer>
                   </>
                 )}
@@ -479,7 +479,7 @@ class AutoestimateContainer extends React.Component {
                         styles={customStyles}
                         value={data.selectedManufacture}
                         options={AutoEstimate.ManufactureOption}
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={(option) => option.name == "절삭가공" && option.name}
                         onChange={(e) => {
                           // 공정 선택
                           AutoEstimate.setManufacture(e, idx);
@@ -562,7 +562,8 @@ class AutoestimateContainer extends React.Component {
                               {(Math.round(data.price / 1000) * 1000 * data.quantity).toLocaleString("ko-KR") + " 원"}
                             </span>
                             <span>예상 납기일 </span>
-                            <span>{data.period + " 영업일"}</span>
+                            {/* <span>{data.period + " 영업일"}</span> */}
+                            <span>9 영업일</span>
                           </>
                         )}
                       </span>
@@ -654,8 +655,8 @@ class AutoestimateContainer extends React.Component {
 
               {/* 파일 업로드 창 */}
               <HeaderBox>
-                <Header>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}</Header>
-                <div>* 3D 도면 없이 발주 요청하는 경우 볼트앤너트 전문가가 견적을 내드립니다.</div>
+                <Header>{AutoEstimate.checkFileUpload && "도면(DWG) 및 관련 파일 : 나사 탭 등 3D 파일에서 표현이 어려운 부분에 대한 가공을 원하실 경우 2D 도면을 같이 첨부해주세요."}</Header>
+                <div>* 미첨부 시 가공이 정확히 되지 않을 수 있습니다.</div>
                 <br/>
                 {AutoEstimate.request_file_set.map((item, idx) => {
                   return (
@@ -704,7 +705,7 @@ class AutoestimateContainer extends React.Component {
                   Router.push("/payment");
                 }}
               >
-                결제하기
+                발주정보 기입
               </Button>
             </>
           )}
@@ -990,7 +991,7 @@ class AutoestimateContainer extends React.Component {
                 Router.push("/payment");
               }}
             >
-              결제하기
+              발주정보 기입
             </Button>
           </>
         )}
@@ -1339,7 +1340,7 @@ const Card = styled.div`
   box-sizing: border-box;
 `;
 
-const Header = styled(Content.FontSize32)`
+const Header = styled(Content.FontSize24)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;

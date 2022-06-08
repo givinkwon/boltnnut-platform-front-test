@@ -87,7 +87,7 @@ class PaymentCompleteContainer extends React.Component {
 								</InlineFlexDiv>
 
 								<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>배송 예정일 : 생산완료 후 1영업일 이내</FontSize18>
+									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>배송 예정일 : 검수요청완료 후 2영업일 이내</FontSize18>
 
 								</div>
 

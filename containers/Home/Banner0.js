@@ -127,8 +127,8 @@ class Banner0Container extends React.Component {
                   <FileImageContainer>
                     <FileImage name=".STP" />
                     <FileImage name=".STEP" />
-                    <FileImage name=".STL" />
-                    <FileImage name=".DWG" />
+                    {/* <FileImage name=".STL" />
+                    <FileImage name=".DWG" /> */}
                   </FileImageContainer>
                 </>
               )}

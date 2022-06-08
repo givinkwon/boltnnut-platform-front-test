@@ -195,7 +195,7 @@ class InputComponent extends React.Component {
                       <FileImageContainer>
                         <FileImage name=".STP" />
                         <FileImage name=".STEP" />
-                        <FileImage name=".STL" />
+                        {/* <FileImage name=".STL" /> */}
                       </FileImageContainer>
                     </div>
                   </FileUploadBox>

@@ -211,7 +211,7 @@ class PaymentContainer extends Component {
               this.PayFunction();
             }}
           >
-            결제하기
+            발주정보 기입
           </PayButton>
         </div>
       </div>
