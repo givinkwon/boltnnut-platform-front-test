@@ -479,7 +479,7 @@ class AutoestimateContainer extends React.Component {
                         styles={customStyles}
                         value={data.selectedManufacture}
                         options={AutoEstimate.ManufactureOption}
-                        getOptionLabel={(option) => option.name == "절삭가공" && option.name}
+                        getOptionLabel={(option) => option.name}
                         onChange={(e) => {
                           // 공정 선택
                           AutoEstimate.setManufacture(e, idx);
