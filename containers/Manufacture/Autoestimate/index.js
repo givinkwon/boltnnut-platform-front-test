@@ -647,7 +647,8 @@ class AutoestimateContainer extends React.Component {
                     <span> 원( VAT 미포함,</span>
                   </span>
                   <span>
-                    {AutoEstimate.totalPeriod}
+                    {/* {AutoEstimate.totalPeriod} */}
+                    9
                     <span> 영업일)</span>
                   </span>
                 </PriceData>

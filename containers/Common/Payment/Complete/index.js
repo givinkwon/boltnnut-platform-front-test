@@ -97,9 +97,9 @@ class PaymentCompleteContainer extends React.Component {
 					</CompleteInfoBackground>
 
 					<div style={{ display: 'inline-flex', marginTop: '60px', marginBottom: 230, justifyContent: 'center' }}>
-						{/* <CompleteBtn onClick={() => Router.push('/request')}>
+						<CompleteBtn onClick={() => window.open('https://www.boltnnut.com/search')}>
 							<FontSize20 style={{ color: '#0933b3', fontWeight: 'bold', textAlign: 'center' }}>제조사 찾아보기</FontSize20>
-						</CompleteBtn> */}
+						</CompleteBtn>
 
 						<CompleteBtn onClick={() => Router.push('/')} style={{ backgroundColor: '#0933b3', marginLeft: '22px' }}>
 							<FontSize20 style={{ color: '#ffffff', fontWeight: 'bold', textAlign: 'center' }}>홈으로가기</FontSize20>
