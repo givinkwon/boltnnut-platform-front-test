@@ -194,7 +194,8 @@ class PaymentPageContainer extends React.Component {
                     생산 소요 시간
                   </FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    {AutoEstimate.totalPeriod} 영업일
+                    {/* {AutoEstimate.totalPeriod} 영업일 */}
+                    9 영업일
                   </FontSize18>
                 </InlineFlexDiv>
 
@@ -204,9 +205,9 @@ class PaymentPageContainer extends React.Component {
                     marginBottom: "30px",
                   }}
                 >
-                  <FontSize18>출하 예정일</FontSize18>
+                  <FontSize18>도착 예정일</FontSize18>
                   <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    검수 요청 완료 후 2 영업일 이내(검수 요청 완료 후)
+                    검수 완료 후 1 영업일 이내
                   </FontSize18>
                 </InlineFlexDiv>
               </PaymentInfo1>
@@ -241,8 +242,9 @@ class PaymentPageContainer extends React.Component {
                   }}
                 >
                   <FontSize18 style={{ color: "#767676" }}>배송비</FontSize18>
-                  <FontSize18 style={{ color: "#414550", fontWeight: "500" }}>
-                    5,000원
+                  <FontSize18 style={{ color: "#414550", fontWeight: "500", display: "flex" }}>
+                    <div style={{textDecoration: "line-through", marginRight: "10px"}}>5000 원</div>
+                    <div>0 원</div>
                   </FontSize18>
                 </InlineFlexDiv>
                 <InlineFlexDiv
@@ -263,7 +265,7 @@ class PaymentPageContainer extends React.Component {
               >
                 <PaymentInfoText24>최종 결제가격(VAT 포함)</PaymentInfoText24>
                 <PaymentInfoText24 style={{ color: "#282c36" }}>
-                  {(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000).toLocaleString("ko-KR")} 원
+                  {(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000).toLocaleString("ko-KR")} 원
                 </PaymentInfoText24>
               </InlineFlexDiv>
             </PaymentInfoWrap>

@@ -69,7 +69,7 @@ class PaymentCompleteContainer extends React.Component {
 							<CompleteInfoRight>
 								<InlineFlexDiv style={{ marginTop: '76px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>주문금액</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>{(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000 + 5000).toLocaleString("ko-KR")} 원(VAT 포함)</FontSize18>
+									<FontSize18 style={{ marginBottom: '12px' }}>{(Math.round(((AutoEstimate.totalPrice) * 1.1/1000)) * 1000).toLocaleString("ko-KR")} 원(VAT 포함)</FontSize18>
 								</InlineFlexDiv>
 
 								<InlineFlexDiv>
@@ -78,16 +78,17 @@ class PaymentCompleteContainer extends React.Component {
 								</InlineFlexDiv>
 								<InlineFlexDiv>
 									<FontSize18 style={{ color: '#767676', fontWeight: 'normal', marginTop: '12px' }}>배송비</FontSize18>
-									<FontSize18 style={{ color: '#414550', marginTop: '12px' }}>5,000원</FontSize18>
+									<FontSize18 style={{ color: '#414550', marginTop: '12px' }}>0원</FontSize18>
 								</InlineFlexDiv>
 
 								<InlineFlexDiv style={{ marginTop: '73px', borderBottom: `1px solid #c6c7cc` }}>
 									<FontSize20 style={{ marginBottom: '12px' }}>예상 납기일</FontSize20>
-									<FontSize18 style={{ marginBottom: '12px' }}>{AutoEstimate.totalPeriod} 영업일</FontSize18>
+									{/* <FontSize18 style={{ marginBottom: '12px' }}>{AutoEstimate.totalPeriod} 영업일</FontSize18> */}
+									<FontSize18 style={{ marginBottom: '12px' }}>9 영업일</FontSize18>
 								</InlineFlexDiv>
 
 								<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>배송 예정일 : 검수요청완료 후 2영업일 이내</FontSize18>
+									<FontSize18 style={{ color: '#767676', fontWeight: 'normal' }}>도착 예정일 : 검수완료 후 1영업일 이내</FontSize18>
 
 								</div>
 
