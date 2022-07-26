@@ -1,16 +1,16 @@
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 
-import React from "react";
-import App from "next/app";
+import React from 'react';
+import App from 'next/app';
 
-import { Provider } from "mobx-react";
-import { createGlobalStyle } from "styled-components";
-import ScrollToTop from "components/ScrollToTop";
-import stores from "stores";
-import CheckBrowserModal from "containers/Home/Common/CheckBrowserModal";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Provider } from 'mobx-react';
+import { createGlobalStyle } from 'styled-components';
+import ScrollToTop from 'components/ScrollToTop';
+import stores from 'stores';
+import CheckBrowserModal from 'containers/Home/Common/CheckBrowserModal';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -77,102 +77,103 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-  // 이전 페이지 관련 SSR : https://stackoverflow.com/questions/55565631/how-to-get-previous-url-in-nextjs
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
+    // 이전 페이지 관련 SSR : https://stackoverflow.com/questions/55565631/how-to-get-previous-url-in-nextjs
+    static async getInitialProps({ Component, ctx }) {
+        let pageProps = {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
+        if (Component.getInitialProps) {
+            pageProps = await Component.getInitialProps(ctx);
+        }
+
+        return { pageProps };
     }
 
-    return { pageProps };
-  }
+    state = {
+        ie_user: false,
+        modal_shown: false,
+        prepare: true,
+        location: '',
+        history: [], // keep history items in state
+    };
 
-  state = {
-    ie_user: false,
-    modal_shown: false,
-    prepare: true,
-    location: "",
-    history: [], // keep history items in state
-  };
+    closeModal = () => {
+        this.setState({
+            ...this.state,
+            ie_user: false,
+            modal_shown: true,
+            prepare: false,
+        });
+    };
 
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      ie_user: false,
-      modal_shown: true,
-      prepare: false,
-    });
-  };
-  componentDidMount() {
-    const { Home } = this.props;
-    const userAgent = window.navigator.userAgent;
+    componentDidMount() {
+        const { Home } = this.props;
+        const userAgent = window.navigator.userAgent;
 
-    // 이전 페이지 기록하기
-    const { asPath } = this.props.router;
+        // 이전 페이지 기록하기
+        const { asPath } = this.props.router;
 
-    // lets add initial route to `history`
-    this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
-    // 이전 페이지 기록하기 끝
+        // lets add initial route to `history`
+        this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
+        // 이전 페이지 기록하기 끝
 
-    // 네이버 애널리틱스
-    this.setState({
-      location: window.location,
-    });
-    if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
-    if (window.wcs) {
-      window.wcs_do();
+        // 네이버 애널리틱스
+        this.setState({
+            location: window.location,
+        });
+        if (!window.wcs_add) window.wcs_add = {};
+        window.wcs_add['wa'] = 'a888b15a2864e';
+        if (window.wcs) {
+            window.wcs_do();
+        }
+        console.log(userAgent.toLowerCase());
+
+        if (userAgent.indexOf('MSIE ') !== -1 || userAgent.indexOf('.NET') !== -1 || userAgent.indexOf('Edge') !== -1) {
+            this.setState({
+                ...this.state,
+                ie_user: true,
+            });
+        }
+
+        if (window.location.pathname !== '/') {
+            this.setState({
+                ...this.state,
+                prepare: false,
+            });
+        }
+
+        const jssStyles = document.querySelector('#jss-server-side');
+        if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles);
     }
-    console.log(userAgent.toLowerCase());
+    // 네이버애널리틱스
+    componentDidUpdate() {
+        if (!window.wcs_add) window.wcs_add = {};
+        window.wcs_add['wa'] = 'a888b15a2864e';
+        if (window.wcs) {
+            window.wcs_do();
+        }
+        // 이전 페이지 기록하기
+        const { history } = this.state;
+        const { asPath } = this.props.router;
 
-    if (userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1 || userAgent.indexOf("Edge") !== -1) {
-      this.setState({
-        ...this.state,
-        ie_user: true,
-      });
+        // if current route (`asPath`) does not equal
+        // the latest item in the history,
+        // it is changed so lets save it
+        if (history[history.length - 1] !== asPath) {
+            this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
+        }
     }
-
-    if (window.location.pathname !== "/") {
-      this.setState({
-        ...this.state,
-        prepare: false,
-      });
+    render() {
+        const { Component, pageProps, Home } = this.props;
+        return (
+            <ScrollToTop>
+                <GlobalStyle />
+                <CheckBrowserModal open={!this.state.modal_shown && this.state.ie_user} handleClose={this.closeModal} />
+                <Provider {...stores}>
+                    <Component history={this.state.history} {...pageProps} />
+                </Provider>
+            </ScrollToTop>
+        );
     }
-
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles);
-  }
-  // 네이버애널리틱스
-  componentDidUpdate() {
-    if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
-    if (window.wcs) {
-      window.wcs_do();
-    }
-    // 이전 페이지 기록하기
-    const { history } = this.state;
-    const { asPath } = this.props.router;
-
-    // if current route (`asPath`) does not equal
-    // the latest item in the history,
-    // it is changed so lets save it
-    if (history[history.length - 1] !== asPath) {
-      this.setState((prevState) => ({ history: [...prevState.history, asPath] }));
-    }
-  }
-  render() {
-    const { Component, pageProps, Home } = this.props;
-    return (
-      <ScrollToTop>
-        <GlobalStyle />
-        <CheckBrowserModal open={!this.state.modal_shown && this.state.ie_user} handleClose={this.closeModal} />
-        <Provider {...stores}>
-          <Component history={this.state.history} {...pageProps} />
-        </Provider>
-      </ScrollToTop>
-    );
-  }
 }
 
 export default MyApp;
