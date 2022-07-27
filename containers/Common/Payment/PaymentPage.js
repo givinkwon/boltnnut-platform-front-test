@@ -341,7 +341,7 @@ class PaymentPageContainer extends React.Component {
                                 </PaymentInfoText24>
                             </InlineFlexDiv>
                         </PaymentInfoWrap>
-
+                        c
                         <PaymentInfo3>
                             <PaymentInfoWrap style={{ marginTop: "26px" }}>
                                 <FontSize18
@@ -401,7 +401,6 @@ class PaymentPageContainer extends React.Component {
                                 </InlineFlexDiv>
                             </PaymentInfoWrap>
                         </PaymentInfo3>
-
                         {/* <PaymentBtn onClick={() => Payment.clientOrder("html5_inicis", 10)}> */}
                         <PaymentBtn onClick={() => AutoEstimate.save_Paylist()}>
                             <PaymenBtnText24>발주 요청하기</PaymenBtnText24>
