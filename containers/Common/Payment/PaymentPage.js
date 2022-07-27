@@ -331,14 +331,11 @@ class PaymentPageContainer extends React.Component {
                                 }}
                             >
                                 <PaymentInfoText24>
-                                    최종 결제가격
+                                    최종 결제가격 (VAT 포함)
                                 </PaymentInfoText24>
                                 <PaymentInfoText24 style={{ color: "#282c36" }}>
-                                    {(
-                                        Math.round(
-                                            (AutoEstimate.totalPrice * 1.1) /
-                                                1000
-                                        ) * 1000
+                                    {Math.round(
+                                        AutoEstimate.totalPrice * 1.1
                                     ).toLocaleString("ko-KR")}{" "}
                                     원
                                 </PaymentInfoText24>
