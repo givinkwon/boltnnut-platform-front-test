@@ -150,7 +150,7 @@ class Home extends React.Component {
                         content="https://www.k-jangin.com"
                     />
                     {/* Title */}
-                    <title>바로발주 | AI 견적으로 제조부품 발주</title>
+                    <title>바로발주 | AI 견적으로 자동발주</title>
                 </Head>
 
                 <div onContextMenu={(e) => e.preventDefault()}>
