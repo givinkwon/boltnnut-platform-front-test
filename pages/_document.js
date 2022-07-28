@@ -3,35 +3,38 @@ import { ServerStyleSheet as StyledComponentSheets } from "styled-components";
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/styles";
 
 export default class MyDocument extends Document {
-  static getInitialProps = async (ctx) => {
-    const styledComponentSheet = new StyledComponentSheets();
-    const materialUiSheets = new MaterialUiServerStyleSheets();
-    const originalRenderPage = ctx.renderPage;
+    static getInitialProps = async (ctx) => {
+        const styledComponentSheet = new StyledComponentSheets();
+        const materialUiSheets = new MaterialUiServerStyleSheets();
+        const originalRenderPage = ctx.renderPage;
 
-    try {
-      ctx.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App) => (props) => styledComponentSheet.collectStyles(materialUiSheets.collect(<App {...props} />)),
-        });
-      const initialProps = await Document.getInitialProps(ctx);
-      return {
-        ...initialProps,
-        styles: [
-          <React.Fragment key="styles">
-            {initialProps.styles}
-            {materialUiSheets.getStyleElement()}
-            {styledComponentSheet.getStyleElement()}
-          </React.Fragment>,
-        ],
-      };
-    } finally {
-      styledComponentSheet.seal();
-    }
-  };
+        try {
+            ctx.renderPage = () =>
+                originalRenderPage({
+                    enhanceApp: (App) => (props) =>
+                        styledComponentSheet.collectStyles(
+                            materialUiSheets.collect(<App {...props} />)
+                        ),
+                });
+            const initialProps = await Document.getInitialProps(ctx);
+            return {
+                ...initialProps,
+                styles: [
+                    <React.Fragment key="styles">
+                        {initialProps.styles}
+                        {materialUiSheets.getStyleElement()}
+                        {styledComponentSheet.getStyleElement()}
+                    </React.Fragment>,
+                ],
+            };
+        } finally {
+            styledComponentSheet.seal();
+        }
+    };
 
-  setReportV4() {
-    return {
-      __html: `
+    setReportV4() {
+        return {
+            __html: `
       var VIEW_ID = '214568260';
 
       // Query the API and print the results to the page.
@@ -104,11 +107,11 @@ export default class MyDocument extends Document {
       }
 
      `,
-    };
-  }
-  setAnalyticsApi() {
-    return {
-      __html: `
+        };
+    }
+    setAnalyticsApi() {
+        return {
+            __html: `
       console.log(1)
       // Replace with your client ID from the developer console.
       var CLIENT_ID ='392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com'; // <-- 발급받은 Client ID 입력 
@@ -257,11 +260,11 @@ export default class MyDocument extends Document {
       // a();
       // alert("F");
       `,
-    };
-  }
-  setGoogleTags() {
-    return {
-      __html: `
+        };
+    }
+    setGoogleTags() {
+        return {
+            __html: `
       
       window.dataLayer = window.dataLayer || [];
       
@@ -280,11 +283,11 @@ export default class MyDocument extends Document {
       }
       
      `,
-    };
-  }
-  setChannelTalk() {
-    return {
-      __html: `
+        };
+    }
+    setChannelTalk() {
+        return {
+            __html: `
         (function() {
           var w = window;
           if (w.ChannelIO) {
@@ -325,12 +328,12 @@ export default class MyDocument extends Document {
           "pluginKey": "ec3d75f3-0b9e-4b01-a746-dfed77e31339"
         });
       `,
-    };
-  }
+        };
+    }
 
-  setBeusable() {
-    return {
-      __html: `
+    setBeusable() {
+        return {
+            __html: `
         (function() {
           var w = window;
           var d = document;
@@ -345,21 +348,21 @@ export default class MyDocument extends Document {
           w.__beusablerumclient__.load(a);
       })();
       `,
-    };
-  }
+        };
+    }
 
-  setKakaoLogin() {
-    return {
-      __html: `
+    setKakaoLogin() {
+        return {
+            __html: `
         (function() {
           Kakao.init("1469e9509222cfd066d35737d4359063");
       })();
       `,
-    };
-  }
-  setBeusableAddition() {
-    return {
-      __html: `
+        };
+    }
+    setBeusableAddition() {
+        return {
+            __html: `
         (function(w, d, a){
           w.__baclient__ = {
               load : function(src){
@@ -370,54 +373,94 @@ export default class MyDocument extends Document {
           };w.__baclient__.load(a);
       })(window, document, "//ba.beusable.net/script/ba/c08687bf6b");
       `,
-    };
-  }
-  render() {
-    return (
-      <html>
-        <Head>
-          <>
-            {/* 페이스북 설치 태그*/}
-            <meta name="facebook-domain-verification" content="l31dir7jjxp2c050hcf9cjdnjpgi50" />
-            {/* 구글 옵티마이저 설치태그 */}
-            <script src="https://www.googleoptimize.com/optimize.js?id=OPT-56ZDC8G"></script>
-            <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        };
+    }
+    render() {
+        return (
+            <html>
+                <Head>
+                    <>
+                        {/* 페이스북 설치 태그*/}
+                        <meta
+                            name="facebook-domain-verification"
+                            content="l31dir7jjxp2c050hcf9cjdnjpgi50"
+                        />
+                        {/* 구글 옵티마이저 설치태그 */}
+                        {/* <script src="https://www.googleoptimize.com/optimize.js?id=OPT-56ZDC8G"></script>
+                        <script
+                            data-ad-client="ca-pub-6441704928060549"
+                            async
+                            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                        ></script> */}
 
-            {/* Beusable */}
-            <script type="text/javascript"></script>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            {/*--PG크로스브라우징필수내용--*/}
-            <meta http-equiv="Cache-Control" content="no-cache" />
-            <meta http-equiv="Expires" content="0" />
-            <meta http-equiv="Pragma" content="no-cache" />
+                        {/* Beusable */}
+                        <script type="text/javascript"></script>
+                        <meta
+                            http-equiv="Content-Type"
+                            content="text/html; charset=utf-8"
+                        />
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                        {/*--PG크로스브라우징필수내용--*/}
+                        <meta http-equiv="Cache-Control" content="no-cache" />
+                        <meta http-equiv="Expires" content="0" />
+                        <meta http-equiv="Pragma" content="no-cache" />
 
-            {/* 네이버웹마스터도구 사이트구조개선 코드*/}
-            <meta name="NaverBot" content="All" />
-            <meta name="NaverBot" content="index, follow" />
-            <meta name="Yeti" content="All" />
-            <meta name="Yeti" content="index, follow" />
+                        {/* 네이버웹마스터도구 사이트구조개선 코드*/}
+                        <meta name="NaverBot" content="All" />
+                        <meta name="NaverBot" content="index, follow" />
+                        <meta name="Yeti" content="All" />
+                        <meta name="Yeti" content="index, follow" />
 
-            <meta name="google-signin-client_id" content="392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com"></meta>
-            <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly"></meta>
-            {/* 대표 URL */}
-            <link rel="canonical" href="https://www.boltnnut.com/" />
-            {/* Naver webmaster */}
-            <meta name="naver-site-verification" content="4354dc20bc3fb28a16e1db9800acf406fd782d76" />
-            {/* favicon */}
-            <link rel="shortcut icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico" />
-            <link rel="shortcut icon" href="https://www.boltnnut.com/favicon.ico" />
-            <link rel="shortcut icon" href="/public/favicon.ico" />
-            <link rel="icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico" />
-            <link rel="icon" href="/public/favicon.ico" />
-            <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
-            <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-          </>
-          {/* Google Tag Manager */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+                        {/* <meta
+                            name="google-signin-client_id"
+                            content="392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com"
+                        ></meta>
+                        <meta
+                            name="google-signin-scope"
+                            content="https://www.googleapis.com/auth/analytics.readonly"
+                        ></meta> */}
+                        {/* 대표 URL */}
+                        <link rel="canonical" href="https://www.k-jangin.com" />
+                        {/* Naver webmaster */}
+                        {/* <meta
+                            name="naver-site-verification"
+                            content="4354dc20bc3fb28a16e1db9800acf406fd782d76"
+                        /> */}
+                        {/* favicon */}
+                        <link
+                            rel="shortcut icon"
+                            href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
+                        />
+                        <link
+                            rel="shortcut icon"
+                            href="https://www.k-jangin.com/favicon.ico"
+                        />
+                        <link rel="shortcut icon" href="/public/favicon.ico" />
+                        <link
+                            rel="icon"
+                            href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"
+                        />
+                        <link rel="icon" href="/public/favicon.ico" />
+                        <link
+                            href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap"
+                            rel="stylesheet"
+                        />
+                        <link
+                            rel="stylesheet"
+                            type="text/css"
+                            charset="UTF-8"
+                            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+                        />
+                        <link
+                            rel="stylesheet"
+                            type="text/css"
+                            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+                        />
+                    </>
+                    {/* Google Tag Manager */}
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
               (function(w,d,s,l,i){
                 w[l]=w[l]||[];w[l].push({
                   'gtm.start':new Date().getTime(),event:'gtm.js'
@@ -426,53 +469,86 @@ export default class MyDocument extends Document {
                 var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 
               })(window,document,'script','dataLayer','GTM-TSW6VSN');`,
-            }}
-            async
-          ></script>
-        </Head>
-        <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
-          <noscript>
-            <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-TSW6VSN"
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            ></iframe>
-          </noscript>
-          <Main />
-          <script dangerouslySetInnerHTML={this.setChannelTalk()} />
-          <script dangerouslySetInnerHTML={this.setBeusable()} />
-          <script dangerouslySetInnerHTML={this.setBeusableAddition()} />
-          <NextScript />
-          {/* GA Settings*/}
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
-          <script dangerouslySetInnerHTML={this.setGoogleTags()} />
+                        }}
+                        async
+                    ></script>
+                </Head>
+                <body
+                    oncontextmenu="return false"
+                    ondragstart="return false"
+                    onselectstart="return false"
+                >
+                    <noscript>
+                        <iframe
+                            src="https://www.googletagmanager.com/ns.html?id=GTM-TSW6VSN"
+                            height="0"
+                            width="0"
+                            style={{ display: "none", visibility: "hidden" }}
+                        ></iframe>
+                    </noscript>
+                    <Main />
+                    <script dangerouslySetInnerHTML={this.setChannelTalk()} />
+                    <script dangerouslySetInnerHTML={this.setBeusable()} />
+                    <script
+                        dangerouslySetInnerHTML={this.setBeusableAddition()}
+                    />
+                    <NextScript />
+                    {/* GA Settings*/}
+                    {/* <script
+                        async
+                        src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"
+                    ></script>
+                    <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
 
-          {/* Iamport */}
-          <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" async></script>
-          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async></script>
-          {/* Naver analic */}
-          <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
-          {/* Google Adsense */}
-          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    {/* Iamport */}
+                    {/* <script
+                        type="text/javascript"
+                        src="https://code.jquery.com/jquery-1.12.4.min.js"
+                        async
+                    ></script>
+                    <script
+                        type="text/javascript"
+                        src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
+                        async
+                    ></script> */}
+                    {/* Naver analic */}
+                    {/* <script
+                        type="text/javascript"
+                        src="//wcs.naver.net/wcslog.js"
+                    ></script> */}
+                    {/* Google Adsense */}
+                    {/* <script
+                        data-ad-client="ca-pub-6441704928060549"
+                        async
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                    ></script> */}
 
-          {/* 카카오로그인 */}
-          <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-          <script dangerouslySetInnerHTML={this.setKakaoLogin()} />
-          {/* 테스트 */}
+                    {/* 카카오로그인 */}
+                    <script
+                        type="text/javascript"
+                        src="https://developers.kakao.com/sdk/js/kakao.js"
+                    ></script>
+                    <script dangerouslySetInnerHTML={this.setKakaoLogin()} />
+                    {/* 테스트 */}
 
-          <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=authorize"></script>
-          <script type="text/javascript" src="https://apis.google.com/js/client:platform.js"></script>
-          <script dangerouslySetInnerHTML={this.setReportV4()} />
+                    <script
+                        type="text/javascript"
+                        src="https://apis.google.com/js/client.js?onload=authorize"
+                    ></script>
+                    <script
+                        type="text/javascript"
+                        src="https://apis.google.com/js/client:platform.js"
+                    ></script>
+                    <script dangerouslySetInnerHTML={this.setReportV4()} />
 
-          {/* <button id="auth-button" onclick="authorize()">
+                    {/* <button id="auth-button" onclick="authorize()">
             Authorize
           </button> */}
-          {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
-          {/* ㅌㅌㅌ */}
-          {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
-        </body>
-      </html>
-    );
-  }
+                    {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
+                    {/* ㅌㅌㅌ */}
+                    {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
+                </body>
+            </html>
+        );
+    }
 }
