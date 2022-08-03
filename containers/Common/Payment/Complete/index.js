@@ -118,7 +118,7 @@ class PaymentCompleteContainer extends React.Component {
                                     <FontSize20 style={{ marginBottom: '12px' }}>예상 납기일</FontSize20>
                                     {
                                         <FontSize18 style={{ marginBottom: '12px' }}>
-                                            {AutoEstimate.totalPeriod} 영업일
+                                            {AutoEstimate.totalPeriod + 2} 영업일
                                         </FontSize18>
                                     }
                                     {/* <FontSize18 style={{ marginBottom: '12px' }}>9 영업일</FontSize18> */}

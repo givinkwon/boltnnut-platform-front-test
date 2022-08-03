@@ -1,78 +1,78 @@
-import React, { Component, useCallback } from "react";
-import styled from "styled-components";
-import { inject, observer } from "mobx-react";
-import FileImage from "./Fileimage";
-import { useDropzone } from "react-dropzone";
-import AutoEstimateCard from "./AutoEstimateCard";
-import STLViewer from "stl-viewer";
-import Banner0 from "./Home/Banner0";
-import Banner1 from "./Home/Banner1";
-import Banner2 from "./Home/Banner2";
-import Banner3 from "./Home/Banner3";
-import Banner4 from "./Home/Banner4";
-import Banner5 from "./Home/Banner5";
+import React, { Component, useCallback } from 'react';
+import styled from 'styled-components';
+import { inject, observer } from 'mobx-react';
+import FileImage from './Fileimage';
+import { useDropzone } from 'react-dropzone';
+import AutoEstimateCard from './AutoEstimateCard';
+import STLViewer from 'stl-viewer';
+import Banner0 from './Home/Banner0';
+import Banner1 from './Home/Banner1';
+import Banner2 from './Home/Banner2';
+import Banner3 from './Home/Banner3';
+import Banner4 from './Home/Banner4';
+import Banner5 from './Home/Banner5';
 
-import MobileBanner0 from "Mobile/Banner0";
-import MobileBanner1 from "Mobile/Banner1";
-import MobileBanner2 from "Mobile/Banner2";
-import MobileBanner3 from "Mobile/Banner3";
-import MobileBanner4 from "Mobile/Banner4";
-import MobileBanner5 from "Mobile/Banner5";
+import MobileBanner0 from 'Mobile/Banner0';
+import MobileBanner1 from 'Mobile/Banner1';
+import MobileBanner2 from 'Mobile/Banner2';
+import MobileBanner3 from 'Mobile/Banner3';
+import MobileBanner4 from 'Mobile/Banner4';
+import MobileBanner5 from 'Mobile/Banner5';
 
 // Components
-import Buttonv1 from "components/Buttonv1";
-import * as Content from "components/Content";
-import * as Title from "components/Title";
-import SelectComponent from "components/Select";
-import LoadingComponent from "components/Loading";
+import Buttonv1 from 'components/Buttonv1';
+import * as Content from 'components/Content';
+import * as Title from 'components/Title';
+import SelectComponent from 'components/Select';
+import LoadingComponent from 'components/Loading';
 
-import Router from "next/router";
+import Router from 'next/router';
 
 // 이미지 && 아이콘
-const pass2 = "static/images/pass2.png";
-const pass3 = "static/images/pass3.png";
-const check_blue = "static/images/check_blue.svg";
-const pass7 = "static/images/pass7.png";
-const deleteButtonImg = "/static/images/delete.svg";
-const fileImg = "/static/images/file.png";
-const calendar = "/static/images/facebook.png";
-const clip = "./static/images/request/clip.svg";
-const addfile = "./static/images/request/addfile.svg";
+const pass2 = 'static/images/pass2.png';
+const pass3 = 'static/images/pass3.png';
+const check_blue = 'static/images/check_blue.svg';
+const pass7 = 'static/images/pass7.png';
+const deleteButtonImg = '/static/images/delete.svg';
+const fileImg = '/static/images/file.png';
+const calendar = '/static/images/facebook.png';
+const clip = './static/images/request/clip.svg';
+const addfile = './static/images/request/addfile.svg';
 
 // selectbox 디자인
 const customStyles = {
     container: (base, state) => {
         return {
             ...base,
-            zIndex: state.isFocused ? "98" : "auto", //Only when current state focused
+            zIndex: state.isFocused ? '98' : 'auto', //Only when current state focused
         };
     },
     dropdownIndicator: () => ({
-        color: "#555555",
+        color: '#555555',
         width: 40,
         height: 40,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }),
     option: (provided, state) => ({
         ...provided,
-        color: state.isSelected ? "#000000" : "#555555",
-        backgroundColor: "#fff",
+        color: state.isSelected ? '#000000' : '#555555',
+        backgroundColor: '#fff',
         borderRadius: 0,
         padding: 16,
         fontSize: 16,
     }),
     control: () => ({
         fontSize: 16,
-        border: "1px solid #e6e6e6",
-        backgroundColor: "#fff",
-        display: "flex",
+        border: '1px solid #e6e6e6',
+        backgroundColor: '#fff',
+        display: 'flex',
         borderRadius: 6,
     }),
     singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
-        const transition = "opacity 300ms";
+        const transition = 'opacity 300ms';
         return { ...provided, opacity, transition };
     },
 };
@@ -87,7 +87,7 @@ function sleep(ms) {
 let checkBox = false;
 let checkBox_one = false;
 
-@inject("Request", "AutoEstimate")
+@inject('Request', 'AutoEstimate')
 @observer
 class AutoestimateContainer extends React.Component {
     state = {
@@ -123,13 +123,13 @@ class AutoestimateContainer extends React.Component {
             this.setState({ loading: true });
             // 파일 값 저장
             files.forEach((file, fileIdx) => {
-                const Fileextension = file.name.split(".");
+                const Fileextension = file.name.split('.');
                 // 도면 파일만 견적 추가
                 if (
-                    Fileextension[Fileextension.length - 1] == "STP" ||
-                    Fileextension[Fileextension.length - 1] == "STEP" ||
-                    Fileextension[Fileextension.length - 1] == "stp" ||
-                    Fileextension[Fileextension.length - 1] == "step"
+                    Fileextension[Fileextension.length - 1] == 'STP' ||
+                    Fileextension[Fileextension.length - 1] == 'STEP' ||
+                    Fileextension[Fileextension.length - 1] == 'stp' ||
+                    Fileextension[Fileextension.length - 1] == 'step'
                 ) {
                     AutoEstimate.set_file(file);
                     // 견적 호출하기
@@ -151,14 +151,12 @@ class AutoestimateContainer extends React.Component {
 
             // 넣은 파일의 확장자 체크 함수
             acceptedFiles.map((data, idx) => {
-                let fileNameAvailable = ["stp", "step", "STP", "STEP"];
-                const extension = data.name.split(".");
+                let fileNameAvailable = ['stp', 'step', 'STP', 'STEP'];
+                const extension = data.name.split('.');
 
-                if (
-                    !fileNameAvailable.includes(extension[extension.length - 1])
-                ) {
+                if (!fileNameAvailable.includes(extension[extension.length - 1])) {
                     alert(
-                        "STP, STEP 파일만 자동 견적을 제공하고 있습니다. \n타 확장자 파일의 경우 하단의 버튼 클릭 후, 기본정보 입력 후 후불결제를 클릭해주세요."
+                        'STP, STEP 파일만 자동 견적을 제공하고 있습니다. \n타 확장자 파일의 경우 하단의 버튼 클릭 후, 기본정보 입력 후 후불결제를 클릭해주세요.'
                     );
                     check_file = true;
                     // 파일 업로드 된 것 체크
@@ -199,34 +197,33 @@ class AutoestimateContainer extends React.Component {
                                 <>
                                     <div
                                         style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            flexDirection: "column",
-                                            marginBottom: "20px",
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            flexDirection: 'column',
+                                            marginBottom: '20px',
                                         }}
                                     >
                                         <div
                                             style={{
-                                                color: "#0933b3",
-                                                fontSize: "20px",
-                                                fontWeight: "bold",
-                                                marginBottom: "-3px",
+                                                color: '#0933b3',
+                                                fontSize: '20px',
+                                                fontWeight: 'bold',
+                                                marginBottom: '-3px',
                                             }}
                                         >
                                             ↑
                                         </div>
                                         <div
                                             style={{
-                                                width: "22px",
-                                                height: "7px",
-                                                border: "3px solid #0933b3",
-                                                borderTop: "none",
+                                                width: '22px',
+                                                height: '7px',
+                                                border: '3px solid #0933b3',
+                                                borderTop: 'none',
                                             }}
                                         ></div>
                                     </div>
                                     <p>
-                                        3D 도면 파일을 이곳에 드래그 또는{" "}
-                                        <span>파일찾기</span>
+                                        3D 도면 파일을 이곳에 드래그 또는 <span>파일찾기</span>
                                     </p>
                                     <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                                     <FileImageContainer>
@@ -246,8 +243,7 @@ class AutoestimateContainer extends React.Component {
                                         <div></div>
                                     </span>
                                     <p>
-                                        3D 도면 파일을 이곳에 드래그 또는{" "}
-                                        <span>파일찾기</span>
+                                        3D 도면 파일을 이곳에 드래그 또는 <span>파일찾기</span>
                                     </p>
                                 </div>
                             )}
@@ -287,15 +283,13 @@ class AutoestimateContainer extends React.Component {
 
             // 넣은 파일의 확장자 체크 함수
             acceptedFiles.map((data, idx) => {
-                let fileNameAvailable = ["stp", "step", "stl", "dwg"];
-                const extension = data.name.split(".");
+                let fileNameAvailable = ['stp', 'step', 'stl', 'dwg'];
+                const extension = data.name.split('.');
 
-                if (
-                    !fileNameAvailable.includes(extension[extension.length - 1])
-                ) {
+                if (!fileNameAvailable.includes(extension[extension.length - 1])) {
                     check_file = false;
                     alert(
-                        "STP, STEP 파일만 자동 견적을 제공하고 있습니다. \nDwg 혹은 STL 파일의 경우 하단의 고객센터로 전화주시면 1영업일 내로 견적을 내드립니다."
+                        'STP, STEP 파일만 자동 견적을 제공하고 있습니다. \nDwg 혹은 STL 파일의 경우 하단의 고객센터로 전화주시면 1영업일 내로 견적을 내드립니다.'
                     );
                     return false;
                 } else {
@@ -319,13 +313,7 @@ class AutoestimateContainer extends React.Component {
             <>
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    {this.state.loading && (
-                        <LoadingComponent
-                            type="spin"
-                            color="#0933b3"
-                            message="견적산출 중입니다"
-                        />
-                    )}
+                    {this.state.loading && <LoadingComponent type="spin" color="#0933b3" message="견적산출 중입니다" />}
                     <InputBox checkFileUpload={AutoEstimate.checkFileUpload}>
                         <DropZoneContainer>
                             {/*파일이 없을 때 */}
@@ -333,34 +321,33 @@ class AutoestimateContainer extends React.Component {
                                 <>
                                     <div
                                         style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            flexDirection: "column",
-                                            marginBottom: "24px",
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            flexDirection: 'column',
+                                            marginBottom: '24px',
                                         }}
                                     >
                                         <div
                                             style={{
-                                                color: "#0933b3",
-                                                fontSize: "20px",
-                                                fontWeight: "bold",
-                                                marginBottom: "-3px",
+                                                color: '#0933b3',
+                                                fontSize: '20px',
+                                                fontWeight: 'bold',
+                                                marginBottom: '-3px',
                                             }}
                                         >
                                             ↑
                                         </div>
                                         <div
                                             style={{
-                                                width: "22px",
-                                                height: "7px",
-                                                border: "3px solid #0933b3",
-                                                borderTop: "none",
+                                                width: '22px',
+                                                height: '7px',
+                                                border: '3px solid #0933b3',
+                                                borderTop: 'none',
                                             }}
                                         ></div>
                                     </div>
                                     <p>
-                                        이 곳을 클릭해 3D 도면 파일{" "}
-                                        <span>업로드</span>
+                                        이 곳을 클릭해 3D 도면 파일 <span>업로드</span>
                                     </p>
                                     <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                                     <FileImageContainer>
@@ -380,8 +367,7 @@ class AutoestimateContainer extends React.Component {
                                         <div></div>
                                     </span>
                                     <p>
-                                        3D 도면 파일을 이곳에{" "}
-                                        <span>업로드</span>
+                                        3D 도면 파일을 이곳에 <span>업로드</span>
                                     </p>
                                 </div>
                             )}
@@ -426,8 +412,7 @@ class AutoestimateContainer extends React.Component {
                                         <div></div>
                                     </span>
                                     <p>
-                                        도면(DWG) 및 관련 파일을 이곳에{" "}
-                                        <span>업로드</span>
+                                        도면(DWG) 및 관련 파일을 이곳에 <span>업로드</span>
                                     </p>
                                 </div>
                             )}
@@ -451,24 +436,16 @@ class AutoestimateContainer extends React.Component {
                         {/* 자동 견적 헤더 */}
                         <HeaderBox>
                             <Header>
-                                {AutoEstimate.checkFileUpload
-                                    ? "3D 파일 업로드"
-                                    : "도면 파일을 업로드 해주세요."}
+                                {AutoEstimate.checkFileUpload ? '3D 파일 업로드' : '도면 파일을 업로드 해주세요.'}
                             </Header>
                         </HeaderBox>
 
-                        <ContentBox
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
                             <this.MyDropzone />
                         </ContentBox>
-                        <Notice>
-                            금형 사출의 경우 최소수량 100개 이상부터 가능합니다.
-                        </Notice>
+                        <Notice>금형 사출의 경우 최소수량 100개 이상부터 가능합니다.</Notice>
 
-                        <TableHeader
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <TableHeader checkFileUpload={AutoEstimate.checkFileUpload}>
                             <div></div>
                             <span style={{ marginRight: 396 }}>파일명</span>
                             <span style={{ marginRight: 180 }}>기본가공</span>
@@ -479,9 +456,7 @@ class AutoestimateContainer extends React.Component {
                         {/* 파일 업로드 창 */}
 
                         {/* 자동 견적 창 */}
-                        <ItemList
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <ItemList checkFileUpload={AutoEstimate.checkFileUpload}>
                             {AutoEstimate.fileList.map((data, idx) => (
                                 <ItemBox>
                                     <MainBox>
@@ -490,28 +465,17 @@ class AutoestimateContainer extends React.Component {
                                             onClick={() => {
                                                 if (!data.checked) {
                                                     data.checked = true;
-                                                    AutoEstimate.checkQuantity(
-                                                        idx,
-                                                        data.quantity,
-                                                        0
-                                                    );
+                                                    AutoEstimate.checkQuantity(idx, data.quantity, 0);
                                                 } else {
                                                     data.checked = false;
-                                                    AutoEstimate.checkQuantity(
-                                                        idx,
-                                                        data.quantity,
-                                                        1
-                                                    );
+                                                    AutoEstimate.checkQuantity(idx, data.quantity, 1);
                                                 }
 
                                                 AutoEstimate.countPrice();
                                             }}
                                         >
                                             <div active={data.checked}>
-                                                <img
-                                                    src={check_blue}
-                                                    active={data.checked}
-                                                />
+                                                <img src={check_blue} active={data.checked} />
                                             </div>
                                         </CheckBox>
 
@@ -535,36 +499,25 @@ class AutoestimateContainer extends React.Component {
                                             />
                                             <Length>
                                                 {Math.round(data.x_length) +
-                                                    " x " +
+                                                    ' x ' +
                                                     Math.round(data.y_length) +
-                                                    " x " +
+                                                    ' x ' +
                                                     Math.round(data.z_length) +
-                                                    " mm"}
+                                                    ' mm'}
                                             </Length>
                                         </StlBox>
                                         <ColumnBox>
                                             <ManufactureBox>
                                                 <Select
                                                     styles={customStyles}
-                                                    value={
-                                                        data.selectedManufacture
-                                                    }
-                                                    options={
-                                                        AutoEstimate.ManufactureOption
-                                                    }
-                                                    getOptionLabel={(option) =>
-                                                        option.name
-                                                    }
+                                                    value={data.selectedManufacture}
+                                                    options={AutoEstimate.ManufactureOption}
+                                                    getOptionLabel={(option) => option.name}
                                                     onChange={(e) => {
                                                         // 공정 선택
-                                                        AutoEstimate.setManufacture(
-                                                            e,
-                                                            idx
-                                                        );
+                                                        AutoEstimate.setManufacture(e, idx);
                                                         // 변경 값에 따라 값 다시 받아오기
-                                                        AutoEstimate.ReloadAutoEstimate(
-                                                            idx
-                                                        );
+                                                        AutoEstimate.ReloadAutoEstimate(idx);
                                                     }}
                                                 />
                                             </ManufactureBox>
@@ -574,54 +527,32 @@ class AutoestimateContainer extends React.Component {
                                                 value={data.selectedMaterial}
                                                 styles={customStyles}
                                                 options={
-                                                    data.selectedManufacture
-                                                        .id == 1
+                                                    data.selectedManufacture.id == 1
                                                         ? AutoEstimate.CNCMaterialOption
                                                         : AutoEstimate.MoldMaterialOption
                                                 }
-                                                getOptionLabel={(option) =>
-                                                    option.name
-                                                }
+                                                getOptionLabel={(option) => option.name}
                                                 onChange={(e) => {
-                                                    AutoEstimate.setMaterial(
-                                                        e,
-                                                        idx
-                                                    );
+                                                    AutoEstimate.setMaterial(e, idx);
                                                     // 변경 값에 따라 값 다시 받아오기
-                                                    AutoEstimate.ReloadAutoEstimate(
-                                                        idx
-                                                    );
+                                                    AutoEstimate.ReloadAutoEstimate(idx);
                                                 }}
                                             />
                                         </MaterialBox>
                                         <QuantityBox>
                                             <DirectInputBox>
                                                 <input
-                                                    value={
-                                                        AutoEstimate.fileList[
-                                                            idx
-                                                        ].quantity
-                                                    }
+                                                    value={AutoEstimate.fileList[idx].quantity}
                                                     placeholder="직접 입력하세요"
                                                     onChange={(e) => {
                                                         // 숫자 검증을 위해
                                                         const re = /^[0-9\b]+$/;
 
-                                                        if (
-                                                            re.test(
-                                                                e.target.value
-                                                            )
-                                                        ) {
-                                                            AutoEstimate.countQuantity(
-                                                                idx,
-                                                                e.target.value
-                                                            );
+                                                        if (re.test(e.target.value)) {
+                                                            AutoEstimate.countQuantity(idx, e.target.value);
                                                         } else {
-                                                            e.target.value = "";
-                                                            AutoEstimate.countQuantity(
-                                                                idx,
-                                                                e.target.value
-                                                            );
+                                                            e.target.value = '';
+                                                            AutoEstimate.countQuantity(idx, e.target.value);
                                                         }
                                                     }}
                                                 />
@@ -630,114 +561,70 @@ class AutoestimateContainer extends React.Component {
                                     </MainBox>
 
                                     {/* 가격 표시 */}
-                                    <div style={{ textAlign: "right" }}>
+                                    <div style={{ textAlign: 'right' }}>
                                         <TailBox
                                             style={{
-                                                float: "left",
-                                                display: "inline-block",
+                                                float: 'left',
+                                                display: 'inline-block',
                                             }}
                                         >
                                             <div>
                                                 <span>
                                                     {/* 금형인 경우(id = 2), 금속가공인 경우(id = 1)*/}
-                                                    {data.selectedManufacture
-                                                        .id === 2 ? (
+                                                    {data.selectedManufacture.id === 2 ? (
                                                         <>
                                                             <div>
-                                                                <span>
-                                                                    금형비{" "}
-                                                                </span>
+                                                                <span>금형비 </span>
                                                                 <span>
                                                                     {/* 1000의 자리까지 반올림 */}
                                                                     {(
-                                                                        Math.round(
-                                                                            data.moldPrice /
-                                                                                1000
-                                                                        ) * 1000
-                                                                    ).toLocaleString(
-                                                                        "ko-KR"
-                                                                    ) + " 원"}
+                                                                        Math.round(data.moldPrice / 1000) * 1000
+                                                                    ).toLocaleString('ko-KR') + ' 원'}
                                                                 </span>
                                                                 <span> + </span>
-                                                                <span>
-                                                                    사출비{" "}
-                                                                </span>
+                                                                <span>사출비 </span>
                                                                 <span>
                                                                     {/* 1의 자리까지 반올림 */}
                                                                     {(
-                                                                        Math.round(
-                                                                            data.injectionPrice
-                                                                        ) *
-                                                                        data.quantity
-                                                                    ).toLocaleString(
-                                                                        "ko-KR"
-                                                                    ) + " 원"}
+                                                                        Math.round(data.injectionPrice) * data.quantity
+                                                                    ).toLocaleString('ko-KR') + ' 원'}
                                                                 </span>
                                                             </div>
 
                                                             <div>
                                                                 <Grid2>
-                                                                    <span>
-                                                                        가격{" "}
-                                                                    </span>
+                                                                    <span>가격 </span>
                                                                     <strong>
                                                                         {(
-                                                                            Math.round(
-                                                                                data.moldPrice /
-                                                                                    1000
-                                                                            ) *
-                                                                                1000 +
-                                                                            Math.round(
-                                                                                data.injectionPrice
-                                                                            ) *
+                                                                            Math.round(data.moldPrice / 1000) * 1000 +
+                                                                            Math.round(data.injectionPrice) *
                                                                                 data.quantity
-                                                                        ).toLocaleString(
-                                                                            "ko-KR"
-                                                                        ) +
-                                                                            " 원"}
+                                                                        ).toLocaleString('ko-KR') + ' 원'}
                                                                     </strong>
                                                                 </Grid2>
                                                                 <Grid2>
-                                                                    <span>
-                                                                        예상
-                                                                        납기일{" "}
-                                                                    </span>
-                                                                    <strong>
-                                                                        {data.period +
-                                                                            " 영업일"}
-                                                                    </strong>
+                                                                    <span>예상 생산일 </span>
+                                                                    <strong>{data.period + ' 영업일'}</strong>
                                                                 </Grid2>
                                                             </div>
                                                         </>
                                                     ) : (
                                                         <>
                                                             <Grid2>
-                                                                <span>
-                                                                    가격{" "}
-                                                                </span>
+                                                                <span>가격 </span>
                                                                 <strong>
                                                                     {/* 1000의 자리까지 반올림 */}
                                                                     {(
-                                                                        Math.round(
-                                                                            data.price /
-                                                                                1000
-                                                                        ) *
+                                                                        Math.round(data.price / 1000) *
                                                                         1000 *
                                                                         data.quantity
-                                                                    ).toLocaleString(
-                                                                        "ko-KR"
-                                                                    ) + " 원"}
+                                                                    ).toLocaleString('ko-KR') + ' 원'}
                                                                 </strong>
                                                             </Grid2>
                                                             <Grid2>
-                                                                <span>
-                                                                    예상 납기일
-                                                                </span>
+                                                                <span>예상 생산일</span>
                                                                 {/* <span>{data.period + " 영업일"}</span> */}
-                                                                <strong>
-                                                                    {data.period +
-                                                                        " 영업일"}
-                                                                </strong>
+                                                                <strong>{data.period + ' 영업일'}</strong>
                                                             </Grid2>
                                                         </>
                                                     )}
@@ -748,10 +635,7 @@ class AutoestimateContainer extends React.Component {
                                     <DeleteBox>
                                         <span
                                             onClick={() => {
-                                                AutoEstimate.fileList.splice(
-                                                    idx,
-                                                    1
-                                                );
+                                                AutoEstimate.fileList.splice(idx, 1);
                                                 AutoEstimate.countPrice();
                                             }}
                                         >
@@ -762,9 +646,7 @@ class AutoestimateContainer extends React.Component {
                             ))}
                         </ItemList>
 
-                        <NoticeBox
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <NoticeBox checkFileUpload={AutoEstimate.checkFileUpload}>
                             {/* 전체 삭제 */}
                             <EntireDelete
                                 onClick={() => {
@@ -793,138 +675,87 @@ class AutoestimateContainer extends React.Component {
                             <>
                                 {/* 파일 업로드 창 */}
                                 <HeaderBox>
-                                    <Header>
-                                        {AutoEstimate.checkFileUpload &&
-                                            "도면(DWG) 및 관련 파일 업로드"}
-                                    </Header>
+                                    <Header>{AutoEstimate.checkFileUpload && '도면(DWG) 및 관련 파일 업로드'}</Header>
                                     <Desc>
-                                        3D 파일에서 표현이 어려운 부분에 대한
-                                        가공을 원하실 경우, 2D 도면을 같이
+                                        3D 파일에서 표현이 어려운 부분에 대한 가공을 원하실 경우, 2D 도면을 같이
                                         첨부해주세요. (ex. 나사 탭 등)
                                     </Desc>
-                                    <Notice>
-                                        미첨부 시 가공이 정확히 되지 않을 수
-                                        있습니다.
-                                    </Notice>
+                                    <Notice>미첨부 시 가공이 정확히 되지 않을 수 있습니다.</Notice>
                                     <br />
-                                    {AutoEstimate.request_file_set.map(
-                                        (item, idx) => {
-                                            return (
-                                                <>
-                                                    <AddFileList>
-                                                        <span
-                                                            onClick={() => {
-                                                                if (
-                                                                    AutoEstimate
-                                                                        .request_file_set
-                                                                        .length >
-                                                                    0
-                                                                ) {
-                                                                    AutoEstimate.request_file_set.splice(
-                                                                        idx,
-                                                                        1
-                                                                    );
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                display: "flex",
-                                                                alignItems:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            <span>
-                                                                <img
-                                                                    src={clip}
-                                                                    style={{
-                                                                        marginLeft: 17,
-                                                                        marginRight: 17,
-                                                                    }}
-                                                                ></img>
-                                                                <span>
-                                                                    {item.name}
-                                                                </span>
-                                                                <DeleteFile
-                                                                    onClick={() =>
-                                                                        AutoEstimate.delete_File(
-                                                                            idx
-                                                                        )
-                                                                    }
-                                                                    src={
-                                                                        deleteButtonImg
-                                                                    }
-                                                                    style={{
-                                                                        marginLeft: 17,
-                                                                    }}
-                                                                />
-                                                            </span>
+                                    {AutoEstimate.request_file_set.map((item, idx) => {
+                                        return (
+                                            <>
+                                                <AddFileList>
+                                                    <span
+                                                        onClick={() => {
+                                                            if (AutoEstimate.request_file_set.length > 0) {
+                                                                AutoEstimate.request_file_set.splice(idx, 1);
+                                                            }
+                                                        }}
+                                                        style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <span>
+                                                            <img
+                                                                src={clip}
+                                                                style={{
+                                                                    marginLeft: 17,
+                                                                    marginRight: 17,
+                                                                }}
+                                                            ></img>
+                                                            <span>{item.name}</span>
+                                                            <DeleteFile
+                                                                onClick={() => AutoEstimate.delete_File(idx)}
+                                                                src={deleteButtonImg}
+                                                                style={{
+                                                                    marginLeft: 17,
+                                                                }}
+                                                            />
                                                         </span>
-                                                    </AddFileList>
-                                                </>
-                                            );
-                                        }
-                                    )}
+                                                    </span>
+                                                </AddFileList>
+                                            </>
+                                        );
+                                    })}
                                 </HeaderBox>
-                                <ContentBox
-                                    checkFileUpload={
-                                        AutoEstimate.checkFileUpload
-                                    }
-                                >
+                                <ContentBox checkFileUpload={AutoEstimate.checkFileUpload}>
                                     <this.DWGDropzone />
                                 </ContentBox>
 
-                                <Price
-                                    checkFileUpload={
-                                        AutoEstimate.checkFileUpload
-                                    }
-                                >
+                                <Price checkFileUpload={AutoEstimate.checkFileUpload}>
                                     <PriceLabel active={checkBox_one}>
                                         <div>
-                                            <span>
-                                                자동 견적 가격 / 예상 납기일
-                                            </span>
+                                            <span>자동 견적 가격 / 예상 납기일</span>
                                             <span
                                                 onMouseOver={() => {
                                                     this.setIsShown(true, 1);
-                                                    console.log("mouse-enter");
+                                                    console.log('mouse-enter');
                                                 }}
                                                 onMouseOut={() => {
                                                     this.setIsShown(false, 1);
-                                                    console.log("mouse-out");
+                                                    console.log('mouse-out');
                                                 }}
                                             >
                                                 ?
                                             </span>
                                         </div>
                                         <div>
-                                            <p>
-                                                해당 사항은 볼트앤너트 AI
-                                                알고리즘이 도출한 견적으로
-                                            </p>
-                                            <p>
-                                                가공품의 발주 요건에 따라 변경될
-                                                수 있습니다.
-                                            </p>
-                                            <p>
-                                                본 견적은 후처리를 제외한 순수
-                                                단품 가공 견적입니다.
-                                            </p>
+                                            <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>
+                                            <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
+                                            <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
                                         </div>
                                     </PriceLabel>
                                     <PriceData>
-                                        <span style={{ color: "#E84040" }}>
-                                            {(
-                                                Math.round(
-                                                    AutoEstimate.totalPrice /
-                                                        1000
-                                                ) * 1000
-                                            ).toLocaleString("ko-KR")}
-                                            <span className="vat">
-                                                {" "}
-                                                (VAT 미포함)
-                                            </span>
+                                        <span style={{ color: '#E84040' }}>
+                                            {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString(
+                                                'ko-KR'
+                                            )}
+                                            <span className="vat"> (VAT 미포함)</span>
                                         </span>
-                                        <span style={{ color: "#E84040" }}>
-                                            / {AutoEstimate.totalPeriod}
+                                        <span style={{ color: '#E84040' }}>
+                                            / {AutoEstimate.totalPeriod + 2}
                                             <span> 영업일</span>
                                         </span>
                                     </PriceData>
@@ -935,7 +766,7 @@ class AutoestimateContainer extends React.Component {
                                     onClick={() => {
                                         // 도면 및 발주요청 파일 저장
                                         AutoEstimate.create_dwg();
-                                        Router.push("/payment");
+                                        Router.push('/payment');
                                     }}
                                 >
                                     발주정보 기입
@@ -949,25 +780,21 @@ class AutoestimateContainer extends React.Component {
                 {width < 768 && (
                     <Container
                         style={{
-                            width: "90%",
-                            marginLeft: "5%",
-                            marginRight: "5%",
+                            width: '90%',
+                            marginLeft: '5%',
+                            marginRight: '5%',
                         }}
                     >
                         <MobileBanner0 />
                         {/* 자동 견적 헤더 */}
-                        <HeaderBox style={{ width: "95%" }}>
+                        <HeaderBox style={{ width: '95%' }}>
                             <Header>
-                                {AutoEstimate.checkFileUpload
-                                    ? "도면 추가"
-                                    : "도면 파일을 업로드 해주세요."}
+                                {AutoEstimate.checkFileUpload ? '도면 추가' : '도면 파일을 업로드 해주세요.'}
                             </Header>
                         </HeaderBox>
 
                         {/* 자동 견적 창 */}
-                        <ItemList
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <ItemList checkFileUpload={AutoEstimate.checkFileUpload}>
                             {AutoEstimate.fileList.map((data, idx) => (
                                 <ItemBox>
                                     <MainBox>
@@ -976,28 +803,17 @@ class AutoestimateContainer extends React.Component {
                                             onClick={() => {
                                                 if (!data.checked) {
                                                     data.checked = true;
-                                                    AutoEstimate.checkQuantity(
-                                                        idx,
-                                                        data.quantity,
-                                                        0
-                                                    );
+                                                    AutoEstimate.checkQuantity(idx, data.quantity, 0);
                                                 } else {
                                                     data.checked = false;
-                                                    AutoEstimate.checkQuantity(
-                                                        idx,
-                                                        data.quantity,
-                                                        1
-                                                    );
+                                                    AutoEstimate.checkQuantity(idx, data.quantity, 1);
                                                 }
 
                                                 AutoEstimate.countPrice();
                                             }}
                                         >
                                             <div active={data.checked}>
-                                                <img
-                                                    src={pass3}
-                                                    active={data.checked}
-                                                />
+                                                <img src={pass3} active={data.checked} />
                                             </div>
                                         </CheckBox>
 
@@ -1021,40 +837,27 @@ class AutoestimateContainer extends React.Component {
                                             />
                                             <Length>
                                                 {Math.round(data.x_length) +
-                                                    " x " +
+                                                    ' x ' +
                                                     Math.round(data.y_length) +
-                                                    " x " +
+                                                    ' x ' +
                                                     Math.round(data.z_length) +
-                                                    " mm"}
+                                                    ' mm'}
                                             </Length>
                                         </StlBox>
-                                        <div style={{ display: "block" }}>
-                                            <div style={{ marginBottom: 20 }}>
-                                                가공방법
-                                            </div>
+                                        <div style={{ display: 'block' }}>
+                                            <div style={{ marginBottom: 20 }}>가공방법</div>
                                             <ColumnBox>
                                                 <ManufactureBox>
                                                     <Select
                                                         styles={customStyles}
-                                                        value={
-                                                            data.selectedManufacture
-                                                        }
-                                                        options={
-                                                            AutoEstimate.ManufactureOption
-                                                        }
-                                                        getOptionLabel={(
-                                                            option
-                                                        ) => option.name}
+                                                        value={data.selectedManufacture}
+                                                        options={AutoEstimate.ManufactureOption}
+                                                        getOptionLabel={(option) => option.name}
                                                         onChange={(e) => {
                                                             // 공정 선택
-                                                            AutoEstimate.setManufacture(
-                                                                e,
-                                                                idx
-                                                            );
+                                                            AutoEstimate.setManufacture(e, idx);
                                                             // 변경 값에 따라 값 다시 받아오기
-                                                            AutoEstimate.ReloadAutoEstimate(
-                                                                idx
-                                                            );
+                                                            AutoEstimate.ReloadAutoEstimate(idx);
                                                         }}
                                                     />
                                                 </ManufactureBox>
@@ -1069,28 +872,18 @@ class AutoestimateContainer extends React.Component {
                                             </div>
                                             <MaterialBox>
                                                 <Select
-                                                    value={
-                                                        data.selectedMaterial
-                                                    }
+                                                    value={data.selectedMaterial}
                                                     styles={customStyles}
                                                     options={
-                                                        data.selectedManufacture
-                                                            .id == 1
+                                                        data.selectedManufacture.id == 1
                                                             ? AutoEstimate.CNCMaterialOption
                                                             : AutoEstimate.MoldMaterialOption
                                                     }
-                                                    getOptionLabel={(option) =>
-                                                        option.name
-                                                    }
+                                                    getOptionLabel={(option) => option.name}
                                                     onChange={(e) => {
-                                                        AutoEstimate.setMaterial(
-                                                            e,
-                                                            idx
-                                                        );
+                                                        AutoEstimate.setMaterial(e, idx);
                                                         // 변경 값에 따라 값 다시 받아오기
-                                                        AutoEstimate.ReloadAutoEstimate(
-                                                            idx
-                                                        );
+                                                        AutoEstimate.ReloadAutoEstimate(idx);
                                                     }}
                                                 />
                                             </MaterialBox>
@@ -1105,36 +898,17 @@ class AutoestimateContainer extends React.Component {
                                             <QuantityBox>
                                                 <DirectInputBox>
                                                     <input
-                                                        value={
-                                                            AutoEstimate
-                                                                .fileList[idx]
-                                                                .quantity
-                                                        }
+                                                        value={AutoEstimate.fileList[idx].quantity}
                                                         placeholder="직접 입력하세요"
                                                         onChange={(e) => {
                                                             // 숫자 검증을 위해
-                                                            const re =
-                                                                /^[0-9\b]+$/;
+                                                            const re = /^[0-9\b]+$/;
 
-                                                            if (
-                                                                re.test(
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            ) {
-                                                                AutoEstimate.countQuantity(
-                                                                    idx,
-                                                                    e.target
-                                                                        .value
-                                                                );
+                                                            if (re.test(e.target.value)) {
+                                                                AutoEstimate.countQuantity(idx, e.target.value);
                                                             } else {
-                                                                e.target.value =
-                                                                    "";
-                                                                AutoEstimate.countQuantity(
-                                                                    idx,
-                                                                    e.target
-                                                                        .value
-                                                                );
+                                                                e.target.value = '';
+                                                                AutoEstimate.countQuantity(idx, e.target.value);
                                                             }
                                                         }}
                                                     />
@@ -1144,82 +918,50 @@ class AutoestimateContainer extends React.Component {
                                     </MainBox>
 
                                     {/* 가격 표시 */}
-                                    <div style={{ textAlign: "right" }}>
+                                    <div style={{ textAlign: 'right' }}>
                                         <TailBox
                                             style={{
-                                                float: "right",
-                                                display: "inline-block",
+                                                float: 'right',
+                                                display: 'inline-block',
                                             }}
                                         >
                                             <div>
                                                 <span>
                                                     {/* 금형인 경우(id = 2), 금속가공인 경우(id = 1)*/}
-                                                    {data.selectedManufacture
-                                                        .id === 2 ? (
+                                                    {data.selectedManufacture.id === 2 ? (
                                                         <>
                                                             <div>
-                                                                <span>
-                                                                    금형비{" "}
-                                                                </span>
+                                                                <span>금형비 </span>
                                                                 <span>
                                                                     {/* 1000의 자리까지 반올림 */}
                                                                     {(
-                                                                        Math.round(
-                                                                            data.moldPrice /
-                                                                                1000
-                                                                        ) * 1000
-                                                                    ).toLocaleString(
-                                                                        "ko-KR"
-                                                                    ) + " 원"}
+                                                                        Math.round(data.moldPrice / 1000) * 1000
+                                                                    ).toLocaleString('ko-KR') + ' 원'}
                                                                 </span>
                                                                 <span> + </span>
-                                                                <span>
-                                                                    사출비{" "}
-                                                                </span>
+                                                                <span>사출비 </span>
                                                                 <span>
                                                                     {/* 1의 자리까지 반올림 */}
                                                                     {(
-                                                                        Math.round(
-                                                                            data.injectionPrice
-                                                                        ) *
-                                                                        data.quantity
-                                                                    ).toLocaleString(
-                                                                        "ko-KR"
-                                                                    ) + " 원"}
+                                                                        Math.round(data.injectionPrice) * data.quantity
+                                                                    ).toLocaleString('ko-KR') + ' 원'}
                                                                 </span>
                                                             </div>
 
                                                             <div>
                                                                 <Grid2>
-                                                                    <span>
-                                                                        가격{" "}
-                                                                    </span>
+                                                                    <span>가격 </span>
                                                                     <strong>
                                                                         {(
-                                                                            Math.round(
-                                                                                data.moldPrice /
-                                                                                    1000
-                                                                            ) *
-                                                                                1000 +
-                                                                            Math.round(
-                                                                                data.injectionPrice
-                                                                            ) *
+                                                                            Math.round(data.moldPrice / 1000) * 1000 +
+                                                                            Math.round(data.injectionPrice) *
                                                                                 data.quantity
-                                                                        ).toLocaleString(
-                                                                            "ko-KR"
-                                                                        ) +
-                                                                            " 원"}
+                                                                        ).toLocaleString('ko-KR') + ' 원'}
                                                                     </strong>
                                                                 </Grid2>
                                                                 <Grid2>
-                                                                    <span>
-                                                                        예상
-                                                                        납기일{" "}
-                                                                    </span>
-                                                                    <strong>
-                                                                        {data.period +
-                                                                            " 영업일"}
-                                                                    </strong>
+                                                                    <span>예상 생산일 </span>
+                                                                    <strong>{data.period + ' 영업일'}</strong>
                                                                 </Grid2>
                                                             </div>
                                                         </>
@@ -1233,23 +975,13 @@ class AutoestimateContainer extends React.Component {
                                                             >
                                                                 {/* 1000의 자리까지 반올림 */}
                                                                 {(
-                                                                    Math.round(
-                                                                        data.price /
-                                                                            1000
-                                                                    ) *
+                                                                    Math.round(data.price / 1000) *
                                                                     1000 *
                                                                     data.quantity
-                                                                ).toLocaleString(
-                                                                    "ko-KR"
-                                                                ) + " 원"}
+                                                                ).toLocaleString('ko-KR') + ' 원'}
                                                             </span>
-                                                            <span>
-                                                                예상 납기일{" "}
-                                                            </span>
-                                                            <span>
-                                                                {data.period +
-                                                                    " 영업일"}
-                                                            </span>
+                                                            <span>예상 생산일 </span>
+                                                            <span>{data.period + ' 영업일'}</span>
                                                         </>
                                                     )}
                                                 </span>
@@ -1257,14 +989,7 @@ class AutoestimateContainer extends React.Component {
                                         </TailBox>
                                     </div>
                                     <DeleteBox>
-                                        <span
-                                            onClick={() =>
-                                                AutoEstimate.fileList.splice(
-                                                    idx,
-                                                    1
-                                                )
-                                            }
-                                        >
+                                        <span onClick={() => AutoEstimate.fileList.splice(idx, 1)}>
                                             <img src={deleteButtonImg} />
                                         </span>
                                     </DeleteBox>
@@ -1273,16 +998,11 @@ class AutoestimateContainer extends React.Component {
                         </ItemList>
 
                         {/* 파일 업로드 창 */}
-                        <ContentBox
-                            style={{ width: "90%" }}
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <ContentBox style={{ width: '90%' }} checkFileUpload={AutoEstimate.checkFileUpload}>
                             <this.MobileDropzone />
                         </ContentBox>
 
-                        <NoticeBox
-                            checkFileUpload={AutoEstimate.checkFileUpload}
-                        >
+                        <NoticeBox checkFileUpload={AutoEstimate.checkFileUpload}>
                             {/* 전체 삭제 */}
                             <EntireDelete
                                 onClick={() => {
@@ -1309,56 +1029,35 @@ class AutoestimateContainer extends React.Component {
                         {/* 도면이 업로드된 상태면 견적 카드 보여주기 */}
                         {AutoEstimate.checkFileUpload && (
                             <>
-                                <Price
-                                    checkFileUpload={
-                                        AutoEstimate.checkFileUpload
-                                    }
-                                >
+                                <Price checkFileUpload={AutoEstimate.checkFileUpload}>
                                     <PriceLabel active={checkBox_one}>
                                         <div>
-                                            <span>
-                                                자동 견적 가격 / 예상 납기일
-                                            </span>
+                                            <span>자동 견적 가격 / 예상 생산일</span>
                                             <span
                                                 onMouseOver={() => {
                                                     this.setIsShown(true, 1);
-                                                    console.log("mouse-enter");
+                                                    console.log('mouse-enter');
                                                 }}
                                                 onMouseOut={() => {
                                                     this.setIsShown(false, 1);
-                                                    console.log("mouse-out");
+                                                    console.log('mouse-out');
                                                 }}
                                             >
                                                 ?
                                             </span>
                                         </div>
                                         <div>
-                                            <p>
-                                                해당 사항은 볼트앤너트 AI
-                                                알고리즘이 도출한 견적으로
-                                            </p>
-                                            <p>
-                                                가공품의 발주 요건에 따라 변경될
-                                                수 있습니다.
-                                            </p>
-                                            <p>
-                                                본 견적은 후처리를 제외한 순수
-                                                단품 가공 견적입니다.
-                                            </p>
+                                            <p>해당 사항은 볼트앤너트 AI 알고리즘이 도출한 견적으로</p>
+                                            <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
+                                            <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
                                         </div>
                                     </PriceLabel>
                                     <PriceData>
                                         <span>
-                                            {(
-                                                Math.round(
-                                                    AutoEstimate.totalPrice /
-                                                        1000
-                                                ) * 1000
-                                            ).toLocaleString("ko-KR")}
-                                            원
-                                            <span className="vat">
-                                                (VAT 미포함)
-                                            </span>
+                                            {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString(
+                                                'ko-KR'
+                                            )}
+                                            원<span className="vat">(VAT 미포함)</span>
                                         </span>
                                         <span>
                                             /{AutoEstimate.totalPeriod}
@@ -1370,85 +1069,61 @@ class AutoestimateContainer extends React.Component {
                                 {/* 파일 업로드 창 */}
                                 <HeaderBox
                                     style={{
-                                        marginLeft: "5%",
-                                        marginRight: "5%",
+                                        marginLeft: '5%',
+                                        marginRight: '5%',
                                     }}
                                 >
                                     <Header style={{ fontSize: 16 }}>
                                         {AutoEstimate.checkFileUpload &&
-                                            "도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료"}
+                                            '도면(DWG) 및 관련 파일 : 상세 발주사항이 포함된 자료'}
                                     </Header>
-                                    <div>
-                                        * 3D 도면 없이 발주 요청하는 경우
-                                        볼트앤너트 전문가가 견적을 내드립니다.
-                                    </div>
+                                    <div>* 3D 도면 없이 발주 요청하는 경우 볼트앤너트 전문가가 견적을 내드립니다.</div>
                                     <br />
-                                    {AutoEstimate.request_file_set.map(
-                                        (item, idx) => {
-                                            return (
-                                                <>
-                                                    <AddFileList>
-                                                        <span
-                                                            onClick={() => {
-                                                                if (
-                                                                    AutoEstimate
-                                                                        .request_file_set
-                                                                        .length >
-                                                                    0
-                                                                ) {
-                                                                    AutoEstimate.request_file_set.splice(
-                                                                        idx,
-                                                                        1
-                                                                    );
-                                                                }
-                                                            }}
-                                                            style={{
-                                                                display: "flex",
-                                                                alignItems:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            <span>
-                                                                <img
-                                                                    src={clip}
-                                                                    style={{
-                                                                        marginLeft: 17,
-                                                                        marginRight: 17,
-                                                                    }}
-                                                                ></img>
-                                                                <span>
-                                                                    {item.name}
-                                                                </span>
-                                                                <DeleteFile
-                                                                    onClick={() =>
-                                                                        AutoEstimate.delete_File(
-                                                                            idx
-                                                                        )
-                                                                    }
-                                                                    src={
-                                                                        deleteButtonImg
-                                                                    }
-                                                                    style={{
-                                                                        marginLeft: 17,
-                                                                    }}
-                                                                />
-                                                            </span>
+                                    {AutoEstimate.request_file_set.map((item, idx) => {
+                                        return (
+                                            <>
+                                                <AddFileList>
+                                                    <span
+                                                        onClick={() => {
+                                                            if (AutoEstimate.request_file_set.length > 0) {
+                                                                AutoEstimate.request_file_set.splice(idx, 1);
+                                                            }
+                                                        }}
+                                                        style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <span>
+                                                            <img
+                                                                src={clip}
+                                                                style={{
+                                                                    marginLeft: 17,
+                                                                    marginRight: 17,
+                                                                }}
+                                                            ></img>
+                                                            <span>{item.name}</span>
+                                                            <DeleteFile
+                                                                onClick={() => AutoEstimate.delete_File(idx)}
+                                                                src={deleteButtonImg}
+                                                                style={{
+                                                                    marginLeft: 17,
+                                                                }}
+                                                            />
                                                         </span>
-                                                    </AddFileList>
-                                                </>
-                                            );
-                                        }
-                                    )}
+                                                    </span>
+                                                </AddFileList>
+                                            </>
+                                        );
+                                    })}
                                 </HeaderBox>
                                 <ContentBox
                                     style={{
-                                        width: "90%",
-                                        marginLeft: "5%",
-                                        marginRight: "5%",
+                                        width: '90%',
+                                        marginLeft: '5%',
+                                        marginRight: '5%',
                                     }}
-                                    checkFileUpload={
-                                        AutoEstimate.checkFileUpload
-                                    }
+                                    checkFileUpload={AutoEstimate.checkFileUpload}
                                 >
                                     <this.DWGDropzone />
                                 </ContentBox>
@@ -1458,7 +1133,7 @@ class AutoestimateContainer extends React.Component {
                                     onClick={() => {
                                         // 도면 및 발주요청 파일 저장
                                         AutoEstimate.create_dwg();
-                                        Router.push("/payment");
+                                        Router.push('/payment');
                                     }}
                                 >
                                     발주정보 기입
@@ -1475,16 +1150,16 @@ class AutoestimateContainer extends React.Component {
 export default AutoestimateContainer;
 
 const quantityAry = [
-    { label: "1", value: 1 },
-    { label: "2", value: 2 },
-    { label: "3", value: 3 },
-    { label: "4", value: 4 },
-    { label: "5", value: 5 },
-    { label: "6", value: 6 },
-    { label: "7", value: 7 },
-    { label: "8", value: 8 },
-    { label: "9", value: 9 },
-    { label: "직접 입력", value: "" },
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+    { label: '5', value: 5 },
+    { label: '6', value: 6 },
+    { label: '7', value: 7 },
+    { label: '8', value: 8 },
+    { label: '9', value: 9 },
+    { label: '직접 입력', value: '' },
 ];
 
 const FileName = styled.span`
@@ -1493,8 +1168,8 @@ const FileName = styled.span`
 `;
 
 const Select = styled(SelectComponent)`
-    width: ${(props) => (props.width ? props.width : "180px")};
-    display: ${(props) => (props.quantity === "직접 입력" ? "none" : "block")};
+    width: ${(props) => (props.width ? props.width : '180px')};
+    display: ${(props) => (props.quantity === '직접 입력' ? 'none' : 'block')};
     @keyframes fadeIn {
         0% {
             opacity: 0.5;
@@ -1548,11 +1223,9 @@ const ItemList = styled.div`
     padding-left: 3px;
     margin-left: auto;
     margin-right: auto;
-    //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
-    //padding-top: ${(props) =>
-        props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
-    padding-top: ${(props) =>
-        props.checkBannerHeight && props.checkFileUpload ? "250px" : "0"};
+    //padding-top: ${(props) => (props.checkFileUpload ? '215px' : '0')};
+    //padding-top: ${(props) => (props.checkBannerHeight && props.checkFileUpload ? '215px' : '0')};
+    padding-top: ${(props) => (props.checkBannerHeight && props.checkFileUpload ? '250px' : '0')};
     @media (min-width: 0px) and (max-width: 767.98px) {
         width: 100%;
     }
@@ -1612,7 +1285,7 @@ const NoticeBox = styled.div`
     margin-right: auto;
     height: 92px;
     //border: 3px solid red;
-    display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'flex' : 'none')};
     position: relative;
     align-items: center;
     padding-bottom: 40px;
@@ -1657,7 +1330,7 @@ const HeaderBox = styled.div`
 
 const ContentBox = styled.div`
     width: 1200px;
-    height: ${(props) => (props.checkFileUpload ? "100px" : "330px")};
+    height: ${(props) => (props.checkFileUpload ? '100px' : '330px')};
     display: flex;
     flex-direction: column;
     border: 3px dashed #a4aab4;
@@ -1666,7 +1339,7 @@ const ContentBox = styled.div`
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "30px")};
+    margin-bottom: ${(props) => (props.checkFileUpload ? '0' : '30px')};
     :focus {
         outline: none;
     }
@@ -1764,7 +1437,7 @@ const TailBox = styled.div`
     width: 800px;
     position: absolute;
     top: 63%;
-    //top: ${(props) => (props.checkSelectBig === "금형사출" ? "70%" : "80%")}
+    //top: ${(props) => (props.checkSelectBig === '금형사출' ? '70%' : '80%')}
     left: 32%;
     > div {
         > span {
@@ -1820,7 +1493,7 @@ const InputBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: ${(props) => (props.checkFileUpload ? "100px" : "330px")};
+    height: ${(props) => (props.checkFileUpload ? '100px' : '330px')};
     text-align: center;
     :focus {
         outline: 0;
@@ -1830,14 +1503,14 @@ const InputBox = styled.div`
 
 const Card = styled.div`
     width: 1210px;
-    height: ${(props) => (props.checkFileUpload ? "210px" : "100px")};
+    height: ${(props) => (props.checkFileUpload ? '210px' : '100px')};
     object-fit: contain;
     background-color: white;
     //margin: 60px 0px 20px 0;
     margin: 30px 0px 20px 0;
     display: flex;
     flex-direction: column;
-    //position: ${(props) => (props.checkFileUpload ? "fixed" : "static")};
+    //position: ${(props) => (props.checkFileUpload ? 'fixed' : 'static')};
     position: static;
     top: 0;
     z-index: 99;
@@ -1876,7 +1549,7 @@ const CheckBox = styled.div`
   > div{        
     width: 19px;
     height: 19px;
-    background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+    background-color: ${(props) => (props.active ? '#0933b3' : '#ffffff')};
     margin-right: 10px;    
     position: relative;
     cursor: pointer;
@@ -1884,7 +1557,7 @@ const CheckBox = styled.div`
     border-radius: 2px;
     box-sizing: border-box;
     > img{
-      display: ${(props) => (props.active ? "static" : "none")};
+      display: ${(props) => (props.active ? 'static' : 'none')};
     
     }
   }
@@ -1952,7 +1625,7 @@ const TableHeader = styled.div`
     margin-right: auto;
     /* border-bottom: 1px solid #c6c7cc; */
     padding-bottom: 18px;
-    display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'flex' : 'none')};
     > div {
         width: 19px;
         height: 19px;
@@ -1999,7 +1672,7 @@ const Price = styled.div`
     border-bottom: 2px solid #c6c7cc;
     margin-top: 60px;
     margin-bottom: 70px;
-    display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'flex' : 'none')};
     @media (min-width: 0px) and (max-width: 767.98px) {
         width: 90%;
     }
@@ -2046,7 +1719,7 @@ const PriceLabel = styled.div`
         }
     }
     > div:nth-of-type(2) {
-        display: ${(props) => (props.active ? "block" : "none")};
+        display: ${(props) => (props.active ? 'block' : 'none')};
         width: 448px;
         height: 135px;
         border: 1px solid #707070;
@@ -2074,7 +1747,7 @@ const Notice = styled.div`
     color: #0933b3;
     font-size: 20px;
     font-weight: 500;
-    font-family: "NotoSansCJKkr";
+    font-family: 'NotoSansCJKkr';
     margin: 16px auto 50px;
 `;
 
@@ -2126,10 +1799,10 @@ const Button = styled(Buttonv1)`
 `;
 
 const Projectbox = styled.div`
-    display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'block' : 'none')};
 `;
 const Purposebox = styled.div`
-    display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'block' : 'none')};
     margin-bottom: 70px;
 `;
 const SelectBox = styled.div`
@@ -2147,7 +1820,7 @@ const PurposeSelectCircle = styled.div`
     height: 44px;
     border-radius: 30px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-    background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+    background-color: ${(props) => (props.active ? '#0933b3' : '#ffffff')};
     cursor: pointer;
     margin-right: 30px;
 `;
@@ -2155,11 +1828,11 @@ const PurposeFont18 = styled.div`
     font-weight: normal;
     line-height: 1.89;
     letter-spacing: -0.45px;
-    color: ${(props) => (props.active ? "#ffffff" : "#414550")};
+    color: ${(props) => (props.active ? '#ffffff' : '#414550')};
 `;
 
 const Label = styled.div`
-    //display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+    //display: ${(props) => (props.checkFileUpload ? 'block' : 'none')};
     margin-bottom: 16px;
     > span {
         font-size: 24px;
@@ -2204,7 +1877,7 @@ const ProjectTitle = styled.div`
 `;
 
 const DeliveryBox = styled.div`
-    display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'block' : 'none')};
     margin-top: 70px;
     margin-bottom: 40px;
     // > div:nth-of-type(1) {
@@ -2219,7 +1892,7 @@ const DeliveryBox = styled.div`
 `;
 const DeliveryDate = styled.div`
   width: 1200px;
-  display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+  display: ${(props) => (props.checkFileUpload ? 'static' : 'none')};
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
@@ -2249,31 +1922,27 @@ const DeliveryDate = styled.div`
         bottom: 6%;
       }
       > div {
-        //display: ${(props) => (props.checkCalendar ? "block" : "none")};
+        //display: ${(props) => (props.checkCalendar ? 'block' : 'none')};
         //display: block;
       }
     }
     > div:nth-of-type(2) {
       margin: 0 30px;
       > div {
-        background-color: ${(props) =>
-            props.checkDateConference ? "#0933b3" : "#999999"};
+        background-color: ${(props) => (props.checkDateConference ? '#0933b3' : '#999999')};
         //background-color: #999999;
         > img {
-          //display: ${(props) =>
-              props.checkDateConference ? "block" : "none"};
+          //display: ${(props) => (props.checkDateConference ? 'block' : 'none')};
           // display: none;
         }
       }
     }
     > div:nth-of-type(3) {
       > div {
-        background-color: ${(props) =>
-            props.checkDateUndefined ? "#0933b3" : "#999999"};
+        background-color: ${(props) => (props.checkDateUndefined ? '#0933b3' : '#999999')};
         //background-color: #999999;
         > img {
-          //display: ${(props) =>
-              props.checkDateUndefined ? "block" : "none"};
+          //display: ${(props) => (props.checkDateUndefined ? 'block' : 'none')};
         }
       }
     > div:nth-of-type(2),
@@ -2299,11 +1968,11 @@ const DeliveryDate = styled.div`
   
 `;
 const RequestBox = styled.div`
-    display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'block' : 'none')};
 `;
 const Request = styled.div`
     width: 1200px;
-    // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+    // display: ${(props) => (props.checkFileUpload ? 'static' : 'none')};
     background-color: #f6f6f6;
     border: 1px solid #ffffff;
     border-radius: 5px;
@@ -2340,7 +2009,7 @@ const Request = styled.div`
         // }
     }
     // > div:nth-of-type(2) {
-    //   display: ${(props) => (props.active ? "block" : "none")};
+    //   display: ${(props) => (props.active ? 'block' : 'none')};
     //   width: 600px;
     //   height: 180px;
     //   // border: 3px solid green;
@@ -2383,7 +2052,7 @@ const Request = styled.div`
 
 const PrivateRequest = styled.div`
     width: 1200px;
-    display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'static' : 'none')};
     background-color: #f6f6f6;
     border: 1px solid #ffffff;
     border-radius: 5px;
@@ -2428,7 +2097,7 @@ const PrivateRequest = styled.div`
     }
 `;
 const ReferenceBox = styled.div`
-    display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+    display: ${(props) => (props.checkFileUpload ? 'static' : 'none')};
 `;
 const Reference = styled.div`
     width: 1200px;

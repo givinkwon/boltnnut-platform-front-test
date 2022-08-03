@@ -190,7 +190,7 @@ class PaymentPageContainer extends React.Component {
                                         marginTop: '20px',
                                     }}
                                 >
-                                    <FontSize18 style={{ marginBottom: '20px' }}>생산 소요 시간</FontSize18>
+                                    <FontSize18 style={{ marginBottom: '20px' }}>예상 생산일</FontSize18>
                                     <FontSize18
                                         style={{
                                             color: '#414550',
