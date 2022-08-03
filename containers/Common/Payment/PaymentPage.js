@@ -1,28 +1,28 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import Background from "components/Background";
-import Containerv1 from "components/Containerv1";
-import * as Title from "components/Title";
-import InputComponent from "components/Input2";
-import { inject, observer } from "mobx-react";
-import AutoEstimate from "../../../stores/Manufacture/AutoEstimate";
-import Router from "next/router";
-import * as PaymentAPI from "axios/Common/Payment";
-import Payment from "../../../stores/Common/Payment";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+import * as Title from 'components/Title';
+import InputComponent from 'components/Input2';
+import { inject, observer } from 'mobx-react';
+import AutoEstimate from '../../../stores/Manufacture/AutoEstimate';
+import Router from 'next/router';
+import * as PaymentAPI from 'axios/Common/Payment';
+import Payment from '../../../stores/Common/Payment';
 
-const img = "/static/images/request/PaymentPage/star.png";
-const passimg = "/static/images/request/PaymentPage/pass.png";
-const pass3 = "static/images/pass3.png";
+const img = '/static/images/request/PaymentPage/star.png';
+const passimg = '/static/images/request/PaymentPage/pass.png';
+const pass3 = 'static/images/pass3.png';
 
-@inject("Payment", "AutoEstimate")
+@inject('Payment', 'AutoEstimate')
 @observer
 class PaymentPageContainer extends React.Component {
     state = {
         selectedIdx: 0,
         checkbox: false,
-        defaultNum: "010",
-        middleNum: "0",
-        lastNum: "0",
+        defaultNum: '010',
+        middleNum: '0',
+        lastNum: '0',
     };
 
     payButtonClick = () => {
@@ -32,19 +32,19 @@ class PaymentPageContainer extends React.Component {
         console.log(cellphone);
 
         if (!cellphoneValid.test(cellphone)) {
-            return alert("전화번호가 잘못 입력되었습니다. 다시 확인해 주세요");
+            return alert('전화번호가 잘못 입력되었습니다. 다시 확인해 주세요');
         } else if (!this.state.checkbox) {
-            return alert("구매진행 동의에 체크를 하셔야 결제가 진행됩니다.");
+            return alert('구매진행 동의에 체크를 하셔야 결제가 진행됩니다.');
         }
-        Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
+        Payment.setPhoneNumber(cellphone.replace('-', '').replace('-', ''));
         Payment.payment_price = 10;
-        Payment.setProjectName("MASDASCNASKLCNASKLCNL");
+        Payment.setProjectName('MASDASCNASKLCNASKLCNL');
         Payment.setCountNumber(3);
-        Payment.clientOrder("html5_inicis");
+        Payment.clientOrder('html5_inicis');
     };
 
     modalHandler = () => {
-        console.log("modalHandler");
+        console.log('modalHandler');
         // const { Payment } = this.props;
         // Payment.modalActive = !Payment.modalActive;
     };
@@ -87,9 +87,7 @@ class PaymentPageContainer extends React.Component {
                             <FontSize16></FontSize16>
                             <img src={img} />
                         </InlineFlexDiv>
-                        <div
-                            style={{ marginTop: "10px", marginBottom: "26px" }}
-                        >
+                        <div style={{ marginTop: '10px', marginBottom: '26px' }}>
                             <InputComponent
                                 class="Input"
                                 placeholder="옵션을 선택해주세요."
@@ -102,11 +100,9 @@ class PaymentPageContainer extends React.Component {
                             <FontSize20>담당자 연락처</FontSize20>
                             <img src={img} />
                         </InlineFlexDiv>
-                        <InlineFlexDiv
-                            style={{ marginTop: "10px", marginBottom: "26px" }}
-                        >
+                        <InlineFlexDiv style={{ marginTop: '10px', marginBottom: '26px' }}>
                             <InputComponent
-                                placeholder={"010"}
+                                placeholder={'010'}
                                 value={Payment.PhoneNumber[0]}
                                 width="90px"
                                 onChange={(e) => Payment.setPhoneNumber(e, 0)}
@@ -114,14 +110,14 @@ class PaymentPageContainer extends React.Component {
                             <PhoneNumDash />
                             <InputComponent
                                 value={Payment.PhoneNumber[1]}
-                                placeholder={"1234"}
+                                placeholder={'1234'}
                                 width="90px"
                                 onChange={(e) => Payment.setPhoneNumber(e, 1)}
                             />
                             <PhoneNumDash />
                             <InputComponent
                                 value={Payment.PhoneNumber[2]}
-                                placeholder={"5678"}
+                                placeholder={'5678'}
                                 width="90px"
                                 onChange={(e) => Payment.setPhoneNumber(e, 2)}
                             />
@@ -131,13 +127,13 @@ class PaymentPageContainer extends React.Component {
                             <FontSize20>배송받을주소</FontSize20>
                             <img src={img} />
                         </InlineFlexDiv>
-                        <div style={{ height: "10px;" }}></div>
+                        <div style={{ height: '10px;' }}></div>
                         <InputComponent
                             value={Payment.location}
-                            placeholder={"정확한 주소를 입력해주세요."}
+                            placeholder={'정확한 주소를 입력해주세요.'}
                             onChange={(e) => Payment.setLocation(e)}
                         />
-                        <div style={{ height: "10px;" }}></div>
+                        <div style={{ height: '10px;' }}></div>
 
                         {/* <InlineFlexDiv>
               <FontSize20>결제방법</FontSize20>
@@ -173,9 +169,7 @@ class PaymentPageContainer extends React.Component {
                             <img src={img} />
                         </InlineFlexDiv>
                         <PaymentWayBox>
-                            <PaymentWay
-                                onClick={() => AutoEstimate.save_Paylist()}
-                            >
+                            <PaymentWay onClick={() => AutoEstimate.save_Paylist()}>
                                 <PaymentCheckImg />
                                 <PaymentWayTitle>후불결제</PaymentWayTitle>
                             </PaymentWay>
@@ -184,27 +178,23 @@ class PaymentPageContainer extends React.Component {
 
                     <PaymentPageRight>
                         <PaymentInfoWrap>
-                            <div style={{ marginTop: "35px" }}>
+                            <div style={{ marginTop: '35px' }}>
                                 <PaymentInfoTitle>발주정보</PaymentInfoTitle>
                             </div>
 
                             <PaymentInfo1>
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "space-between",
-                                        marginTop: "30px",
-                                        marginTop: "20px",
+                                        justifyContent: 'space-between',
+                                        marginTop: '30px',
+                                        marginTop: '20px',
                                     }}
                                 >
-                                    <FontSize18
-                                        style={{ marginBottom: "20px" }}
-                                    >
-                                        생산 소요 시간
-                                    </FontSize18>
+                                    <FontSize18 style={{ marginBottom: '20px' }}>생산 소요 시간</FontSize18>
                                     <FontSize18
                                         style={{
-                                            color: "#414550",
-                                            fontWeight: "500",
+                                            color: '#414550',
+                                            fontWeight: '500',
                                         }}
                                     >
                                         {AutoEstimate.totalPeriod} 영업일
@@ -214,21 +204,18 @@ class PaymentPageContainer extends React.Component {
 
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "space-between",
-                                        marginBottom: "30px",
+                                        justifyContent: 'space-between',
+                                        marginBottom: '30px',
                                     }}
                                 >
                                     <FontSize18>도착 예정일</FontSize18>
                                     <FontSize18
                                         style={{
-                                            color: "#414550",
-                                            fontWeight: "500",
+                                            color: '#414550',
+                                            fontWeight: '500',
                                         }}
                                     >
-                                        <span style={{ color: "#0933B3" }}>
-                                            검수 완료 후
-                                        </span>{" "}
-                                        2 영업일 이내
+                                        <span style={{ color: '#0933B3' }}>검수 완료 후</span> 2 영업일 이내
                                     </FontSize18>
                                 </InlineFlexDiv>
                             </PaymentInfo1>
@@ -236,74 +223,65 @@ class PaymentPageContainer extends React.Component {
                             <PaymentInfo2>
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "space-between",
-                                        marginTop: "30px",
+                                        justifyContent: 'space-between',
+                                        marginTop: '30px',
                                     }}
                                 >
                                     <FontSize18
                                         style={{
-                                            color: "#767676",
-                                            marginBottom: "20px",
+                                            color: '#767676',
+                                            marginBottom: '20px',
                                         }}
                                     >
                                         부품 개수
                                     </FontSize18>
                                     <FontSize18
                                         style={{
-                                            color: "#414550",
-                                            fontWeight: "500",
+                                            color: '#414550',
+                                            fontWeight: '500',
                                         }}
                                     >
                                         {AutoEstimate.total_quantity} 개
                                     </FontSize18>
                                 </InlineFlexDiv>
-                                <InlineFlexDiv
-                                    style={{ justifyContent: "space-between" }}
-                                >
+                                <InlineFlexDiv style={{ justifyContent: 'space-between' }}>
                                     <FontSize18
                                         style={{
-                                            color: "#767676",
-                                            marginBottom: "20px",
+                                            color: '#767676',
+                                            marginBottom: '20px',
                                         }}
                                     >
                                         부품 가격
                                     </FontSize18>
                                     <FontSize18
                                         style={{
-                                            color: "#414550",
-                                            fontWeight: "500",
+                                            color: '#414550',
+                                            fontWeight: '500',
                                         }}
                                     >
-                                        {(
-                                            Math.round(
-                                                AutoEstimate.totalPrice / 1000
-                                            ) * 1000
-                                        ).toLocaleString("ko-KR")}{" "}
-                                        원
+                                        {(Math.round(AutoEstimate.totalPrice / 1000) * 1000).toLocaleString('ko-KR')} 원
                                     </FontSize18>
                                 </InlineFlexDiv>
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "space-between",
-                                        marginBottom: "30px",
+                                        justifyContent: 'space-between',
+                                        marginBottom: '30px',
                                     }}
                                 >
-                                    <FontSize18 style={{ color: "#767676" }}>
-                                        배송비
-                                    </FontSize18>
+                                    <FontSize18 style={{ color: '#767676' }}>배송비</FontSize18>
                                     <FontSize18
                                         style={{
-                                            color: "#414550",
-                                            fontWeight: "500",
-                                            display: "flex",
+                                            color: '#414550',
+                                            fontWeight: '500',
+                                            display: 'flex',
                                         }}
                                     >
                                         <EventBox>EVENT</EventBox>
                                         <div
                                             style={{
-                                                textDecoration: "line-through",
-                                                marginRight: "10px",
-                                                color: "#C2C2C2",
+                                                textDecoration: 'line-through',
+                                                marginRight: '10px',
+                                                color: '#C2C2C2',
                                             }}
                                         >
                                             5000 원
@@ -313,73 +291,65 @@ class PaymentPageContainer extends React.Component {
                                 </InlineFlexDiv>
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "space-between",
-                                        marginBottom: "30px",
+                                        justifyContent: 'space-between',
+                                        marginBottom: '30px',
                                     }}
                                 >
-                                    <FontSize18 style={{ color: "#767676" }}>
-                                        * 일반 택배로 배달되지 않는 일부
-                                        가공품은 용달 비용이 추가됩니다.
+                                    <FontSize18 style={{ color: '#767676' }}>
+                                        * 일반 택배로 배달되지 않는 일부 가공품은 용달 비용이 추가됩니다.
                                     </FontSize18>
                                 </InlineFlexDiv>
                             </PaymentInfo2>
 
                             <InlineFlexDiv
                                 style={{
-                                    justifyContent: "space-between",
-                                    marginBottom: "26px",
+                                    justifyContent: 'space-between',
+                                    marginBottom: '26px',
                                 }}
                             >
-                                <PaymentInfoText24>
-                                    최종 결제가격 (VAT 포함)
-                                </PaymentInfoText24>
-                                <PaymentInfoText24 style={{ color: "#282c36" }}>
-                                    {Math.round(
-                                        AutoEstimate.totalPrice * 1.1
-                                    ).toLocaleString("ko-KR")}{" "}
-                                    원
+                                <PaymentInfoText24>최종 결제가격 (VAT 포함)</PaymentInfoText24>
+                                <PaymentInfoText24 style={{ color: '#282c36' }}>
+                                    {(Math.round(AutoEstimate.totalPrice / 1000) * 1100).toLocaleString('ko-KR')} 원
                                 </PaymentInfoText24>
                             </InlineFlexDiv>
                         </PaymentInfoWrap>
                         c
                         <PaymentInfo3>
-                            <PaymentInfoWrap style={{ marginTop: "26px" }}>
+                            <PaymentInfoWrap style={{ marginTop: '26px' }}>
                                 <FontSize18
                                     style={{
-                                        fontWeight: "500",
-                                        color: "#282c36",
+                                        fontWeight: '500',
+                                        color: '#282c36',
                                     }}
                                 >
                                     주문동의
                                 </FontSize18>
                                 <FontSize18
                                     style={{
-                                        fontWeight: "normal",
-                                        color: "#767676",
-                                        marginTop: "14px",
-                                        lineHeight: "1.56",
+                                        fontWeight: 'normal',
+                                        color: '#767676',
+                                        marginTop: '14px',
+                                        lineHeight: '1.56',
                                     }}
                                 >
-                                    주문할 상품의 상품, 상품가격, 배송정보를
-                                    확인하였으며, 구매에 동의 하시겠습니까?
+                                    주문할 상품의 상품, 상품가격, 배송정보를 확인하였으며, 구매에 동의 하시겠습니까?
                                     <br /> (전자상거래법 제8조 제2항)
                                 </FontSize18>
 
                                 <FontSize18
                                     style={{
-                                        fontWeight: "normal",
-                                        color: "#767676",
-                                        marginTop: "18px",
-                                        lineHeight: "1.56",
+                                        fontWeight: 'normal',
+                                        color: '#767676',
+                                        marginTop: '18px',
+                                        lineHeight: '1.56',
                                     }}
                                 >
-                                    주문제작상품의 경우, 교환/환불이 불가능
-                                    하다는 내용을 확인하였으며 이에 동의합니다.
+                                    주문제작상품의 경우, 교환/환불이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.
                                 </FontSize18>
                                 <InlineFlexDiv
                                     style={{
-                                        justifyContent: "center",
-                                        marginTop: "28px",
+                                        justifyContent: 'center',
+                                        marginTop: '28px',
                                     }}
                                 >
                                     <CheckBox
@@ -389,15 +359,10 @@ class PaymentPageContainer extends React.Component {
                                         }}
                                     >
                                         <div active={this.state.checkbox}>
-                                            <img
-                                                src={pass3}
-                                                active={this.state.checkbox}
-                                            />
+                                            <img src={pass3} active={this.state.checkbox} />
                                         </div>
                                     </CheckBox>
-                                    <PaymentInfoText16>
-                                        동의합니다
-                                    </PaymentInfoText16>
+                                    <PaymentInfoText16>동의합니다</PaymentInfoText16>
                                 </InlineFlexDiv>
                             </PaymentInfoWrap>
                         </PaymentInfo3>
@@ -596,8 +561,7 @@ const PaymentWay = styled.div`
     height: 118px;
     border-radius: 3px;
     border: solid 2px #0933b3;
-    /* border: ${(props) =>
-        props.active ? "solid 2px #0933b3" : "solid 2px #e1e2e4"}; */
+    /* border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'solid 2px #e1e2e4')}; */
 `;
 
 const PaymentWayTitle = styled(Title.FontSize18)`
@@ -611,7 +575,7 @@ const PaymentWayTitle = styled(Title.FontSize18)`
 
 const PaymentCheckImg = styled.img`
     padding-bottom: 5px;
-    display: ${(props) => (props.active ? "block" : "none")};
+    display: ${(props) => (props.active ? 'block' : 'none')};
 `;
 
 // right
@@ -734,7 +698,7 @@ const CheckBox = styled.div`
     > div {
         width: 19px;
         height: 19px;
-        background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+        background-color: ${(props) => (props.active ? '#0933b3' : '#ffffff')};
         margin-right: 10px;
         position: relative;
         cursor: pointer;
@@ -742,7 +706,7 @@ const CheckBox = styled.div`
         border-radius: 2px;
         box-sizing: border-box;
         > img {
-            display: ${(props) => (props.active ? "static" : "none")};
+            display: ${(props) => (props.active ? 'static' : 'none')};
             position: absolute;
             top: 17%;
             left: 15%;
